@@ -1,0 +1,21 @@
+.chm-browser-app .window-content {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.chm-browser-wrapper {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.chm-browser-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
