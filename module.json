@@ -1,0 +1,36 @@
+{
+  "id": "5e-chm-in-fvtt",
+  "title": "5E不全书fvtt内部部署",
+  "description": "在FVTT内嵌浏览器中打开5e不全书。适配 dnd5e 5.x 系统。",
+  "version": "26.02.07",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "14"
+  },
+  "styles": [
+    "styles/module.css"
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "5.1.0",
+          "verified": "5.2.x"
+        }
+      }
+    ]
+  },
+  "authors": [
+    {
+      "name": "xian_miao"
+    }
+  ],
+  "esmodules": [
+    "scripts/main.js"
+  ],
+  "url": "",
+  "manifest": "",
+  "download": "https://github.com/Heldea-xianmiao/fvtt-5echm-online-mod/releases"
+}
