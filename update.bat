@@ -5,5 +5,11 @@ echo.
 echo Injecting cloud-ready scripts...
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0prepare_for_cloud.ps1"
 echo.
+echo Creating .nojekyll to prevent GitHub Pages build issues...
+type nul > "%~dp0chm\.nojekyll"
+echo.
+echo Fixing Web compatibility (Paths and Encodings)...
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0fix_web_compatibility.ps1"
+echo.
 echo Done.
 pause
