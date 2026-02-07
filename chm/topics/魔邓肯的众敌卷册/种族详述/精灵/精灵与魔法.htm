@@ -50,7 +50,45 @@ Drannor）的迷锁能防止诸如巨龙、灵吸怪、卓尔、变形怪等种�
 
 <P><STRONG><FONT color=#800000 size=4>剑歌 
 
-Bladesong</FONT></STRONG><BR>那些在战争中曾见过剑咏者的人永远不会忘记他们见到的情景。混乱与鲜血如影随形，剑咏者正踏着超凡脱俗的舞步。咒语与利剑奏成乐章，交织着动魄之美、致命之死。当剑咏者的利剑划过空中，剑刃之蜂鸣与风声之哀泣便化作乐章，剑咏者的剑歌也就此奏起——而这将是它的敌人听到的最后的葬歌。<BR>精灵和半精灵们练习着最初源自费伦世界的剑歌之术，它们在战斗中临危不惧，拨挡刀剑、腾挪转闪并回以攻击。一位剑咏单手持用着武器，空出另一只手以便施法或者操纵魔杖，相辅相成形成战姿。剑歌技艺让剑咏者能掌握不同武术姿态所必需的自如行动之法，而借此，剑咏者便能行云流水地施展魔法与剑技。<BR>但仅有精灵中的少部分与半精灵中的极少部分能得此殊荣，晋升剑咏者之列。只有同时心怀大法师之智慧，身负舞蹈家之灵敏的人才能成为剑咏者。</P></body>
+Bladesong</FONT></STRONG><BR>那些在战争中曾见过剑咏者的人永远不会忘记他们见到的情景。混乱与鲜血如影随形，剑咏者正踏着超凡脱俗的舞步。咒语与利剑奏成乐章，交织着动魄之美、致命之死。当剑咏者的利剑划过空中，剑刃之蜂鸣与风声之哀泣便化作乐章，剑咏者的剑歌也就此奏起——而这将是它的敌人听到的最后的葬歌。<BR>精灵和半精灵们练习着最初源自费伦世界的剑歌之术，它们在战斗中临危不惧，拨挡刀剑、腾挪转闪并回以攻击。一位剑咏单手持用着武器，空出另一只手以便施法或者操纵魔杖，相辅相成形成战姿。剑歌技艺让剑咏者能掌握不同武术姿态所必需的自如行动之法，而借此，剑咏者便能行云流水地施展魔法与剑技。<BR>但仅有精灵中的少部分与半精灵中的极少部分能得此殊荣，晋升剑咏者之列。只有同时心怀大法师之智慧，身负舞蹈家之灵敏的人才能成为剑咏者。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -80,7 +80,45 @@ Stride。</STRONG>地狱火机车直线移动至多等于其速度的距离。�
 
   d10)钝击+13(2 d12)雷鸣伤害，豁免成功则伤害减半。</P></BLOCKQUOTE>
 
-<P dir=ltr>如果选择的选项杀死一个了生物,这个生物将在1d4小时内被冥河复活为地狱的劣魔。如果生物在这之前没有被复活，只有祈愿术或杀死那个劣魔和并对生物原本的身体使用完全复生术可以恢复其原本的生命。构装生物和恶魔免疫这种效应。</P></body>
+<P dir=ltr>如果选择的选项杀死一个了生物,这个生物将在1d4小时内被冥河复活为地狱的劣魔。如果生物在这之前没有被复活，只有祈愿术或杀死那个劣魔和并对生物原本的身体使用完全复生术可以恢复其原本的生命。构装生物和恶魔免疫这种效应。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

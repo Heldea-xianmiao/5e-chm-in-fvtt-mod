@@ -40,7 +40,45 @@ Flotket Alps
 
 <P>蠕虫的崇拜者Worshipers Of The Worm<BR>一个崇拜夸加斯的野人部落分散在水晶沙的北部地区，他们自称为毛科特人。它们通过在沙子和附近的岩石中挖掘隧道和洞穴来捕猎，然后躺在那里等待猎物落入陷阱时跳出来。这些狂热的人们每年都会穿越险恶的寒冷深处，前往盖尔的艾塞尔克罗斯岛，从夸加斯冰冻的身体上开采血肉。然后，这些肉被带回水晶之沙，由虫祭的首领按照仪式吞食，并由年轻人作为成年仪式。对他们来说幸运的是，肉在被消耗之前旅行了足够长的时间，以避免完全的蠕虫转化(见本章后面的“蠕虫之墓”)。毛科特夫妇渴望有一天能把他们的恩人从冰冷的监狱里解救出来。<BR>水晶苔原的冒险Crystalsands Tundra Adventures<BR>对任何冒险家来说，穿越这些无边无际的冻土地带都是一段惊心动魄而又危险的旅程。<BR>酒肉朋友(中级)Fair-Weather Friends (Mid 
 
-Level)。在穿越被风吹过的雪山时，角色们遇到了三个不攻击的年轻悔恨者。相反，他们追随的是Shwells(混乱的中立，女性，侏儒侦察员)，他挥舞着一个最近捡来的淡蓝色球体，让这些生物变得温顺。她不会和魔法球分开，她越来越喜欢她的怪物同伴，但拥有奥术知识的角色会注意到魔法球在苔原上吸引了更多的忏悔，而制服生物的魔法似乎正在迅速消失。</P></body>
+Level)。在穿越被风吹过的雪山时，角色们遇到了三个不攻击的年轻悔恨者。相反，他们追随的是Shwells(混乱的中立，女性，侏儒侦察员)，他挥舞着一个最近捡来的淡蓝色球体，让这些生物变得温顺。她不会和魔法球分开，她越来越喜欢她的怪物同伴，但拥有奥术知识的角色会注意到魔法球在苔原上吸引了更多的忏悔，而制服生物的魔法似乎正在迅速消失。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

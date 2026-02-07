@@ -64,7 +64,45 @@ html,body {
 
 <P>吉高的冒险<BR>角色们可能会被吸引到当地的比赛中，或者为克林王朝监视当地居民，以避免反抗的发生。</P>
 
-<P>吹牛之战（低级）：在一个酒馆中，冒险者们会看见两个吹牛的人在吹牛。其中一个是久经沙场的老兽人泰姆格，另一个是叫做葛布的年轻地精，二者都十分骄傲，不愿意退缩。看起来马上冲突就要发生了，泰姆格和葛布的朋友们分别请求冒险者在曙光护卫介入前调和他们的关系。</P></body>
+<P>吹牛之战（低级）：在一个酒馆中，冒险者们会看见两个吹牛的人在吹牛。其中一个是久经沙场的老兽人泰姆格，另一个是叫做葛布的年轻地精，二者都十分骄傲，不愿意退缩。看起来马上冲突就要发生了，泰姆格和葛布的朋友们分别请求冒险者在曙光护卫介入前调和他们的关系。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -96,7 +96,45 @@ Actions</FONT></STRONG><BR>巨颅魔可以采取3个传奇行动，选择下面�
 
 casts  a spell。<BR><STRONG>喷雾：</STRONG>巨颅魔使用喷射胆汁 Squirt Bile。<BR><STRONG>扭曲（消耗2动作）：</STRONG>巨颅魔使用扭曲生物Warp 
 
-Creature。</P></body>
+Creature。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

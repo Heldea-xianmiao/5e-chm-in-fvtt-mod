@@ -24,6 +24,43 @@ Non-Dunamancers</FONT></H3>
 
 <P>通过使用秘迹来开发并掌握的深奥力量，仍然是荒洲中克灵王朝非常罕见且严密守护的特性。然而,这等奥秘很难匿于人世，尤其是在战乱时期。间谍与叛逃者早已将这种晦涩魔法技艺的秘密偷偷带出，如今，这种力量正逐渐传播到乔哈斯以外的地区。</P>
 
-<P>秘迹学法术可以直接供本章的法师子职使用，但不应简单地添加到其他施法职业的完整法术列表中。然而，DM可以考虑允许其他施法职业在整个战役过程中有机会学到少量与秘迹学相关的法术作为奖励。或许PC们找到了一处魔法走私品的贮藏处，其中包含了几张法术卷轴，或者一名旅行的侍僧在与友好的牧师角色一起度过了休整期，并向其敞开心扉，分享了一些宇宙中更为神秘的秘密，从而解锁了一两个法术。还有许多独特的方方式，可以把这些法术引入你的游戏中，而无需特定的秘迹使子职出现在冒险队伍中。</P></body>
+<P>秘迹学法术可以直接供本章的法师子职使用，但不应简单地添加到其他施法职业的完整法术列表中。然而，DM可以考虑允许其他施法职业在整个战役过程中有机会学到少量与秘迹学相关的法术作为奖励。或许PC们找到了一处魔法走私品的贮藏处，其中包含了几张法术卷轴，或者一名旅行的侍僧在与友好的牧师角色一起度过了休整期，并向其敞开心扉，分享了一些宇宙中更为神秘的秘密，从而解锁了一两个法术。还有许多独特的方方式，可以把这些法术引入你的游戏中，而无需特定的秘迹使子职出现在冒险队伍中。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>

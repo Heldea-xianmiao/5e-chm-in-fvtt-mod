@@ -46,7 +46,45 @@ style="FONT-WEIGHT: bold"><FONT color=#800000>雷兽Titanothere</FONT></STRONG><
 
 <P><STRONG >驼兽Beast 
 
-of Burden。</STRONG>在决定雷兽的载重能力时，雷兽视作体型大一级的生物。<br><STRONG style="FONT-WEIGHT: bold"><font color=#800000>动作Actions</font></STRONG><br><STRONG >践踏Stomp。</STRONG>近战武器攻击：命中+10，触及10尺，单一目标。命中：20（3d8+7）钝击伤害。若雷兽在命中前径直向目标移动了至少20尺，则目标额外受到13（3d8）钝击伤害，且若目标为一个生物，则其必须进行一次DC18的力量豁免否则陷入倒地状态。</P></body>
+of Burden。</STRONG>在决定雷兽的载重能力时，雷兽视作体型大一级的生物。<br><STRONG style="FONT-WEIGHT: bold"><font color=#800000>动作Actions</font></STRONG><br><STRONG >践踏Stomp。</STRONG>近战武器攻击：命中+10，触及10尺，单一目标。命中：20（3d8+7）钝击伤害。若雷兽在命中前径直向目标移动了至少20尺，则目标额外受到13（3d8）钝击伤害，且若目标为一个生物，则其必须进行一次DC18的力量豁免否则陷入倒地状态。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -654,7 +654,45 @@ style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><FONT face=宋
 
 style="FONT-SIZE: 10pt; FONT-FAMILY: 'Segoe UI'; mso-spacerun: 'yes'"><BR></SPAN><SPAN 
 
-style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><FONT face=宋体>在我们等待这一谜题的答案的同时，我们鼓励大家体验一下塞拉小姐的新作品。《五命》是一部撕心裂肺的悲剧，它迫使我们回顾自己最黑暗的时刻，思考敌人的苦难，以及将我们团结起来的共性。如果你只想忘记你的烦恼，去看看《外观》或是《迟暮伯爵》吧。但如果你想看一场振奋你的心灵，促使你奋发向上的演出，不惜一切代价去抢一张《五命》的门票吧。</FONT></SPAN></P></body>
+style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><FONT face=宋体>在我们等待这一谜题的答案的同时，我们鼓励大家体验一下塞拉小姐的新作品。《五命》是一部撕心裂肺的悲剧，它迫使我们回顾自己最黑暗的时刻，思考敌人的苦难，以及将我们团结起来的共性。如果你只想忘记你的烦恼，去看看《外观》或是《迟暮伯爵》吧。但如果你想看一场振奋你的心灵，促使你奋发向上的演出，不惜一切代价去抢一张《五命》的门票吧。</FONT></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

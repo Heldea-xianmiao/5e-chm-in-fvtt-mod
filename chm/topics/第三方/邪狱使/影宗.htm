@@ -100,7 +100,45 @@ Killer</FONT></STRONG><BR>阴影是你的伙伴，帮助你完成伟业。你获
 
 <P><STRONG><FONT color=#800000>15级：影定之亡 Doomed to the 
 
-Shadows</FONT></STRONG><BR>你完善了你的刺客技法。你的暗袭造成的额外伤害提升至你熟练加值枚d8（而不是d4），且若目标身处微光光照或黑暗中，你额外造成2d8伤害（而非1d4）。<BR>此外，当你使用暗袭造成伤害时，你能够以反应在该生物身上焚灭一枚缄印，不造成伤害而是令其陷入目盲，持续一分钟。<BR>                 </P></body>
+Shadows</FONT></STRONG><BR>你完善了你的刺客技法。你的暗袭造成的额外伤害提升至你熟练加值枚d8（而不是d4），且若目标身处微光光照或黑暗中，你额外造成2d8伤害（而非1d4）。<BR>此外，当你使用暗袭造成伤害时，你能够以反应在该生物身上焚灭一枚缄印，不造成伤害而是令其陷入目盲，持续一分钟。<BR>                 </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -278,7 +278,45 @@ Charges。</STRONG>这根法杖在每日黎明时重获1d6已消耗的充能。�
 
 <H6>凋零法杖 Staff of Withering</H6>
 
-<P><EM>法杖，珍稀（需同调）</EM><BR>这根法杖具有3充能，并在每日黎明时重获1d3已消耗的充能。<BR>这根法杖可被用作一根魔法长棍。命中时，其造成普通长棍的伤害，然后你可以消耗1充能来对目标造成额外2d10暗蚀伤害，并强迫目标进行一次DC15的体质豁免。豁免失败时，目标在1小时内进行的基于力量或体质的属性检定与豁免都具有劣势。</P></body>
+<P><EM>法杖，珍稀（需同调）</EM><BR>这根法杖具有3充能，并在每日黎明时重获1d3已消耗的充能。<BR>这根法杖可被用作一根魔法长棍。命中时，其造成普通长棍的伤害，然后你可以消耗1充能来对目标造成额外2d10暗蚀伤害，并强迫目标进行一次DC15的体质豁免。豁免失败时，目标在1小时内进行的基于力量或体质的属性检定与豁免都具有劣势。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -68,7 +68,45 @@ of
 
 Azzagrat。</STRONG>以西提安为源点的15尺立方区域内的每个生物必须进行一次DC14的感知豁免，豁免失败则受到18点（4d8）心灵伤害并陷入失能直到生物的下个回合结束。成功则承受一半伤害且不会失能。<BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>邪魔叱喝Fiendish 
 
-Rebuke（3/日）。</STRONG>当距离西提安5尺内的一个生物攻击命中他后，西提安强迫该生物进行一次DC14的体质豁免，豁免失败则受到14点（4d6）火焰伤害，成功则承受一半伤害。</P></body>
+Rebuke（3/日）。</STRONG>当距离西提安5尺内的一个生物攻击命中他后，西提安强迫该生物进行一次DC14的体质豁免，豁免失败则受到14点（4d6）火焰伤害，成功则承受一半伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

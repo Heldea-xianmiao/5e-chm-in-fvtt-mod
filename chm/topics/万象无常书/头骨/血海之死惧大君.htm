@@ -78,7 +78,45 @@ HP 280（33d8+132）<br>
 
 <strong>煽动暴力Induce Violence。</strong>大君以一个60尺内她能看见的生物为目标。该目标必须成功通过DC19的感知豁免否则立即对另一个大君选择的自身触及范围内的生物进行一次近战武器攻击。如果没有生物在该目标的触及范围内或目标陷入失能，则目标受到11（2d10）心灵伤害。<br>
 
-<strong>威吓Menace（消耗2动作）。</strong>大君选择自身30尺内能看见的任意数量的生物。每个目标必须成功通过DC19的感知豁免否则直到自身下个回合结束陷入<STRONG>恐慌frightened</STRONG>。</p></body>
+<strong>威吓Menace（消耗2动作）。</strong>大君选择自身30尺内能看见的任意数量的生物。每个目标必须成功通过DC19的感知豁免否则直到自身下个回合结束陷入<STRONG>恐慌frightened</STRONG>。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -58,7 +58,45 @@ Resistance。</STRONG>
 
 Horns（充能5~6）。</STRONG> 
 
-巴弗灭之猎手搅动60尺内，它能看见的地面上一点，大片六角形石柱将从该点喷发，破碎，形成一处半径30尺，高30尺的柱状区域。区域内每个生物必须进行一次DC15的敏捷豁免。豁免失败者将受到33（6d10）点穿刺伤害，并被推高30尺随后坠落。豁免成功则伤害减半。<BR><STRONG>施法Spellcasting。</STRONG>巴弗灭之猎手可施展下列法术而不需要任何相应的法术成分，施法属性为感知（法术豁免DC15）：<BR>每项1/日：融身入石，塑石术，石墙术<BR></P></body>
+巴弗灭之猎手搅动60尺内，它能看见的地面上一点，大片六角形石柱将从该点喷发，破碎，形成一处半径30尺，高30尺的柱状区域。区域内每个生物必须进行一次DC15的敏捷豁免。豁免失败者将受到33（6d10）点穿刺伤害，并被推高30尺随后坠落。豁免成功则伤害减半。<BR><STRONG>施法Spellcasting。</STRONG>巴弗灭之猎手可施展下列法术而不需要任何相应的法术成分，施法属性为感知（法术豁免DC15）：<BR>每项1/日：融身入石，塑石术，石墙术<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

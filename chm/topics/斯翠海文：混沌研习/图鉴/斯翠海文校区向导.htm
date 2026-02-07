@@ -62,7 +62,45 @@ DC 11 的智力豁免，否则将被向导神奇地魅惑 1 小时。<BR>
 
 分钟里，该生物能选择在一次属性检定的 d20 之后，立刻投掷一枚 
 
-d4，并将结果加入检定中。<BR>————————————————————————<BR><STRONG><FONT color=#800000>附赠动作：</FONT></STRONG><BR><STRONG>需要帮忙吗？</STRONG>向导可以进行协助动作。</P></body>
+d4，并将结果加入检定中。<BR>————————————————————————<BR><STRONG><FONT color=#800000>附赠动作：</FONT></STRONG><BR><STRONG>需要帮忙吗？</STRONG>向导可以进行协助动作。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

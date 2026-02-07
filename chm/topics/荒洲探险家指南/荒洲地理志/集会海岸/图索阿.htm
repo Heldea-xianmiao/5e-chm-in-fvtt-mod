@@ -62,7 +62,45 @@
 
 <P><STRONG><EM>伐木战争 Log 
 
-Wars（低等级）</EM></STRONG>。当一群雷格维尔的伐木工人被谋杀，儿证据指向了附近的马杰斯特伐木工营地时，商业战争变成了暴力冲突。雷格维尔方面以焚烧马杰斯特的船只作为回应，暴力事件持续升级。侯爵担心这场战争会蔓延到图索阿的街头，所以她雇佣了角色们进行和平谈判。角色们可能会发现，正是狂欢众策划了这起谋杀事件，以在城市中制造混乱。</P></body>
+Wars（低等级）</EM></STRONG>。当一群雷格维尔的伐木工人被谋杀，儿证据指向了附近的马杰斯特伐木工营地时，商业战争变成了暴力冲突。雷格维尔方面以焚烧马杰斯特的船只作为回应，暴力事件持续升级。侯爵担心这场战争会蔓延到图索阿的街头，所以她雇佣了角色们进行和平谈判。角色们可能会发现，正是狂欢众策划了这起谋杀事件，以在城市中制造混乱。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

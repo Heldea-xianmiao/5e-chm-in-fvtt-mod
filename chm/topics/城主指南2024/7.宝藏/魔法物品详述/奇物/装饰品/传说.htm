@@ -52,7 +52,45 @@ Evil</H6>
 
 Symbol</STRONG>。你可以将护符当作圣徽使用。着装或持握护符期间，你进行的法术攻击检定获得+2加值。<BR><STRONG>万物终焉Ultimate 
 
-End</STRONG>。护符具有6充能。着装或持握护符期间，你能够以一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作，消耗1充能并以一名位于你120尺内的地面上的你可见的生物为目标，使目标脚下张开一道火焰裂隙。目标必须进行一次DC20的敏捷豁免，若目标是天族，其进行此豁免具有劣势。豁免失败则目标坠入裂隙，灰飞烟灭；成功则目标不会坠入裂隙，但因审判受到4d6心灵伤害。无论情况如何，裂隙随后将不留痕迹地闭合。充能耗尽时，护符将被摧毁，化为散发着恶臭的粘液。 </P></body>
+End</STRONG>。护符具有6充能。着装或持握护符期间，你能够以一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作，消耗1充能并以一名位于你120尺内的地面上的你可见的生物为目标，使目标脚下张开一道火焰裂隙。目标必须进行一次DC20的敏捷豁免，若目标是天族，其进行此豁免具有劣势。豁免失败则目标坠入裂隙，灰飞烟灭；成功则目标不会坠入裂隙，但因审判受到4d6心灵伤害。无论情况如何，裂隙随后将不留痕迹地闭合。充能耗尽时，护符将被摧毁，化为散发着恶臭的粘液。 </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

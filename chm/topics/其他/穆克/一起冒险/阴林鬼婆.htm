@@ -58,7 +58,45 @@ Appearance。</STRONG>鬼婆让自己和随身携带的物品笼罩在一层魔�
 
 20的智力（调查）检定即可以揭穿鬼婆的伪装。<BR><STRONG>隐形通道Invisible 
 
-Passage。</STRONG>鬼婆以魔法变为隐形，直到它发动攻击，施展法术或终止专注。隐形时，它不会留下任何存在的物理线索，因此不会被任何非魔法的手段侦查到。它随身携带的所有装备也一并进入隐形状态。<BR><STRONG>爪击Claw。</STRONG>近战武器攻击：命中+6，触及5尺，单一目标，命中：13（2d8+4）的挥砍伤害。</P></body>
+Passage。</STRONG>鬼婆以魔法变为隐形，直到它发动攻击，施展法术或终止专注。隐形时，它不会留下任何存在的物理线索，因此不会被任何非魔法的手段侦查到。它随身携带的所有装备也一并进入隐形状态。<BR><STRONG>爪击Claw。</STRONG>近战武器攻击：命中+6，触及5尺，单一目标，命中：13（2d8+4）的挥砍伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -42,7 +42,45 @@ html,body {
 
 杯低钠鸡汤<BR>1.5汤匙新鲜小葱碎，装饰用</P></BLOCKQUOTE>
 
-<P>烤箱中层放入架子，预热至200华氏度。<BR>在鲑鱼上撒上少量盐和胡椒。<BR>在一个不粘的大煎锅中，用中高火将油加热至微滚。皮朝下放入鱼片，在周围留出至少1/4英寸的空间，煎至鱼片底部开始变得不透明，大约3至4分钟，期间不要触碰。轻轻翻转鱼片，同样不要触碰，直到鱼片外表不再呈半透明状，轻轻按压时变得坚硬，半熟(rare)约3分钟，中等熟度(medium)约4分钟。将鲑鱼转移到耐热盘上，用铝箔纸轻轻地盖上，放入烤箱中保温。<BR>擦干煎锅，加入1汤匙黄油，用中小火融化后，加入葱头、百里香和1/4茶匙盐，不断搅拌，直到葱头变软，约1分钟。加入葡萄酒和鸡汤，将火调至中高火，并煮至微沸，偶尔搅拌并刮研锅底，以松动和溶解棕色的部分。继续熬煮，直到减少约三分之二，约6到8分钟，中途加入积聚的鲑鱼汁（如有）。将火调至小火，加入剩余的1汤匙黄油、1/4茶匙盐和胡椒粉调味，并不断搅拌，将黄油融化并融入酱汁中。品尝，可酌量加盐。将酱汁倒在三文鱼上或周围，撒上小葱碎，并趁热食用。<BR></P></body>
+<P>烤箱中层放入架子，预热至200华氏度。<BR>在鲑鱼上撒上少量盐和胡椒。<BR>在一个不粘的大煎锅中，用中高火将油加热至微滚。皮朝下放入鱼片，在周围留出至少1/4英寸的空间，煎至鱼片底部开始变得不透明，大约3至4分钟，期间不要触碰。轻轻翻转鱼片，同样不要触碰，直到鱼片外表不再呈半透明状，轻轻按压时变得坚硬，半熟(rare)约3分钟，中等熟度(medium)约4分钟。将鲑鱼转移到耐热盘上，用铝箔纸轻轻地盖上，放入烤箱中保温。<BR>擦干煎锅，加入1汤匙黄油，用中小火融化后，加入葱头、百里香和1/4茶匙盐，不断搅拌，直到葱头变软，约1分钟。加入葡萄酒和鸡汤，将火调至中高火，并煮至微沸，偶尔搅拌并刮研锅底，以松动和溶解棕色的部分。继续熬煮，直到减少约三分之二，约6到8分钟，中途加入积聚的鲑鱼汁（如有）。将火调至小火，加入剩余的1汤匙黄油、1/4茶匙盐和胡椒粉调味，并不断搅拌，将黄油融化并融入酱汁中。品尝，可酌量加盐。将酱汁倒在三文鱼上或周围，撒上小葱碎，并趁热食用。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

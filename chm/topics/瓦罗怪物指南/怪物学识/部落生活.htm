@@ -82,4 +82,41 @@
 
 
 
-  FONT-WEIGHT: bold; COLOR: rgb(128,0,0);   "></span></b></p><p   style="     "><span><font>一个兽人部族通常不会多于几百个成员，因为更大的部族需要大量的资源来保持其强大。一般来说，一个部族对它遇到的任何其他部族都有强烈的敌意，他们首先会把敌对的兽人视为食物和受害者的争夺者。</font><br><br><font>尽管如此，在某些情况下有涉及相同目标的部族（</font>Tribe<font>）们也会联合在一起。其结果是一个兽人部落（</font>Horde<font>）</font><font>——</font><font>一片蔓延的杀戮之海，血洗乡村，在其行进范围内留下大片土地的废墟。这样的事件在极端情况下也是罕见的，但这种情况会导致无法抵御兽人浪潮的国度从此衰落。</font></span></p></div></body></html>
+  FONT-WEIGHT: bold; COLOR: rgb(128,0,0);   "></span></b></p><p   style="     "><span><font>一个兽人部族通常不会多于几百个成员，因为更大的部族需要大量的资源来保持其强大。一般来说，一个部族对它遇到的任何其他部族都有强烈的敌意，他们首先会把敌对的兽人视为食物和受害者的争夺者。</font><br><br><font>尽管如此，在某些情况下有涉及相同目标的部族（</font>Tribe<font>）们也会联合在一起。其结果是一个兽人部落（</font>Horde<font>）</font><font>——</font><font>一片蔓延的杀戮之海，血洗乡村，在其行进范围内留下大片土地的废墟。这样的事件在极端情况下也是罕见的，但这种情况会导致无法抵御兽人浪潮的国度从此衰落。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

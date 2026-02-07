@@ -44,7 +44,45 @@ html,body {
 
 <P>遇上怪物并不一定非得要见面就打。要是能提供一些贡品，比如食物之类的，也许能直接化敌为友或是化险为夷。而那些富有灵性的生物通常也更喜欢交谈而非刀剑相向。如果冒险者们尝试与怪物进行交涉，你可以即兴发挥，也可以使用《城主指南》中的“社交互动”规则。</P>
 
-<P>而如果冒险者能提供出怪物想要的东西，你可以考虑让冒险者与怪物交谈时进行的属性检定具有优势。下方的怪物偏好表向你建议了各种生物类型可能会普遍喜欢的各种物品。</P></body>
+<P>而如果冒险者能提供出怪物想要的东西，你可以考虑让冒险者与怪物交谈时进行的属性检定具有优势。下方的怪物偏好表向你建议了各种生物类型可能会普遍喜欢的各种物品。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

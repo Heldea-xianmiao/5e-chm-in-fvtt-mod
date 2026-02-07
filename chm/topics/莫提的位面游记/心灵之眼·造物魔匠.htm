@@ -98,7 +98,45 @@ style="DISPLAY: inline !important" > 状态，持续直至其下一回合结束�
 
 Shield。</STRONG><SPAN 
 
-style="DISPLAY: inline !important" >造物魔匠召唤出一面悬浮的灵体盾牌，以此为自己的AC提供+5加值。护盾（以及AC加值）会在造物魔匠的下一回合开始时消失。盾牌存在期间，首个向造物魔匠发动近战攻击检定却失手的生物将受到7（2d6）点力场伤害。</SPAN></P></body>
+style="DISPLAY: inline !important" >造物魔匠召唤出一面悬浮的灵体盾牌，以此为自己的AC提供+5加值。护盾（以及AC加值）会在造物魔匠的下一回合开始时消失。盾牌存在期间，首个向造物魔匠发动近战攻击检定却失手的生物将受到7（2d6）点力场伤害。</SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

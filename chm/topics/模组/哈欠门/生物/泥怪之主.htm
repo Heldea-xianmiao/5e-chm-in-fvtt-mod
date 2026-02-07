@@ -82,7 +82,45 @@ Charm。</STRONG>一个身处周边 30
 
 的感知豁<BR>。豁免失败则攻击者必须转而攻击距离他最近的生物，但不包括泥怪之主和他自身。如果有多个目标离他<BR>的距离相等且都为最近，则攻击者可以从中自选一个攻击对象。豁免成功则攻击者在接下来 
 
-24 小时内免疫本特性。具有魅惑免疫的生物同样免疫本特性。</P></body>
+24 小时内免疫本特性。具有魅惑免疫的生物同样免疫本特性。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

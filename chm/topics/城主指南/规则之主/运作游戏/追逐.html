@@ -2408,9 +2408,47 @@ Chase Complications</span><span lang=EN-US style='FONT-SIZE:
 
 <p class=MsoNormal><span lang=EN-US><span
 
- style="mso-spacerun: yes">    </span></span>追逐事件进行时，猎手有可能变为猎物。例如，角色们在集市中追逐一名盗贼时，可能会因此被盗贼工会的其他成员盯上。因此他们在追逐逃跑盗贼的过程中必须同时避免被盗贼追逐。如果有新角色加入，则为其掷先攻加入先攻序列，并以相似的程序同时进行两场追逐事件。还有另一种情况，即逃跑的盗贼进入一队整备完毕的共犯中。角色们可能碍于其人数压制决定转头逃跑，而盗贼们此时则作为猎手对其追逐。</p></div></body>
+ style="mso-spacerun: yes">    </span></span>追逐事件进行时，猎手有可能变为猎物。例如，角色们在集市中追逐一名盗贼时，可能会因此被盗贼工会的其他成员盯上。因此他们在追逐逃跑盗贼的过程中必须同时避免被盗贼追逐。如果有新角色加入，则为其掷先攻加入先攻序列，并以相似的程序同时进行两场追逐事件。还有另一种情况，即逃跑的盗贼进入一队整备完毕的共犯中。角色们可能碍于其人数压制决定转头逃跑，而盗贼们此时则作为猎手对其追逐。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

@@ -42,7 +42,45 @@ html,body {
 
   磅胡萝卜，去皮，绞碎（约3杯）<BR>1/2 杯杏仁片或杏仁条</P></BLOCKQUOTE>
 
-<P>烤箱正中放置烤架，预热至350华氏度。在8.5英寸乘4.5英寸的不粘面包模具上涂一薄层植物油或黄油。<BR>在碗中加入面粉、泡打粉、小苏打、姜、肉桂、肉豆蔻和盐，充分混合。加入葡萄干，搅拌均匀。<BR>在另一只大碗中加入鸡蛋和黄糖，搅拌均匀。加入融化的黄油，搅拌至完全混合。加入脱脂牛奶和香草精，再次搅拌至混合。加入胡萝卜搅拌。将之前混合好的面粉倒入大碗，用一把有弹性的刮刀翻拌，直到干湿原料混合。不要过度搅拌。用刮刀将面糊移进面包模具，抹平表面。将杏仁均匀撒在面糊表面，轻轻按压，让杏仁黏牢。<BR>烘烤约55分钟，直至杏仁变为金色，面包边缘开始脱离模具，用牙签插进面包中央再拔出来时不会黏上面糊。中途需要将模具翻转180度。<BR>将面包模具在烤架上冷却约15分钟。将面包脱模取出，正面朝上放置在烤架上，冷却至室温后上桌。</P></body>
+<P>烤箱正中放置烤架，预热至350华氏度。在8.5英寸乘4.5英寸的不粘面包模具上涂一薄层植物油或黄油。<BR>在碗中加入面粉、泡打粉、小苏打、姜、肉桂、肉豆蔻和盐，充分混合。加入葡萄干，搅拌均匀。<BR>在另一只大碗中加入鸡蛋和黄糖，搅拌均匀。加入融化的黄油，搅拌至完全混合。加入脱脂牛奶和香草精，再次搅拌至混合。加入胡萝卜搅拌。将之前混合好的面粉倒入大碗，用一把有弹性的刮刀翻拌，直到干湿原料混合。不要过度搅拌。用刮刀将面糊移进面包模具，抹平表面。将杏仁均匀撒在面糊表面，轻轻按压，让杏仁黏牢。<BR>烘烤约55分钟，直至杏仁变为金色，面包边缘开始脱离模具，用牙签插进面包中央再拔出来时不会黏上面糊。中途需要将模具翻转180度。<BR>将面包模具在烤架上冷却约15分钟。将面包脱模取出，正面朝上放置在烤架上，冷却至室温后上桌。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

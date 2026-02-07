@@ -44,7 +44,45 @@ html,body {
 
 <P >
 
- 低语研究（高级）：一个维克那的主要实验室仍旧隐藏在险恶空谷，它被幻术隐蔽，充满了死亡陷阱。它里面有很多强大的神器以及奥数的秘密，如此丰厚的奖励使得一群勇敢的冒险者尝试找到它。鲜有凡人了解佛斯特格拉德在哪里，以及它藏着什么。只有用管的冒险者或者邪恶的爪牙才会愚蠢到进入腐朽的森林。</P></body>
+ 低语研究（高级）：一个维克那的主要实验室仍旧隐藏在险恶空谷，它被幻术隐蔽，充满了死亡陷阱。它里面有很多强大的神器以及奥数的秘密，如此丰厚的奖励使得一群勇敢的冒险者尝试找到它。鲜有凡人了解佛斯特格拉德在哪里，以及它藏着什么。只有用管的冒险者或者邪恶的爪牙才会愚蠢到进入腐朽的森林。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

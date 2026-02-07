@@ -28,7 +28,45 @@
 
 <P>从表面上来看，地精、熊地精、大地精应属于不同的种族，就像半身人、矮人和精灵那样，每个种族都有自己的倾向、观点、文化和神。但是马格鲁比耶让它们团结起来，就像祂将它们的神都整合在一个更大的整体之中一样。当一种类地精和另一种类地精相遇时，这两个族群不会视对方为陌生人或是敌人。相反，仅仅通过它们族群的相见，它们就已经明白，是马格鲁比耶命令他们聚在一起的。</P>
 
-<P>这些类地精明白是时候组成一支大军了。</P></body>
+<P>这些类地精明白是时候组成一支大军了。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

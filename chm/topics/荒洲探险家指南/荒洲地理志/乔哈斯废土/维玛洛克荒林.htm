@@ -32,7 +32,45 @@ html,body {
 
 <P>维玛洛克荒林的冒险<BR>角色们可能会在维玛洛克荒林中狩猎以证明他们的勇气，或者被迫穿过森林求生。</P>
 
-<P>伊特怪之网（低级）：阿拉姆，一名维玛洛克荒林的德鲁伊，荒野之母的虔诚追随者，有一个独特的天赋：她可以将梦境送给其他的梅洛拉Melara信徒。利用这种力量，她可以向这些人伸出援手。阿拉姆需要人协助清除森林中一个控制了许多巨蜘蛛的伊特怪。这些蜘蛛攻击了森林的边缘聚集地，并将俘虏送给伊特怪，后者将其献祭以获得罗斯的喜悦。这位树精在夜里被伊特怪的尖叫受苦而保持着清醒。</P></body>
+<P>伊特怪之网（低级）：阿拉姆，一名维玛洛克荒林的德鲁伊，荒野之母的虔诚追随者，有一个独特的天赋：她可以将梦境送给其他的梅洛拉Melara信徒。利用这种力量，她可以向这些人伸出援手。阿拉姆需要人协助清除森林中一个控制了许多巨蜘蛛的伊特怪。这些蜘蛛攻击了森林的边缘聚集地，并将俘虏送给伊特怪，后者将其献祭以获得罗斯的喜悦。这位树精在夜里被伊特怪的尖叫受苦而保持着清醒。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

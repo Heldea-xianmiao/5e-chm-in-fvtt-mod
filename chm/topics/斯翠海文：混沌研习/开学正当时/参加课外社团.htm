@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>参加课外社团 Joining an Extracurricular</FONT></STRONG></P>
 
-<P>角色可以从下文中提到的课外社团中选择至多两门参加，并在本书冒险中获益。如果角色同时也在校园中参与工作，那么他只能参加一门课外社团。<BR>角色需要在学年开始——也就是一次冒险章节的开始——时宣称加入课外社团，以享受增益。在假期参加课外社团通常不会有很多活动。玩家应该在他们的记录表上记录这些变化。</P></body>
+<P>角色可以从下文中提到的课外社团中选择至多两门参加，并在本书冒险中获益。如果角色同时也在校园中参与工作，那么他只能参加一门课外社团。<BR>角色需要在学年开始——也就是一次冒险章节的开始——时宣称加入课外社团，以享受增益。在假期参加课外社团通常不会有很多活动。玩家应该在他们的记录表上记录这些变化。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

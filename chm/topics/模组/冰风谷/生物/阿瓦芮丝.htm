@@ -74,7 +74,45 @@ of
 
 Frost。</STRONG>当持有此权杖时，阿瓦芮丝可以使用1或更多充能来使用以下任一法术(法术豁免DC14)：寒冰锥(5充能)，云雾术(1充能)，冰风暴(4充能)，冰墙术(4充能)。<BR>冰霜法杖每天黎明时恢复1d6+4充能。如果它的最后一个充能被消耗，掷一个d20；若结果为1，则法杖转化为水，并被摧毁。<BR><STRONG><FONT color=#800000>反应</FONT></STRONG><BR><STRONG>驱逐呵斥Banishing 
 
-Rebuke（长休后充能）。</STRONG>当阿瓦芮丝被她60英尺内看得见的生物伤害时，她可以将该生物放逐到一个寒冷的异次元监狱1分钟。此时，该生物将陷入失能，并在每个回合开始时受到5点(1d10)寒冷伤害。在每个回合结束时，该生物可以进行DC14魅力豁免，成功逃离监狱，并重新出现在它离开时的空间或最近的未被占用的空间(如果该空间被占用)。死在监狱里的生物会被无限期地困在那里。</P></body>
+Rebuke（长休后充能）。</STRONG>当阿瓦芮丝被她60英尺内看得见的生物伤害时，她可以将该生物放逐到一个寒冷的异次元监狱1分钟。此时，该生物将陷入失能，并在每个回合开始时受到5点(1d10)寒冷伤害。在每个回合结束时，该生物可以进行DC14魅力豁免，成功逃离监狱，并重新出现在它离开时的空间或最近的未被占用的空间(如果该空间被占用)。死在监狱里的生物会被无限期地困在那里。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

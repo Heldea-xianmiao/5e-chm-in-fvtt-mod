@@ -42,7 +42,45 @@ Minotaurs</FONT></STRONG><BR>恶名远扬的惊怖牛头人是烬土军阀泰罗
 
 <P><STRONG><FONT color=#800000>怒血牛头人 Ragegore 
 
-Minotaurs<BR></FONT></STRONG>怒血牛头人他们同类中最凶猛的，深受墨癸司嗜血欲望的影响。怒血牛头人从不退出战斗，他们一看到敌人的鲜血就会陷入狂暴的喜悦之中。在激烈的战斗中，一个怒血牛头人看起来感觉不到疼痛，几乎不会注意到身上的足以杀死人类的伤口。据说有些怒血牛头人在战斗一结束就立刻倒地而死，他们的生命只靠愤怒维持。</P></body>
+Minotaurs<BR></FONT></STRONG>怒血牛头人他们同类中最凶猛的，深受墨癸司嗜血欲望的影响。怒血牛头人从不退出战斗，他们一看到敌人的鲜血就会陷入狂暴的喜悦之中。在激烈的战斗中，一个怒血牛头人看起来感觉不到疼痛，几乎不会注意到身上的足以杀死人类的伤口。据说有些怒血牛头人在战斗一结束就立刻倒地而死，他们的生命只靠愤怒维持。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

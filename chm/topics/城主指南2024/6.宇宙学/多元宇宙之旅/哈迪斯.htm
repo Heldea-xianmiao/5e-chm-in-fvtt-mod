@@ -118,7 +118,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
 <H3><FONT color=#800000>哈迪斯冒险Hades Adventures</FONT></H3>
 
-<P>哈迪斯乃化作冷漠之绝望的化身。纯粹、浓烈的邪恶如同无形的重力，无声地拖拽着一切生物的灵魂向下堕落。即使是深渊的狂怒，九狱的诡计，也无法抵御灰败荒原哈迪斯的无尽虚无。这片领域缓慢地吞噬梦想与欲望，剥离希望与乐观，将曾经炙热的灵魂化为冰冷灰烬。<BR>在哈迪斯的冒险中，冒险者需要直面一个始终萦绕心头的问题：何苦呢？当冷漠的绝望浸透他们的心灵与精神，他们必须找到点燃生命激情与驱动目标的方式，否则便会彻底被虚无吞噬。<BR>冒险者可能追踪一只鬼婆、巫妖，或其他邪恶施法者进入哈迪斯，这些恶徒来到哈迪斯，为了恶毒的目的收集化为幼虫魔的灵魂。然而，在踏足三重暗界时，冒险者自身也面临着屈服于此处绝望的风险。</P></body>
+<P>哈迪斯乃化作冷漠之绝望的化身。纯粹、浓烈的邪恶如同无形的重力，无声地拖拽着一切生物的灵魂向下堕落。即使是深渊的狂怒，九狱的诡计，也无法抵御灰败荒原哈迪斯的无尽虚无。这片领域缓慢地吞噬梦想与欲望，剥离希望与乐观，将曾经炙热的灵魂化为冰冷灰烬。<BR>在哈迪斯的冒险中，冒险者需要直面一个始终萦绕心头的问题：何苦呢？当冷漠的绝望浸透他们的心灵与精神，他们必须找到点燃生命激情与驱动目标的方式，否则便会彻底被虚无吞噬。<BR>冒险者可能追踪一只鬼婆、巫妖，或其他邪恶施法者进入哈迪斯，这些恶徒来到哈迪斯，为了恶毒的目的收集化为幼虫魔的灵魂。然而，在踏足三重暗界时，冒险者自身也面临着屈服于此处绝望的风险。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -40,7 +40,45 @@ html,body {
 
   <P><STRONG>龙与龙 Dragons and 
 
-  Dragons</STRONG><BR>费资本的巨龙宝库，顾名思义，这是一本关于龙的书，但却又不只是如此——而是各种各样的龙类生物。这本书的大部分内容都与怪物手册中已经介绍过的色彩与金属龙，以及本书将要介绍的宝石龙有关。这三个龙类家族都有着与物质位面曾经的神话历史紧密相连的魔法本质。其他的一些龙种也有许多类似的特征，并在第五章中与色彩、金属以及宝石龙们一起登场。其中包括龙龟、妖精龙，以及将要在第六章进一步介绍的深龙与月石龙。<BR>无论我们讨论的是某种特定的龙，还是三大龙族的成员，还是所有生物类型为龙的生物，在本书中都应该有清楚地描述。但如果你看到了“龙”这个字又不确定其具体代指，请假设我们所指的是色彩、金属或者宝石龙。</P></BLOCKQUOTE></body>
+  Dragons</STRONG><BR>费资本的巨龙宝库，顾名思义，这是一本关于龙的书，但却又不只是如此——而是各种各样的龙类生物。这本书的大部分内容都与怪物手册中已经介绍过的色彩与金属龙，以及本书将要介绍的宝石龙有关。这三个龙类家族都有着与物质位面曾经的神话历史紧密相连的魔法本质。其他的一些龙种也有许多类似的特征，并在第五章中与色彩、金属以及宝石龙们一起登场。其中包括龙龟、妖精龙，以及将要在第六章进一步介绍的深龙与月石龙。<BR>无论我们讨论的是某种特定的龙，还是三大龙族的成员，还是所有生物类型为龙的生物，在本书中都应该有清楚地描述。但如果你看到了“龙”这个字又不确定其具体代指，请假设我们所指的是色彩、金属或者宝石龙。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

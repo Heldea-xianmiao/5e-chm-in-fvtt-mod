@@ -52,7 +52,45 @@ Bug</FONT></STRONG><BR><EM>中型怪兽，绝对中立</EM><BR>护甲等级：14
 
 <P><STRONG>敏锐嗅觉Keen 
 
-Smell。</STRONG>暗杀虫在依靠嗅觉的感知（察觉）检定上有优势。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>暗杀虫进行两次啃咬攻击。<BR><STRONG>啃咬Bite。</STRONG>近战武器攻击：命中+4，触及5尺，单一生物。命中：7（1d10+2）穿刺伤害，目标必须通过一次DC11的体质豁免检定，否则将中毒1分钟。当以这种方式中毒时，目标被麻痹。目标可以在每次其回合结束时重复豁免，成功则结束对自己的影响。<BR><STRONG>产卵器Ovipositor。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命中：目标被1d3枚暗杀虫卵感染，并立即孵化成暗杀虫幼体。在目标的每个回合开始时，幼虫啃食血肉将对目标造成1d6穿刺伤害。在目标的下一个回合结束前对咬伤处施放火焰，会对目标造成1点火焰伤害并杀死这些暗杀虫幼体。错失时机后，幼体咬穿皮肤进入身体内部，就不会再被灼伤。<BR>如果一个被暗杀虫幼体感染的目标在其回合结束时生命值为0，那么它将在被幼体啃咬身体脏器的过程中死亡。治疗疾病的效果能够杀死目标体内所有的暗杀虫幼体。</P></body>
+Smell。</STRONG>暗杀虫在依靠嗅觉的感知（察觉）检定上有优势。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>暗杀虫进行两次啃咬攻击。<BR><STRONG>啃咬Bite。</STRONG>近战武器攻击：命中+4，触及5尺，单一生物。命中：7（1d10+2）穿刺伤害，目标必须通过一次DC11的体质豁免检定，否则将中毒1分钟。当以这种方式中毒时，目标被麻痹。目标可以在每次其回合结束时重复豁免，成功则结束对自己的影响。<BR><STRONG>产卵器Ovipositor。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命中：目标被1d3枚暗杀虫卵感染，并立即孵化成暗杀虫幼体。在目标的每个回合开始时，幼虫啃食血肉将对目标造成1d6穿刺伤害。在目标的下一个回合结束前对咬伤处施放火焰，会对目标造成1点火焰伤害并杀死这些暗杀虫幼体。错失时机后，幼体咬穿皮肤进入身体内部，就不会再被灼伤。<BR>如果一个被暗杀虫幼体感染的目标在其回合结束时生命值为0，那么它将在被幼体啃咬身体脏器的过程中死亡。治疗疾病的效果能够杀死目标体内所有的暗杀虫幼体。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

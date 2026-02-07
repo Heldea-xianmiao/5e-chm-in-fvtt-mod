@@ -60,7 +60,45 @@ Heroism</FONT></STRONG><BR>该变体使用5分钟的短休时间和1小时的长
 
 <p class=MsoNormal><span lang=EN-US><span style="mso-spacerun: yes"><STRONG><FONT color=#800000>残酷现实Gritty 
 
-Realism</FONT></STRONG><BR>该变体使用8小时的短休时间和7日的长休时间。以此作为玩家们在战役战斗中自行决断利弊的中断点。角色们无法一时承受过多的战斗任务，因而所有冒险都必须先作好谨慎的计划。<BR>这种方法鼓励角色们把时间花在地下城之外。比较适合那些强调阴谋斗争、政治和NPC交互的战役，以及那些战斗状况较少或是鼓励绕开战斗而非一往无前的战役。</span></span></p></body>
+Realism</FONT></STRONG><BR>该变体使用8小时的短休时间和7日的长休时间。以此作为玩家们在战役战斗中自行决断利弊的中断点。角色们无法一时承受过多的战斗任务，因而所有冒险都必须先作好谨慎的计划。<BR>这种方法鼓励角色们把时间花在地下城之外。比较适合那些强调阴谋斗争、政治和NPC交互的战役，以及那些战斗状况较少或是鼓励绕开战斗而非一往无前的战役。</span></span></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

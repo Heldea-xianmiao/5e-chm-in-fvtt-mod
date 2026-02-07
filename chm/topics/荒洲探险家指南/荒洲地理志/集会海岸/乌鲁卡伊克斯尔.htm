@@ -18,7 +18,45 @@
 
 <P> 
 
-在那之后的许多年里，这座倒塌的神殿被遗忘，周围被丛林包围着，丛林中栖息着互相敌对的蜥蜴人族和蛇人族。这些蛇人是隐秘巨蛇的仆人，仍然按照他们被放逐的神的形象维持着这座扭曲的神殿。由于携带疾病的昆虫、致命的丛林和危险的墨爪暗礁，这片地区被许多人视为诅咒之地，并尽量避免接近它。</P></body>
+在那之后的许多年里，这座倒塌的神殿被遗忘，周围被丛林包围着，丛林中栖息着互相敌对的蜥蜴人族和蛇人族。这些蛇人是隐秘巨蛇的仆人，仍然按照他们被放逐的神的形象维持着这座扭曲的神殿。由于携带疾病的昆虫、致命的丛林和危险的墨爪暗礁，这片地区被许多人视为诅咒之地，并尽量避免接近它。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

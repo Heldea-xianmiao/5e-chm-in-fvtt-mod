@@ -260,7 +260,45 @@ Wind</EM></U>  所创造）所吹散。<BR>烟云出现时，每个处在其内�
 
 <H4 id="Tsunami">海啸术｜Tsunami</H4>
 
-<P><EM>八环 咒法（德鲁伊）</EM> <BR><STRONG>施法时间：</STRONG>1分钟<BR><STRONG>施法距离：</STRONG>1里<BR><STRONG>法术成分：</STRONG>V、S<BR><STRONG>持续时间：</STRONG>专注，至多6轮<BR>一面水墙从施法范围内你指定的一点成型。水墙至多长300尺，高300尺，厚50尺，且持续存在至法术终止。<BR>水墙出现时，所有位于范围内的生物进行一次力量豁免。豁免失败者受到6d10点钝击伤害，豁免成功则只受一半伤害。<BR>水墙出现后你的每回合开始时，水墙将带着其内的所有生物一起向远离你的方向移动50尺。当水墙进入一个体型不超过<U>巨型</U>的生物所占据的空间，或他们原本就处于墙内时，该生物必须进行一次力量豁免，豁免失败则受到5d10点钝击伤害。一名生物一轮只能受到一次此伤害。在你的回合结束时，水墙的高度减少50尺，且其随后每轮对生物造成的伤害也减少1d10。当水墙高度变为0尺时，法术终止。<BR>淹没在水墙中的生物可以用游泳的方式移动，由于波涛阻力影响，该生物必须成功于一次对抗你法术豁免DC的力量（运动）检定以决定其能否成功移动。检定失败者无法移动。移动离开水墙区域的生物会直接掉到地上。</P></body>
+<P><EM>八环 咒法（德鲁伊）</EM> <BR><STRONG>施法时间：</STRONG>1分钟<BR><STRONG>施法距离：</STRONG>1里<BR><STRONG>法术成分：</STRONG>V、S<BR><STRONG>持续时间：</STRONG>专注，至多6轮<BR>一面水墙从施法范围内你指定的一点成型。水墙至多长300尺，高300尺，厚50尺，且持续存在至法术终止。<BR>水墙出现时，所有位于范围内的生物进行一次力量豁免。豁免失败者受到6d10点钝击伤害，豁免成功则只受一半伤害。<BR>水墙出现后你的每回合开始时，水墙将带着其内的所有生物一起向远离你的方向移动50尺。当水墙进入一个体型不超过<U>巨型</U>的生物所占据的空间，或他们原本就处于墙内时，该生物必须进行一次力量豁免，豁免失败则受到5d10点钝击伤害。一名生物一轮只能受到一次此伤害。在你的回合结束时，水墙的高度减少50尺，且其随后每轮对生物造成的伤害也减少1d10。当水墙高度变为0尺时，法术终止。<BR>淹没在水墙中的生物可以用游泳的方式移动，由于波涛阻力影响，该生物必须成功于一次对抗你法术豁免DC的力量（运动）检定以决定其能否成功移动。检定失败者无法移动。移动离开水墙区域的生物会直接掉到地上。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -168,7 +168,45 @@ Trick*</FONT></STRONG><BR>一名温和尔雅的牧师教会了你如何引导魔
 
 点的临时生命值。此技艺创造的守御面纱需要你为其保持专注，至多可持续10分钟。<BR>达到第6级之后，你的练习令你习得了如何编织出可以对那些伤害你盟友的人进行反击的守御面纱。任何对具有此技艺临时生命值的盟友造成伤害的生物都必须通过一次感知豁免。豁免失败时该生物将会受到等同于你的诗人激励骰的光耀伤害。<BR>达到第14级之后，你习得了使你编织出的守御防护能力更上一层楼的方法。技艺效应期间，在每轮之中你的回合开始时，目标都会重新获得等同于 
 
-你的诗人激励骰+你的感知调整值（至少+1） 点临时生命值。这些新的临时生命值会取代那些之前的临时生命值。</P></body>
+你的诗人激励骰+你的感知调整值（至少+1） 点临时生命值。这些新的临时生命值会取代那些之前的临时生命值。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -24,9 +24,47 @@
 
 <P class=MsoNormal style="TEXT-ALIGN: left; MARGIN: 0pt"><B><SPAN style="FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'" >龙类忠诚Draconic De</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'" >v</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'" >otion</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'" >。</SPAN></B><SPAN style="mso-bidi-font-family: 'Times New Roman'" >若赤色灾星能看到一个非敌对</SPAN><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000; mso-bidi-font-family: 'Times New Roman'">龙类</SPAN></B><SPAN style="mso-bidi-font-family: 'Times New Roman'" >，则她在攻击检定上有优势。</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" ><BR></SPAN><B><SPAN style="FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'" >骑乘战斗大师Mounted Combat Master</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'" >。</SPAN></B><SPAN style="mso-bidi-font-family: 'Times New Roman'" >在骑乘时，赤色灾星可以</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" >使得</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" >针对她坐骑的攻击</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" >变成</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" >针对她自己。</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" ><BR></SPAN><B><SPAN style="FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'" >骑乘反射闪避Mounted Evasion</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'" >。</SPAN></B><SPAN style="mso-bidi-font-family: 'Times New Roman'" >当赤色灾星或她的坐骑在为敏捷豁免成功后只承受一半伤害的效应进行豁免时，</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" >他</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" >们在豁免成功时不受伤害，豁免失败时只受到一半伤害。</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" ><BR></SPAN><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000; mso-bidi-font-family: 'Times New Roman'">动作Actions</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000; mso-bidi-font-family: 'Times New Roman'"><BR></SPAN></B><B><SPAN style="FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'" >多重攻击Multiattack</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'" >。</SPAN></B><SPAN style="mso-bidi-font-family: 'Times New Roman'" >赤色灾星发动三次余烬骑枪攻击。</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" ><BR></SPAN><B><SPAN style="FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'" >余烬骑枪Ember Lance</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'" >。</SPAN></B><SPAN style="mso-bidi-font-family: 'Times New Roman'" >近战武器攻击：命中+8，触及10尺，单一目标。命中：10（1d12+4）穿刺伤害外加7（2d6）火焰伤害。若目标是一个中型或更小的生物，则其必须通过一次DC16的力量豁免，否则应击</SPAN><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000; mso-bidi-font-family: 'Times New Roman'">倒地</SPAN></B><SPAN style="mso-bidi-font-family: 'Times New Roman'" >。</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" ><BR></SPAN><B><SPAN style="FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'" >爆裂手弩Explosive Hand Crossbow（充能5~6）</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'" >。</SPAN></B><SPAN style="mso-bidi-font-family: 'Times New Roman'" >赤色灾星用爆裂手弩向120尺内她可见的一点发射一道弩矢。当弩矢抵达该点，或提前命中一个物件，它将在其周围20尺半径球型空间产生爆炸。任何位于该区域</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" >内</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" >的生物都必须进行一次DC15的敏捷豁免，豁免失败受到35（10d6）火焰伤害，豁免成功</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" >则只受到一半的伤害</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" >。</SPAN><SPAN style="mso-bidi-font-family: 'Times New Roman'" ></SPAN></P><!--EndFragment-->
 
-<P> </P></BODY>
+<P> </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

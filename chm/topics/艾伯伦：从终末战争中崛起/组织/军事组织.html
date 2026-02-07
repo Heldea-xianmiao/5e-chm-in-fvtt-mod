@@ -2588,9 +2588,47 @@ Ghaash’kala. </span><span style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; COLOR: 
 
 ='FONT-SIZE: 10pt; FONT-FAMILY: "Segoe UI",sans-serif; COLOR: black'> Khalar d’tharashk </span><span style="FONT-SIZE:
 
- 10pt; FONT-FAMILY: 宋体; COLOR: black">宣布了一项计划，在赛伯斯特国王的支持下，追踪犯人并实施报复。</span></p></body>
+ 10pt; FONT-FAMILY: 宋体; COLOR: black">宣布了一项计划，在赛伯斯特国王的支持下，追踪犯人并实施报复。</span></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

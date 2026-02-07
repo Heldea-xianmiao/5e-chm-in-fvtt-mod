@@ -58,7 +58,45 @@ Strike。</STRONG>近战武器攻击：命中+5，触及5
 
 尺，单一目标。命中：5（1d4+3）的穿刺伤害。<BR><STRONG><FONT color=#800000>反应</FONT></STRONG><BR><STRONG>拨挡飞弹Deflect 
 
-Missiles。</STRONG>高手可以用其反应拨挡一次击中自己的远程武器攻击。该次攻击的伤害将被削弱，减少的数值等于1d10+3。当被拨挡攻击的伤害减少至0，且实施伤害的飞弹可被高手单手抓住时，则高手可用此时空闲的手去抓取飞弹。</P></body>
+Missiles。</STRONG>高手可以用其反应拨挡一次击中自己的远程武器攻击。该次攻击的伤害将被削弱，减少的数值等于1d10+3。当被拨挡攻击的伤害减少至0，且实施伤害的飞弹可被高手单手抓住时，则高手可用此时空闲的手去抓取飞弹。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

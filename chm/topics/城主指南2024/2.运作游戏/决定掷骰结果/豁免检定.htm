@@ -30,7 +30,45 @@ html,body {
 
 <P><FONT color=#800000 size=5><STRONG>豁免检定 Saving Throws</STRONG><FONT color=#000000 size=3> </FONT></FONT></P>
 
-<P>与属性检定相反，豁免检定是对效应的即时反应，且几乎无法自愿进行。一次豁免检定在某些坏事威胁到角色，而角色有机会去避免或抵抗时进行则最为合理。<BR>大多数时间下，豁免检定只会在某种效应(例如法术、怪物能力或陷阱）要求你为其进行豁免时才需要进行，且该效应亦会告知你需进行哪种豁免检定，并提供其DC。<BR>而在其他要求进行豁免检定的情况下，则由你来决定该豁免与哪个属性值相关。属性、属性检定和豁免检定表为你提供了建议。</P></body>
+<P>与属性检定相反，豁免检定是对效应的即时反应，且几乎无法自愿进行。一次豁免检定在某些坏事威胁到角色，而角色有机会去避免或抵抗时进行则最为合理。<BR>大多数时间下，豁免检定只会在某种效应(例如法术、怪物能力或陷阱）要求你为其进行豁免时才需要进行，且该效应亦会告知你需进行哪种豁免检定，并提供其DC。<BR>而在其他要求进行豁免检定的情况下，则由你来决定该豁免与哪个属性值相关。属性、属性检定和豁免检定表为你提供了建议。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

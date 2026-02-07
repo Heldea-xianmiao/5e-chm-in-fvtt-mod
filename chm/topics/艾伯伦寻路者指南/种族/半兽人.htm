@@ -46,7 +46,45 @@ html,body {
 
 你能是一名来自阴影湿地的普通猎人。也许你曾在终末战争中以雇佣兵的身份参战，或者你想要赚取财富，又或者想在湿地以外的世界寻求真正的挑战。</P>
 
-<P><STRONG><FONT color=#800000>半兽人与龙纹<BR></FONT></STRONG>萨拉释克家族的半兽人拥有探索龙纹。萨拉释克家族向赏金猎人、调查员和探矿者颁发许可证；如果你想寻找什么，找萨拉释克准没错。</P></body>
+<P><STRONG><FONT color=#800000>半兽人与龙纹<BR></FONT></STRONG>萨拉释克家族的半兽人拥有探索龙纹。萨拉释克家族向赏金猎人、调查员和探矿者颁发许可证；如果你想寻找什么，找萨拉释克准没错。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

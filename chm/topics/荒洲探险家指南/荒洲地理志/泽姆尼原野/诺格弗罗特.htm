@@ -78,7 +78,45 @@ Cornwrath（绝对中立，女性，人类间谍）接近角色们，并他声�
 
 她想知道是哪个犯罪家族贿赂了每个腐败的官员。她可能是她声称的那个人，或者她可能是万象会Myriad的间谍，或者是暗流帮 Shadycreek Run 
 
-中寻求消除竞争的帮派之一。 在后一种情况下，她可能不希望角色留在那里无所事事。 </P></body>
+中寻求消除竞争的帮派之一。 在后一种情况下，她可能不希望角色留在那里无所事事。 </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

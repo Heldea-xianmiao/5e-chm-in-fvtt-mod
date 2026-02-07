@@ -56,7 +56,45 @@ Shiftweave</FONT></STRONG><BR><EM>奇物，普通</EM><BR>变装布的面料中�
 
 <P><STRONG><FONT color=#800000>法晶 
 
-Spellshard</FONT></STRONG><BR><EM>奇物，普通</EM><BR>法晶是一块大小正好能一手掌握且经过抛光的艾伯伦龙晶。法晶用特殊方法写入了一些文章。只要拿着法晶，集中精神，你就可以在你的脑海中看到它的书页。你只要通过思考一个短语或标题就能让你看到对应的第一个篇章，添加内容到法晶中需要你进行一个简单的仪式。<BR>奥术施法者可以使用法晶来代替法术书；法晶每分出一“页”就需要花费1gp，在其他方面和普通的法术书无异。法晶也可以用来作为笔记或日记。更高级（稀有度非普通）的法晶可能需要用一个特定的心灵密码来访问其中的内容。</P></body>
+Spellshard</FONT></STRONG><BR><EM>奇物，普通</EM><BR>法晶是一块大小正好能一手掌握且经过抛光的艾伯伦龙晶。法晶用特殊方法写入了一些文章。只要拿着法晶，集中精神，你就可以在你的脑海中看到它的书页。你只要通过思考一个短语或标题就能让你看到对应的第一个篇章，添加内容到法晶中需要你进行一个简单的仪式。<BR>奥术施法者可以使用法晶来代替法术书；法晶每分出一“页”就需要花费1gp，在其他方面和普通的法术书无异。法晶也可以用来作为笔记或日记。更高级（稀有度非普通）的法晶可能需要用一个特定的心灵密码来访问其中的内容。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

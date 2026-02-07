@@ -92,7 +92,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
 <H3><FONT color=#800000>修罗场冒险Acheron Adventures</FONT></H3>
 
-<P>修罗场是强制秩序之位面，在这里，严苛军令会压碎魂灵，粉碎希望。这里的精魂完全无法想象有人会拒绝履行指挥官的命令。他们是忠诚的士兵，却不知自己为何而战。<BR>前往修罗场的旅途是一场与无尽冲突中冷酷虚无的对抗，是面对威权统治的严酷现实，以及毫不留情的社会同化压力的体验。这也是角色们质疑自己为何而战的契机——尤其是在那些早已忘记了提问为何物的军队之中。<BR>说得更实际一点，修罗场的冒险可能包括阻止某个反派从遗械墟中回收战场残骸，以制造新的恐怖战争武器。又或许，这趟冒险需要从冥忆墟的石块中取回被囚禁的思维或记忆，以揭开其中隐藏的秘密。</P></body>
+<P>修罗场是强制秩序之位面，在这里，严苛军令会压碎魂灵，粉碎希望。这里的精魂完全无法想象有人会拒绝履行指挥官的命令。他们是忠诚的士兵，却不知自己为何而战。<BR>前往修罗场的旅途是一场与无尽冲突中冷酷虚无的对抗，是面对威权统治的严酷现实，以及毫不留情的社会同化压力的体验。这也是角色们质疑自己为何而战的契机——尤其是在那些早已忘记了提问为何物的军队之中。<BR>说得更实际一点，修罗场的冒险可能包括阻止某个反派从遗械墟中回收战场残骸，以制造新的恐怖战争武器。又或许，这趟冒险需要从冥忆墟的石块中取回被囚禁的思维或记忆，以揭开其中隐藏的秘密。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

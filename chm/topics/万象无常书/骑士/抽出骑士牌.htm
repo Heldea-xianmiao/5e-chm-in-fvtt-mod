@@ -28,7 +28,45 @@ html,body {
 
 <body><p><font size=5><font color=#800000><strong>抽出骑士牌 Drawing the Knight Card</strong></font></font></p><p>
 
-本节将为从 <strong>万象无常牌Deck of Many Things</strong> 中抽出骑士卡的角色出发，为这些角色的DM提供相关的建议，以及那些伴这些角色左右之盟友的常规建议。此外，从牌组中召唤的“骑士”，也将可以一名忠诚的构装生物：<font color=red><strong>牌组守卫Deck Defender</strong></font>。</p></body>
+本节将为从 <strong>万象无常牌Deck of Many Things</strong> 中抽出骑士卡的角色出发，为这些角色的DM提供相关的建议，以及那些伴这些角色左右之盟友的常规建议。此外，从牌组中召唤的“骑士”，也将可以一名忠诚的构装生物：<font color=red><strong>牌组守卫Deck Defender</strong></font>。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

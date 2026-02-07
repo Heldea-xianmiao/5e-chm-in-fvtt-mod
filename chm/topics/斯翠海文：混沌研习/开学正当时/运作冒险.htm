@@ -78,7 +78,45 @@ Grenshel），一个几个世纪前曾就读于斯翠海文的心怀不满的学
 
 <P><STRONG><FONT color=#800000 size=5>时间流逝<BR></FONT></STRONG>本书中的每一次冒险都发生在一个学年中，时间不会超过一个自然年。冒险中所包含的事件并不是角色们本学年在学校中的全部经历。除非明确说明，否则不同的冒险事件之间默认会有从几天到几周不等的时间间隔。你可以自行决定这一年过得有多快，并与你的玩家们一同决定他们的角色在这一学年的其他时间里还能做什么。你可以用角色的同学们，如他们的朋友、爱人和对手，设计一场需要进行角色扮演的场景。你也可以直接描述他们课程的推进，以体现该学年学习生活的多样和充实。<BR>最后，当角色一起完成了课程任务，并与同学们一起 
 
-“厮混”时，可以安排他们在校园里遭遇随机的怪物。这些遭遇可能是随机设计的，也可能是由于冒险中发生的更重要事件所导致的意外副产物。每章都包含一张为该次冒险定制的随机遭遇表格。</P></body>
+“厮混”时，可以安排他们在校园里遭遇随机的怪物。这些遭遇可能是随机设计的，也可能是由于冒险中发生的更重要事件所导致的意外副产物。每章都包含一张为该次冒险定制的随机遭遇表格。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

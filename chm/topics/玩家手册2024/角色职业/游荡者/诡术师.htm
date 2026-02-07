@@ -138,7 +138,44 @@ Trickster<BR></FONT></STRONG>你获得了使用<U><EM>法师之手Mage Hand</EM>
 
 <p><STRONG><FONT color=#800000>17级：法术窃贼 Spell 
 
-Thief<BR></FONT></STRONG>你获得了如何以魔法从其他施法者那里偷取有关如何施展某一法术的知识的能力。<BR>当一个生物施展了一个目标是你或是其效应范围会影响你的法术后，你可以立刻使用你的反应来迫使该生物进行一次智力豁免。其豁免DC等同于你的施法DC。若豁免失败，你消除这个法术对你的影响，并且你将偷走使用这个法术的知识，但这个法术最低必须是一环并且你可以施展的更高等级的法术（不需要是法师法术）。接下来的八小时内，你准备了这个法术。同时该生物在此期间无法施展这个法术，直到八小时结束以后。<BR>此特性一经使用，直至完成<U>长休</U>你都无法再次使用。</p></body>
+Thief<BR></FONT></STRONG>你获得了如何以魔法从其他施法者那里偷取有关如何施展某一法术的知识的能力。<BR>当一个生物施展了一个目标是你或是其效应范围会影响你的法术后，你可以立刻使用你的反应来迫使该生物进行一次智力豁免。其豁免DC等同于你的施法DC。若豁免失败，你消除这个法术对你的影响，并且你将偷走使用这个法术的知识，但这个法术最低必须是一环并且你可以施展的更高等级的法术（不需要是法师法术）。接下来的八小时内，你准备了这个法术。同时该生物在此期间无法施展这个法术，直到八小时结束以后。<BR>此特性一经使用，直至完成<U>长休</U>你都无法再次使用。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
@@ -147,6 +184,7 @@ Thief<BR></FONT></STRONG>你获得了如何以魔法从其他施法者那里偷�
 
 
 </html>
+
 
 
 

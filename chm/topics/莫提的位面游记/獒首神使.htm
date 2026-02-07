@@ -60,7 +60,45 @@ Blade（仅真实形态）。</STRONG>近战武器攻击：命中+6，触及5尺
 
 flame</FONT></EM><BR><STRONG>传送Teleport。</STRONG>亚空天族可以带着随身携带或着装的全部装备一同传送至它周围120尺范围内的一处它可以看到且未占据空间内。<BR><STRONG><FONT color=#800000>附赠动作Bonus Actions<BR></FONT>变换形态Change 
 
-Shape。</STRONG>亚空天族魔法性的变化为任何中型或大型的狗或狼，并保留它体型以外的所有游戏数据（亚空天族无法在变形的情况下使用它的闪耀刀刃攻击）。亚空天族的生命值降至0或它主动以一个附赠动作解除时，它将恢复其真实形态。</P></body>
+Shape。</STRONG>亚空天族魔法性的变化为任何中型或大型的狗或狼，并保留它体型以外的所有游戏数据（亚空天族无法在变形的情况下使用它的闪耀刀刃攻击）。亚空天族的生命值降至0或它主动以一个附赠动作解除时，它将恢复其真实形态。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

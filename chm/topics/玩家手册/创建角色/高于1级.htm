@@ -826,7 +826,45 @@ style="FONT-SIZE: 11pt; FONT-FAMILY: 宋体; mso-bidi-font-family: s灿砰; mso-
 
 style="FONT-SIZE: 11pt; FONT-FAMILY: Cambria; mso-bidi-font-family: s灿砰; mso-spacerun: 'yes'">17~20</SPAN><SPAN 
 
-style="FONT-SIZE: 11pt; FONT-FAMILY: 宋体; mso-bidi-font-family: s灿砰; mso-ascii-font-family: Cambria; mso-hansi-font-family: Cambria; mso-spacerun: 'yes'"><FONT face=宋体>级），角色们达到其职业特性的巅峰，并凭着其自身的资质成为了模范的英雄（或反派）。他们的冒险活动影响着世界的命运，乃至多元宇宙的秩序。</FONT></SPAN></P></SPAN></body>
+style="FONT-SIZE: 11pt; FONT-FAMILY: 宋体; mso-bidi-font-family: s灿砰; mso-ascii-font-family: Cambria; mso-hansi-font-family: Cambria; mso-spacerun: 'yes'"><FONT face=宋体>级），角色们达到其职业特性的巅峰，并凭着其自身的资质成为了模范的英雄（或反派）。他们的冒险活动影响着世界的命运，乃至多元宇宙的秩序。</FONT></SPAN></P></SPAN><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

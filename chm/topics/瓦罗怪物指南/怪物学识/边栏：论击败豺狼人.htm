@@ -18,4 +18,41 @@
 
 
 
- 12pt;    ; mso-ascii-font-family: Verdana; mso-hansi-font-family: Verdana; mso-bidi-font-family: Verdana">  <font>有些人可能会争论，想要提出一种不依赖于人类生命的逝去便能达到成功的方法。如果这类方</font><font>法真的存在的话，我会很乐意推荐一个的。你最好的策略就是保卫我们的大厅，让人类充当诱饵。摩拉丁知道他们繁殖得足够快，他们的损失很快就能恢复的。</font></span></p></div></body></html>
+ 12pt;    ; mso-ascii-font-family: Verdana; mso-hansi-font-family: Verdana; mso-bidi-font-family: Verdana">  <font>有些人可能会争论，想要提出一种不依赖于人类生命的逝去便能达到成功的方法。如果这类方</font><font>法真的存在的话，我会很乐意推荐一个的。你最好的策略就是保卫我们的大厅，让人类充当诱饵。摩拉丁知道他们繁殖得足够快，他们的损失很快就能恢复的。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

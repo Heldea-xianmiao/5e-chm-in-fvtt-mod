@@ -1196,9 +1196,47 @@ lang=EN-US><br>
 
 lang=EN-US>1d6</span>分钟。然后进行一次<span lang=EN-US>DC 20</span>的智力（自然）检定（角色不具备自然技能熟练项时，也可以用制毒工具进行该检定）。检定成功时角色可以提取出足够制作一剂毒药的毒素，检定失败则提取失败。如果角色检定失败且其差值为<span
 
-lang=EN-US>5</span>或更高，则该角色还要受相应毒药的影响。</p></div></body>
+lang=EN-US>5</span>或更高，则该角色还要受相应毒药的影响。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

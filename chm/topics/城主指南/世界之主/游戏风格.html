@@ -530,9 +530,47 @@ lang=EN-US><o:p></o:p></span></p>
 
 style='mso-spacerun:yes'>    </span></span>将各种事物杂糅在一起，有时可以让玩家们体验到多样化的冒险。就算是主题紧凑的战役也会或多或少的出现偏颇。如果你的战役大量涉及密谋、神秘事物和角色扮演，那你的玩家也许会享受偶尔造访地下城的主意——尤其是当故事出现转机并揭晓某个战役中的大阴谋时。如果冒险者中多数人倾向地城远征，则可以将那些紧凑的城中神秘事物作一些转换，然后把队伍引导到某个废弃建筑或塔楼里进行地城探险。如果你主持一场每周开展的恐怖冒险，则可以尝试使用一个普通的反派，或者甚至是有点傻的反派。幽默的解说在几乎所有<span
 
-lang=EN-US>D&amp;D</span>战役里都是一种优秀的转折，有时甚至玩家自己也会创作这种转机。<span lang=EN-US><o:p></o:p></span></p></div></body>
+lang=EN-US>D&amp;D</span>战役里都是一种优秀的转折，有时甚至玩家自己也会创作这种转机。<span lang=EN-US><o:p></o:p></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

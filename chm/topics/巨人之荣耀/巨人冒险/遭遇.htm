@@ -112,7 +112,45 @@ cellPadding=2 width=300 border=0>
 
       <P align=center>友善</P></TD></TR></TABLE></P></BLOCKQUOTE>
 
-<P>如果骰出的初始态度与生物正在做的事情不相符，你可以忽略骰出的态度，或者将遭遇改的与之匹配。例如，如果你对一个正在捕猎猎物的生物投出冷漠或友好的态度，你可能会设定猎手根本不觉得这些角色是美味佳肴。如果那个生物有智慧，也许它还可以询问角色们是否看到它的猎物，以及猎物走了哪条路。</P></body>
+<P>如果骰出的初始态度与生物正在做的事情不相符，你可以忽略骰出的态度，或者将遭遇改的与之匹配。例如，如果你对一个正在捕猎猎物的生物投出冷漠或友好的态度，你可能会设定猎手根本不觉得这些角色是美味佳肴。如果那个生物有智慧，也许它还可以询问角色们是否看到它的猎物，以及猎物走了哪条路。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

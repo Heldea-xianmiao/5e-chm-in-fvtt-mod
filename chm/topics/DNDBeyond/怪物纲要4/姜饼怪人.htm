@@ -58,7 +58,45 @@ Me。</STRONG>姜饼怪人在一切避免自己陷入擒抱或束缚状态的属
 
 Victory。</STRONG>当姜饼怪人被破坏时，一个生物可以用自己的动作吃掉它留下的全部碎块，并获得5临时生命值。如果留着不吃，这些留下的碎饼干会在24个小时后瓦解消失。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>姜饼怪人进行两次餐叉攻击，或两次软糖弹弓攻击，或两者各一。<BR><STRONG>餐叉Fork。</STRONG>近战武器攻击，命中+6，触及5尺，单一目标，命中：6（1d4+4）穿刺伤害。<BR><STRONG>软糖弹弓Gumdrop 
 
-Slingshot。</STRONG>远程武器攻击，命中+6，射程30/60尺，单一目标，命中：6（1d4+4）钝击伤害。</P></body>
+Slingshot。</STRONG>远程武器攻击，命中+6，射程30/60尺，单一目标，命中：6（1d4+4）钝击伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

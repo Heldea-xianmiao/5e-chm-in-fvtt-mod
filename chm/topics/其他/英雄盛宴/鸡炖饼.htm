@@ -46,7 +46,45 @@ Orp著名的饥饿半身人餐厅到几乎每一个半身人晚餐时间的餐�
 
 （或鸡油，如果你之前保留了它们），偶尔停下来翻拌以融化黄油。加入牛奶继续加热，直到混合物温热（不要过热），大约1分半。将温热的牛奶混合物加入面粉混合物中。用木勺或叉子，搅拌至无干粉（混合物应该看起来是个湿润并毛绒绒的面团）。<BR>为完成鸡肉和煮面团的工作，将胡萝卜、芹菜、1寸的京葱片和大部分的欧芹加入到炖汤中，搅拌均匀。用汤勺将12个高尔夫球大小的分量的面团放入锅中，相隔半寸左右（四周放8个，中间放4个）。将火调小，盖上盖子，煮到面团膨化熟透，用牙签插进去拔出来是干爽的，需要15至20分钟。<BR>将炖好的面团舀到碗里，每份鸡炖饼可以放三个。每份撒上一些剩余的欧芹碎，即可上桌。</P>
 
-<P> </P></body>
+<P> </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -34,7 +34,45 @@ html,body {
 
 <H3><FONT color=#800000>定时事件Timed Events</FONT></H3>
 
-<P>与一年中的某些特定时间相关联的超凡事件是绝佳的冒险机会。也许每到冬至，某座山丘上就会出现一座幽灵城堡；或者，每到第十三次满月时，升起的月亮都是血红色的，并令狼人的嗜血欲望大幅增强。一道彗星划过天空，可能预示着各种重大事件的发生。诸神的节日亦可以作为冒险的起点，尤其是在诸神本身参与到了故事之中的那些时候。</P></body>
+<P>与一年中的某些特定时间相关联的超凡事件是绝佳的冒险机会。也许每到冬至，某座山丘上就会出现一座幽灵城堡；或者，每到第十三次满月时，升起的月亮都是血红色的，并令狼人的嗜血欲望大幅增强。一道彗星划过天空，可能预示着各种重大事件的发生。诸神的节日亦可以作为冒险的起点，尤其是在诸神本身参与到了故事之中的那些时候。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

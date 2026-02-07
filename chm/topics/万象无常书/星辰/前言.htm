@@ -18,7 +18,45 @@ Star</h1>
 
 Things</U></EM>时,她为每张卡都选取了一个星座。<BR>这一章将要介绍这些被后人称为<STRONG>万象星天Sky of many 
 
-Things</STRONG>的星座；并完善这些包含在一个十二宫中的星座对在其下出生者命运的魔法效果。<BR>这一章的后半部分倾向于为DM设计，包含被称为天文台的天文观察与学习场所，其细节与规则。</p></body>
+Things</STRONG>的星座；并完善这些包含在一个十二宫中的星座对在其下出生者命运的魔法效果。<BR>这一章的后半部分倾向于为DM设计，包含被称为天文台的天文观察与学习场所，其细节与规则。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

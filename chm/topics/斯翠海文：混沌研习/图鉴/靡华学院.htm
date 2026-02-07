@@ -180,7 +180,45 @@ Nature's
 
 Avatar（短休或长休后充能）。</STRONG>  
 
-教授用魔法召唤出一只河沼泽犬Groff。河沼泽犬出现在教授身边60尺范围内一处未占据空间，作为教授的盟友进行行动，并在教授回合结束后开始回合。教授在这只河沼泽犬存在时可以与其进行心灵感应交流。河沼泽犬持续存在10分钟，或直至其本身或者教授死亡，或直至教授用一个动作将其解散。</P></body>
+教授用魔法召唤出一只河沼泽犬Groff。河沼泽犬出现在教授身边60尺范围内一处未占据空间，作为教授的盟友进行行动，并在教授回合结束后开始回合。教授在这只河沼泽犬存在时可以与其进行心灵感应交流。河沼泽犬持续存在10分钟，或直至其本身或者教授死亡，或直至教授用一个动作将其解散。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

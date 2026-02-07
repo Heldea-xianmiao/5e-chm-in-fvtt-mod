@@ -84,7 +84,45 @@ Comet</FONT></STRONG><br><EM>中型类人（魔契师），通常混乱邪恶</E
 
 <font color=maroon><font size=3><strong>附赠动作Bonus Actions</strong></font></font><br>
 
-<strong>魔星之欲Star's Hunger。</strong>教宗指定一个位于其<font color=purple><strong>吞噬万物之星All-Consuming Star</strong></font>的中心30尺内的生物。目标必须成功通过一次DC17的力量豁免否则被拉向<font color=purple><strong>吞噬万物之星All-Consuming Star</strong></font>的中心点至多30尺。</p></body>
+<strong>魔星之欲Star's Hunger。</strong>教宗指定一个位于其<font color=purple><strong>吞噬万物之星All-Consuming Star</strong></font>的中心30尺内的生物。目标必须成功通过一次DC17的力量豁免否则被拉向<font color=purple><strong>吞噬万物之星All-Consuming Star</strong></font>的中心点至多30尺。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

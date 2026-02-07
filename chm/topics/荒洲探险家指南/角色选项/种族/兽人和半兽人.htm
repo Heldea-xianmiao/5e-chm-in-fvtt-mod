@@ -60,6 +60,43 @@ Xhorhas</FONT></H3>
 
 =2d8<BR>身高= 5尺+4寸+体型调整值（寸）<BR>体重（磅） =175+（2d6*你的体型调整值）<BR><STRONG>速度Speed</STRONG>。兽人的基础步行速度为 30 尺。<BR><STRONG>黑暗视觉Darkvision</STRONG>。在微光光照下，你身边60尺内可以视为等同于明亮光照。而在黑暗中，该范围内可视为等同于微光光照。你无法在黑暗中分辨颜色，只能看到有灰度的黑白画面。<BR><STRONG>好斗Aggressive</STRONG>。以一个附赠动作，兽人向一名可见或能听到的的敌对生物移动至多相当于其速度的距离。你必须在结束这个移动时，比开始移动前更接近敌人。<BR><STRONG>身强力壮Powerful Build</STRONG> 
 
-。你的负重、推动、拉动及抬起物品的能力视同为体型大一级的生物。<BR><STRONG>原初直觉Primal Intuition</STRONG> 。你从下列中选择两项技能获得熟练项：驯兽，洞悉，恐吓，医药，察觉，求生 。<BR><STRONG>语言Languages</STRONG>。你可以说，读，写通用语和兽人语。</P></body>
+。你的负重、推动、拉动及抬起物品的能力视同为体型大一级的生物。<BR><STRONG>原初直觉Primal Intuition</STRONG> 。你从下列中选择两项技能获得熟练项：驯兽，洞悉，恐吓，医药，察觉，求生 。<BR><STRONG>语言Languages</STRONG>。你可以说，读，写通用语和兽人语。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>

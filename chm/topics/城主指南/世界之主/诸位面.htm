@@ -648,9 +648,47 @@ Hours of Night</span>。太阳船本身即是一个微小的外层位面，只�
 
 ='FONT-SIZE: 11pt; FONT-FAMILY: "STHeiti light"; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'>本章所述的每个位面都会对那些敢于进入其内的旅行者产生至少一种的显著效应。当你决定自创位面时，考虑沿用这种模式会说个不错的点子。创作一个简单的特质能够吸引玩家的注意，而其在加深大家游戏印象的同时，尽量不要令桌面游戏变得更烦琐。此外，你可以尝试使该地域反映出一定的哲学性与情绪性，而不只是其物理特征。</span><span
 
- lang=EN-US style='FONT-SIZE: 11pt; mso-fareast-font-family: "STHeiti light"'><o:p></o:p></span></p></body>
+ lang=EN-US style='FONT-SIZE: 11pt; mso-fareast-font-family: "STHeiti light"'><o:p></o:p></span></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

@@ -52,7 +52,45 @@ Strike。</STRONG>远程武器攻击：命中+7，射程240尺，单一目标。
 
 Shape。</STRONG>巨人如魔法般变形成它看到的野兽或者类人生物，或者回到他的真实形态。巨人穿着或携带的任何装备都会被新形态吸收。他的数据，除了它的体形外，在每种形态下都是相同的。如果他死了，它变回其真实形态。<BR><STRONG>施法Spellcasting。</STRONG>巨人施展以下法术之一，无需材料成分，且以魅力为其施法属性（法术豁免DC15）：<BR><EM><FONT color=#800080>随意：侦测魔法，云雾术，光亮术，次级幻象<BR>每项3/日：隐形术，无声幻影，暗示术，羽落术，巧言术<BR>每项1/日：气化形体，高级幻影</FONT></EM><BR><STRONG><FONT color=#800000>附赠动作Bonus Actions</FONT></STRONG><BR><STRONG>腾云步Cloud 
 
-Step（充能4~6）。</STRONG>巨人和他携带、穿着的所有装备传送到至多60尺内一个他能看见且未被占据的位置。</P></body>
+Step（充能4~6）。</STRONG>巨人和他携带、穿着的所有装备传送到至多60尺内一个他能看见且未被占据的位置。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

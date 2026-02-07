@@ -746,7 +746,45 @@ Trap<BR></FONT></STRONG>环境是陷阱的一切。击倒角色的滚木陷阱�
 
 <P>除此之外，放置陷阱需要逻辑，并考虑建造陷阱的时间和努力。若你的冒险者们遭遇了太多的陷阱，游戏会因为玩家们检查地下城的每个格子、搜寻绊线和压力板而变得碎片化。</P>
 
-<P>如果玩家们正确的削弱了一个陷阱，这没什么问题。这意味着你的陷阱安放符合逻辑，而玩家们也参与到了游戏中。<BR></P></body>
+<P>如果玩家们正确的削弱了一个陷阱，这没什么问题。这意味着你的陷阱安放符合逻辑，而玩家们也参与到了游戏中。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

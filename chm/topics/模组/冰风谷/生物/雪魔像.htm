@@ -46,7 +46,45 @@ Absorption。</STRONG>当魔像受到寒冷伤害时，它不会受到伤害，�
 
 Form。</STRONG>魔像免疫能使它变形的法术与效应。<BR><STRONG>融化Melt。</STRONG>处于极端炎热地区期间，魔像每回合开始损失1d6生命值。<BR><STRONG>非凡本质Unusual 
 
-Nature。</STRONG>魔像不需要空气，食物，水或睡眠。<BR><STRONG><FONT color=#800000>动作Actions:</FONT></STRONG><BR><STRONG>多重攻击Multattack。</STRONG>雪魔像发动三次猛击。<BR><STRONG>猛击Slam。</STRONG>近战武器攻击，命中+4，触及5尺，单一目标。造成5(1d6+2)钝击伤害与7(2d6)寒冷伤害。<BR><STRONG>雪球Snowball。</STRONG>远程武器攻击，命中+0，射程60尺，单一目标。造成9(2d6+2)寒冷伤害。</P></body>
+Nature。</STRONG>魔像不需要空气，食物，水或睡眠。<BR><STRONG><FONT color=#800000>动作Actions:</FONT></STRONG><BR><STRONG>多重攻击Multattack。</STRONG>雪魔像发动三次猛击。<BR><STRONG>猛击Slam。</STRONG>近战武器攻击，命中+4，触及5尺，单一目标。造成5(1d6+2)钝击伤害与7(2d6)寒冷伤害。<BR><STRONG>雪球Snowball。</STRONG>远程武器攻击，命中+0，射程60尺，单一目标。造成9(2d6+2)寒冷伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

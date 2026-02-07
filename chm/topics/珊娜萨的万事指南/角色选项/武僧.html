@@ -544,5 +544,43 @@ cellSpacing=0 cellPadding=0 width=700 border=0>
 
 <P class=MsoNormal><SPAN 
 
-lang=EN-US>　　</SPAN>当你到达第三级时，武僧将获得其武僧宗派特质。下列选项给出了在玩家手册提供的宗派以外的额外宗派选项，醉拳宗，剑圣宗，和日魂宗。</P></DIV></BODY></HTML>
+lang=EN-US>　　</SPAN>当你到达第三级时，武僧将获得其武僧宗派特质。下列选项给出了在玩家手册提供的宗派以外的额外宗派选项，醉拳宗，剑圣宗，和日魂宗。</P></DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

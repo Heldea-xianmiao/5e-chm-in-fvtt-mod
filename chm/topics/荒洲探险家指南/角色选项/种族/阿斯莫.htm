@@ -198,6 +198,43 @@ AASIMAR<BR>
 
 <P><STRONG>属性值提升Ability Score Increase</STRONG> 。你的力量+1。<BR><STRONG>死灵环绕Necrotic Shroud</STRONG> 
 
-。从3级起，你可以使用一个动作来解放你内在的腐败力量。你的眼睛将变为两个漆黑的池，一对幽灵般的骨翅将从你的身后展开。任何在你10尺内可以看你的生物都必须通过一次的魅力豁免（DC为8+你的熟练加值+你的魅力调整值），否则将会陷入恐慌直到你的下一个回合结束。你的转变持续一分钟或直到你以一个附赠动作中止。在这期间，每个你的回合中一次，当你的一次攻击或法术造成伤害时，你可以对一个目标造成额外的暗蚀伤害。该额外伤害等同于你的人物等级。一旦你使用这个特质，直到你完成一次长休之前你不能再次使用。</P></body>
+。从3级起，你可以使用一个动作来解放你内在的腐败力量。你的眼睛将变为两个漆黑的池，一对幽灵般的骨翅将从你的身后展开。任何在你10尺内可以看你的生物都必须通过一次的魅力豁免（DC为8+你的熟练加值+你的魅力调整值），否则将会陷入恐慌直到你的下一个回合结束。你的转变持续一分钟或直到你以一个附赠动作中止。在这期间，每个你的回合中一次，当你的一次攻击或法术造成伤害时，你可以对一个目标造成额外的暗蚀伤害。该额外伤害等同于你的人物等级。一旦你使用这个特质，直到你完成一次长休之前你不能再次使用。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>

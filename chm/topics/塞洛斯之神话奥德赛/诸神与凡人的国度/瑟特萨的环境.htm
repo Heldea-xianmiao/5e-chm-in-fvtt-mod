@@ -42,7 +42,45 @@ Wood</FONT></STRONG><BR>奈西安森林的广袤荒野被认为是倪勒娅的�
 
 Gates。</STRONG>斯珀奇河西侧两山之间的天然裂缝提供了一条从东侧进入奈西安森林的通道。古瑟特萨人在山里开凿了一个坚不可摧的堡垒来守卫关隘。来自瑟特萨的巴萨剌巡逻队仍然定期检查要塞，当有理由怀疑有危险来自东方时，她们就会占据要塞。然而，巡逻队不止一次到达要塞，却发现有别的东西在其间居住，喧闹的半羊人，阴沉的转世者甚至是更糟的。<BR><STRONG>猎人路口Hunter's 
 
-Crossing。</STRONG>瑟特萨曾经把它的领土扩大到奈西安森林之外，建立了像阿喀洛斯那样的军事哨所。在森林的西端，从迈勒提斯出发被称为守护者之路的道路旁，一座圆形塔的废墟一条坐落在湍急的小溪旁。这标志着古代瑟特萨的疆域最远处。这是一个自然景色优美的地方，紫丁香沿着河岸生长，银色的鱼在异常清澈的水里游动，它被瑟特萨遗弃却被旅客们作为进入森林边缘前的休息点。</P></body>
+Crossing。</STRONG>瑟特萨曾经把它的领土扩大到奈西安森林之外，建立了像阿喀洛斯那样的军事哨所。在森林的西端，从迈勒提斯出发被称为守护者之路的道路旁，一座圆形塔的废墟一条坐落在湍急的小溪旁。这标志着古代瑟特萨的疆域最远处。这是一个自然景色优美的地方，紫丁香沿着河岸生长，银色的鱼在异常清澈的水里游动，它被瑟特萨遗弃却被旅客们作为进入森林边缘前的休息点。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

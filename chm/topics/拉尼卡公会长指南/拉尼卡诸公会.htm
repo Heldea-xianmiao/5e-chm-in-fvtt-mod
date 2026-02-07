@@ -320,7 +320,45 @@ style="FONT-SIZE: small; FONT-FAMILY: Verdana, arial, helvetica, serif; WHITE-SP
 
 style="FONT-SIZE: small; FONT-FAMILY: Verdana, arial, helvetica, serif; WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; FLOAT: none; FONT-WEIGHT: 400; FONT-STYLE: normal; ORPHANS: 2; WIDOWS: 2; DISPLAY: inline !important; LETTER-SPACING: normal; BACKGROUND-COLOR: rgb(255,255,255); TEXT-INDENT: 0px; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial">大约半数拉尼卡居民是无属者。这个比例在部分种族中会比其他种族更高一些，比如几乎所有的精灵都属于葛加理，瑟雷尼亚和析米克公会，但大多数地精都是无属者。象族具有很强的社会性，所以他们都乐意加入公会。而当他们不想时，他们会加入一些队伍或者别的组织，例如佣兵公司或者邪教。析米克杂种都是由析米克联合制造的，所以他们这个种族很少不参与公会。</SPAN></P>
 
-</BODY>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </HTML>
+
 

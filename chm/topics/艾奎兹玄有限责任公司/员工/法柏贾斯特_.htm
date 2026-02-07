@@ -58,7 +58,45 @@ XP)<BR><STRONG>施法。</STRONG>法柏贾斯特是一名9级施法者。他的�
 
 13，+5法术攻击命中）。他准备了以下法术：<BR>戏法（随意）：光亮术，火焰箭，法师之手，魔发伎俩<BR>一环（4个）：侦测魔法，法师护甲，扭曲价值，睡眠术<BR>二环（3个）：巧舌如簧，迷踪步，暗示术<BR>三环（3个）：快速交友，飞行术，闪电束<BR>四环（3个）：高等隐形术<BR>五环（1个）：寒冰锥<BR><STRONG><FONT color=#800000>动作<BR></FONT>匕首。</STRONG>近战或远程武器攻击：+4 命中，触及5尺或射程 20/60 尺，单一目标。命中： 
 
-4 （ld4 + 2） 穿刺伤害。</P></body>
+4 （ld4 + 2） 穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -70,7 +70,45 @@ html,body {
 
 <strong>消化Digest。</strong>尸魔花消化一具在其体内的类人生物尸体，以此立即恢复11（2d10）点的生命值。被消化后，尸体身上的任何装备都会被排出到尸魔花占据的空间内，而尸体本身将尸骨无存。<br>
 
-<strong>再活化Reanimate。</strong>尸魔花再活化一具在其体内的类人生物尸体，令它变成一个 <font color=red><strong>丧尸Zombie</strong></font> 仆役。丧尸仆役将出现尸魔花周围5尺范围内的一处未占据空间中。在先攻顺序中，丧尸仆役在尸魔花的回合后立刻行动。丧尸将作为尸魔花的盟友行动，但并不处于它的控制之下，而且它还将散发出花朵的恶臭（见 死亡恶臭Stench of Death 特性）。</p></body>
+<strong>再活化Reanimate。</strong>尸魔花再活化一具在其体内的类人生物尸体，令它变成一个 <font color=red><strong>丧尸Zombie</strong></font> 仆役。丧尸仆役将出现尸魔花周围5尺范围内的一处未占据空间中。在先攻顺序中，丧尸仆役在尸魔花的回合后立刻行动。丧尸将作为尸魔花的盟友行动，但并不处于它的控制之下，而且它还将散发出花朵的恶臭（见 死亡恶臭Stench of Death 特性）。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -40,7 +40,45 @@ Xulregg</strong></font></font></p><p>深渊位层叙勒戈是一处由庞大的�
 
 <strong>腐烂洞丛Warrens of Rot。</strong>畸角巨木之下是名为腐烂洞丛的，复杂而潮湿的洞穴系统。其中的每一条隧道都曾是巨树的一道根系，并在过去着火，燃尽，化为一条焦黑通路。奥诺茨之国度中的入侵者会被抓到此处，作为笼中妖螟的储备祭品。诡异魔化的野兽潜藏在这些洞穴中尚未探明的角落之中，即使是强大的恶魔也不愿在此久留。</p><p>
 
-<strong>惨白毒沼Whitemarsh。</strong>自焰巢底部留下的污秽事物汇流在其下方的土地上，形成了一片名为惨白毒沼的“生机勃勃”之地——一坨能催生出无数怪物的原始汤。其中弱小的那些会被刚刚自卑恶茧蜕中新生的恶魔吞噬殆尽；然而偶尔也会有力量惊人的可怕巨兽从中诞生。这样的存在大多都会被捕获并献祭给奥诺茨，或是从叙勒戈中逃脱；然而，其中的一部分也被允许活着，成为服从于奥诺茨的恐怖爪牙。</p></body>
+<strong>惨白毒沼Whitemarsh。</strong>自焰巢底部留下的污秽事物汇流在其下方的土地上，形成了一片名为惨白毒沼的“生机勃勃”之地——一坨能催生出无数怪物的原始汤。其中弱小的那些会被刚刚自卑恶茧蜕中新生的恶魔吞噬殆尽；然而偶尔也会有力量惊人的可怕巨兽从中诞生。这样的存在大多都会被捕获并献祭给奥诺茨，或是从叙勒戈中逃脱；然而，其中的一部分也被允许活着，成为服从于奥诺茨的恐怖爪牙。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

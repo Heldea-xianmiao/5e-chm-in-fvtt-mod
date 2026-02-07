@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>费尔伯格人 Firbolgs</FONT></STRONG></P>
 
-<P>身为巨人的远亲，最初的费尔伯格人在多元宇宙中的原始森林中漫步。那些森林的魔法与费尔伯格人的灵魂交织相融，直至今日。<BR>费尔伯格人经常追随或效仿迪安卡斯特拉Diancastra和西亚缇Hiatea费尔伯格人天生擅与遮蔽与诡术的魔法会与迪安卡斯特拉狡猾才智产生共鸣，而对重视社区与和睦的传统则许多费尔伯格人立誓为西亚缇服务。</P></body>
+<P>身为巨人的远亲，最初的费尔伯格人在多元宇宙中的原始森林中漫步。那些森林的魔法与费尔伯格人的灵魂交织相融，直至今日。<BR>费尔伯格人经常追随或效仿迪安卡斯特拉Diancastra和西亚缇Hiatea费尔伯格人天生擅与遮蔽与诡术的魔法会与迪安卡斯特拉狡猾才智产生共鸣，而对重视社区与和睦的传统则许多费尔伯格人立誓为西亚缇服务。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

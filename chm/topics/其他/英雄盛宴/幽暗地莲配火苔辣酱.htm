@@ -46,7 +46,45 @@ lichen]研磨制成的美味辣酱。吃的时候一定要记得随身携带一�
 
   ，去皮并切碎<BR>3/4茶匙小茴香籽或甜辣椒粉<BR>1茶匙辣椒<BR>3汤匙橄榄油，另备一些供淋洒<BR>犹太盐和鲜磨黑胡椒粉<BR>2/3杯冰水，根据需要可以另备一些<BR>1/4杯新鲜柠檬汁<BR>1/4杯芝麻酱[tahini]<BR>备好水萝卜、黄瓜片或莴苣叶，以待蘸料<BR>将烤箱预热到425华氏度，烤箱中央放一个烤架</P></BLOCKQUOTE>
 
-<P>在一个大的有边框的烤盘上，将鹰嘴豆、胡萝卜、小茴香、红辣椒和2汤匙的橄榄油拌在一起。<BR>撒上半茶匙盐和大量的胡椒粉。烘烤约25分钟，至胡萝卜变软。<BR>将烤好的胡萝卜和鹰嘴豆转移到食品加工机或搅拌机中。加入水、柠檬汁、芝麻酱和剩余的1汤匙橄榄油。搅拌至完全柔滑，若有需要，再加入更多的水，每次一汤匙，直到蘸酱变得如奶油一般稠软。<BR>将涂抹好的酱汁舀入碗中，将碗放在大盘子上，淋上橄榄油。将水萝卜、黄瓜片或莴苣叶摆放在碗的周围以待蘸食，即可食用。<BR>厨师笔记<BR>为了做出莲花的形状，可以把蔬菜像花瓣一样在蘸料碗的周围摆盘。<BR>你可以用你喜欢的蔬菜品种来蘸食。</P></body>
+<P>在一个大的有边框的烤盘上，将鹰嘴豆、胡萝卜、小茴香、红辣椒和2汤匙的橄榄油拌在一起。<BR>撒上半茶匙盐和大量的胡椒粉。烘烤约25分钟，至胡萝卜变软。<BR>将烤好的胡萝卜和鹰嘴豆转移到食品加工机或搅拌机中。加入水、柠檬汁、芝麻酱和剩余的1汤匙橄榄油。搅拌至完全柔滑，若有需要，再加入更多的水，每次一汤匙，直到蘸酱变得如奶油一般稠软。<BR>将涂抹好的酱汁舀入碗中，将碗放在大盘子上，淋上橄榄油。将水萝卜、黄瓜片或莴苣叶摆放在碗的周围以待蘸食，即可食用。<BR>厨师笔记<BR>为了做出莲花的形状，可以把蔬菜像花瓣一样在蘸料碗的周围摆盘。<BR>你可以用你喜欢的蔬菜品种来蘸食。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

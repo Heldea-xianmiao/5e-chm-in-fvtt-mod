@@ -58,7 +58,45 @@ style="FONT-WEIGHT: bold">幽灵</STRONG>的数据）复生。小型魂体将作
 
 Wings（充能5~6）。</STRONG>云雾魂体释放一道猛烈的寒风覆盖一处60尺长，10尺宽的线形区域。任何位于区域内的生物都必须进行一次DC20的体质豁免。豁免失败者受到38（7d10）寒冷伤害并陷入失能状态一分钟。受影响的生物可以在自己的回合结束时重复该豁免，豁免成功则结束该效应。豁免成功者伤害减半且不会失能。若一个生物为本效应进行的豁免成功或是其身上的本效应结束，则该生物在接下来的24小时内免疫该云雾魂体的冻寒之风。</P>
 
-<P></P></body>
+<P></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -56,7 +56,45 @@ html,body {
 
 传奇动作，用于选择执行下列动作选项。 每次执行传奇动作时，每个选项只可以选用一次，且只能在另 一生物的回合结束时执行。扎拉坦在它的回合开始时恢复 
 
-其所有已消耗的传奇动作数。<BR><STRONG>践踏。</STRONG>扎拉坦进行一次践踏攻击。<BR><STRONG>移动。</STRONG>扎拉坦移动等同至多等于其速度的距离。<BR><STRONG>喷吐（消耗2动作）。</STRONG>扎拉坦使用喷吐岩石。<BR><STRONG>缩壳（消耗2动作）。</STRONG>扎拉坦缩入壳中。直到他使用出现行动，他获得所有伤害的抗性并被束缚。下次传奇行动时只能使用出现行动或振兴。<BR><STRONG>振兴（消耗2动作）。</STRONG>扎拉坦只有在缩壳期间才能使用此传奇动作。扎拉坦回复52（5d20）点HP，下次使用传奇动作时必须使用出现行动。<BR><STRONG>出现（消耗2动作）。</STRONG>扎拉坦从壳中出现并使用喷吐岩石。只有他在缩壳是才能使用此动作。</P></body>
+其所有已消耗的传奇动作数。<BR><STRONG>践踏。</STRONG>扎拉坦进行一次践踏攻击。<BR><STRONG>移动。</STRONG>扎拉坦移动等同至多等于其速度的距离。<BR><STRONG>喷吐（消耗2动作）。</STRONG>扎拉坦使用喷吐岩石。<BR><STRONG>缩壳（消耗2动作）。</STRONG>扎拉坦缩入壳中。直到他使用出现行动，他获得所有伤害的抗性并被束缚。下次传奇行动时只能使用出现行动或振兴。<BR><STRONG>振兴（消耗2动作）。</STRONG>扎拉坦只有在缩壳期间才能使用此传奇动作。扎拉坦回复52（5d20）点HP，下次使用传奇动作时必须使用出现行动。<BR><STRONG>出现（消耗2动作）。</STRONG>扎拉坦从壳中出现并使用喷吐岩石。只有他在缩壳是才能使用此动作。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

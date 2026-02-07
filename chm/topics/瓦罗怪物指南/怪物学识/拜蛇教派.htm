@@ -26,7 +26,45 @@
 
 <P>蛇人们将这些邪教视为自愿的低贱奴仆和马屁精的稳定来源。许多蛇人建立或鼓动邪教以收集他们在进化为更强大的模式时需要的特殊草药和魔法。就像蛇人有改变自己身体的仪式一样，他们有一种可以把人变成纯血蛇人的仪式。他们有时会用这个仪式的承诺来吸引渴望力量的追随者，或者是当做对他们最忠诚的信徒的奖励。</P>
 
-<P>在文明社会中，教徒们设法讨好当地的平民，通常是通过允诺实现完美的肉体（有时包括疾病的治疗），从罪恶和罪恶的思想中解脱出来，以及给那些加入邪教的人以享乐主义的快乐。邪教的领袖通常由一个纯血来担任，它在邪教和一个蛇人城市之间传递命令和信息。</P></body>
+<P>在文明社会中，教徒们设法讨好当地的平民，通常是通过允诺实现完美的肉体（有时包括疾病的治疗），从罪恶和罪恶的思想中解脱出来，以及给那些加入邪教的人以享乐主义的快乐。邪教的领袖通常由一个纯血来担任，它在邪教和一个蛇人城市之间传递命令和信息。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

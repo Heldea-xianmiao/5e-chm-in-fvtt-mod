@@ -60,7 +60,45 @@ d4 骰，当这些骰子被使用以后，学生骰的数目也随之减少。</
 
 <P><FONT color=#800000 size=4><STRONG></STRONG></FONT> </P>
 
-<P><FONT color=#800000 size=4><STRONG>可选规则</STRONG></FONT><BR>本书中关于课外社团、工作、考试和人际关系的规则，是为了使其与冒险相结合，以营造在魔法大学中的生活气氛。<BR>但如果你发现这些规则不适合你的战役，你同样可以在不使用这些规则的情况下运行本书的冒险。你只要叙述相关遭遇的影响，而无需使用规则来将它们数值化。</P></body>
+<P><FONT color=#800000 size=4><STRONG>可选规则</STRONG></FONT><BR>本书中关于课外社团、工作、考试和人际关系的规则，是为了使其与冒险相结合，以营造在魔法大学中的生活气氛。<BR>但如果你发现这些规则不适合你的战役，你同样可以在不使用这些规则的情况下运行本书的冒险。你只要叙述相关遭遇的影响，而无需使用规则来将它们数值化。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

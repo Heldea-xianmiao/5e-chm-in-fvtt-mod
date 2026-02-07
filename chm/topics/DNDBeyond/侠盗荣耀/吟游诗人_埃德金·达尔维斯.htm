@@ -54,7 +54,45 @@ Words：</STRONG>埃德金魔法地嘲讽60尺内他能看见的最多3个生物
 
 person，易容术disguise self<BR>——————————————————<BR><STRONG><FONT color=#800000>反应：<BR></FONT>激励之语Inspiring 
 
-Words：</STRONG>当埃德金能看到的一个60尺内的生物在一次属性、攻击或豁免检定中失败时，埃德金给予那个生物以魔法激励。目标生物能骰一个D8并在总掷骰结果中加入掷骰数值，这可能使失败的检定变为成功。</P></body>
+Words：</STRONG>当埃德金能看到的一个60尺内的生物在一次属性、攻击或豁免检定中失败时，埃德金给予那个生物以魔法激励。目标生物能骰一个D8并在总掷骰结果中加入掷骰数值，这可能使失败的检定变为成功。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

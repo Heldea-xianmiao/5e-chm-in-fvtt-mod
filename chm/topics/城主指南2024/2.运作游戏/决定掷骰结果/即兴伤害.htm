@@ -210,7 +210,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
       <P align=center><FONT size=4 > 99(18d10)</FONT></P></TD></TR></TABLE></P>
 
-<P>妨害型伤害很少在角色处于所示等级时将他们置于死地，但已被严重削弱的角色可能会被这次伤害所击溃。<BR>致死型伤害对处于所示等级的角色构成了显著的威胁，且有可能杀死已经失去生命值的角色。</P></body>
+<P>妨害型伤害很少在角色处于所示等级时将他们置于死地，但已被严重削弱的角色可能会被这次伤害所击溃。<BR>致死型伤害对处于所示等级的角色构成了显著的威胁，且有可能杀死已经失去生命值的角色。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

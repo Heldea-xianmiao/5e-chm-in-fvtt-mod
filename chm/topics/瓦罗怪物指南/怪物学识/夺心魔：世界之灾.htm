@@ -38,7 +38,45 @@ style='FONT-SIZE: 10pt; FONT-FAMILY: "Segoe UI",sans-serif; COLOR: black'> <FONT
 
 </SPAN><SPAN 
 
-style="FONT-SIZE: 10pt; COLOR: black"><FONT size=3>，它们是潜伏在幽暗地域深处的可怖异域人型生物。作为灵能大师，他们利用自己的这一精神力量来控制其他生物。那些受害者中的幸运儿则被杀死，他们的大脑被吞食。而不幸的那些，他们的心灵会被扭曲，他们会成为没有心智的奴隶，他们获救的希望渺茫。</FONT></SPAN></FONT></P></body>
+style="FONT-SIZE: 10pt; COLOR: black"><FONT size=3>，它们是潜伏在幽暗地域深处的可怖异域人型生物。作为灵能大师，他们利用自己的这一精神力量来控制其他生物。那些受害者中的幸运儿则被杀死，他们的大脑被吞食。而不幸的那些，他们的心灵会被扭曲，他们会成为没有心智的奴隶，他们获救的希望渺茫。</FONT></SPAN></FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

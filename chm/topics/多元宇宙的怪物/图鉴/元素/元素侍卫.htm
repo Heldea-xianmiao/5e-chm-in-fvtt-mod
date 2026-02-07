@@ -28,7 +28,45 @@ html,body {
 
 <body><p><font size=5><font color=#800000><strong>元素侍从 Elemental Myrmidons</strong></font></font></p><p>板甲经由特殊的仪式处理，将元素咒唤出并束缚于之中，以此便得到了元素侍从这样的特殊元素。以这种形式存在于世，会令它们忘却自己曾身为自由 元素Element 的记忆。<br>
 
-现在，它们是只为听从创造者命令而存在的元素。</p></body>
+现在，它们是只为听从创造者命令而存在的元素。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

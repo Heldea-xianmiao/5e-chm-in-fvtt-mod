@@ -42,7 +42,45 @@ Bitterwind</font></FONT>  </FONT></STRONG></P>
 
 <strong>
 
-<font color=maroon>秃鹫人Werevulture</font></strong>凯瑟拉·苦风（秃鹫人数据详见第二十一章）是奥古斯都老大和德卢尔老大最信任的副手。与大多数成员不同的是，凯瑟拉在加入公会时已经是一名兽化人，她通过证明自己对公会首领坚定不移的忠诚，很快就爬到了高层<br>由于首领们大部分时间都在月之潜猎者的公会会馆里与强大的客户进行策划和谈判，大多数公会成员与凯瑟拉相处的时间远远多于与德洛尔或奥古斯都相处的时间。她训练成员，领导高优先级的任务，总是希望她的同伙能像她一样提供专业精准的服务。她脾气暴躁，对新成员没有耐心，但在关键时刻她很少失去冷静。</P></body>
+<font color=maroon>秃鹫人Werevulture</font></strong>凯瑟拉·苦风（秃鹫人数据详见第二十一章）是奥古斯都老大和德卢尔老大最信任的副手。与大多数成员不同的是，凯瑟拉在加入公会时已经是一名兽化人，她通过证明自己对公会首领坚定不移的忠诚，很快就爬到了高层<br>由于首领们大部分时间都在月之潜猎者的公会会馆里与强大的客户进行策划和谈判，大多数公会成员与凯瑟拉相处的时间远远多于与德洛尔或奥古斯都相处的时间。她训练成员，领导高优先级的任务，总是希望她的同伙能像她一样提供专业精准的服务。她脾气暴躁，对新成员没有耐心，但在关键时刻她很少失去冷静。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -246,7 +246,45 @@ Least Devils</STRONG>  </P>
 
 Adventures</FONT></H3>
 
-<P>九层地狱象征着秩序的堕落，是冷酷与腐化的极致。相比其他邪魔，九层地狱的恶魔更为狡诈、险恶且危险。它们的智慧、操控与无尽的野心，使它们成为真正令人恐惧的敌人。<BR>深入九层地狱，如同踏入邪恶的心脏。此地每一寸都为恶意所用，每层都针对凡人的弱点加以剥削。许多探险者在此发现自己难以抗拒诱惑，最终被腐化，永远滞留在九层地狱中。为了避免这样的命运，正义的冒险者必须在面对魔鬼时保持坚定，不被其狡诈的承诺与甜美的谎言所动摇，哪怕它们声称可以满足他们最深的渴望。</P></body>
+<P>九层地狱象征着秩序的堕落，是冷酷与腐化的极致。相比其他邪魔，九层地狱的恶魔更为狡诈、险恶且危险。它们的智慧、操控与无尽的野心，使它们成为真正令人恐惧的敌人。<BR>深入九层地狱，如同踏入邪恶的心脏。此地每一寸都为恶意所用，每层都针对凡人的弱点加以剥削。许多探险者在此发现自己难以抗拒诱惑，最终被腐化，永远滞留在九层地狱中。为了避免这样的命运，正义的冒险者必须在面对魔鬼时保持坚定，不被其狡诈的承诺与甜美的谎言所动摇，哪怕它们声称可以满足他们最深的渴望。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -58,7 +58,45 @@ Nyanzaru是亡灵盘踞的雨林、湍急和河流和超大号顶级捕食者面
 
   <P align=center><FONT size=4><STRONG>厨师笔记</STRONG></FONT></P>
 
-  <P>如果你没有用来增加甜味和风味的君度酒，你也可以在每杯中加入1.5茶匙特细砂糖代替。只需用搅拌机或料理机加入冰糖，打碎成易溶解的大小。<BR>这道鸡尾酒的量很大，不同的摇酒壶容量不同。你可能要分成两次摇，每次一杯。酒吧常用的波士顿壶比一般家用的、自带滤网的英式壶（cobbler）要大。</P></div></BLOCKQUOTE></body>
+  <P>如果你没有用来增加甜味和风味的君度酒，你也可以在每杯中加入1.5茶匙特细砂糖代替。只需用搅拌机或料理机加入冰糖，打碎成易溶解的大小。<BR>这道鸡尾酒的量很大，不同的摇酒壶容量不同。你可能要分成两次摇，每次一杯。酒吧常用的波士顿壶比一般家用的、自带滤网的英式壶（cobbler）要大。</P></div></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

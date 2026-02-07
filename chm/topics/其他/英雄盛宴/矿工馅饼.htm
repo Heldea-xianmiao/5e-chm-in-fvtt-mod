@@ -52,7 +52,45 @@ html,body {
 
 <P><STRONG>于此同时，制作盖头：<BR></STRONG>将土豆放进蒸笼。在一个宽大的煮锅里加入勉强能触碰到蒸笼的水，把水在大火下烧开。将蒸笼放在锅里，盖上锅子，将火候调整到中高火，蒸20分钟直到土豆变得很软。把蒸笼拿出，并把水倒出去。将土豆泥机放在锅上方，把土豆泥机捣碎的土豆直接倒进锅里。加入融化的黄油，搅进土豆粒。加入牛奶、1又1/2 
 
-茶匙的盐、适量胡椒、帕玛臣芝士，搅匀。尝尝味道并根据需要用盐和胡椒调整味道，放一旁冷却20分钟。将鸡蛋加入土豆，搅匀。将土豆泥放在陷的上面，均匀地铺平它，并保证覆盖焖锅的每一角。洒上均匀的一层蒙特利杰克芝士。将锅放在大号烤盘上，将内陷烤热，土豆略微膨胀，大约20分钟。打开烤箱的炙烤功能，将馅饼的表面烤至金黄酥脆，5到7分钟。洒上剩余的欧芹，趁热吃。</P></body>
+茶匙的盐、适量胡椒、帕玛臣芝士，搅匀。尝尝味道并根据需要用盐和胡椒调整味道，放一旁冷却20分钟。将鸡蛋加入土豆，搅匀。将土豆泥放在陷的上面，均匀地铺平它，并保证覆盖焖锅的每一角。洒上均匀的一层蒙特利杰克芝士。将锅放在大号烤盘上，将内陷烤热，土豆略微膨胀，大约20分钟。打开烤箱的炙烤功能，将馅饼的表面烤至金黄酥脆，5到7分钟。洒上剩余的欧芹，趁热吃。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

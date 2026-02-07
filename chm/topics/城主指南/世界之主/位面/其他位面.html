@@ -1302,9 +1302,47 @@ Realm</span>在已知的多元宇宙之外。事实上，它可能是一个完�
 
  lang=EN-US>Firestorm Peak</span>的山中开辟了通往遥远国度的巨大传送门，而他们的文明却最终崩溃在血腥的恐怖中，而传送门的所在地（甚至连同它所在的世界一起）被长远的遗忘。这些失传的传送<span
 
- class=GramE>门可能</span>仍然存在，甚至被异域魔法所标记并不断转变着其周围的区域。</p></div></body>
+ class=GramE>门可能</span>仍然存在，甚至被异域魔法所标记并不断转变着其周围的区域。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

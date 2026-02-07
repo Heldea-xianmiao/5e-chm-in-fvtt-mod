@@ -156,7 +156,45 @@ DC13
 
 <P><EM>奇物，
 
-普通</EM><BR>你能够以一个<STRONG><FONT color=#008000>附赠动作</FONT></STRONG>将这根手杖变为一把普普通通的长剑，或者将长剑变回手杖。你必须持握该物品才能完成以上两种变形。<!--StartFragment--></P></body>
+普通</EM><BR>你能够以一个<STRONG><FONT color=#008000>附赠动作</FONT></STRONG>将这根手杖变为一把普普通通的长剑，或者将长剑变回手杖。你必须持握该物品才能完成以上两种变形。<!--StartFragment--></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

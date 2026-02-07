@@ -72,7 +72,45 @@ Brust</SPAN></STRONG><STRONG>（充能5~6）。</STRONG>云雨使用其光环独
 
  style="COLOR: red">虹Heali</SPAN><SPAN style="COLOR: navy">ng Rainbow</SPAN></STRONG><STRONG>。</STRONG>云雨释放出一道带有复苏之力的多彩光波，光波照耀30尺锥形区域。区域内每一个云雨选择的生物恢复18（4d8）点生命值。<BR>——————————————<BR><STRONG><FONT color=#800000>附赠动作Bonus Action</FONT></STRONG><BR><STRONG>迅捷逃逸Nimble 
 
-Escape。</STRONG>云雨可在自己的回合，以一个附赠动作来执行撤离Disengage或躲藏Hide动作。</P></body>
+Escape。</STRONG>云雨可在自己的回合，以一个附赠动作来执行撤离Disengage或躲藏Hide动作。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

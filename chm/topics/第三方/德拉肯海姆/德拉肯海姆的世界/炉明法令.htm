@@ -64,7 +64,45 @@ style="FONT-SIZE: 11pt; FONT-FAMILY: 微软雅黑; COLOR: rgb(128,0,0); mso-spac
 
   <LI><STRONG>咒术条款：紫晶学院不得教授召唤恶魔和/或唤起亡灵等法术，严禁巫师使用魔法直接影响或控制贵族和/或神职人员。</STRONG></LI>
 
-  <LI><STRONG>伤害条款：详细说明了以和平方式解决轻微违规行为的复杂制度；更严重的违规行为需进行损害赔偿；以及在何种情况下各方可以使用暴力手段强制执行法令。</STRONG></LI></UL></body>
+  <LI><STRONG>伤害条款：详细说明了以和平方式解决轻微违规行为的复杂制度；更严重的违规行为需进行损害赔偿；以及在何种情况下各方可以使用暴力手段强制执行法令。</STRONG></LI></UL><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

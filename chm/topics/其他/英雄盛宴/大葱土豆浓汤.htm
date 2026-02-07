@@ -40,7 +40,45 @@ html,body {
 
 奶油<BR>现磨黑胡椒</P></BLOCKQUOTE>
 
-<P>开中火，在一个大锅里开始煎培根，按需翻面，直到它被煎得金黄且出油，大约13分钟。用一个漏勺或夹子将培根放到吸油纸上。在锅中加入大葱、西芹、百里香，炒至变软，大约5分钟。加入土豆、高汤、1茶匙盐。煮至土豆变软，15到20分钟。关火，用浸入式搅拌器将汤搅拌至均匀柔滑。或者，用一个台式搅拌机分批搅拌汤。重开中火，加入奶油，炖煮至汤1略微变厚，大约5分钟。尝味，并按需用黑胡椒和更多的盐来调味。将煎过的培根磨碎。趁热盛汤，洒上培根即可食用（也可以盛冷汤）。</P></body>
+<P>开中火，在一个大锅里开始煎培根，按需翻面，直到它被煎得金黄且出油，大约13分钟。用一个漏勺或夹子将培根放到吸油纸上。在锅中加入大葱、西芹、百里香，炒至变软，大约5分钟。加入土豆、高汤、1茶匙盐。煮至土豆变软，15到20分钟。关火，用浸入式搅拌器将汤搅拌至均匀柔滑。或者，用一个台式搅拌机分批搅拌汤。重开中火，加入奶油，炖煮至汤1略微变厚，大约5分钟。尝味，并按需用黑胡椒和更多的盐来调味。将煎过的培根磨碎。趁热盛汤，洒上培根即可食用（也可以盛冷汤）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

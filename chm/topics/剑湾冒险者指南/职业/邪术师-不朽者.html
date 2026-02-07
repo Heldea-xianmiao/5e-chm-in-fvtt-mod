@@ -158,5 +158,43 @@ Life</STRONG></FONT><BR>从14级起，你窥探到一些有关于 不朽者Undyi
 
 的生命值。此外，如果你在使用这个能力的同时把自己一部分被切断的躯体放置在断口处，那部分断口将会愈合。<BR>    
 
-一旦你使用了这个能力，直到你完成一次短休或长休之前你都不能再次使用它。</p></BODY></HTML>
+一旦你使用了这个能力，直到你完成一次短休或长休之前你都不能再次使用它。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

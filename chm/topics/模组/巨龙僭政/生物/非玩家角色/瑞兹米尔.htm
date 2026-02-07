@@ -56,7 +56,45 @@ Bolt。</STRONG>远程法术攻击：命中+8，射程90尺，单一目标。命
 
 Breath（充能5~6）。</STRONG>瑞兹米尔呼出强酸并覆盖一处30尺长、5尺宽的线状区域。该区域内的每个生物都必须进行一次DC 
 
-14的敏捷豁免，豁免失败者将受到22（5d8）的强酸伤害，豁免成功则伤害减半。<BR><STRONG><FONT color=#800000>传奇动作</FONT></STRONG><BR>若瑞兹米尔着装了黑龙面具，她将可以在其自己每回合之间执行2传奇动作，它们可同时花费或在当轮里分开使用。每个传奇动作项只能在一个回合开始或结束时执行。瑞兹米尔拥有下列传奇动作项，其中某些项目执行时需要花费多于1传奇动作。<BR><STRONG>2动作。</STRONG>一片半径15尺的魔法黑暗从瑞兹米尔周边60尺范围内她能看到的一点扩散开来并充满其所在区域的所有角落。黑暗区域在瑞兹米尔维持其专注时持续存在，且至多持续1分钟。拥有黑暗视觉的生物无法看透这片黑暗，自然光照也无法照亮它。若黑暗区域与任何2环或更高环阶法术创造的光照区域重叠，则该创造光照的法术被反制。<BR><STRONG>1动作。</STRONG>瑞兹米尔发动一次近战攻击。<BR><STRONG>1动作。</STRONG>瑞兹米尔执行躲藏Hide动作。</P></body>
+14的敏捷豁免，豁免失败者将受到22（5d8）的强酸伤害，豁免成功则伤害减半。<BR><STRONG><FONT color=#800000>传奇动作</FONT></STRONG><BR>若瑞兹米尔着装了黑龙面具，她将可以在其自己每回合之间执行2传奇动作，它们可同时花费或在当轮里分开使用。每个传奇动作项只能在一个回合开始或结束时执行。瑞兹米尔拥有下列传奇动作项，其中某些项目执行时需要花费多于1传奇动作。<BR><STRONG>2动作。</STRONG>一片半径15尺的魔法黑暗从瑞兹米尔周边60尺范围内她能看到的一点扩散开来并充满其所在区域的所有角落。黑暗区域在瑞兹米尔维持其专注时持续存在，且至多持续1分钟。拥有黑暗视觉的生物无法看透这片黑暗，自然光照也无法照亮它。若黑暗区域与任何2环或更高环阶法术创造的光照区域重叠，则该创造光照的法术被反制。<BR><STRONG>1动作。</STRONG>瑞兹米尔发动一次近战攻击。<BR><STRONG>1动作。</STRONG>瑞兹米尔执行躲藏Hide动作。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -70,7 +70,45 @@ html,body {
 
 1/每日：<em>高级幻影major image，暗示术suggestion</em></FONT><br><STRONG><FONT color=#800000>附赠动作Bonus Actions</FONT></STRONG><br>
 
-<strong>妖精步Fey Step（充能4~6）。</strong>雅灵连同其携带和穿着的装备一同传送至一处30尺内它可见的、未占据空间。</p></body>
+<strong>妖精步Fey Step（充能4~6）。</strong>雅灵连同其携带和穿着的装备一同传送至一处30尺内它可见的、未占据空间。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

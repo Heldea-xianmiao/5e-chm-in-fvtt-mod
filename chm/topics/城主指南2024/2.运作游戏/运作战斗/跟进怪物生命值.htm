@@ -38,7 +38,45 @@ Points</FONT></STRONG></FONT></FONT></P>
 
 33<BR>食人魔C：59<BR></EM></STRONG> <BR>有些DM更喜欢跟进怪物受到的伤害，随着角色造成伤害而增加这个数字（而非从怪物的生命值中减去）。一般来说，加法比减法更容易，而且你可以在一个可见的先攻列表（如白板）上追踪伤害，而无需向玩家透露怪物有多少的生命值。跟进过程可能看起来像这样：<BR><STRONG><EM>食人魔A：<del>9</DEL> <del>15</DEL> <del>23</DEL> <del>44</DEL> <del>54</DEL> <del>59</DEL> 
 
-死亡<BR>食人魔B：<del>9</DEL> <del>17</DEL> 38<BR>食人魔C：</EM></STRONG></P></body>
+死亡<BR>食人魔B：<del>9</DEL> <del>17</DEL> 38<BR>食人魔C：</EM></STRONG></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

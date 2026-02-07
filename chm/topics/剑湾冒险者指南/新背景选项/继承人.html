@@ -128,7 +128,45 @@ Characteristics<BR></STRONG></FONT></font></SPAN>使用
 
 lang=EN-US>
 
-    《玩家手册》</SPAN>中“平民英雄”的特征表格作为你的基础特征和动机，并在适当的时候修改条目以让其符合你作为继承者的身份。<BR>你的羁绊可能会与你的继承物直接相关，或可能会是你从之接收到继承物的某人。你的理念可能会受到你对继承物了解的影响，或可能被在你所得到赠礼所能做到的事给影响。</P></body>
+    《玩家手册》</SPAN>中“平民英雄”的特征表格作为你的基础特征和动机，并在适当的时候修改条目以让其符合你作为继承者的身份。<BR>你的羁绊可能会与你的继承物直接相关，或可能会是你从之接收到继承物的某人。你的理念可能会受到你对继承物了解的影响，或可能被在你所得到赠礼所能做到的事给影响。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

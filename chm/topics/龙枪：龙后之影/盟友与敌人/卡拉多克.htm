@@ -64,9 +64,47 @@
 
 <P class=MsoNormal style="MARGIN: 0pt"><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000">附赠动作Bonus</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000"> </SPAN></B><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000">Actions</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000"></SPAN></B></P>
 
-<P class=MsoNormal style="MARGIN: 0pt"><B><SPAN style="FONT-WEIGHT: bold" >离间低语Divisive</SPAN></B><B><SPAN style="FONT-WEIGHT: bold" > </SPAN></B><B><SPAN style="FONT-WEIGHT: bold" >Whisper。</SPAN></B><SPAN >卡拉多克对60尺内的一个生物魔法性地低语。目标必须成功通过一次DC15的感知豁免，否则必须立即用自己的反应对卡拉多克指定的一个其他生物发动一次近战武器攻击，而若目标触及范围内没有其他生物，则目标的反应被浪费。</SPAN></P></BODY>
+<P class=MsoNormal style="MARGIN: 0pt"><B><SPAN style="FONT-WEIGHT: bold" >离间低语Divisive</SPAN></B><B><SPAN style="FONT-WEIGHT: bold" > </SPAN></B><B><SPAN style="FONT-WEIGHT: bold" >Whisper。</SPAN></B><SPAN >卡拉多克对60尺内的一个生物魔法性地低语。目标必须成功通过一次DC15的感知豁免，否则必须立即用自己的反应对卡拉多克指定的一个其他生物发动一次近战武器攻击，而若目标触及范围内没有其他生物，则目标的反应被浪费。</SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

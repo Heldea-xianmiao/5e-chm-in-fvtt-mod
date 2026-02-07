@@ -82,7 +82,45 @@ Cave</STRONG>。这处受腐化的洞穴使用附录B中的幽暗地域巷道地
 
 Home</STRONG>。当角色们离开树林时，它们会再次遇到波罗果芙。如果他们已经用掉了波罗果芙的橡子，他会再给角色们一颗。如果角色们净化了溪流的源头，他还会赠予角色们一柄<EM><U>鲜花法杖Staff 
 
-Of Flowers</U></EM>以表感激。</P></body>
+Of Flowers</U></EM>以表感激。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

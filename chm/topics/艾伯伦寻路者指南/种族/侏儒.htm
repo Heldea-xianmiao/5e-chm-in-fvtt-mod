@@ -144,7 +144,45 @@ Lyrris是Lyrris家族中两个不同家庭的成员。侏儒的名字又长又�
 
 <P><STRONG><FONT color=#800000>五国的侏儒</FONT></STRONG><BR>侏儒在五国中也能见到，而且他们大多数都很好地融入了当地文化。在五国中遇到的侏儒一般是商人、魔匠师、记录者、学者和恶棍。虽然五国的侏儒不像他们在吉拉哥的远亲一样天性狡猾，但通常来说家庭对他们也很重要。你可能有一个和你成长的社区有关的人情关系网。但你也有可能选择避开吉拉哥远亲喜欢的阴谋，寻找自己的人生道路。</P>
 
-<P><STRONG><FONT color=#800000>侏儒与龙纹</FONT></STRONG><BR>西维斯家族的侏儒拥有抄录龙纹。这个家族的成员是抄写员和公证人，他们同时也能通过通讯石在科瓦雷中远程传递信息。</P></body>
+<P><STRONG><FONT color=#800000>侏儒与龙纹</FONT></STRONG><BR>西维斯家族的侏儒拥有抄录龙纹。这个家族的成员是抄写员和公证人，他们同时也能通过通讯石在科瓦雷中远程传递信息。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

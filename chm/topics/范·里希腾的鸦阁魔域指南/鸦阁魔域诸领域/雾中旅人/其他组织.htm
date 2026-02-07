@@ -128,7 +128,45 @@ style="mso-bidi-font-family: 'Times New Roman'"><o:p></o:p></SPAN></P>
 
 style="">乌尔米斯特审判庭的三个分支能够追溯到他们起源于马里坦时，那是一座神秘的、邪教肆虐城市，来自和巴洛维亚相同的世界。这些审判官们驱使灵能的力量来消灭邪恶，但他们的狂热和窥伺他人内心的意图让许多人对他们持有和他们对抗的邪恶同等的恐惧。乌尔米斯特审判庭的组织能够在任何领取找到，并且他们还常常和以斯拉教会结盟对抗奥西巴斯祭司。乌尔米斯特审判官们也可能会和角色们结盟以对抗邪恶，但他们也同样会看到冒险者们灵魂中的腐化。这些审判官们在第五章中有详述。</SPAN><SPAN 
 
-style="mso-bidi-font-family: 'Times New Roman'"><o:p></o:p></SPAN></P></body>
+style="mso-bidi-font-family: 'Times New Roman'"><o:p></o:p></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

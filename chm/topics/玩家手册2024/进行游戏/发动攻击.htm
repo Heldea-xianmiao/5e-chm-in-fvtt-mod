@@ -40,7 +40,45 @@
 
 and Targets<BR></STRONG>当你对不可见的目标进行一次攻击检定时，你在该检定上具有<FONT color=#008000><STRONG>劣势</STRONG></FONT>。无论你是通过猜测来判断出了敌人的位置，还是你能听到对方的声音却看不到人，都会如此。如果该目标不位于你指定的位置则攻击失手。<BR>你对看不见你的生物进行的攻击检定具有<FONT color=#008000><STRONG>优势。<BR></STRONG></FONT>若你进行攻击检定时处于躲藏中，不论是否命中你的位置都会暴露。</p></div>
 
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
 </body>
 
 </html>
+
 

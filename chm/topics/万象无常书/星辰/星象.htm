@@ -110,7 +110,45 @@ Loss。</STRONG>在利爪座下出生的孩子有时眉头上会有皱纹，被�
 
 <P><STRONG><FONT color=#800000>弄臣座（小丑）Jester</FONT></STRONG><BR><EM>林</EM><EM>布哥Nilbog；在初冬时最为突出</EM><BR>小丑在其他星座之上跳起预示冬天来临的舞蹈。当布林哥出现时，欢乐与悲痛结伴成行，许多冬季的节日也在他古灵精怪的笑容下庆祝。<BR><STRONG>混乱之兆Omen of 
 
-Chaos。</STRONG>与其他星座下出生的人不同，在弄臣座下出生的人的未来是无法知晓的。这些人往往成为了混乱的代理人，并能出现在任何职业之中。</P></body>
+Chaos。</STRONG>与其他星座下出生的人不同，在弄臣座下出生的人的未来是无法知晓的。这些人往往成为了混乱的代理人，并能出现在任何职业之中。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

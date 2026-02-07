@@ -112,5 +112,43 @@ lang=EN-US>2</SPAN>动作）：狮子发出魔法吼叫。在狮子周围<SPAN
 
 lang=EN-US>60</SPAN>尺内的每一个能听到吼叫的生物，必须成功一次<SPAN lang=EN-US>DC 
 
-12的</SPAN>感知豁免检定，或者陷入对狮子的恐慌，直到狮子的下一轮结束。</P></DIV></BODY></HTML>
+12的</SPAN>感知豁免检定，或者陷入对狮子的恐慌，直到狮子的下一轮结束。</P></DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

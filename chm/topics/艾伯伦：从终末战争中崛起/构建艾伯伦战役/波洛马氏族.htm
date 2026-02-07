@@ -98,7 +98,45 @@ Daask，但到目前为止，他的想法都没有奏效。<BR>阴暗夜总会�
 
 包含了额外的想法。波洛马氏族任务<BR>d6 任务<BR>1 找到两个不同的龙纹家族有染的证据。<BR>2 向一个迟交货款的销赃处收钱。<BR>3 偷一个市议员的银行记录。<BR>4 说服一个萨恩守望者队长，积极根除达斯克的特工。<BR>5 找回一袋跑错地方的梦幻百合。<BR>6 发现一个达斯克安全屋的位置。<BR>波洛马氏族冒险引子<BR>波洛马氏族冒险引子表提供了围绕波洛马氏族的额外冒险的想法。波洛马氏族冒险引子<BR>d4 冒险引子<BR>1 达斯克部队抓获了从塔兰塔平原来萨恩探望的波洛马氏族成员。 
 
-波洛马悬赏让他们的家人平安归来，并悬赏绑匪头目，这导致了街头的帮派暴力。<BR>2 一位备受爱戴的萨恩守望者队长消失了，他曾公开反对波洛马氏族。波洛马声称他们与此事无关，但萨恩守望者的一些成员以此事为借口对该组织进行攻击。<BR>3 一个幻身灵从波洛马氏族偷了一件走私的价值连城的神器。为了找到它，波洛马执法者们在萨恩到处对人们进行打击，氏族领袖们考虑与暴君会开战。<BR>4 波洛马氏族为赛丹的生日在卡尔斯坦举办了一个节日。氏族的所有盟友都将出席，为间谍活动和暗杀创造机会。</P></body>
+波洛马悬赏让他们的家人平安归来，并悬赏绑匪头目，这导致了街头的帮派暴力。<BR>2 一位备受爱戴的萨恩守望者队长消失了，他曾公开反对波洛马氏族。波洛马声称他们与此事无关，但萨恩守望者的一些成员以此事为借口对该组织进行攻击。<BR>3 一个幻身灵从波洛马氏族偷了一件走私的价值连城的神器。为了找到它，波洛马执法者们在萨恩到处对人们进行打击，氏族领袖们考虑与暴君会开战。<BR>4 波洛马氏族为赛丹的生日在卡尔斯坦举办了一个节日。氏族的所有盟友都将出席，为间谍活动和暗杀创造机会。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

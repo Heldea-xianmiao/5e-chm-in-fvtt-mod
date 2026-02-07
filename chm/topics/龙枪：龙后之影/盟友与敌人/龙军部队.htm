@@ -28,9 +28,47 @@
 
 <P class=MsoNormal style="TEXT-ALIGN: left; MARGIN: 0pt"><SPAN ><BR></SPAN><B><SPAN style="FONT-WEIGHT: bold" >龙类忠诚Draconic De</SPAN></B><B><SPAN style="FONT-WEIGHT: bold" >v</SPAN></B><B><SPAN style="FONT-WEIGHT: bold" >otion</SPAN></B><B><SPAN style="FONT-WEIGHT: bold" >。</SPAN></B><SPAN >若龙军士兵能看到一个非敌对的</SPAN><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000">龙类</SPAN></B><SPAN >，则他在攻击检定上有优势。<BR></SPAN><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000">动作Actions</SPAN></B><SPAN ><BR></SPAN><B><SPAN style="FONT-WEIGHT: bold" >多重攻击Multiattack</SPAN></B><B><SPAN style="FONT-WEIGHT: bold" >。</SPAN></B><SPAN >龙军士兵发动两次长剑或标枪攻击。<BR></SPAN><B><SPAN style="FONT-WEIGHT: bold" >长剑Longsword</SPAN></B><B><SPAN style="FONT-WEIGHT: bold" >。</SPAN></B><SPAN >近战武器攻击：命中+4，触及5尺，单一目标。命中：6（1d8+2）或双手持用时的7（1d10+2）挥砍伤害，外加2（1d4）火焰伤害。<BR></SPAN><B><SPAN style="FONT-WEIGHT: bold" >标枪Javelin</SPAN></B><B><SPAN style="FONT-WEIGHT: bold" >。</SPAN></B><SPAN >近战或远程武器攻击：命中+4，触及5尺或射程30/120尺，单一目标。命中：5（1d6+2）穿刺伤害外加2（1d4）火焰伤害。</SPAN></P><!--EndFragment-->
 
-<P> </P></BODY>
+<P> </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

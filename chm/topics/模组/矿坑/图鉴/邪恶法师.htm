@@ -40,7 +40,45 @@ html,body {
 
 <P><STRONG>施法。</STRONG>这是一名4级法师，以智力为施法属性(法术豁免DC13，法术攻击加值+5)，这个法师得知以下的法术列表：<BR>戏法(随意)：光亮术、法师之手、电爪<BR>1环法术(四个法术位)：魅惑类人、魔法飞弹<BR>2环法术(三个法术位)：定身类人、迷踪步<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>法杖。</STRONG>近战武器攻击：命中+1，触及5尺，单一目标。命中：3 
 
-(1d8 -1)钝击伤害</P></body>
+(1d8 -1)钝击伤害</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -86,7 +86,45 @@ of Dragonkind。在灰鹰世界，这些神器是苏帝国在对抗红龙的战�
 
 Orbs）是用来保护大法师诸塔免遭巨龙的袭击。在费伦，惑龙宝珠Orb of Draconic 
 
-Influence（译注：出典于2版龙书，我未找到既存翻译，欢迎补充）则是由巨龙制造，以扩大它们对其他龙族的影响。这些神器的相似之处并非是因为巧合或者魔法性的趋同演化；它们本身就体现了龙与物质位面魔法结构之间的独有联系，并且在许多世界中形成回声。</P></BLOCKQUOTE></body>
+Influence（译注：出典于2版龙书，我未找到既存翻译，欢迎补充）则是由巨龙制造，以扩大它们对其他龙族的影响。这些神器的相似之处并非是因为巧合或者魔法性的趋同演化；它们本身就体现了龙与物质位面魔法结构之间的独有联系，并且在许多世界中形成回声。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

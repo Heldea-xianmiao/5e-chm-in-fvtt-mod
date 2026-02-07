@@ -36,7 +36,45 @@ Stone。这个岛上有一个小树林，那里有一个可怕的女巫的废弃
 
 Level)。东之湖的某些东西正在把湖里的鱼和螃蟹变成可怕的骷髅，攻击靠近海岸的船只和人。这些角色被雇来揭开这个诅咒的来源，这恰好是一群孩子从女巫的小岛小树林里发现并扔到水里的护身符。如果角色能够找到并取回护身符，女巫（一个夜鬼婆A 
 
-Night Hag）可能很快就会来找它。<BR>为了在这次冒险中创造骨骼生物，请使用任何水生野兽并对其进行以下更改：<BR>?该生物是亡灵，不需要空气、食物、饮水或睡眠。<BR>?对毒素伤害和力竭免疫，不会陷入中毒。<BR>?它易受钝击伤害。</P></body>
+Night Hag）可能很快就会来找它。<BR>为了在这次冒险中创造骨骼生物，请使用任何水生野兽并对其进行以下更改：<BR>?该生物是亡灵，不需要空气、食物、饮水或睡眠。<BR>?对毒素伤害和力竭免疫，不会陷入中毒。<BR>?它易受钝击伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

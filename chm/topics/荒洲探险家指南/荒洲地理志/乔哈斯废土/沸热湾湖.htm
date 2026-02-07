@@ -32,7 +32,45 @@ html,body {
 
 <P>沸热湾湖的冒险<BR>角色们可以尝试穿过热血湾湖，避免唤醒水下的怪物，或者他们可以猎杀水下的生物。</P>
 
-<P>湖中之眼（任何级别）：靠近沸热湾湖的两个小岛被称作湖中之眼，上面有岩石岛岸，以及两片棕褐色的死木林。高大、扭曲并且没有树叶。这些树林在远处看来十分不详。但是伊欧西亚高沼地的部族还在讲述有关奇怪而与世隔绝的邪教仍然住在那里，并且纪念那些被遗忘已久的神。</P></body>
+<P>湖中之眼（任何级别）：靠近沸热湾湖的两个小岛被称作湖中之眼，上面有岩石岛岸，以及两片棕褐色的死木林。高大、扭曲并且没有树叶。这些树林在远处看来十分不详。但是伊欧西亚高沼地的部族还在讲述有关奇怪而与世隔绝的邪教仍然住在那里，并且纪念那些被遗忘已久的神。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

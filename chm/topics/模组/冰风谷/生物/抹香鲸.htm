@@ -46,7 +46,45 @@ Breath。</STRONG>抹香鲸可以最多屏气90分钟。<BR><STRONG>敏锐听觉
 
 Hearing。</STRONG>抹香鲸在依靠听觉的感知检定上具有优势。<BR><STRONG><FONT color=#800000>动作Actions:</FONT></STRONG><BR><STRONG>多重攻击Multattack。</STRONG>抹香鲸发动两次攻击，一次用它的啃咬，一次用它的尾击。<BR><STRONG>啃咬bite。</STRONG>近战武器攻击，命中+11，触及5尺，单一目标，命中：21(3d8+8)点穿刺伤害。若目标是个大型或体型更小的生物，则其必须通过一个DC14的敏捷豁免，否则就会被鲸吞下。一个被鲸吞下的生物对鲸外攻击与其他效应视作全身掩护，并且在鲸鱼体内开始其回合时，其受到3(1d6)点强酸伤害。<BR>若鲸在单一个回合内受到来自体内的生物的30点伤害，那么它在该回合结束时需要通过一个DC16的体质豁免。若豁免失败，那么鲸会把他体所有被吞噬的生物喷出。并以倒地状态落在鲸周围10尺处。如果该鲸死亡，则被吞下的生物将不再受束缚，且可以消耗20尺移动力逃出，然后在尸体旁现身并陷入倒地状态。<BR><STRONG>尾击Tail 
 
-Attack。</STRONG>近战武器攻击，命中+11，触及15尺，单一目标，命中：18(3d6+8)点钝击伤害，或目标是物件时造成37(6d6+8)点钝击伤害。</P></body>
+Attack。</STRONG>近战武器攻击，命中+11，触及15尺，单一目标，命中：18(3d6+8)点钝击伤害，或目标是物件时造成37(6d6+8)点钝击伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

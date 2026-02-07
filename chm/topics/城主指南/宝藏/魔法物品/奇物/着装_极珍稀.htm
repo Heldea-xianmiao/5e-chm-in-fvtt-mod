@@ -114,7 +114,45 @@ Stars</FONT></STRONG>
 
 <P>着装头盔时，如果你因为对一个法术豁免失败而受到火焰伤害，则骰一次d20。如果骰值为1，则头盔上剩余的宝石将迸射出光束。60尺范围内的每个生物都必须成功通过一次DC 
 
-17的敏捷豁免否则将被光束击中，并受到与头盔上剩余宝石数量相等点光耀伤害。此后光辉头盔和所有宝石都被摧毁。 </P></body>
+17的敏捷豁免否则将被光束击中，并受到与头盔上剩余宝石数量相等点光耀伤害。此后光辉头盔和所有宝石都被摧毁。 </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -56,7 +56,45 @@ margin-bottom: -18px;
 
 Adventures</FONT></H3>
 
-<P>次生元素位面的环境极端，但本质上与物质位面上的地方相似——物质位面也不过是四种元素自由交织之地。<BR>在象征意义上，次生元素位面代表了其构成元素之间的互动，甚至有时是对立。例如，焚焰烬空突出了气与火的共性——它们都有着流动与变化的倾向，而这也奠定了该位面熊熊烈火中呈现的毁灭基调。遗忘泥沼则强调了稳定坚固的土与缓缓流动的水之间的对立。</P></body>
+<P>次生元素位面的环境极端，但本质上与物质位面上的地方相似——物质位面也不过是四种元素自由交织之地。<BR>在象征意义上，次生元素位面代表了其构成元素之间的互动，甚至有时是对立。例如，焚焰烬空突出了气与火的共性——它们都有着流动与变化的倾向，而这也奠定了该位面熊熊烈火中呈现的毁灭基调。遗忘泥沼则强调了稳定坚固的土与缓缓流动的水之间的对立。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

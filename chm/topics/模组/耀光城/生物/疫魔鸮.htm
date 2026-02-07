@@ -46,7 +46,45 @@ Resistance。</STRONG>疫魔鸮为抵抗法术和其他魔法效应而作的豁�
 
 Shape。</STRONG>疫魔鸮魔法性地变形成一只中型猫头鹰。这不会改变它的游戏数据（除体型）。该变形在疫魔鸮降到0生命值时或其以一个动作解除。<BR><STRONG>瘟疫之风Plague 
 
-Winds（仅邪魔形态，充能5~6）。</STRONG>疫魔鸮释放出一股蕴含瘟疫的透骨寒风并覆盖一处60尺长，10尺宽的线状区域。区域内的所有生物都必须成功通过一次DC13的体质豁免，否则受到26（4d12）寒冷伤害并中毒。<BR>当一个生物以此法中毒期间，它不能恢复生命值，且每个小时结束是都必须成功通过一次DC13的体质豁免否则获得一级力竭。如果生物进行该豁免时处于日光直射下，其豁免自动成功。<BR>若该生物被结束中毒或疾病的魔法指定为目标（例如次等复原术）时不处于日光直射下，则该效应不会被移除。</P></body>
+Winds（仅邪魔形态，充能5~6）。</STRONG>疫魔鸮释放出一股蕴含瘟疫的透骨寒风并覆盖一处60尺长，10尺宽的线状区域。区域内的所有生物都必须成功通过一次DC13的体质豁免，否则受到26（4d12）寒冷伤害并中毒。<BR>当一个生物以此法中毒期间，它不能恢复生命值，且每个小时结束是都必须成功通过一次DC13的体质豁免否则获得一级力竭。如果生物进行该豁免时处于日光直射下，其豁免自动成功。<BR>若该生物被结束中毒或疾病的魔法指定为目标（例如次等复原术）时不处于日光直射下，则该效应不会被移除。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

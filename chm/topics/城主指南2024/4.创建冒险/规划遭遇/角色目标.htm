@@ -58,7 +58,45 @@ Ritual</STRONG><BR>邪恶的邪教领袖，恶毒的施法者，以及邪魔通�
 
 <P><STRONG>猎头行动Take Out a Single 
 
-Target</STRONG><BR>角色们想要击败的一个大反派的身边聚集着一堆强大到足以击杀冒险者们的爪牙。角色们可以逃走并期望在未来的某天再直面敌人，或者他们可以试图在这群爪牙中杀出一条路来。让情况更为复杂的是，这群爪牙可能只是在反派控制之下的无辜者。杀死反派即可打破他的控制，但是在此之前——冒险者们必须一直承受爪牙的攻击。</P></body>
+Target</STRONG><BR>角色们想要击败的一个大反派的身边聚集着一堆强大到足以击杀冒险者们的爪牙。角色们可以逃走并期望在未来的某天再直面敌人，或者他们可以试图在这群爪牙中杀出一条路来。让情况更为复杂的是，这群爪牙可能只是在反派控制之下的无辜者。杀死反派即可打破他的控制，但是在此之前——冒险者们必须一直承受爪牙的攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

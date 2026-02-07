@@ -612,9 +612,47 @@ Smite</span></span></i></strong>，次数等于你的体质调整值（至少一
 
  lang=EN-US><br>
 
-</span>在诞生之初，墨癸斯决定打造一把用来杀死他的兄弟的武器。他召集了他的勇士们，将他们送上了战场，并在那里收集怒火、仇恨与嗜血欲的精华。墨癸斯用这些材料，在血月的照耀下打造出了一柄象征着暴力的黑铁巨斧，并将之命名为愤怒使者。</p></div></body>
+</span>在诞生之初，墨癸斯决定打造一把用来杀死他的兄弟的武器。他召集了他的勇士们，将他们送上了战场，并在那里收集怒火、仇恨与嗜血欲的精华。墨癸斯用这些材料，在血月的照耀下打造出了一柄象征着暴力的黑铁巨斧，并将之命名为愤怒使者。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

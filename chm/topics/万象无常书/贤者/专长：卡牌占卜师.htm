@@ -30,7 +30,45 @@ Cartomancer</FONT></STRONG> <BR><EM><STRONG>先决条件：</STRONG>等级4+，�
 
   Ace。</STRONG>当你完成一次长休时，你可以从你的职业法术列表中选择一个法术，并将其注入一张卡牌之中，被选择的法术施法时间必须为1动作，并必须是你拥有法术位的环阶。卡牌将被魔法侵染8小时，期间，你可以以你的附赠动作展示出卡牌并且施展其内的法术。之后卡牌立刻失去魔力。</LI></UL> 
 
-  <P><FONT color=#808080 size=2>（译注：隐藏王牌效果没有明确说明是否需要法术位以及何时需要法术位，导致出现严重的歧义并在外网备受争论。使用前请询问你的DM该专长与法术位如何互动，并静候本书的Errata（若有）。）</FONT></P></EM></body>
+  <P><FONT color=#808080 size=2>（译注：隐藏王牌效果没有明确说明是否需要法术位以及何时需要法术位，导致出现严重的歧义并在外网备受争论。使用前请询问你的DM该专长与法术位如何互动，并静候本书的Errata（若有）。）</FONT></P></EM><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

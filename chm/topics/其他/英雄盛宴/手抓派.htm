@@ -46,7 +46,45 @@ html,body {
 
 "X 
 
-"形的小通风口。修整边缘的不规则处，并使用叉子按压边缘留下纹路来帮助密封。如有必要，使用刮板（有把手的可能更方便使用），将馅饼转移到准备好的烤盘上。并对剩余的面饼和馅料重复以上操作。<BR>在一个小碗里，用1汤匙水打散鸡蛋，在每个派的顶部和侧面刷上蛋液。烘烤至馅饼呈金黄色且酥脆，大概需要40至45分钟，中途转动烤盘使它们受热均匀。将馅饼移至烤架上，冷却5至10分钟，热食时可配上番茄酱、芥末酱或牛排酱。</P></body>
+"形的小通风口。修整边缘的不规则处，并使用叉子按压边缘留下纹路来帮助密封。如有必要，使用刮板（有把手的可能更方便使用），将馅饼转移到准备好的烤盘上。并对剩余的面饼和馅料重复以上操作。<BR>在一个小碗里，用1汤匙水打散鸡蛋，在每个派的顶部和侧面刷上蛋液。烘烤至馅饼呈金黄色且酥脆，大概需要40至45分钟，中途转动烤盘使它们受热均匀。将馅饼移至烤架上，冷却5至10分钟，热食时可配上番茄酱、芥末酱或牛排酱。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

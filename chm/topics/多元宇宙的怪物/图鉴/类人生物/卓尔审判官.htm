@@ -68,7 +68,45 @@ seeing</FONT></EM><BR><STRONG><FONT color=#800000>附赠动作Bonuse
 
 Actions</FONT></STRONG><BR><STRONG>灵体匕首Spectral 
 
-Dagger（短休或长休后充能）。</STRONG>卓尔在其60尺内召唤一把浮空的灵体匕首。卓尔可以对匕首5尺内的一个生物发动一次近战法术攻击（命中+10）。命中目标受到9（1d8+5）力场伤害。<BR>匕首持续一分钟。在本回合后的任意回合，卓尔都可以用附赠动作来将其移动20尺并对匕首5尺内的一个生物重复该攻击。</P></body>
+Dagger（短休或长休后充能）。</STRONG>卓尔在其60尺内召唤一把浮空的灵体匕首。卓尔可以对匕首5尺内的一个生物发动一次近战法术攻击（命中+10）。命中目标受到9（1d8+5）力场伤害。<BR>匕首持续一分钟。在本回合后的任意回合，卓尔都可以用附赠动作来将其移动20尺并对匕首5尺内的一个生物重复该攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

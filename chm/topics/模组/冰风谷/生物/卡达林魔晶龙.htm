@@ -54,7 +54,45 @@ Nature。</STRONG>巨龙不需要食物，饮水，空气与睡眠，但是它�
 
 Presence。</STRONG>任何在魔晶龙30尺内的，智力为4或更高的生物必须通过DC16的感知豁免，否则会被龙魅惑一分钟。被影响的生物可以在自己回合结束时重复豁免，并在豁免成功时解除该效应。若一个生物成功通过了豁免或其身上的该效应停止，那么他在接下来24小时内免疫魔晶龙的恶意威仪。<BR>被如此魅惑的生物会紧盯着魔晶龙内心选择让他去盯着的物件与或另一个生物，并且最重要的是被魅惑的生物会在他的每个回合尽可能地接近目标并用自己的动作对其发动一次近战攻击。若巨龙没有选择任何目标，那么他可以在自己的回合照常行动。<BR><STRONG>光耀吐息Radiance 
 
-Breach(充能5~6)。</STRONG>魔晶龙呼出一道长120尺，宽5尺的光辉能量。每一个位于线型区域内的生物必须通过DC16的敏捷豁免，若豁免失败则受到31(7d8)点光耀伤害，豁免通过则只受到一半伤害。</P></body>
+Breach(充能5~6)。</STRONG>魔晶龙呼出一道长120尺，宽5尺的光辉能量。每一个位于线型区域内的生物必须通过DC16的敏捷豁免，若豁免失败则受到31(7d8)点光耀伤害，豁免通过则只受到一半伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

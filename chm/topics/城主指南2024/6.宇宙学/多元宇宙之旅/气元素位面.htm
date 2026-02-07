@@ -70,7 +70,45 @@ margin-bottom: 16px;
 
 Adventures</FONT></H3>
 
-<P>气之位面代表着气的本质：运动、活力与激发。气是生命之息，是变革之风，也是驱散无知迷雾和陈旧思想的清新和风。<BR>当气被邪恶元素邪教徒所驱使时，它也代表着毁灭性的力量，成为复仇的工具。邪气教徒们操纵着咆哮的风暴，用暴力表达个人自由，或是夺回他们认为应得之物。</P></body>
+<P>气之位面代表着气的本质：运动、活力与激发。气是生命之息，是变革之风，也是驱散无知迷雾和陈旧思想的清新和风。<BR>当气被邪恶元素邪教徒所驱使时，它也代表着毁灭性的力量，成为复仇的工具。邪气教徒们操纵着咆哮的风暴，用暴力表达个人自由，或是夺回他们认为应得之物。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

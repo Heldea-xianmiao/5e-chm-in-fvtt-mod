@@ -130,7 +130,45 @@ Preparation<BR>
 
 Step9 
 
-</STRONG>为一名玩家设计特别的新遭遇，或者更改一个现有的遭遇，使其紧贴某位玩家角色的目标和动机。但请注意不要让某名或某些玩家及其角色一连好几次团都体验不到这样的“专属遭遇“。<BR> <BR>[插图附文]<EM>就像真菌魔后祖格莫伊培育她的真菌花园一样，你也可以创造一个勃勃生机的战役！</EM></P></body>
+</STRONG>为一名玩家设计特别的新遭遇，或者更改一个现有的遭遇，使其紧贴某位玩家角色的目标和动机。但请注意不要让某名或某些玩家及其角色一连好几次团都体验不到这样的“专属遭遇“。<BR> <BR>[插图附文]<EM>就像真菌魔后祖格莫伊培育她的真菌花园一样，你也可以创造一个勃勃生机的战役！</EM></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

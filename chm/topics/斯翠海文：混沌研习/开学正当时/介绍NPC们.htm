@@ -36,7 +36,45 @@ NPC 的存在，也可以在课堂场景中加入任意的你想扮演的 NPC。
 
 更感兴趣，并可以从而安排那个 NPC 在遭遇中和玩家进行互动。或者当角色进行工作和社团活动时，就可以和在干同样事情的 NPC 
 
-进行遭遇。<BR>你也可以允许玩家阅览“同学”章节来更多的了解那些 NPC。</P></body>
+进行遭遇。<BR>你也可以允许玩家阅览“同学”章节来更多的了解那些 NPC。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -74,7 +74,45 @@ Tal）：一种来自塔兰塔平原的饮料，由伽兰达家族的半身人�
 
 20 瓶。<BR>⑤ 微风郡彩虹酒（Windshire rainbow wine）：此酒每喝一口都会改变颜色与味道。<BR>⑥ 伊垂颜红酒（Iltrayan 
 
-wine）：产自安黛尔的一种深色干红。伊垂颜葡萄酒庄园坐落于永恒战境撒法<BR>拉斯位面与艾伯伦相接的显能区域内。许多士兵都声称，伊垂颜的高脚杯内盛满了来自战场的鲜血。</P></body>
+wine）：产自安黛尔的一种深色干红。伊垂颜葡萄酒庄园坐落于永恒战境撒法<BR>拉斯位面与艾伯伦相接的显能区域内。许多士兵都声称，伊垂颜的高脚杯内盛满了来自战场的鲜血。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

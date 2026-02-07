@@ -40,7 +40,45 @@ html,body {
 
 <P>胡帕克杖看起来是一根结实的棍子，一端被做成投石索模样，另一端被削成尖头。<BR>特殊SPECIAL。当你用这种武器进行近战攻击时，你忽略其弹药属性。你也可以将另一头的投石索作为一种军用远程武器使用。这样做时，你使用其弹药属性，用投石索弹丸作为弹药，并在命中时造成1D4钝击伤害。</P>
 
-<P><BR><FONT color=#800000><STRONG>防止跌落背包NARYCRASH</STRONG></FONT><BR>这个背包大小的装置内置了一个基于气球设计的降落伞。如果你在穿戴这个装置时坠落，你可以使用一个反应来展开降落伞，降落伞一旦展开会迅速充气，使你的摔落速度变为每回合60尺，并且不会受到坠落伤害。当你离地面10尺远时，掷一个D20。如果你掷出5或更低，降落伞就会失灵，你开始正常坠落。</P></body>
+<P><BR><FONT color=#800000><STRONG>防止跌落背包NARYCRASH</STRONG></FONT><BR>这个背包大小的装置内置了一个基于气球设计的降落伞。如果你在穿戴这个装置时坠落，你可以使用一个反应来展开降落伞，降落伞一旦展开会迅速充气，使你的摔落速度变为每回合60尺，并且不会受到坠落伤害。当你离地面10尺远时，掷一个D20。如果你掷出5或更低，降落伞就会失灵，你开始正常坠落。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

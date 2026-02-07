@@ -66,7 +66,45 @@ Telepathy。</STRONG>食腐兽可以将简单的话语或图像转换成目标�
 
 15的体质豁免否则将陷入中毒，持续至被治愈时终止。<BR><STRONG>触须Tentacle。</STRONG>近战武器攻击：命中+6，接触10尺，单一目标。命中：7（1d8+3）的钝击伤害，目标必须通过一次DC19的体质豁免，否则受到42（12d6）的毒素伤害。<BR><STRONG>猛击Tentacle 
 
-Slam。</STRONG>目标需通过一次DC14的体质豁免，否则会被擒抱！</P></body>
+Slam。</STRONG>目标需通过一次DC14的体质豁免，否则会被擒抱！</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

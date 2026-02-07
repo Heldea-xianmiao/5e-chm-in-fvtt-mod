@@ -50,7 +50,45 @@ style="BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid; WIDTH: 400px;
 
 style="FONT-SIZE: 11pt; FONT-FAMILY: 'Arial Unicode MS'; mso-spacerun: 'yes'" 
 
-dir=ltr><FONT size=3 face="Arial Unicode MS">带有浓郁的果香、甜香和辛辣的味道，Peppadews牌的南非樱桃辣椒（一种装在罐子里出售的腌辣椒）既有辣的品种也有微辣的；这道菜首选辣的品种。切碎辣椒之前要先用纸巾吸干水分。</FONT></SPAN></P></div></body>
+dir=ltr><FONT size=3 face="Arial Unicode MS">带有浓郁的果香、甜香和辛辣的味道，Peppadews牌的南非樱桃辣椒（一种装在罐子里出售的腌辣椒）既有辣的品种也有微辣的；这道菜首选辣的品种。切碎辣椒之前要先用纸巾吸干水分。</FONT></SPAN></P></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

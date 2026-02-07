@@ -110,6 +110,43 @@ Margolin，</STRONG><STRONG> Archmage of Conscription</STRONG></FONT>
 
 Hass，</STRONG><STRONG> Archmage of Cultivation</STRONG> <BR></FONT><FONT color=#000000><EM>守序中立，男性土元素裔<BR></EM>奥瑞米德是扎达什博学大厅的现任院长，他的职责是观察和培养雷克森特伦以外地区的新生代施法者和奥术专家。虽然他本人性情温和，喜欢动物，但他表面上装作一个严厉且毫无幽默感的人，这一形象由于他土元素裔的血统影响而显得更加突出。他教导学生们，失败不是可选项，以及情绪是实现个人真正能力的阻碍。奥瑞米德既令学生们敬畏又受他们尊重，私底下甚至有一些人对他心怀厌恶（包括部分导师），他亲自开除那些无法承受课程压力的学生，并对那些坚持训练下来的学生大加赞赏。 
 
-</FONT>   </P></body>
+</FONT>   </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>

@@ -46,7 +46,45 @@ style="FONT-WEIGHT: bold"><FONT color=#800000>燃烬巨怪Cinder Hulk</FONT>
 
 Burst。</STRONG>燃烬巨怪死亡时，它会留下一团灰烬和烟雾组成的焚云，充满以自身为源点的半径10尺球状区域。区域会陷入重度遮蔽。任何在一个回合中移动进入区域内或在其中开始回合的生物必须成功通过一次DC16的体质豁免，否则受到10（3d6）火焰伤害。这团灰烬云持续存在1分钟，或者直到它被一阵强风吹散。<br> <STRONG style="FONT-WEIGHT: bold"><font color=#800000>动作Actions</font></STRONG><br><STRONG >多重攻击Multiattack。</STRONG>燃烬巨怪发动两次猛击攻击。<br><STRONG >猛击Slam。</STRONG>近战武器攻击：命中+8，触及5尺，单一目标。命中：16（2d10+5）钝击伤害，外加10（3d6）火焰伤害。<br><STRONG >燃烬焚风Wave 
 
-of Cinders（充能5~6）。</STRONG>燃烬巨怪从自己的脸、手臂或胸膛中吹出一道充满燃烧的灰烬的焚风，覆盖30尺锥状区域。任何位于其中的生物都必须进行一次DC16的敏捷豁免。豁免失败的情况下，生物受到31（7d8）火焰伤害并直到自己下个回合开始陷入目盲。成功的情况下，生物只受到一半伤害。</P></body>
+of Cinders（充能5~6）。</STRONG>燃烬巨怪从自己的脸、手臂或胸膛中吹出一道充满燃烧的灰烬的焚风，覆盖30尺锥状区域。任何位于其中的生物都必须进行一次DC16的敏捷豁免。豁免失败的情况下，生物受到31（7d8）火焰伤害并直到自己下个回合开始陷入目盲。成功的情况下，生物只受到一半伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

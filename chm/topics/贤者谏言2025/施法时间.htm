@@ -32,7 +32,45 @@ Mockery</EM></U>——因其是不需要法术位的戏法。</FONT></p>
 
 <p class=MsoNormal><span lang=EN-US><FONT size=3></FONT></span> </p>
 
-<p class=MsoNormal><FONT size=3><STRONG><FONT color=#800000>如果一个法术在通常情况下不需要 专注Concentratin ，那么当它被作为 仪式Ritual 施展时需要吗？<BR></FONT></STRONG>以超过<span lang=EN-US>1</span>个动作的时间施展——包括仪式施法——的任何法术都需求角色维持专注。一旦它施展完成，这个法术就不需要专注，除非它的持续时间一栏中有说明其需要专注。</FONT></p></body>
+<p class=MsoNormal><FONT size=3><STRONG><FONT color=#800000>如果一个法术在通常情况下不需要 专注Concentratin ，那么当它被作为 仪式Ritual 施展时需要吗？<BR></FONT></STRONG>以超过<span lang=EN-US>1</span>个动作的时间施展——包括仪式施法——的任何法术都需求角色维持专注。一旦它施展完成，这个法术就不需要专注，除非它的持续时间一栏中有说明其需要专注。</FONT></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

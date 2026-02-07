@@ -1308,9 +1308,47 @@ style="FONT-SIZE: 8pt; FONT-FAMILY: 'STHeiti light'; mso-ascii-font-family: Cali
 
 style="FONT-SIZE: 8pt; FONT-FAMILY: Calibri; mso-bidi-font-family: 宋体; mso-fareast-font-family: 'STHeiti light'; mso-spacerun: 'yes'">60</SPAN><FONT face=Calibri><SPAN 
 
-style="FONT-SIZE: 8pt; FONT-FAMILY: 'STHeiti light'; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri; mso-spacerun: 'yes'">尺再恢复其原形态。处于沙风暴形态时，木乃伊领主免疫所有伤害，并且免疫擒抱、石化、应击倒地、束缚和震慑等状态。动作完成后，木乃伊领主的着装和携带的装备依然保持在其身上。</SPAN></FONT></P></body>
+style="FONT-SIZE: 8pt; FONT-FAMILY: 'STHeiti light'; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri; mso-spacerun: 'yes'">尺再恢复其原形态。处于沙风暴形态时，木乃伊领主免疫所有伤害，并且免疫擒抱、石化、应击倒地、束缚和震慑等状态。动作完成后，木乃伊领主的着装和携带的装备依然保持在其身上。</SPAN></FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

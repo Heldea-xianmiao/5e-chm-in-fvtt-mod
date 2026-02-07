@@ -36,9 +36,47 @@ Retaliation</FONT>
 
 <BR></FONT></STRONG>以一个附赠动作，你可以用你那令人魂消胆丧的面相，在原初之力的辅助下将恐惧打入他者内心。当你如此做时，每个位于以你为源点的30尺<U>光环</U>区域内你所选择的生物必须进行一次感知豁免检定（DC等于8＋你的力量调整值＋你的熟练加值）。豁免失败则陷入<U>恐慌</U>状态，持续1分钟。陷入恐慌的生物在其每个回合结束时重复豁免，成功则终止其身上的该效应。<BR>此特性一经使用，直至完成<U>长休</U>你都无法再次使用。你也可以消耗一次狂暴使用次数（无需动作）来重置此特性的使用权。</p>
 
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
 </body>
 
 </html>
+
 
 
 

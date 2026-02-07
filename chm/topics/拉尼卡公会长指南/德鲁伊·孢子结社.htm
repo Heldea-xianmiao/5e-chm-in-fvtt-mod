@@ -156,7 +156,45 @@ Spores Spells</STRONG>
 
 尺立方的空间中1分钟。若你再次使用此特性、使用一个附赠动作取消掉它们，或你的一体共生状态结束，这片孢子都将提前消失。<BR>每当一个生物移动进入该立方区域或在该处开始它的回合，该生物必须通过一次对抗你法术豁免DC的体质豁免，豁免失败时它将受到你孢子环绕的伤害。不过一个生物每回合只会受到一次这一伤害。<BR>只要这片孢子存在，你就不能使用你孢子环绕的反应能力。</P>
 
-<P><STRONG><FONT color=#800000>真菌之躯 Fungal Body</FONT></STRONG><BR><EM>第14级孢子结社特性</EM><BR>你体内的真菌改变了你，你不会陷入目盲、耳聋、恐慌或中毒。<BR>且，只要你未处于失能状态，任何对你形成的重击都将被视为一次普通的命中。</P></body>
+<P><STRONG><FONT color=#800000>真菌之躯 Fungal Body</FONT></STRONG><BR><EM>第14级孢子结社特性</EM><BR>你体内的真菌改变了你，你不会陷入目盲、耳聋、恐慌或中毒。<BR>且，只要你未处于失能状态，任何对你形成的重击都将被视为一次普通的命中。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -132,7 +132,45 @@ Stage</FONT></STRONG><BR>第零回是和玩家分享战役相关基本信息的�
 
 <H3><FONT color=#800000>第一次的冒险First Adventure</FONT></H3>
 
-<P>如果你使用出版物中的冒险来作为战役的起始，请使用该冒险中的角色引子将角色们从起始位置“钩“到冒险之中。许多战役都是从使用出版物中的冒险开始，并随着角色们逐步触及冒险之外的内容，自然而然地发展成了独属于自己的战役。<BR>如果你正在为战役设计起始冒险，请参考第四章中的建议。第一次的冒险应当相对简短，并让角色有足够的时间通过玩家的扮演来互相了解。最重要的是，确保他们开始觉得自己像个冒险小队，并且熟悉掌握自己的能力。而在那之后，战役的完整内容就会逐渐向他们展开。</P></body>
+<P>如果你使用出版物中的冒险来作为战役的起始，请使用该冒险中的角色引子将角色们从起始位置“钩“到冒险之中。许多战役都是从使用出版物中的冒险开始，并随着角色们逐步触及冒险之外的内容，自然而然地发展成了独属于自己的战役。<BR>如果你正在为战役设计起始冒险，请参考第四章中的建议。第一次的冒险应当相对简短，并让角色有足够的时间通过玩家的扮演来互相了解。最重要的是，确保他们开始觉得自己像个冒险小队，并且熟悉掌握自己的能力。而在那之后，战役的完整内容就会逐渐向他们展开。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

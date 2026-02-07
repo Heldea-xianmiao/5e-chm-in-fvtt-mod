@@ -10,4 +10,41 @@
 
   FONT-WEIGHT: bold;   ">Talons  of  the Bear</span></b><b><span style="  FONT-WEIGHT: bold;   "><font>。</font></span></b><span><font>茹赛可通常被认为使用一只巨大洞熊作为她的化身。她的追随者们尊敬她的这一面，将洞熊作为宠物养育来保护充满吵闹的年轻兽人的围栏。茹赛可的献身者也会长出她们自己的长爪子，并将它们涂黑，以模仿她们女神可怕的利爪。作为回报，茹赛可让她们的爪子像钢铁一样坚硬和强韧。</font><br><br></span><b><span style="  FONT-WEIGHT: bold;   "><font>坚守堡垒</font></span></b><b><span style="
 
-  FONT-WEIGHT: bold;   ">Holding the Fort</span></b><b><span style="  FONT-WEIGHT: bold;   "><font>。</font></span></b><span><font>除了保护幼崽和部族的食物储备，茹赛可的崇拜者也担任兽人部落的工匠，工程师和建筑师。她们制造原始的武器、盔甲和少数兽人生活所需的日常用品。</font><font>当部族外出劫掠时，他们可能会挖深洞穴，来为不断增加的人口创造更多的生存空间。</font></span></p></div></body></html>
+  FONT-WEIGHT: bold;   ">Holding the Fort</span></b><b><span style="  FONT-WEIGHT: bold;   "><font>。</font></span></b><span><font>除了保护幼崽和部族的食物储备，茹赛可的崇拜者也担任兽人部落的工匠，工程师和建筑师。她们制造原始的武器、盔甲和少数兽人生活所需的日常用品。</font><font>当部族外出劫掠时，他们可能会挖深洞穴，来为不断增加的人口创造更多的生存空间。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

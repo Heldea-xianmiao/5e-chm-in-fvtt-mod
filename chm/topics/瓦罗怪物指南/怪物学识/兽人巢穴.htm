@@ -80,4 +80,41 @@
 
   FONT-WEIGHT: bold; COLOR: rgb(128,0,0);   ">CAVES  FOR  FOLLOWERS OF  SHARGAAS</span></b><span style="FONT-SIZE: 10pt;
 
-     "><br><font>沙葛司的追随者居住在据点里最偏远的地方，浸没在黑暗中，并被部族的其他人所恐惧。部族的沙葛司祭坛是一块血迹斑斑的岩石。</font><br><font></font></span></p><p   style="     "><span><font>地图中描绘的据点具有许多小通道，这些通道从巢穴的深处引出，最终提供到达地表的出口。部落中沙葛司教派的成员们，他们称自己为沙葛司的红牙，利用这些秘密通道来突袭外面的世界并带回囚犯。</font><br><br><font>红牙的成员们使用巨大的肉食性蝙蝠作为坐骑，使他们能安静地进入任何地区。那些认为自己能够躲在黑暗中或者隐身逃走的人会是红牙蝙蝠轻而易举的目标，它们用尖锐的咔嚓声和尖啸找到猎物，然后俯冲下来，用剃刀般锋利的爪子捉住猎物。</font><br><br><font>红牙的蝙蝠骑士们使用他们从悬崖的裂缝中出来时同样的通路在袭击之后返回巢穴，一条隧道穿过潮湿的石头和结晶的矿物层，最终通向地下。俘虏们被用作栖息在洞穴里的巨蝙蝠后代的食物，或被作为奴隶保留以供工作或用于交换。</font></span></p><p   style="     "><span> </span></p></div></body></html>
+     "><br><font>沙葛司的追随者居住在据点里最偏远的地方，浸没在黑暗中，并被部族的其他人所恐惧。部族的沙葛司祭坛是一块血迹斑斑的岩石。</font><br><font></font></span></p><p   style="     "><span><font>地图中描绘的据点具有许多小通道，这些通道从巢穴的深处引出，最终提供到达地表的出口。部落中沙葛司教派的成员们，他们称自己为沙葛司的红牙，利用这些秘密通道来突袭外面的世界并带回囚犯。</font><br><br><font>红牙的成员们使用巨大的肉食性蝙蝠作为坐骑，使他们能安静地进入任何地区。那些认为自己能够躲在黑暗中或者隐身逃走的人会是红牙蝙蝠轻而易举的目标，它们用尖锐的咔嚓声和尖啸找到猎物，然后俯冲下来，用剃刀般锋利的爪子捉住猎物。</font><br><br><font>红牙的蝙蝠骑士们使用他们从悬崖的裂缝中出来时同样的通路在袭击之后返回巢穴，一条隧道穿过潮湿的石头和结晶的矿物层，最终通向地下。俘虏们被用作栖息在洞穴里的巨蝙蝠后代的食物，或被作为奴隶保留以供工作或用于交换。</font></span></p><p   style="     "><span> </span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

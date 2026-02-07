@@ -52,7 +52,45 @@ step<BR><STRONG>战争魔法War
 
 Magic。</STRONG>德拉莫瑞以其动作施展一道戏法时，他还可以执行一个附赠动作来发动一次武器攻击。<BR><STRONG>武器联结Weapon 
 
-Bond。</STRONG>只要其长剑跟自己同处一个位面，德拉莫瑞就可以执行一个附赠动作来将其传送到自己手上。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>德拉莫瑞发动两次攻击，每次攻击都可以是长剑攻击或匕首攻击。<BR><STRONG>长剑Longsword。</STRONG>近战武器攻击：命中+6，触及5尺，单一目标。命中：8（1d8+4）的挥砍伤害。<BR><STRONG>匕首Dagger。</STRONG>近战或远程武器攻击：命中+6，触及5尺或射程20/60尺，单一目标。命中：6（1d4+4）的穿刺伤害。</P></body>
+Bond。</STRONG>只要其长剑跟自己同处一个位面，德拉莫瑞就可以执行一个附赠动作来将其传送到自己手上。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>德拉莫瑞发动两次攻击，每次攻击都可以是长剑攻击或匕首攻击。<BR><STRONG>长剑Longsword。</STRONG>近战武器攻击：命中+6，触及5尺，单一目标。命中：8（1d8+4）的挥砍伤害。<BR><STRONG>匕首Dagger。</STRONG>近战或远程武器攻击：命中+6，触及5尺或射程20/60尺，单一目标。命中：6（1d4+4）的穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

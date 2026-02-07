@@ -120,7 +120,45 @@ Religions<BR></STRONG></FONT>列一张诸神的列表是构思战役的一个好
 
 <P><STRONG>宗教活动Religious 
 
-Practice<BR></STRONG>人们在不同的情况下敬拜同一神系中的多个神。一个人可能会于晨间在厨房中的祭坛向炉火或是家庭之神供奉焚香、下午在狩猎时向狩猎之神祈祷、晚上在农业之神的神殿庙参加公共庆祝丰收的宴会。<BR>城市和较大的镇子可以容纳许多座神殿，每座神殿中都供奉着对这一社群来说重要的一位神祇；而较小的聚落可能只有一座神殿，其中供奉着当地人所崇敬的所有神祇。位于聚落之外的神殿和圣坛通常位于那些标志着神（或神的化身）出现或留下过奇迹之地。这些地点可能会成为朝圣者的目的地，他们会跨越漫长的距离，以感受留在那里的神圣伟力。</P></body>
+Practice<BR></STRONG>人们在不同的情况下敬拜同一神系中的多个神。一个人可能会于晨间在厨房中的祭坛向炉火或是家庭之神供奉焚香、下午在狩猎时向狩猎之神祈祷、晚上在农业之神的神殿庙参加公共庆祝丰收的宴会。<BR>城市和较大的镇子可以容纳许多座神殿，每座神殿中都供奉着对这一社群来说重要的一位神祇；而较小的聚落可能只有一座神殿，其中供奉着当地人所崇敬的所有神祇。位于聚落之外的神殿和圣坛通常位于那些标志着神（或神的化身）出现或留下过奇迹之地。这些地点可能会成为朝圣者的目的地，他们会跨越漫长的距离，以感受留在那里的神圣伟力。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

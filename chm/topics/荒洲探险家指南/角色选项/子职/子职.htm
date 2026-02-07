@@ -40,7 +40,45 @@
 
 Focus</FONT></H3>
 
-<P>人生是一连串的选择。每个十字路口通向不同的可能性。当你接近决定的瞬间，每个可能发生的选择开始凝聚成现实，此时多个时间线充满机会的共鸣。一旦做出选择，一条道路迸发生机并继续延续，而其他道路则逐渐消散，它们潜在可能性的能量会扩散到多元宇宙中。极少数角色学会在战斗的激烈阶段中召唤并驾驭这些释放的秘迹，来增强他们的武技能力——而这样的战士无一例外都令人畏惧。</P></body>
+<P>人生是一连串的选择。每个十字路口通向不同的可能性。当你接近决定的瞬间，每个可能发生的选择开始凝聚成现实，此时多个时间线充满机会的共鸣。一旦做出选择，一条道路迸发生机并继续延续，而其他道路则逐渐消散，它们潜在可能性的能量会扩散到多元宇宙中。极少数角色学会在战斗的激烈阶段中召唤并驾驭这些释放的秘迹，来增强他们的武技能力——而这样的战士无一例外都令人畏惧。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

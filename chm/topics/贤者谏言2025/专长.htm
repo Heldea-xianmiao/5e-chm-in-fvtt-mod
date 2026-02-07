@@ -94,9 +94,47 @@ Initiate 专长时选择自己的职业吗？</FONT></STRONG><BR>可以。举个
 
 <P><STRONG><FONT color=#800000>凶蛮打手Savage Attacker 
 
-专长的增益能应用到 游荡者Rogue 的 偷袭Sneak Attack 或 圣武士Paladin 的 至圣斩Divine Smite 之类的额外效应上吗？<BR></FONT></STRONG>不能。凶蛮打手的增益只对武器的伤害骰有效，而与一个特性或别的能力创造的额外伤害无关。<BR></P></body>
+专长的增益能应用到 游荡者Rogue 的 偷袭Sneak Attack 或 圣武士Paladin 的 至圣斩Divine Smite 之类的额外效应上吗？<BR></FONT></STRONG>不能。凶蛮打手的增益只对武器的伤害骰有效，而与一个特性或别的能力创造的额外伤害无关。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

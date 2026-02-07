@@ -102,7 +102,45 @@ Appearance。</STRONG>当诅咒石化人静止不动时，外表与一尊无生�
 
 ACTIONS</FONT></STRONG><BR><STRONG>石化爪击 Petrifying 
 
-Claws。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：8（1d10+3）挥砍伤害。或者14（2d10+3）优势挥砍伤害。若目标为一个生物，需成功于一个DC12的体质豁免，豁免失败的生物开始逐渐转变为石头并陷入束缚。受束缚生物必须在其自己的下一回合结束时再次进行该豁免。豁免成功则终止该效应。豁免失败则该生物陷入石化并持续24小时。</P></body>
+Claws。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：8（1d10+3）挥砍伤害。或者14（2d10+3）优势挥砍伤害。若目标为一个生物，需成功于一个DC12的体质豁免，豁免失败的生物开始逐渐转变为石头并陷入束缚。受束缚生物必须在其自己的下一回合结束时再次进行该豁免。豁免成功则终止该效应。豁免失败则该生物陷入石化并持续24小时。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

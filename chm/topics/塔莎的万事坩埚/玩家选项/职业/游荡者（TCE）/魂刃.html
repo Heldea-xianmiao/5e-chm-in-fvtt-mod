@@ -72,5 +72,43 @@ Veil</FONT></STRONG><BR><EM>第13级魂刃特性</EM><BR>你可以编织一层�
 
 <P><STRONG><FONT color=#800000>撕裂心智 Rend 
 
-Mind</FONT></STRONG><BR><EM>第17级魂刃特性</EM><BR>你能让你的念刃直接切削一个生物的心智。当你使用心灵之刃对一个生物造成偷袭攻击伤害时，你能迫使其进行一次感知豁免（DC=8+你的熟练加值+你的敏捷调整值）。若豁免失败，目标将在陷入长达一分钟的震慑。被震慑的目标可以在他的回合结束时重复豁免，如果成功这一效应将结束。<BR>当你使用该特性后，直到你完成一次长休为止你都不能再次使用它。你也可以消耗三枚灵能骰来再次使用该特性。</P></BODY></HTML>
+Mind</FONT></STRONG><BR><EM>第17级魂刃特性</EM><BR>你能让你的念刃直接切削一个生物的心智。当你使用心灵之刃对一个生物造成偷袭攻击伤害时，你能迫使其进行一次感知豁免（DC=8+你的熟练加值+你的敏捷调整值）。若豁免失败，目标将在陷入长达一分钟的震慑。被震慑的目标可以在他的回合结束时重复豁免，如果成功这一效应将结束。<BR>当你使用该特性后，直到你完成一次长休为止你都不能再次使用它。你也可以消耗三枚灵能骰来再次使用该特性。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

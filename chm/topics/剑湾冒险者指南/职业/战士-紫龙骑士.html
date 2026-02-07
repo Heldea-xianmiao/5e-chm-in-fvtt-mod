@@ -46,9 +46,47 @@ Surge</FONT></STRONG><BR>
 
 <P><STRONG><FONT color=#800000>意志壁垒 
 
-Bulwark</FONT></STRONG><BR>从15级起，你可以延展你的<STRONG>不屈</STRONG>特性作用于你的盟友。每当你决定使用不屈重骰智力、感知或者魅力豁免并且你未处于失能状态，你可以选择一个在你周围60尺距离内的对抗同一效应豁免失败的盟友。如果他能看见你或者听见你的声音，他可以重骰豁免骰，但必须采用新的结果。</P></body>
+Bulwark</FONT></STRONG><BR>从15级起，你可以延展你的<STRONG>不屈</STRONG>特性作用于你的盟友。每当你决定使用不屈重骰智力、感知或者魅力豁免并且你未处于失能状态，你可以选择一个在你周围60尺距离内的对抗同一效应豁免失败的盟友。如果他能看见你或者听见你的声音，他可以重骰豁免骰，但必须采用新的结果。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

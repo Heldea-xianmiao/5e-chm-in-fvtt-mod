@@ -34,7 +34,45 @@
 
 <P>马格鲁比耶，类地精万神殿中的首脑，强迫两兄弟服从的命令而非杀死他们，这彰显了的仁慈，甚至以某种方式给予了二位神明尊重，给予二位神明自由——在控制之下的——如此，熊地精就可以继续利用他们的能力以对抗敌人。熊地精通过崇敬赫鲁格克和格兰库尔了解到了这些，他们尊敬着马格鲁比耶，尽管他们从不公开的对他们那至高无上的主神献上敬意。当熊地精被召唤加入军队时，熊地精坚信这是马格鲁比耶再次召集了他们的双生神明加入了一场圣战，为了取悦自己的神明，他们将跟随自己神明的脚步。</P>
 
-<P>斯奇格瑞特就像是熊地精版本的妖怪，对熊地精来说可恨又可怕，就像熊地精在其他种族眼里的那样。的名字很少被提起，即使有人称呼了的名讳，那音量也不会超过小声耳语。斯奇格瑞特的影响主要表现在熊地精被迫表现的懦弱的时候；一只知道或感觉自己处于致命危险中的熊地精会受到某种形式的疯狂的影响，在这种情况下他会做任何事情，包括试图逃跑，以求活命。熊地精相信，这种恐惧感是被斯奇格瑞特的附身了，他们并不喜欢体验它。在疯狂过去之后，熊地精不会纠结于在斯奇格瑞特面前做过的事情。讨论这些会重新吸引的注意。</P></body>
+<P>斯奇格瑞特就像是熊地精版本的妖怪，对熊地精来说可恨又可怕，就像熊地精在其他种族眼里的那样。的名字很少被提起，即使有人称呼了的名讳，那音量也不会超过小声耳语。斯奇格瑞特的影响主要表现在熊地精被迫表现的懦弱的时候；一只知道或感觉自己处于致命危险中的熊地精会受到某种形式的疯狂的影响，在这种情况下他会做任何事情，包括试图逃跑，以求活命。熊地精相信，这种恐惧感是被斯奇格瑞特的附身了，他们并不喜欢体验它。在疯狂过去之后，熊地精不会纠结于在斯奇格瑞特面前做过的事情。讨论这些会重新吸引的注意。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

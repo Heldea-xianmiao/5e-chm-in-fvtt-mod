@@ -56,7 +56,45 @@ html,body {
 
 <strong>三叉戟Trident。</strong>近战武器攻击：命中+7，触及5尺，单一目标。命中：7（1d6+4）点力场伤害（双手持戟时8（1d8+4）点力场伤害）。<br>
 
-<strong>冻寒打击Freezing Strikes（充能6）。</strong>元素侍从使用它的多重攻击，且每一次攻击击中都会额外造成5（1d10）点寒冷伤害，并使目标的速度降低10尺，持续直至元素侍从的下个回合结束。</p></body>
+<strong>冻寒打击Freezing Strikes（充能6）。</strong>元素侍从使用它的多重攻击，且每一次攻击击中都会额外造成5（1d10）点寒冷伤害，并使目标的速度降低10尺，持续直至元素侍从的下个回合结束。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -48,7 +48,45 @@ Undying Court。</STRONG>艾伦诺的荣誉不朽者在不朽王庭中团结在�
 
 Court）成员花费他们的时间冥想，从事研究，或继续完善他们在生活中实践的艺术。不朽者充当着生活的向导和顾问，艾伦诺贵族的成员可以通过礼拜式的礼仪，与莎尔莫黛依的祖先进行商议。<BR>不朽王庭中最伟大的成员是至尊议员。这些纯粹的光之存有们专注于思考生命和层面的奥秘，并且可以一起工作来运用神性的力量，使他们能够保护艾伦诺几乎免受任何威胁。然而，在艾伦诺之外的地区，至尊议员只能通过诚恳的圣骑士与不朽王庭的牧师才能运用力量。<BR><STRONG>亡灵本质Undead 
 
-Nature。</STRONG>不朽者不需要空气、食物、饮水或睡眠。</P></body>
+Nature。</STRONG>不朽者不需要空气、食物、饮水或睡眠。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

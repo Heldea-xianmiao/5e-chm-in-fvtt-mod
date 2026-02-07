@@ -90,7 +90,45 @@ html,body {
 
 <strong>腐坏之家House of Rot。</strong>一座被称为“腐坏之家”的摇摇欲坠的农舍矗立在枯藤庭院中心的矮丘上。病态的蓝色油漆从农舍发霉的木墙上剥落，蛛网缝补起石板屋顶上的破洞。在屋子里面，类人生物的骨骸散落在地板上，被虫子清理得干干净净。<br>
 
-腐坏之家是<strong>灾疫之死惧大君Grim Champion of Pestilence</strong>埃利隆的家园。双胞胎<strong>报丧妖banshee</strong>阿勒格拉和梅丽萨在埃利隆不在时照看屋子。她们欢迎客人，将他们视作潜在的食粮，并会为客人提供一盘盘腐烂的小菜和一杯杯发霉的茶。</p></body>
+腐坏之家是<strong>灾疫之死惧大君Grim Champion of Pestilence</strong>埃利隆的家园。双胞胎<strong>报丧妖banshee</strong>阿勒格拉和梅丽萨在埃利隆不在时照看屋子。她们欢迎客人，将他们视作潜在的食粮，并会为客人提供一盘盘腐烂的小菜和一杯杯发霉的茶。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

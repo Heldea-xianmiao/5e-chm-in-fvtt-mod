@@ -50,7 +50,45 @@ World</STRONG><BR>一些团队会使用一个大型而完善的战役设定并�
 
 <P><STRONG>联合DM Joint 
 
-DMs</STRONG><BR>两个或更多个DM可以共同创建单次战役，合作维持游戏回之间的连续性，并确保每个DM的冒险都能够推进世界和角色的宏观故事。当玩家同时是DM时，它们不应该让其对战役故事的了解去影响它们角色的行动。如果轮到某名玩家成为DM，其角色亦会在此期间暂时退出游戏。<BR>联合DM们也可以组队运作战役中的单次游戏回，其中每位DM都专注于它们最享受的游戏方面，或DM们的专注焦点也可以随着每次游戏回而变化。一位DM可能运作战斗中的描述来保持战斗运行，而另一位专注于微缩模型和音乐。两位DM可以在交涉遭遇中扮演两位不同的NPC。在游戏回之间，他们可以合作或分工建设世界、创建遭遇和其他任务。</P></body>
+DMs</STRONG><BR>两个或更多个DM可以共同创建单次战役，合作维持游戏回之间的连续性，并确保每个DM的冒险都能够推进世界和角色的宏观故事。当玩家同时是DM时，它们不应该让其对战役故事的了解去影响它们角色的行动。如果轮到某名玩家成为DM，其角色亦会在此期间暂时退出游戏。<BR>联合DM们也可以组队运作战役中的单次游戏回，其中每位DM都专注于它们最享受的游戏方面，或DM们的专注焦点也可以随着每次游戏回而变化。一位DM可能运作战斗中的描述来保持战斗运行，而另一位专注于微缩模型和音乐。两位DM可以在交涉遭遇中扮演两位不同的NPC。在游戏回之间，他们可以合作或分工建设世界、创建遭遇和其他任务。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

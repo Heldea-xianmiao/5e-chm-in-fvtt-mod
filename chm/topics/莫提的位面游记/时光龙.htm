@@ -162,7 +162,45 @@ Wyrmling</STRONG></FONT></FONT><BR>中型龙类，通常绝对中立<BR>护甲�
 
 <P><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>巨龙发动三次撕裂攻击。<BR><STRONG>撕裂Rend。</STRONG>近战武器攻击：命中+7，触及10尺，单一目标。命中：7（1d6+4）挥砍伤害外加3（1d6）力场伤害。<BR><STRONG>时光吐息Time 
 
-Breath（充能5~6）。</STRONG>巨龙呼出一道闪耀的光流，覆盖一处15尺锥状区域。区域内未被携带或着装的非魔法物件及植物都会崩解为灰尘。任何位于区域内的生物都必须进行一次DC14的体质豁免。豁免失败者受到27（6d8）力场伤害并因为其时间流发生错乱而被魔法性地削弱。对此状态下的生物发动的攻击检定具有优势。豁免成功者只会受到一半的伤害。一个被削弱的生物可以在其每个回合结束时重复此豁免，并在豁免成功之后结束此效应。</P></body>
+Breath（充能5~6）。</STRONG>巨龙呼出一道闪耀的光流，覆盖一处15尺锥状区域。区域内未被携带或着装的非魔法物件及植物都会崩解为灰尘。任何位于区域内的生物都必须进行一次DC14的体质豁免。豁免失败者受到27（6d8）力场伤害并因为其时间流发生错乱而被魔法性地削弱。对此状态下的生物发动的攻击检定具有优势。豁免成功者只会受到一半的伤害。一个被削弱的生物可以在其每个回合结束时重复此豁免，并在豁免成功之后结束此效应。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

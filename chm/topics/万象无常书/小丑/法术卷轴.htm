@@ -84,7 +84,45 @@ Scrolls</strong></font></font></p><div style="BORDER-TOP: black 1px solid; BORDE
 
 <P><strong>价钱Price</strong><br>薰衣草收取声音作为报酬。当角色买1环卷轴时，他们会失去自己的声音长达10分钟，2环卷轴是1个小时，而3环卷轴则是一天。对购买多个卷轴的角色来说，这些持续时间会累计。<br>当失去声音的角色试图说话或发出声音时，他们会打嗝并突出小泡泡。在此期间，薰衣草能够完美模仿角色的声音，而她也很喜欢这么做。<em><FONT color=#800080>移除诅咒Remove 
 
-Curse</FONT> </em>或类似的法术可以结束这一效应。</P></body>
+Curse</FONT> </em>或类似的法术可以结束这一效应。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

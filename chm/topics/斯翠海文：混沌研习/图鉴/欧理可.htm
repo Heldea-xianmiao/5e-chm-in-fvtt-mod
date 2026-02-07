@@ -60,7 +60,45 @@ Recruiter</STRONG></FONT><BR>欧理可招募者是听命潜入斯翠海文的狡
 
 游说+6<BR>伤害抗性：心灵<BR>状态免疫：魅惑，恐慌<BR>感官：被动察觉12<BR>语言：通用语和任意两门语言<BR>cr4 熟练加值+2<BR><STRONG>误导守御。</STRONG>招募者在没有穿着护甲和盾牌的情况下将它的魅力调整值加入其ac中。<BR><STRONG>欧理可面具。</STRONG>招募者穿戴着欧理可面具。当穿着此面具时，血法师无法被任何预言法术选为目标或是被魔法探知，它在魅力（欺瞒）检定上具有双倍熟练加值（已计入）。<BR><STRONG><FONT color=#800000>动作：</FONT></STRONG><BR>多重攻击。招募者使用两次心灵匕首。它也可以施展一个法术代替其中一次攻击。<BR><STRONG>心灵匕首。</STRONG>近战或远程法术攻击：命中+6，触及5尺或30尺射程，单一生物。命中造成21（5d6+4）心灵伤害。 
 
-<FONT color=#808080>（译者吐槽：认真的？cr4轮伤42？）<BR></FONT><STRONG>施法。</STRONG>招募者施展下列法术之一，无需任何材料成分，以智力作为施法属性。（法术豁免dc14）<BR>随意：易容术，无声幻影<BR>2/日：魅惑类人<BR>1/日：暗示术</P></body>
+<FONT color=#808080>（译者吐槽：认真的？cr4轮伤42？）<BR></FONT><STRONG>施法。</STRONG>招募者施展下列法术之一，无需任何材料成分，以智力作为施法属性。（法术豁免dc14）<BR>随意：易容术，无声幻影<BR>2/日：魅惑类人<BR>1/日：暗示术</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

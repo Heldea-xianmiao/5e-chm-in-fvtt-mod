@@ -108,7 +108,45 @@ border=0>
 
 <P><STRONG><FONT color=#800000>科瑞隆与罗丝</FONT></STRONG><BR>艾伯伦的精灵不是由你可能已经从其他设定中知道的神所创造的。在艾伯伦，卓尔是由Sulat巨人创造出来对抗反叛精灵的活体兵器：卓尔和精灵之间有着挥之不去的敌意，但这并不是因为受到罗丝的影响。同时，精灵们尊崇他们的祖先（他们中的许多人仍然留在世间并指引着他们）而不是遥远的神。<BR>这是一个从新的角度探索这些传统种族的机会。无论如何，如果你想引入科瑞隆和罗丝，有几种方法可以做到这一点。一个方法是，艾伯伦是作为多元宇宙中的遥远国度的复制品创造出来的，同时为了防止神对其施加影响而进行了隐蔽。因此，虽然艾伯伦的卓尔对罗斯一无所知，但如果她能通过西伯瑞斯圆环进入艾伯伦，她也许就能毒害他们的内心，让他们为她服务。<BR>或者，你也可以把科瑞隆和罗斯设定成古代的传奇勇士。科瑞隆可以是维伦那精灵中最伟大的英雄和先祖守护者之一，也能是不朽评议会的领袖之一；而罗斯可能是有着传奇经历的第一名卓尔指挥官，她渴望复仇的灵魂至今阴魂不散。<BR>归根结底，这取决于你想讲一个怎样的故事。你是想保持艾伯伦独特的文化并让科瑞隆和罗丝有机地融入其中？还是说你想进一步挖掘这两柱神发现艾伯伦后唤醒沉睡于精灵和卓尔血脉中记忆的故事？</P>
 
-<P><STRONG><FONT color=#800000>精灵与龙纹</FONT></STRONG><BR>精灵家族费奥兰和索兰尼拥有阴影龙纹。他们控制着整个科瓦雷的间谍业务，但他们也经营着更合法的艺术和娱乐相关业务。他们曾经是一个家族，但后来在终末战争中分裂；现在他们在间谍和娱乐领域都是无情的竞争对手。</P></body>
+<P><STRONG><FONT color=#800000>精灵与龙纹</FONT></STRONG><BR>精灵家族费奥兰和索兰尼拥有阴影龙纹。他们控制着整个科瓦雷的间谍业务，但他们也经营着更合法的艺术和娱乐相关业务。他们曾经是一个家族，但后来在终末战争中分裂；现在他们在间谍和娱乐领域都是无情的竞争对手。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

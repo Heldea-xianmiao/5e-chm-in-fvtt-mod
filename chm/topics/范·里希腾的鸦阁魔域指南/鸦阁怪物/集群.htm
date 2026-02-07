@@ -890,7 +890,45 @@ style="mso-bidi-font-weight: bold" >6</SPAN><SPAN
 
 style="mso-ascii-: bold"  >）穿刺伤害。任何生物都能用一个动作通过火焰或造成穿刺伤害的武器杀死或除去圣甲虫，并对目标造成1点对应伤害。被集群的穿刺伤害将生命值降低到0的生物会立即死亡。</SPAN><SPAN 
 
-style="mso-bidi-font-weight: bold" ><o:p></O:P></SPAN></P></body>
+style="mso-bidi-font-weight: bold" ><o:p></O:P></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

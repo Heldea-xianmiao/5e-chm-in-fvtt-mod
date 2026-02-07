@@ -652,9 +652,47 @@ Shrine to Nyx</span></span></i></strong>。<span lang=EN-US><br>
 
  style="FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体">水灵<span lang=EN-US>naiad</span></span></i></strong>。她与克罗芬斯传奇的会面是每个克罗芬斯信徒都努力试图复制的传奇经历。仿效这位水灵的旅程会在一场典礼的宁静圣歌中开始，模仿者会被蒙着眼睛由同修引导着跨越边界<span
 
- lang=EN-US>——</span>通常是踏入河流或跨越低矮的石墙，这一行为象征着跨国地平线。然后，当信徒们齐声颂唱克罗芬斯的赞歌时，眼罩被取下。信徒们希望克罗芬斯会在仪式高潮时现身，无论是通过预兆还是个人的顿悟。然而，这些启示并不总是能取得积极的成果，因为克罗芬斯经常让凡人一瞥宇宙真理，而他们并没有理解这些真理的能力。</p></div></body>
+ lang=EN-US>——</span>通常是踏入河流或跨越低矮的石墙，这一行为象征着跨国地平线。然后，当信徒们齐声颂唱克罗芬斯的赞歌时，眼罩被取下。信徒们希望克罗芬斯会在仪式高潮时现身，无论是通过预兆还是个人的顿悟。然而，这些启示并不总是能取得积极的成果，因为克罗芬斯经常让凡人一瞥宇宙真理，而他们并没有理解这些真理的能力。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

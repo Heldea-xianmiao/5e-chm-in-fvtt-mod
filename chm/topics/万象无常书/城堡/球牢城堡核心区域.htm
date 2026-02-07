@@ -270,7 +270,45 @@ CONVEYORS</STRONG><BR>传送带连接区域28-31，允许球牢内核各区域�
 
 这个房间中心的传送门被强大的能量场所包裹。一个生物在每回合首次进入传送门附近15尺时必须进行一次DC20的体质豁免，豁免失败受到55（10d10）点力场伤害，豁免成功则伤害减半。<br>
 
-除此之外，未能通过此次豁免或直接接触传送门的生物将被困在其能量场中。该生物将以每轮1里的速度从球牢的两极之一（各50％几率）中被弹出。一旦脱离球牢，该生物可以使用星界海中的移动规则正常移动。</p></body>
+除此之外，未能通过此次豁免或直接接触传送门的生物将被困在其能量场中。该生物将以每轮1里的速度从球牢的两极之一（各50％几率）中被弹出。一旦脱离球牢，该生物可以使用星界海中的移动规则正常移动。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

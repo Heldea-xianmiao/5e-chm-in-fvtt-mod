@@ -90,7 +90,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
 Adventures</FONT></H3>
 
-<P>双生天堂是勤勉之乐的化身，是工作完成后油然而生的满足。此地涌动的善意激发了所有生灵的友爱与喜悦。安宁镇为渴望宁静生活的人带来回馈，而砥砺镇则嘉奖那些不断进步，挑战自我的灵魂。<BR>双生天堂两个位层经常被称为“勤睦叠境”，有传闻称一层的任何行动都会在另一层产生对等的后果——尽管这更多是隐喻性的，而非物理性的。这一特性赋予冒险者们独特的机会，使他们得以深刻反思自身行为对世界的影响。当他们在某一层的所作所为被另一层的“镜像”效果映射时，或许能更清楚地领悟自己在双生天堂的所作所为究竟有何后果。</P></body>
+<P>双生天堂是勤勉之乐的化身，是工作完成后油然而生的满足。此地涌动的善意激发了所有生灵的友爱与喜悦。安宁镇为渴望宁静生活的人带来回馈，而砥砺镇则嘉奖那些不断进步，挑战自我的灵魂。<BR>双生天堂两个位层经常被称为“勤睦叠境”，有传闻称一层的任何行动都会在另一层产生对等的后果——尽管这更多是隐喻性的，而非物理性的。这一特性赋予冒险者们独特的机会，使他们得以深刻反思自身行为对世界的影响。当他们在某一层的所作所为被另一层的“镜像”效果映射时，或许能更清楚地领悟自己在双生天堂的所作所为究竟有何后果。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

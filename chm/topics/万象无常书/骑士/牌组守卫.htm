@@ -88,7 +88,45 @@ Defender<br></FONT></STRONG>
 
 <strong>守护Protection（仅限<font color=#ff00ff>防卫者</font>形态）。</strong>当一个牌组守卫可以看见的生物，对牌组守卫周围5尺范围内的其他生物进行攻击时，牌组守卫能迫使此次攻击承受劣势。<br>
 
-<font color=#777777>（译者注：与钢铁守卫的需要敌人在守卫身边不同，这个是需要被守护者在牌组守卫身边）</font><br></p></body>
+<font color=#777777>（译者注：与钢铁守卫的需要敌人在守卫身边不同，这个是需要被守护者在牌组守卫身边）</font><br></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

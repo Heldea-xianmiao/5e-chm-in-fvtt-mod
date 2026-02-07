@@ -108,7 +108,45 @@ Legacy</STRONG> 特质中的 <EM><FONT color=#800080>炼狱叱喝Hellish Rebuke 
 
 <P><STRONG>飞翼Winged。</STRONG>在你的肩胛骨下方有一双蝙蝠般的翅膀。未穿着重甲的情况下，你具有30尺飞行速度。<BR>此特质取代 
 
-<STRONG>地狱遗赠Infernal Legacy</STRONG> 特质。</P></body>
+<STRONG>地狱遗赠Infernal Legacy</STRONG> 特质。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

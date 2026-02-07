@@ -82,7 +82,45 @@ S, M（一根羽毛、一簇毛皮和一条装在镀金橡果内的鱼尾，价�
 
 心灵伤害，并且直到其下一回合结束前不能做出反应。此外，它在自己的下一回合中，只能选择在移动、动作或附赠动作中采取一种。若豁免成功，目标只受到半额伤害，并且不会受到该法术的其他效应。<BR><b>升环施法。</b>使用三环或更高的法术位施展该法术时，你使用的法术位每比二环高 
 
-1 环就可以额外指定一个生物。被你选为目标的生物互相之间的距离不能超过 30 尺。</P></body>
+1 环就可以额外指定一个生物。被你选为目标的生物互相之间的距离不能超过 30 尺。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

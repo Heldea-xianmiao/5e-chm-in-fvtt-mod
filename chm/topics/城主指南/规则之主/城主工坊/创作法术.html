@@ -950,9 +950,47 @@ Damage</span><span lang=EN-US style='FONT-SIZE:
 
 <p class=MsoNormal><span lang=EN-US><span
 
- style="mso-spacerun: yes">    </span></span>你也可以使用法术伤害表来确定一个治疗法术恢复的生命值。原则上你不该让戏法提供任何治疗。</p><![if !supportLists]><![endif]><![if !supportLists]><![endif]></div></body>
+ style="mso-spacerun: yes">    </span></span>你也可以使用法术伤害表来确定一个治疗法术恢复的生命值。原则上你不该让戏法提供任何治疗。</p><![if !supportLists]><![endif]><![if !supportLists]><![endif]></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

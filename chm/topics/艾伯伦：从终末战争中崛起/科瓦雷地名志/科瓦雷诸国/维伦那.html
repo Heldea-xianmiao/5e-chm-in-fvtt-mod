@@ -762,7 +762,44 @@ style='font-variant-ligatures: normal;font-variant-caps: normal;orphans: 2;
 
 text-align:start;widows: 2;-webkit-text-stroke-width: 0px;text-decoration-style: initial;
 
-text-decoration-color: initial;float:none;word-spacing:0px'>正因为如此，这个国家仍然处于战争状态。村庄发现生产维持精灵军队所需的物资很有挑战性。尽管如此，维伦那人很少是残酷的统治者。只要一个村庄能达到它的配额，精灵们就不会去管它，尽管那些低于预期的村庄更有可能从德鲁伊顾问那里得到帮助而不是惩罚。</span></span></p></body>
+text-decoration-color: initial;float:none;word-spacing:0px'>正因为如此，这个国家仍然处于战争状态。村庄发现生产维持精灵军队所需的物资很有挑战性。尽管如此，维伦那人很少是残酷的统治者。只要一个村庄能达到它的配额，精灵们就不会去管它，尽管那些低于预期的村庄更有可能从德鲁伊顾问那里得到帮助而不是惩罚。</span></span></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 

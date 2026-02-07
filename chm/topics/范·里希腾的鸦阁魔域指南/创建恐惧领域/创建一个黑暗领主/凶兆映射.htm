@@ -94,7 +94,45 @@ style="mso-bidi-font-family: 'Times New Roman'"><o:p> </o:p></SPAN></P>
 
 style="">使用这些夸张和相反的映射来激发你创作黑暗领主的灵感。通过把你的黑暗领主建立在玩家角色提取出来的密切细节，你创造了一个感觉玩家角色与黑暗领主被困在同一个噩梦之中。通过他们与从他们中映射出来的黑暗领主交互，玩家会发现他们有多么容易成为他们对付的反派。</SPAN><SPAN 
 
-style="mso-bidi-font-family: 'Times New Roman'"><o:p></o:p></SPAN></P></body>
+style="mso-bidi-font-family: 'Times New Roman'"><o:p></o:p></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

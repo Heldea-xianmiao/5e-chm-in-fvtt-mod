@@ -48,7 +48,45 @@ Battlegrounds。</STRONG>长时间受螨精影响的地城会变成混乱的战�
 
 Boiling 
 
-Hex（充能6）。</STRONG>螨精对距离它60尺以内的一个生物施展诅咒，持续1分钟。如果螨精处于躲藏状态，使用这个能力不会暴露它的位置。当生物受到这个诅咒影响时，每当它进行攻击掷骰、属性检定或豁免掷骰时，它必须投掷d6并从d20掷骰中减去掷出的数字。在目标受到诅咒影响的任何一个回合中，它可以用其反应攻击一个盟友，从而忽略诅咒的效果。然后它免疫诅咒效果，直到它的回合结束。</P></body>
+Hex（充能6）。</STRONG>螨精对距离它60尺以内的一个生物施展诅咒，持续1分钟。如果螨精处于躲藏状态，使用这个能力不会暴露它的位置。当生物受到这个诅咒影响时，每当它进行攻击掷骰、属性检定或豁免掷骰时，它必须投掷d6并从d20掷骰中减去掷出的数字。在目标受到诅咒影响的任何一个回合中，它可以用其反应攻击一个盟友，从而忽略诅咒的效果。然后它免疫诅咒效果，直到它的回合结束。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

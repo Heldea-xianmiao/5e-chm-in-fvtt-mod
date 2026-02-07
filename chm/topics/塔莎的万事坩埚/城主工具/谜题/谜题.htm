@@ -108,5 +108,43 @@ style="BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid; WIDTH: 500px;
 
 进行属性检定。检定成功者将习得相关提示。<BR>不要犹豫向队伍透露提示。提示为拥有相关技能的角色提供了发光机会，即便他们通常并非格外狡猾。此外，如果队伍成员的背景或战役经历可能与谜题有关，这些都是为角色们提供额外提示的绝佳理由。</P>
 
-<P><STRONG><FONT color=#800000>运作谜题 Running Puzzles</FONT></STRONG> <BR>一旦你向团队展示了某道谜题，你可以自由地添加和解读细节，就像你在任何其他类型遭遇中一样。尽量不要在描述中透露解谜细节，但在各处透露个提示也没什么不好。<BR>不要担心解谜的是玩家还是角色。虽然提示检定提供了一种使角色经验有助于解谜的方法，但最终玩家与角色解谜能力的界限并不比队伍享受挑战更重要。然而，如果玩家事先知道谜题答案，则敦促他们只分享自己角色习得的提示。<BR>在提出一道谜题后，鼓励大家一起解谜、汇总提示并分享他们的见解。与大家一同分享一切谜题资料，并轮流谈论自己的想法。最终，解谜将是整个小组而非某个人的胜利。</P></body>
+<P><STRONG><FONT color=#800000>运作谜题 Running Puzzles</FONT></STRONG> <BR>一旦你向团队展示了某道谜题，你可以自由地添加和解读细节，就像你在任何其他类型遭遇中一样。尽量不要在描述中透露解谜细节，但在各处透露个提示也没什么不好。<BR>不要担心解谜的是玩家还是角色。虽然提示检定提供了一种使角色经验有助于解谜的方法，但最终玩家与角色解谜能力的界限并不比队伍享受挑战更重要。然而，如果玩家事先知道谜题答案，则敦促他们只分享自己角色习得的提示。<BR>在提出一道谜题后，鼓励大家一起解谜、汇总提示并分享他们的见解。与大家一同分享一切谜题资料，并轮流谈论自己的想法。最终，解谜将是整个小组而非某个人的胜利。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 </html>
+

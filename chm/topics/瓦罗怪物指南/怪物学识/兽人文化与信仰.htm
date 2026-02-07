@@ -136,4 +136,41 @@ style
 
      ><font>一个战败四散的部族幸存者有时会依靠自己的战斗技巧，以单独或者小队的形式来寻找任何愿意雇佣他们的雇主。这些佣兵虽然可能自豪于为他们表面上的独立，但仍然努力坚持到他们交易结束，因为由雇主支付报酬总好过因违反交易而被追捕。</font></span><span 
 
-     ></span></p></td></tr></table><p   style="     "><span> </span></p></div></body></html>
+     ></span></p></td></tr></table><p   style="     "><span> </span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

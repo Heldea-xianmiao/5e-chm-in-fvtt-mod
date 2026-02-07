@@ -54,7 +54,45 @@ Spear。</STRONG>近战或远程武器攻击：命中+8，触及5尺或射程30/
 
 无论是否命中，影矛都会魔法性地在进行远程攻击后立刻回到影灵手上<BR><STRONG>施法Spellcasting。</STRONG>影灵施展以下一个法术且不需要任何材料成分并使用魅力作为施法属性（法术豁免DC16）：<BR><EM><FONT color=#800080>随意：秘法眼，法师护甲，次级幻象，魔法伎俩，死者交谈<BR>每项1/日：秘法门，灾祸术，困惑术，黑暗术，恐惧术，高级幻影，真知术</FONT></EM><BR><STRONG><FONT color=#800000>反应 Reactions</FONT></STRONG><BR><STRONG>雾遁Misty 
 
-Escape（充能6）。</STRONG>在受到伤害后，影灵变为隐形，并带着任何其携带或着装的装备传送到60尺内一处他能看见的未占据空间。它保持隐形直到它的下回合开始或它进行攻击、造成伤害，或施放法术。</P></body>
+Escape（充能6）。</STRONG>在受到伤害后，影灵变为隐形，并带着任何其携带或着装的装备传送到60尺内一处他能看见的未占据空间。它保持隐形直到它的下回合开始或它进行攻击、造成伤害，或施放法术。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

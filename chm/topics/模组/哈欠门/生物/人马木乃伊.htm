@@ -66,7 +66,45 @@ DC 14 的体质豁免，豁免失败则承受木乃伊的腐烂诅咒。被诅�
 
 的感知豁免以抵抗该魔法，豁免失败则目标生物陷入恐慌，其效<BR>应持续至该人马木乃伊的下一个回合结束。如果目标生物的豁免检定投值低于 5 
 
-或更多，则目标生物同时<BR>陷入麻痹。豁免成功的生物在接下来的 24 小时免疫所有木乃伊（除了木乃伊领主）的恐怖凝视。</P></body>
+或更多，则目标生物同时<BR>陷入麻痹。豁免成功的生物在接下来的 24 小时免疫所有木乃伊（除了木乃伊领主）的恐怖凝视。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

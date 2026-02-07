@@ -68,7 +68,45 @@ Storm<BR>5 环(1
 
 Sickle(仅类人形态)。</STRONG>近战武器攻击，命中+4，触及5尺，单一目标。造成3(1d4+1)点挥砍伤害加5(2d4)点寒冷伤害。<BR><STRONG>啃咬Maul(仅野兽形态)。</STRONG>近战武器攻击，命中+4，触及5尺，单一目标。造成3(1d4+1)点穿刺伤害。<BR><STRONG>变形change 
 
-shape。</STRONG>德鲁伊魔法地变形为一种野兽的形态——北极狐，山羊，猫头鹰或狼——或变回类人原型。任何他所携带的装备会在野兽状态下被吸收或保持承载(由德鲁伊选择)。当其死亡时，霜地德鲁伊变回原型。除了在上面提到的部分外，德鲁伊的数据在各个形态中是相同的。</P></body>
+shape。</STRONG>德鲁伊魔法地变形为一种野兽的形态——北极狐，山羊，猫头鹰或狼——或变回类人原型。任何他所携带的装备会在野兽状态下被吸收或保持承载(由德鲁伊选择)。当其死亡时，霜地德鲁伊变回原型。除了在上面提到的部分外，德鲁伊的数据在各个形态中是相同的。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

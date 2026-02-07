@@ -208,4 +208,41 @@ font-weight:bold;" ></span></b></p><p   style="margin-bottom:12.0000pt;
 
 
 
-" ><span><font>只有最绝望的社群才会使用地精、狗头人、侏儒和其他小型类人来做除食物以外的任何事情。小型类人确实是一个很好的食物来源，因为他们往往聚集在一个大的群体中，他们面对夺心魔入侵时的恐惧和绝望使他们的大脑对灵吸怪的味蕾来说很美味。相对更大、更强的类人奴仆来说，它们也更容易控制。小型的类人生物很少会被转变成奴仆，或者被严格控制。</font><br><br><font>几乎所有的类人生物都有可能沦为奴仆，夺心魔有时会与落入他们手中的受害者合作。除了上面讨论的例子外，他们倾向于认为兽人、熊地精、人类和其他类似的类人生物在很大程度上是可以互换的。他们的大脑都有相似的味道，他们作为奴隶的效用大致相同。</font></span></p></div></body></html>
+" ><span><font>只有最绝望的社群才会使用地精、狗头人、侏儒和其他小型类人来做除食物以外的任何事情。小型类人确实是一个很好的食物来源，因为他们往往聚集在一个大的群体中，他们面对夺心魔入侵时的恐惧和绝望使他们的大脑对灵吸怪的味蕾来说很美味。相对更大、更强的类人奴仆来说，它们也更容易控制。小型的类人生物很少会被转变成奴仆，或者被严格控制。</font><br><br><font>几乎所有的类人生物都有可能沦为奴仆，夺心魔有时会与落入他们手中的受害者合作。除了上面讨论的例子外，他们倾向于认为兽人、熊地精、人类和其他类似的类人生物在很大程度上是可以互换的。他们的大脑都有相似的味道，他们作为奴隶的效用大致相同。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

@@ -34,7 +34,45 @@ html,body {
 
 Guard）的存在，鸟族在外界的威胁下得到了妥善的保护。这是一支经过空中和地面作战训练士兵组成的部队，能够保证鸟族城市和居民的安全。<BR>多年以来桤心城（Alderheart 
 
-City）一直是和平与和谐的灯塔，但席卷而来的大火却使该地区陷入混乱。树栖守卫部队分散在各处的树冠城市中，几乎无法在保护主要道路的商旅的同时，又保护他们的家园免遭森林火灾的侵袭。现在这些伟大的鸟族城市面临着比以往更多的来自强盗和森林火灾的威胁。尽管如此，他们相信只要鸟族和那些将鸟族木栖地视为家园的其他居民之间精诚协作，就能够像往常一样承受住即将到来的风暴。</P></body>
+City）一直是和平与和谐的灯塔，但席卷而来的大火却使该地区陷入混乱。树栖守卫部队分散在各处的树冠城市中，几乎无法在保护主要道路的商旅的同时，又保护他们的家园免遭森林火灾的侵袭。现在这些伟大的鸟族城市面临着比以往更多的来自强盗和森林火灾的威胁。尽管如此，他们相信只要鸟族和那些将鸟族木栖地视为家园的其他居民之间精诚协作，就能够像往常一样承受住即将到来的风暴。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

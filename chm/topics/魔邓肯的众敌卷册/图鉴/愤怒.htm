@@ -70,7 +70,45 @@ Heads。</STRONG>愤怒进行感知（察觉）检定和抵抗目盲、魅惑、
 
 (3d12)的心灵伤害。<BR>在它的回合中，如果自上个一回合结束后没有其他生物对它造成伤害，愤怒在攻击中取劣势。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击 Multiattack。</STRONG>愤怒发动两次钩子爪攻击。<BR><STRONG>钩爪 
 
-Hook。</STRONG>近战武器攻击：命中+8，触及5尺，单一目标， 命中：16(2d12+3)的穿刺伤害。</P></body>
+Hook。</STRONG>近战武器攻击：命中+8，触及5尺，单一目标， 命中：16(2d12+3)的穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

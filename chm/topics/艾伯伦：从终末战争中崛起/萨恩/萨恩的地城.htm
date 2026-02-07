@@ -168,7 +168,45 @@ style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><FONT face=宋
 
 style="FONT-SIZE: 10pt; FONT-FAMILY: 'Segoe UI'; mso-spacerun: 'yes'"><BR></SPAN><SPAN 
 
-style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><FONT face=宋体>虽然下水道本身不是用来让人生活的地方，但是几个世纪以来，这里也形成了一种亚文化。一些原始野蛮的种族，大部分是地精，还有一些化兽者、矮人和野生半身人居住在下水道里，在垃圾山李翻箱倒柜，在下城区贩卖他们的收货。这些下水道氏族不断地争夺领地，因为中央处理室的控制权至关重要。下水道氏族既可以成为冒险者的助力，也可能对冒险者造成威胁；没有比下水道氏族的人更了解他们下面的东西了。</FONT></SPAN></P></body>
+style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><FONT face=宋体>虽然下水道本身不是用来让人生活的地方，但是几个世纪以来，这里也形成了一种亚文化。一些原始野蛮的种族，大部分是地精，还有一些化兽者、矮人和野生半身人居住在下水道里，在垃圾山李翻箱倒柜，在下城区贩卖他们的收货。这些下水道氏族不断地争夺领地，因为中央处理室的控制权至关重要。下水道氏族既可以成为冒险者的助力，也可能对冒险者造成威胁；没有比下水道氏族的人更了解他们下面的东西了。</FONT></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

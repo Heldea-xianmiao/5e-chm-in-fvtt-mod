@@ -42,7 +42,45 @@ Dimetrodon</FONT></STRONG>
 
 <BR><EM>中型野兽，无阵营</EM><BR>护甲等级：12（天生护甲）<BR>生命值：19（3d8+6）<BR>速度：30尺，游泳20尺<BR>力量14（+2） 敏捷10（+0） 体质15（+2）<BR>智力2（-4） 
 
-感知10（+0） 魅力5（-3）<BR>技能：察觉+2<BR>感官：被动察觉12<BR>语言：——<BR>挑战等级：1/4（50XP）<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>啃咬Bite。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命中：9（2d6+2）穿刺伤害。</P></body>
+感知10（+0） 魅力5（-3）<BR>技能：察觉+2<BR>感官：被动察觉12<BR>语言：——<BR>挑战等级：1/4（50XP）<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>啃咬Bite。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命中：9（2d6+2）穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

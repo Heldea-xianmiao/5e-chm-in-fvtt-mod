@@ -60,7 +60,45 @@ html,body {
 
 <font color=#800000><strong>附赠动作Bonus Actions</strong></font><br>
 
-<strong>绝对追迹者Unerring Tracker。</strong>牛头人选择一个它可见生物，与该生物之间创建一条心灵链接。接下来的一小时内，只要目标与牛头人处于同一存在位面，牛头人就永远可以知晓与那个生物之间的距离与方向。若牛头人陷入 <strong>失能Incapacitated</strong> 状态或是再次使用此能力，这一链接将提前结束。</p></body>
+<strong>绝对追迹者Unerring Tracker。</strong>牛头人选择一个它可见生物，与该生物之间创建一条心灵链接。接下来的一小时内，只要目标与牛头人处于同一存在位面，牛头人就永远可以知晓与那个生物之间的距离与方向。若牛头人陷入 <strong>失能Incapacitated</strong> 状态或是再次使用此能力，这一链接将提前结束。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -18,7 +18,45 @@
 
 </p><p>本章介绍了受万象无常牌启发的怪物，依首字母排序。<strong>《<FONT face=仿宋>怪物图鉴</FONT>》</strong>的前言讲述了如何使用这些数据卡。某些生物可以用武器造成非寻常的伤害类型和施放以非典型方式发挥作用的法术。这种例外是来源于资料卡上的一种特殊特性，代表了该生物如何使用自己的武器或施法；该例外不会影响武器或法术在其他生物手里所发挥的效果。<br>
 
-若该生物的数据卡在名字下的括号内包含了职业，则该生物视为对应职业的一员，用以满足魔法物品的先决条件。</p></body>
+若该生物的数据卡在名字下的括号内包含了职业，则该生物视为对应职业的一员，用以满足魔法物品的先决条件。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

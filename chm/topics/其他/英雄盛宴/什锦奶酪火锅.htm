@@ -56,7 +56,45 @@ style="BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid; WIDTH: 400px;
 
 style="FONT-SIZE: 11pt; FONT-FAMILY: 'Arial Unicode MS'; mso-spacerun: 'yes'" 
 
-dir=ltr><FONT size=3 face="Arial Unicode MS">奶酪的融化方式非常多变。所以为了增加你顺利完成的几率，请使用室温下磨碎的奶酪。许多专家建议使用一年以内的新鲜奶酪，避免使用那些来自超市熟食柜台的奶酪。<BR>奶酪的咸度会有差异，所以要仔细调味。先用半茶匙粗盐，然后品尝。如有必要，可按1/4茶匙的量加入更多的盐。</FONT></SPAN></P></div></body>
+dir=ltr><FONT size=3 face="Arial Unicode MS">奶酪的融化方式非常多变。所以为了增加你顺利完成的几率，请使用室温下磨碎的奶酪。许多专家建议使用一年以内的新鲜奶酪，避免使用那些来自超市熟食柜台的奶酪。<BR>奶酪的咸度会有差异，所以要仔细调味。先用半茶匙粗盐，然后品尝。如有必要，可按1/4茶匙的量加入更多的盐。</FONT></SPAN></P></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

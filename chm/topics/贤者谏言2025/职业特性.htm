@@ -16,7 +16,45 @@
 
 <p class=MsoNormal><b><FONT color=#800000 size=3>当你使用 额外攻击Extra Attack 
 
-特性时，你必须在进行所有攻击时使用同一把武器吗？<BR></FONT></b><FONT size=3>额外攻击对于你用来攻击的武器没有限制。你可以在攻击时使用正常武器、临时武器、徒手打击或三者组合使用。不过你仍需要遵循作为<U>攻击</U>动作的一部分拔出和收起武器的规则。</FONT></p></body>
+特性时，你必须在进行所有攻击时使用同一把武器吗？<BR></FONT></b><FONT size=3>额外攻击对于你用来攻击的武器没有限制。你可以在攻击时使用正常武器、临时武器、徒手打击或三者组合使用。不过你仍需要遵循作为<U>攻击</U>动作的一部分拔出和收起武器的规则。</FONT></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

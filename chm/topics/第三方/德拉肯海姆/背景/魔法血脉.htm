@@ -978,7 +978,45 @@ style="FONT-SIZE: 12pt; FONT-FAMILY: 微软雅黑; FONT-WEIGHT: bold; COLOR: rgb
 
 <P class=MsoNormal style="MARGIN: 0pt"><SPAN 
 
-style="FONT-SIZE: 10.5pt; FONT-FAMILY: 等线; mso-spacerun: 'yes'; mso-bidi-font-family: 'Times New Roman'; mso-font-kerning: 1.0000pt"><FONT color=#000000 face=等线>你因为一些实际存在或者子虚乌有的违规行为而被紫晶学院开除，又或者，你从来未被紫晶学院收留，自己学会了魔法。普通人通常不会信任不穿紫晶学院袍子的施法者，所以你可能需要隐藏自己的身份和能力，尤其是面对紫晶学院和白银骑士团的时候。</FONT></SPAN><!--EndFragment--></FONT></P></body>
+style="FONT-SIZE: 10.5pt; FONT-FAMILY: 等线; mso-spacerun: 'yes'; mso-bidi-font-family: 'Times New Roman'; mso-font-kerning: 1.0000pt"><FONT color=#000000 face=等线>你因为一些实际存在或者子虚乌有的违规行为而被紫晶学院开除，又或者，你从来未被紫晶学院收留，自己学会了魔法。普通人通常不会信任不穿紫晶学院袍子的施法者，所以你可能需要隐藏自己的身份和能力，尤其是面对紫晶学院和白银骑士团的时候。</FONT></SPAN><!--EndFragment--></FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

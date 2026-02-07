@@ -62,7 +62,45 @@ Worm</FONT></STRONG><BR><EM>超巨型怪兽，无阵营</EM><BR>护甲等级：1
 
 Stinger。</STRONG>近战武器攻击：命中+14，触及10尺，单一生物。命中：19（3d6+9）点穿刺伤害。且目标必须进行一次DC 
 
-19的体质豁免，豁免失败则受42（12d6）点毒素伤害。<BR><FONT color=#808080>（译者注：该怪物错误数据较多，除力量10（+0）和命中+14外（推断为复制紫虫忘了改），该紫虫的吞噬没有写逃出的办法。）</FONT></P></body>
+19的体质豁免，豁免失败则受42（12d6）点毒素伤害。<BR><FONT color=#808080>（译者注：该怪物错误数据较多，除力量10（+0）和命中+14外（推断为复制紫虫忘了改），该紫虫的吞噬没有写逃出的办法。）</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -160,7 +160,45 @@ Turning</FONT></STRONG><BR><EM>戒指，传说（需同调）</EM><BR>佩戴这�
 
 <P><STRONG><FONT color=#800000>三愿戒指 Ring of Three 
 
-Wishes</FONT></STRONG><BR><EM>戒指，传说</EM><BR>这枚戒指有3发充能。佩戴这枚戒指期间，以一个动作，你可以消耗1发充能用其施展法术 <EM><FONT color=#800080>祈愿术wish</FONT></EM>。充能用尽后，这枚戒指化为一枚非魔法的戒指。</P></body>
+Wishes</FONT></STRONG><BR><EM>戒指，传说</EM><BR>这枚戒指有3发充能。佩戴这枚戒指期间，以一个动作，你可以消耗1发充能用其施展法术 <EM><FONT color=#800080>祈愿术wish</FONT></EM>。充能用尽后，这枚戒指化为一枚非魔法的戒指。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

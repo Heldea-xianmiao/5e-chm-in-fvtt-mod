@@ -74,7 +74,45 @@ restoration的增益。<BR>月井水装到容器中或在离井30尺远后将成
 
 <P><STRONG><FONT color=#800000>竖琴手与德鲁伊The Harpers and 
 
-Druids</FONT></STRONG><BR>北地的德鲁伊结社经常因目标一致，再经并由吟游诗人和游侠作中间人搭桥来与竖琴手们结盟。单独行动的竖琴手有时会向某个结社寻求帮助，至少希望能够获得食物和住所的供给，有机会的话也会希望能够出席聚会或在其中发表演说。<BR>尽管如此，竖琴手并不属于德鲁伊组织。此外，德鲁伊和德鲁伊结社并不一定像普罗大众想象中那样亲切，他们可能并不认同竖琴手本身或其使命，甚至都不会对其表示友善。事实上，一些德鲁伊认为这些多管闲事的竖琴手几乎和那些自己对抗的邪恶一样，四处威胁着自然之平衡。</P></body>
+Druids</FONT></STRONG><BR>北地的德鲁伊结社经常因目标一致，再经并由吟游诗人和游侠作中间人搭桥来与竖琴手们结盟。单独行动的竖琴手有时会向某个结社寻求帮助，至少希望能够获得食物和住所的供给，有机会的话也会希望能够出席聚会或在其中发表演说。<BR>尽管如此，竖琴手并不属于德鲁伊组织。此外，德鲁伊和德鲁伊结社并不一定像普罗大众想象中那样亲切，他们可能并不认同竖琴手本身或其使命，甚至都不会对其表示友善。事实上，一些德鲁伊认为这些多管闲事的竖琴手几乎和那些自己对抗的邪恶一样，四处威胁着自然之平衡。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

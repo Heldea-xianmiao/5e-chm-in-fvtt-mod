@@ -50,5 +50,43 @@ src="四乘四.jpg"><BR>每行与每列的数字都代表了头骨数量。角�
 
 <P><STRONG><FONT color=#800000>定制谜题<BR></FONT></STRONG>如果其中一个角色是个矮人，这可能是引入家族剧情的最佳时机。这些是他们失散多年的家族的头骨吗？其中某个头骨是否属于他们一直在寻找的亲人？而九个头骨中只有四个归于了“天界床榻”，他们认为此道谜题在暗示什么？</P>
 
-<hr></body>
+<hr><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 </html>
+

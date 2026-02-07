@@ -66,6 +66,43 @@ Armory</STRONG> ：当你对此设施下达贸易指令时，你委托设施雇�
 
 。如果你的据点拥有铁匠铺，总价格将减半。</P>
 
-<P>当你的军械库补充完毕后，你的据点卫兵会更难被杀死。当一个事件迫使你掷骰以决定自己是否失去了一个或更多的据点卫兵时（见本章末“<STRONG>据点事件</STRONG>”一节），你投掷d8，而非d6。在该事件结束后，无论是否有据点卫兵损失，你储存的装备都会被消耗。这会导致你的军械库失去作用，直至你再次对其下达贸易指令来重新补货。</P></body>
+<P>当你的军械库补充完毕后，你的据点卫兵会更难被杀死。当一个事件迫使你掷骰以决定自己是否失去了一个或更多的据点卫兵时（见本章末“<STRONG>据点事件</STRONG>”一节），你投掷d8，而非d6。在该事件结束后，无论是否有据点卫兵损失，你储存的装备都会被消耗。这会导致你的军械库失去作用，直至你再次对其下达贸易指令来重新补货。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>

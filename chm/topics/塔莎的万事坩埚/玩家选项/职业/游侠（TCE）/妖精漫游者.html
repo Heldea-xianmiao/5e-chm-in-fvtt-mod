@@ -146,5 +146,43 @@ fey</EM>（一个出自第三章的法术)。它不计入你的已知游侠法�
 
 <P><STRONG><FONT color=#800000>雾行漫游 Misty 
 
-Wanderer</FONT></STRONG><BR><EM>第15级妖精漫游者特性</EM><BR>你可以在眨眼之间穿梭妖精荒原以进行移动：你可以免费施展 <EM>迷踪步misty step</EM>而不需要消耗法术位，次数等同于你的感知调整值次（至少一次），在完成一次长休后，你重获所有的已消耗的次数。<BR>另外，每当你施展 <EM>迷踪步misty step</EM>时，你可以携带一个五尺以内你可见的自愿生物与你一同传送。那个生物会被传送到由你选择的，位于你的目标位置周围五尺范围内的一处未占据空间内。</P></BODY></HTML>
+Wanderer</FONT></STRONG><BR><EM>第15级妖精漫游者特性</EM><BR>你可以在眨眼之间穿梭妖精荒原以进行移动：你可以免费施展 <EM>迷踪步misty step</EM>而不需要消耗法术位，次数等同于你的感知调整值次（至少一次），在完成一次长休后，你重获所有的已消耗的次数。<BR>另外，每当你施展 <EM>迷踪步misty step</EM>时，你可以携带一个五尺以内你可见的自愿生物与你一同传送。那个生物会被传送到由你选择的，位于你的目标位置周围五尺范围内的一处未占据空间内。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

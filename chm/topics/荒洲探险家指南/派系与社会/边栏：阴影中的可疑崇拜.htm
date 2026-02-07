@@ -34,7 +34,45 @@ Heart</STRONG>。刻薄之心的领袖们全身心奉献于提亚玛特，并渴
 
 Core</STRONG>。这些变异的邪教信徒崇拜诞生自古老邪恶者Elder Evils梦境中的恐怖存在——那些存在于遥远国度Far 
 
-Realm和已知位面之外的不可思议的古老、恶毒存在。受到疯狂的影响，他们的身体常常因为与他们崇拜的恐怖存在接触而发生微妙的变异，核之先驱聚集在枯滩破碎的土地上，召唤并释放他们主人的可怕孩子。</P></body>
+Realm和已知位面之外的不可思议的古老、恶毒存在。受到疯狂的影响，他们的身体常常因为与他们崇拜的恐怖存在接触而发生微妙的变异，核之先驱聚集在枯滩破碎的土地上，召唤并释放他们主人的可怕孩子。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

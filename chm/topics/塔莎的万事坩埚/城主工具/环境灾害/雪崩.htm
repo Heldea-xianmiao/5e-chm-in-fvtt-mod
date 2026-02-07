@@ -40,7 +40,45 @@ html,body {
 
 15的力量（运动）检定尝试挖掘自己，打破表面并结束自己身上的目盲和束缚状态。一个生物三次检定失败之后，就不能再尝试把自己挖出。</P>
 
-<P>一个没有陷入束缚或失能的生物可以花费1分钟来解放一个被掩埋的生物。一旦自由，这个生物就不再因雪崩而陷入目盲或束缚。</P></body>
+<P>一个没有陷入束缚或失能的生物可以花费1分钟来解放一个被掩埋的生物。一旦自由，这个生物就不再因雪崩而陷入目盲或束缚。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

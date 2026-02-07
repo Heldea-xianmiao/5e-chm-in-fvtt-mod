@@ -154,7 +154,45 @@ Nature。</STRONG> 你具有毒素伤害抗性，并免疫于疾病。你为防�
 
 Rest。</STRONG> 当你进行长休时，你需要花费6小时处于一种静止的、非激活的状态，以代替睡眠。这种状态下，你会表现的十分迟缓，但不会失去意识。 <BR><STRONG>专业设计 Specialized 
 
-Design。</STRONG> 你获得两项自选的工具熟练，从《玩家手册》中进行选择。</P></body>
+Design。</STRONG> 你获得两项自选的工具熟练，从《玩家手册》中进行选择。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

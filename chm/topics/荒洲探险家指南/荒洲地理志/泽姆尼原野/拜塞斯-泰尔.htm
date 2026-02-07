@@ -66,7 +66,45 @@ Prent和拜塞斯泰尔的其他重要人物。他们相信，随着王室Crown�
 
 Oleyahs的强大神器已从莫莱斯迈的废墟中找到，并正在秘密运送到拜塞斯泰尔。研究人员希望这个物品能解开他们祖先家园被毁的关键，但是当物品到达时，它被揭示为大法师半巫妖形态的欺骗性外壳。一场神秘的恐怖瘟疫降临到 
 
-拜塞斯泰尔身上，角色们被三人之戒指派去摧毁半巫妖奥莱亚斯 Oleyahs，或将其从燃烧的城市中驱逐出去。 </P></body>
+拜塞斯泰尔身上，角色们被三人之戒指派去摧毁半巫妖奥莱亚斯 Oleyahs，或将其从燃烧的城市中驱逐出去。 </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -26,7 +26,45 @@ H3{BORDER-BOTTOM: #b79c61 1px solid;MARGIN-BOTTOM:-18px;}
 
 假设冒险的背景是一个充满宝藏的地城，当角色们进入地城时，等待他们的是什么冲突？它可能简单如“敌对怪物想要把角色们吃掉”，或是“两个互相敌对的怪物派系居住在地城里”。也可能是一个对手或反派希望先角色一步掠夺地城；一座隆隆作响的火山即将喷发，威胁着地城的安全；或者是两个互相敌对的家族正在争夺祖先遗留在地城中的宝藏。
 
-<BR>如果你卡在了建立冲突的过程中，你可以阅览一下《<STRONG><FONT face=仿宋 >怪物图鉴Monster Manual</FONT></STRONG>》，直到你受到其中一种怪物的启发。</P></body>
+<BR>如果你卡在了建立冲突的过程中，你可以阅览一下《<STRONG><FONT face=仿宋 >怪物图鉴Monster Manual</FONT></STRONG>》，直到你受到其中一种怪物的启发。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

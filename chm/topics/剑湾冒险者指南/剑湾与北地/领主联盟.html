@@ -3314,9 +3314,47 @@ Undercliff</span></i></b><b><i><span style='font-size:9.0pt;font-family:宋体;
 
 color:black'>。</span></i></b><span style='font-size:9.0pt;font-family:宋体;
 
-color:black'>虽然许多人都不将这里认作一个城市大区，但这个位于城市东郊，由几个分散的小村庄和许多农场组成的地区，自深水城将一处营房和训练设施迁移至此后，便正式被成为该城市的一部分。</span></p></div></body>
+color:black'>虽然许多人都不将这里认作一个城市大区，但这个位于城市东郊，由几个分散的小村庄和许多农场组成的地区，自深水城将一处营房和训练设施迁移至此后，便正式被成为该城市的一部分。</span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

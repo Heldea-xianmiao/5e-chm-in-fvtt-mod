@@ -124,7 +124,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
       <P align=center>无价之宝</P></TD></TR></TABLE><BR>*除<FONT color=#0000ff face=仿宋><STRONG>法术卷轴<FONT face="Times New Roman"><EM>Spell 
 
-scroll</EM></FONT></STRONG></FONT>外，所有消耗品的价格减半。一张法术卷轴的价格为该卷轴抄写时所需成本（在玩家手册中已标明）的两倍。</P></body>
+scroll</EM></FONT></STRONG></FONT>外，所有消耗品的价格减半。一张法术卷轴的价格为该卷轴抄写时所需成本（在玩家手册中已标明）的两倍。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

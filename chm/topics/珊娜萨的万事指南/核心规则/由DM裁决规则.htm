@@ -50,7 +50,45 @@ html,body {
 
 <P >
 
-  DM是其中关键。D&amp;D战役中可能会出现许多意想不到的事件，既定的规则无法尽善尽美的解释每一种意外。试图面面俱到的规则往往会使游戏变得步履维艰。而严格限制角色们所作所为的想法与D&amp;D的开放性理念相违背。该游戏应包含的宗旨为：它应为DM构建规则奠定基础，并协助DM作为桥梁来判定规则与万物之间关联或非关联的性质。</P></body>
+  DM是其中关键。D&amp;D战役中可能会出现许多意想不到的事件，既定的规则无法尽善尽美的解释每一种意外。试图面面俱到的规则往往会使游戏变得步履维艰。而严格限制角色们所作所为的想法与D&amp;D的开放性理念相违背。该游戏应包含的宗旨为：它应为DM构建规则奠定基础，并协助DM作为桥梁来判定规则与万物之间关联或非关联的性质。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

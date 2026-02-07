@@ -58,7 +58,45 @@ of
 
 Nerves（1/日）。</STRONG>仙灵释放出一股令人神志迷乱的魔力，笼罩15尺锥状区域。该区域中的每个生物都必须成功通过DC12的智力豁免，否则陷入1分钟的恐慌frightened。每个恐慌的生物可以在回合结束时重复豁免，成功则结束自己身上的效应。<BR><STRONG><FONT color=#800000>附赠动作Bonus Actions</FONT></STRONG><BR><STRONG>顽劣匿踪Mischievous 
 
-Stealth。</STRONG>仙灵执行躲藏Hide动作。</P></body>
+Stealth。</STRONG>仙灵执行躲藏Hide动作。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

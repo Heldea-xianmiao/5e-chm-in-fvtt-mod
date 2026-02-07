@@ -2946,9 +2946,47 @@ Optional Rule: Facing</span></h4>
 
  lang=EN-US>Fire Form</span>”特质点燃，该被点燃目标不会因重复受该特质影响而提高其所受的持续性火焰伤害。游戏特性包括法术、职业特性、专长、种族特质、怪物能力以及魔法物品。与之相关的规则见<i
 
- style="mso-bidi-font-style: normal">《玩家手册》</i>第<span lang=EN-US>10</span>章“魔法效应混合”一节。</p></div></body>
+ style="mso-bidi-font-style: normal">《玩家手册》</i>第<span lang=EN-US>10</span>章“魔法效应混合”一节。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

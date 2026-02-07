@@ -34,7 +34,45 @@ Version?</STRONG> <BR>这是五版<FONT face=仿宋><STRONG>《玩家手册》</
 
 <p>如果你找不到某个规则，那么查询索引吧。如果某一规则的名字相比2014版<FONT face=仿宋><STRONG>《玩家手册》</STRONG></FONT>有变动，那么索引会给你指向新的名字。例如，如果你在索引中寻找<STRONG>激励Inspiration</STRONG>，它会给你指向术语汇编中的<FONT color=#008000><STRONG>英雄激励</STRONG></FONT>规则。</p></div>
 
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
 </body>
 
 </html>
+
 

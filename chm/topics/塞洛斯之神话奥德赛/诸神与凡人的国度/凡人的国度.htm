@@ -44,7 +44,45 @@ Wood）的北部边缘。<BR>拉苟那族（Lagonna）和斐力兹族（Pheres�
 
   Theros</STRONG><BR>从人类的宏伟城邦到俄拉尼阿德山脉（Oranaid 
 
-  Mountains）那令人眩晕的山峰，广阔而多样的土地组成了塞洛斯的世界。不过在塞洛斯，传说和地理位置之间的界限常常模糊不清。虽然城邦的居民可以相对地确保当他们冒险外出工作时他们的家还会留在他们离开时的地方，但描述那些传奇遗址的具体位置会更加模糊。即使常被提及的著名地点也是如此，比如奈欧兰廷（Neolantin）通常被描述为沿着海岸线远离迈勒提斯的西南部的位置。<BR>有些位置甚至更加难以捉摸。例如，达喀拉群岛完全随众神的心血来潮而移动，因而无法绘制地图。<BR>因此，多数地图起到的作用在很大程度上仅仅是提供一个模棱两可的地点，模糊的边界和通常的距离。虽然以凡人的标准而言，遗址的规模和位置是真实的，但细节可能会随众神的意愿而改变。所以在不同地点之间进行旅行时使用特定于某个目的地的指南或地图是最可靠的。<BR>如果你在塞洛斯展开冒险，你可以调整地点之间的距离以满足你的探险需要。两次连续的旅行其距离可能不一样。任何穿越塞洛斯的跋涉都可以扩大或缩小，从而适应你所希望的冒险和遭遇。</P></BLOCKQUOTE></body>
+  Mountains）那令人眩晕的山峰，广阔而多样的土地组成了塞洛斯的世界。不过在塞洛斯，传说和地理位置之间的界限常常模糊不清。虽然城邦的居民可以相对地确保当他们冒险外出工作时他们的家还会留在他们离开时的地方，但描述那些传奇遗址的具体位置会更加模糊。即使常被提及的著名地点也是如此，比如奈欧兰廷（Neolantin）通常被描述为沿着海岸线远离迈勒提斯的西南部的位置。<BR>有些位置甚至更加难以捉摸。例如，达喀拉群岛完全随众神的心血来潮而移动，因而无法绘制地图。<BR>因此，多数地图起到的作用在很大程度上仅仅是提供一个模棱两可的地点，模糊的边界和通常的距离。虽然以凡人的标准而言，遗址的规模和位置是真实的，但细节可能会随众神的意愿而改变。所以在不同地点之间进行旅行时使用特定于某个目的地的指南或地图是最可靠的。<BR>如果你在塞洛斯展开冒险，你可以调整地点之间的距离以满足你的探险需要。两次连续的旅行其距离可能不一样。任何穿越塞洛斯的跋涉都可以扩大或缩小，从而适应你所希望的冒险和遭遇。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

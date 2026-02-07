@@ -108,7 +108,45 @@ Penance。忏悔地牢的很多层次都深入到城市的下面。可怕的暗�
 
 of Malice的特工们发起了突袭，袭击并且试图绑架王朝内有影响力的神职人员。角色们必须阻止袭击。铲除这个计划背后隐藏的叛徒，并且拯救幸存的俘虏。</P>
 
-<P>古尔-德拉纳斯回归（史诗级）：三头犬密会派出几个化过装的大法师来解开罗索纳封印的裂隙，通过让这个城市充满异界威胁来摧毁王朝。角色们或许会推动计划，或许会阻止它。</P></body>
+<P>古尔-德拉纳斯回归（史诗级）：三头犬密会派出几个化过装的大法师来解开罗索纳封印的裂隙，通过让这个城市充满异界威胁来摧毁王朝。角色们或许会推动计划，或许会阻止它。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

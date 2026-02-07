@@ -62,7 +62,45 @@ Actions</FONT></STRONG><BR><STRONG>消耗活力Consume
 
 Vitality。</STRONG>灵魂震颤者以一名它正在擒抱的生物为目标。如果目标不是构装或亡灵生物，则目标必须成功于DC 
 
-14体质豁免，否则受到7（2d6）点暗蚀伤害。目标的生命值上限减少相当于所受暗蚀伤害的值，灵魂震颤者恢复等同于该数量的生命值。以此减少的上限持续至目标完成一次长休。如果目标的生命值上限降低到0，则目标死亡。</P></body>
+14体质豁免，否则受到7（2d6）点暗蚀伤害。目标的生命值上限减少相当于所受暗蚀伤害的值，灵魂震颤者恢复等同于该数量的生命值。以此减少的上限持续至目标完成一次长休。如果目标的生命值上限降低到0，则目标死亡。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

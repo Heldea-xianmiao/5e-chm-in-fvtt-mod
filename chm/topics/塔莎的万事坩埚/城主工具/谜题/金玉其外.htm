@@ -108,5 +108,43 @@ palm.）”这句话。当角色大声说出这句话时，雕像的合掌就会
 
 魅力（游说或威吓）检定。可以考虑像“A 是字母表的第一个字母”或“宝石按顺序排列，会对拼写（同法术，spell）有帮助”这样的提示。</P>
 
-<P><STRONG><FONT color=#800000>释放魂灵</FONT></STRONG><BR>如果角色没有尝试将宝石从房间里移走，或者他们花了太长时间商议，就创造一个新的触发点来释放精神。例如，如果角色将宝石放在雕像附近或持有宝石太久，或许就会释放魂灵。</P></body>
+<P><STRONG><FONT color=#800000>释放魂灵</FONT></STRONG><BR>如果角色没有尝试将宝石从房间里移走，或者他们花了太长时间商议，就创造一个新的触发点来释放精神。例如，如果角色将宝石放在雕像附近或持有宝石太久，或许就会释放魂灵。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 </html>
+

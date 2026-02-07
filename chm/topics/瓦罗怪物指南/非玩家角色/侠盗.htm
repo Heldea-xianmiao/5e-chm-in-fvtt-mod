@@ -40,7 +40,45 @@ html,body {
 
 特技+8，运动+5，游说+6<BR>感官 被动察觉10<BR>语言 任意一种语言（一般为通用语）<BR>挑战等级 3（700XP）</P>
 
-<P><STRONG>轻盈脚步。</STRONG>侠盗可以在她的每个回合以一个附赠动作进行疾走或者撤退动作。<BR><STRONG>精明防御。</STRONG>侠盗在穿戴轻甲或者无甲并且没有持握盾牌时，她的AC包含她的魅力调整值。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>侠盗进行三次攻击：一次匕首和两次细剑。<BR><STRONG>匕首。</STRONG>近战或者远程武器攻击：命中+6，触及5尺，或者射程20/60尺，单一目标。命中：6（1d4+4）穿刺伤害。<BR><STRONG>细剑。</STRONG>近战武器攻击：命中+6，触及5尺，单一目标。命中：8（1d8+4）穿刺伤害。</P></body>
+<P><STRONG>轻盈脚步。</STRONG>侠盗可以在她的每个回合以一个附赠动作进行疾走或者撤退动作。<BR><STRONG>精明防御。</STRONG>侠盗在穿戴轻甲或者无甲并且没有持握盾牌时，她的AC包含她的魅力调整值。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>侠盗进行三次攻击：一次匕首和两次细剑。<BR><STRONG>匕首。</STRONG>近战或者远程武器攻击：命中+6，触及5尺，或者射程20/60尺，单一目标。命中：6（1d4+4）穿刺伤害。<BR><STRONG>细剑。</STRONG>近战武器攻击：命中+6，触及5尺，单一目标。命中：8（1d8+4）穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

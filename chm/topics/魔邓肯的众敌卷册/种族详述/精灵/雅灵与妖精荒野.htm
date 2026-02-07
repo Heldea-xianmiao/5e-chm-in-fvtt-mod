@@ -36,7 +36,45 @@ html,body {
 
 <P><STRONG>边栏：废陋巨人 
 
-  Fomorians</STRONG><BR>丑陋的废陋巨人曾经在巨人之中最为英俊。它们与精灵同住在妖精荒原中，两者皆因对魔法的热爱而结为盟友。但后来，废陋巨人们将自己的爱转为了恶意，将魔法视作用来喂饱自己权力欲望的奴隶。当它们试图征服妖精荒野并将精灵也打成奴隶时，精灵们和其他妖精们联合了起来并将废陋巨人赶入了地下。这些曾经的巨人、现在的异形被自己的内在腐化所带来的诅咒塑造成了现在这副人厌鬼憎的模样，它们撤入妖精荒原的幽暗地域，一直留在那里直到今日。</P></BLOCKQUOTE></body>
+  Fomorians</STRONG><BR>丑陋的废陋巨人曾经在巨人之中最为英俊。它们与精灵同住在妖精荒原中，两者皆因对魔法的热爱而结为盟友。但后来，废陋巨人们将自己的爱转为了恶意，将魔法视作用来喂饱自己权力欲望的奴隶。当它们试图征服妖精荒野并将精灵也打成奴隶时，精灵们和其他妖精们联合了起来并将废陋巨人赶入了地下。这些曾经的巨人、现在的异形被自己的内在腐化所带来的诅咒塑造成了现在这副人厌鬼憎的模样，它们撤入妖精荒原的幽暗地域，一直留在那里直到今日。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

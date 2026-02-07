@@ -56,7 +56,45 @@ html,body {
 
 一旦寻猎开始，亡灵们会尽其所能飞速去完成他们的任务目标。如果目标是一副万象无常牌，寻猎队会试图杀死其持有者，然后毁掉牌组，如果不能，他们会把牌组带回衰朽花园。如果牌组并非直接目标，寻猎队成员会分头行动，寻找可能找到牌组的人。经过数个世纪的活动，死惧刑徒已经前往过多元宇宙中的许多世界，并在各个世界都有联络人和代理人。这些信息提供者中大多数都并不知晓死惧刑徒或并不知道他们究竟是什么。他们只知道这些猎手十分可怕，任何阻挡他们的人都是死路一条。寻找牌组的猎手会定期通过恐惧和贿赂来重新建立起他们在这些联络人之间的权威，收集他们掌握的关于万象无常牌和相关内容的情报，如炽天城塞（见第十章）、彗星先驱（见第二十一章）或洗牌妖（见第二十一章）的消息。<br>
 
-由于亡灵们被束缚于衰朽花园，这场寻猎必须在24小时之后结束。在那时，参加寻猎的亡灵们将消失，然后再出现在衰朽花园之中。他们会向死惧大君们汇报，并等待下一次寻猎。</p></body>
+由于亡灵们被束缚于衰朽花园，这场寻猎必须在24小时之后结束。在那时，参加寻猎的亡灵们将消失，然后再出现在衰朽花园之中。他们会向死惧大君们汇报，并等待下一次寻猎。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -476,7 +476,45 @@ glue</U></EM>）。
 
 <P><EM>奇物，传说<BR></EM>这块丝绸般柔软的精致黑色布料折叠起来有手帕大小，展开时则为直径6尺的圆形。<BR>你能够以一个<U>魔法</U>动作展开诸界之井，将它布置在坚实表面上，产生一扇直径6尺、通向另一个世界或存在位面的圆形双向传送门。每次此物品打开传送门时，由DM决定它所连接的地方。传送门保持开启，直至位于其5尺内的一名生物以一个<U>魔法</U>动作抓住布料的边缘把它折叠起来，来将传送门关闭。<BR> 
 
-诸界之井一经使用，在1d8小时内都无法再次打开传送门。 </P></body>
+诸界之井一经使用，在1d8小时内都无法再次打开传送门。 </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -6382,9 +6382,47 @@ style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; COLOR: black">的游侠，他的身
 
 style='FONT-SIZE: 10pt; FONT-FAMILY: "Segoe UI",sans-serif; COLOR: black'> </SPAN><span 
 
-style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; COLOR: black">这个男人是一个贪婪的可怜人，他声称自己已经被刺了很多次，现在对飞龙的毒液免疫了。他喜欢在菜鸟酒馆讲述他如何被刺的故事，并认为自己是一个有趣的叙事者，因为人们会认真倾听和鼓掌。事实是当地人害怕他，所以在他喝醉的时候会迁就他。</SPAN></SPAN></P></div></body>
+style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; COLOR: black">这个男人是一个贪婪的可怜人，他声称自己已经被刺了很多次，现在对飞龙的毒液免疫了。他喜欢在菜鸟酒馆讲述他如何被刺的故事，并认为自己是一个有趣的叙事者，因为人们会认真倾听和鼓掌。事实是当地人害怕他，所以在他喝醉的时候会迁就他。</SPAN></SPAN></P></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

@@ -62,7 +62,45 @@ Claw。</STRONG>近战武器攻击：命中+8，触及15尺，单一目标。<BR
 
 Jump。</STRONG>如果骨爪处于微光或黑暗中，每个其选择的在其5尺以内的生物必须成功通过DC14的体质豁免检定否则受到34（5d12+2）暗蚀伤害。<BR>骨爪在之后魔法地传送到60尺内一个未占据空间。它能带走一个它所擒抱的生物，并将该生物传送到其目的地的5尺内。该目的地的空间必须为微光或者黑暗环境。<BR><STRONG><FONT color=#800000>反应 Reactions</FONT></STRONG><BR><STRONG>死亡触及Deadly 
 
-Reach。</STRONG>当一个可见的敌人移动进入骨爪的触及范围时，骨爪可以对该敌人进行一次爪击攻击。如果这次攻击命中，骨爪可以对该生物进行第二次攻击。</P></body>
+Reach。</STRONG>当一个可见的敌人移动进入骨爪的触及范围时，骨爪可以对该敌人进行一次爪击攻击。如果这次攻击命中，骨爪可以对该生物进行第二次攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

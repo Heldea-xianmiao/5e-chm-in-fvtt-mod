@@ -54,7 +54,45 @@ Pick。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命�
 
 Crossbow。</STRONG>远程武器攻击：命中+2，射程100/400尺，单一目标。命中：5（1d10）点穿刺伤害。<BR><STRONG>共享隐形Shared 
 
-Invisibility（短休或长休后充能）。</STRONG>凯沃拉骑兵魔法性地隐去身形，效果将最多持续1小时，或直至他进行攻击，迫使一个生物进行豁免，亦或其专注被打断（这个效果如同他在专注一个法术）。凯沃拉骑兵穿着及携带的所有装备也随他一起隐形。当隐形的灰矮人凯沃拉骑兵骑乘坐骑时，坐骑也同样隐形。若坐骑进行了攻击，那么坐骑身上的隐形效果将立刻提前结束。</P></body>
+Invisibility（短休或长休后充能）。</STRONG>凯沃拉骑兵魔法性地隐去身形，效果将最多持续1小时，或直至他进行攻击，迫使一个生物进行豁免，亦或其专注被打断（这个效果如同他在专注一个法术）。凯沃拉骑兵穿着及携带的所有装备也随他一起隐形。当隐形的灰矮人凯沃拉骑兵骑乘坐骑时，坐骑也同样隐形。若坐骑进行了攻击，那么坐骑身上的隐形效果将立刻提前结束。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

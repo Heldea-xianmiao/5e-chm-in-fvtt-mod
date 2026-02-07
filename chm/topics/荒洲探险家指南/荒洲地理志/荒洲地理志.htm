@@ -32,6 +32,43 @@ Darrington</EM>          </P>
 
 <P>本章介绍了荒洲的各个区域，分为七个主要地区:集会海岸、泽姆尼原野和骨髓谷，这三者共同构成了西维南迪尔；灰败荒原和埃塞克罗斯，形成了被称为凛寒北境的地区；最后是乔哈斯废土和枯滩，这两个地区组成了东维南迪尔。每个部分都描述了该地区的重要地点，并包含适合前往该地冒险者的情节线索。</P>
 
-<P>本章中提供的冒险线索根据推荐的冒险队伍等级划分为几个范围：低等级（1-6级）、中等级（7-11级）、高等级（12-16级）和史诗级（17-20级）。标记为“任何等级”的冒险线索可以在你的团队旅程的任何时刻呈现，只需稍加规划。你可以根据你的战役调整任何这些冒险线索的难度。</P></body>
+<P>本章中提供的冒险线索根据推荐的冒险队伍等级划分为几个范围：低等级（1-6级）、中等级（7-11级）、高等级（12-16级）和史诗级（17-20级）。标记为“任何等级”的冒险线索可以在你的团队旅程的任何时刻呈现，只需稍加规划。你可以根据你的战役调整任何这些冒险线索的难度。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>

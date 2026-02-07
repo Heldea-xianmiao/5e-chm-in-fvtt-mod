@@ -32,7 +32,45 @@
 
 <P>每个军团的总部都有一个指挥中心，军阀在那里会见各旗的头领和其他高级将领。在这一综合楼内部或附近的某个地方是通往荣耀之路——一条路、一条河、一条隧道或一条山谷，两边埋葬着光荣的死者，每个墓地都配有对其居住者的旗、等级和荣耀的描述。</P>
 
-<P>军队的营房虽然简陋但数量充足，马厩和洞穴也足够容纳军团的牲畜和野兽。有需要的军团还预留了一个图书馆的空间，这个图书馆也可以同时用作学校和施法者的训练设施。如果一个大地精巢穴有监狱,这地方通常不大——恶徒们在面对大地精的残酷判决前只会被关押很短一段时间。</P></body>
+<P>军队的营房虽然简陋但数量充足，马厩和洞穴也足够容纳军团的牲畜和野兽。有需要的军团还预留了一个图书馆的空间，这个图书馆也可以同时用作学校和施法者的训练设施。如果一个大地精巢穴有监狱,这地方通常不大——恶徒们在面对大地精的残酷判决前只会被关押很短一段时间。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

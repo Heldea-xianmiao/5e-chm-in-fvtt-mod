@@ -38,7 +38,45 @@ Chain</FONT></STRONG><BR><EM>护甲（链甲），传说（需同调）</EM><BR>
 
 <P><STRONG><FONT color=#800000>以太化板甲 Plate Armor of 
 
-Etherealness</FONT></STRONG><BR><EM>护甲（板甲），传说（需同调）</EM><BR>着装该护甲期间，你可以用动作说出其命令语以获得法术 <EM><FONT color=#800080>以太化etherealness</FONT></EM>的效应。效应持续10分钟，若你用动作再次说出命令语或你脱下此护甲，效应也将提前结束。该护甲的这一属性一经使用，直到次日黎明前都无法再次被使用。</P></body>
+Etherealness</FONT></STRONG><BR><EM>护甲（板甲），传说（需同调）</EM><BR>着装该护甲期间，你可以用动作说出其命令语以获得法术 <EM><FONT color=#800080>以太化etherealness</FONT></EM>的效应。效应持续10分钟，若你用动作再次说出命令语或你脱下此护甲，效应也将提前结束。该护甲的这一属性一经使用，直到次日黎明前都无法再次被使用。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

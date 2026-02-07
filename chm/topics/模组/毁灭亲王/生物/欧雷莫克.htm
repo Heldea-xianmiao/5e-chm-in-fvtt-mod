@@ -154,7 +154,45 @@ Actions</FONT></STRONG>
 
 Gargoyle（消耗3动作）。</STRONG> 
 
-欧雷莫克将自己的身体拆下一片并放在周围15尺区域内一处不被占据的空间，这使他的生命值降低50点。这块岩石将立即转变为一只石像鬼并在与欧雷莫克同等的先攻中进行行动。欧雷莫克无法在生命值只有50或更低时使用这个动作。石像鬼遵听从欧雷莫克的命令并战斗直至被摧毁。</P></body>
+欧雷莫克将自己的身体拆下一片并放在周围15尺区域内一处不被占据的空间，这使他的生命值降低50点。这块岩石将立即转变为一只石像鬼并在与欧雷莫克同等的先攻中进行行动。欧雷莫克无法在生命值只有50或更低时使用这个动作。石像鬼遵听从欧雷莫克的命令并战斗直至被摧毁。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -58,7 +58,45 @@ creature</FONT>
 
 Actions</FONT></STRONG><BR><STRONG>引路明光Guiding 
 
-Light（2/日）。</STRONG>以自己为中心，仙灵召唤出一个30尺的魔法光球。光球会持续1分钟或直到仙灵陷入失能。每个仙灵选择的生物（除了仙灵自己）在范围内开始回合时都会获得5临时生命值并且直到下个回合开始在感知豁免和感知检定中具有优势。<BR>光球内为明亮光照，还会向外发出额外30尺的微光，并且随着仙灵移动。如果光球的区域与3环或更低环阶的法术产生的黑暗区域重叠，则产生黑暗的区域将被驱散。</P></body>
+Light（2/日）。</STRONG>以自己为中心，仙灵召唤出一个30尺的魔法光球。光球会持续1分钟或直到仙灵陷入失能。每个仙灵选择的生物（除了仙灵自己）在范围内开始回合时都会获得5临时生命值并且直到下个回合开始在感知豁免和感知检定中具有优势。<BR>光球内为明亮光照，还会向外发出额外30尺的微光，并且随着仙灵移动。如果光球的区域与3环或更低环阶的法术产生的黑暗区域重叠，则产生黑暗的区域将被驱散。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

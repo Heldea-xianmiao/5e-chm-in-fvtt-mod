@@ -58,4 +58,41 @@ color:rgb(128,0,0);font-weight:bold;font-size:14.0000pt;
 
 " > Trolls</span></b><span style="
 
-font-size:14.0000pt;" ><br><font>在巨魔遇到的所有生物中，巨魔最有可能加入他们，仅仅是因为鬣狗人的生活方式吸引了他们。巨魔作为一种有着难以置信的韧性和可怕食欲的生物，他们能很好地融入到一支鬣狗人战团的松散计划中去。</font></span></p></div></body></html>
+font-size:14.0000pt;" ><br><font>在巨魔遇到的所有生物中，巨魔最有可能加入他们，仅仅是因为鬣狗人的生活方式吸引了他们。巨魔作为一种有着难以置信的韧性和可怕食欲的生物，他们能很好地融入到一支鬣狗人战团的松散计划中去。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

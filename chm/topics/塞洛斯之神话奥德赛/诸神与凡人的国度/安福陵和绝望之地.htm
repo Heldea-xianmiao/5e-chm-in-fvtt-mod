@@ -54,7 +54,45 @@ Bothros</FONT></STRONG><BR>在俄度诺陵的北方边缘有一个无敌深渊�
 
 <P><STRONG><FONT color=#800000>失落墓地 Crypts of the 
 
-Lost</FONT></STRONG><BR>在俄度诺陵变成有一个无数墓葬集合而成的岩石蜂巢前，少有人知最初那些埋葬在这个恐怖迷宫的人，但转世者不在乎这些尸体和尘埃。有时候，转世者厌倦了在这里的活死人生活，等待最终死亡。一些故事说这些墓穴里埋藏着宝藏，另外一些人说斐纳克第一次从冥界逃脱就是在那里出现，沿着他的足迹回溯可以返回厄睿柏斯的领域</P></body>
+Lost</FONT></STRONG><BR>在俄度诺陵变成有一个无数墓葬集合而成的岩石蜂巢前，少有人知最初那些埋葬在这个恐怖迷宫的人，但转世者不在乎这些尸体和尘埃。有时候，转世者厌倦了在这里的活死人生活，等待最终死亡。一些故事说这些墓穴里埋藏着宝藏，另外一些人说斐纳克第一次从冥界逃脱就是在那里出现，沿着他的足迹回溯可以返回厄睿柏斯的领域</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

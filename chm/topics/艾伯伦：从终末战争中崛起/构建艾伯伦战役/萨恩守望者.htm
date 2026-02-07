@@ -152,7 +152,45 @@ magewright 和偷窃零件需要建立一个爆炸装置。<BR>8 处理囚犯用
 
 <P><STRONG><FONT color=#800000>萨恩守望者冒险引子</FONT></STRONG><BR>萨恩守望者冒险引子表提出了更多的冒险主题围绕着萨恩守望者的想法。</P>
 
-<P><STRONG>萨恩守望者冒险引子<BR>d4 冒险引子<BR></STRONG>1 萨恩守望者镇压达斯克，这导致了城市下层区暴力冲突。  <BR>2 萨恩好奇志发表了一篇文章，声称暴君会的幻身灵窃取了许多守望者官员的身份，导致全市对该组织的不信任。<BR>3 在一个瑟雷恩移民打开了一个封闭的入口到老萨恩的废墟后，门卫部门不允许任何人进出萨恩，直到移民被发现和入口被重新封闭。<BR>4 黑书部门的特工们在全城各处的萨恩工作站找到了占卜传感器。</P></body>
+<P><STRONG>萨恩守望者冒险引子<BR>d4 冒险引子<BR></STRONG>1 萨恩守望者镇压达斯克，这导致了城市下层区暴力冲突。  <BR>2 萨恩好奇志发表了一篇文章，声称暴君会的幻身灵窃取了许多守望者官员的身份，导致全市对该组织的不信任。<BR>3 在一个瑟雷恩移民打开了一个封闭的入口到老萨恩的废墟后，门卫部门不允许任何人进出萨恩，直到移民被发现和入口被重新封闭。<BR>4 黑书部门的特工们在全城各处的萨恩工作站找到了占卜传感器。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

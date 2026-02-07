@@ -58,9 +58,47 @@ xmlns="http://www.w3.org/TR/REC-html40">
 
  lang=EN-US><br>
 
-<span style="mso-spacerun: yes">    </span></span>出版的冒险也可以为你提供灵感。你可能不会像它所书写的那样去冒险，但它仍可以激发你的想象力，或者你也可以把其中的一部分提取出来在按自己的需求重新设计。例如，你可能会用上一张神庙的地图，但却用自己选择的怪物填充其中，或者你也可以选用其中的追逐情节作为自己战役中追捕场景的模型。</p><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]></div></body>
+<span style="mso-spacerun: yes">    </span></span>出版的冒险也可以为你提供灵感。你可能不会像它所书写的那样去冒险，但它仍可以激发你的想象力，或者你也可以把其中的一部分提取出来在按自己的需求重新设计。例如，你可能会用上一张神庙的地图，但却用自己选择的怪物填充其中，或者你也可以选用其中的追逐情节作为自己战役中追捕场景的模型。</p><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

@@ -44,7 +44,45 @@ Grue</FONT></STRONG><BR><EM>小型异怪，普遍中立邪恶</EM><BR>护甲等�
 
 Shrieks。</STRONG>距离战栗者20英尺以内的非异怪生物，在进行豁免检定和攻击战栗者以外的生物时，都具有劣势。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>致惑啃咬Confounding 
 
-Bite。</STRONG>近战武器攻击：命中+3，触及5尺，单一目标。命中：6（2d4+1）穿刺伤害，且目标须成功通过一次DC10的感知豁免否则对目标发动的攻击检定具有优势，直到战栗者的下回合开始。</P></body>
+Bite。</STRONG>近战武器攻击：命中+3，触及5尺，单一目标。命中：6（2d4+1）穿刺伤害，且目标须成功通过一次DC10的感知豁免否则对目标发动的攻击检定具有优势，直到战栗者的下回合开始。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

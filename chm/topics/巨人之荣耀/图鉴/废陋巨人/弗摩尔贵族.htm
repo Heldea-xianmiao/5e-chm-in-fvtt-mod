@@ -46,7 +46,45 @@ style="FONT-WEIGHT: bold"><FONT color=#800000>弗摩尔贵族Fomorian Noble</FON
 
 <P><STRONG style="FONT-WEIGHT: bold"><font color=#800000>动作Actions</font></STRONG><br><STRONG >多重攻击Multiattack。</STRONG>弗摩尔巨人发动三次权杖攻击。<br><STRONG >权杖Rod。</STRONG>近战武器攻击：命中+11，触及10尺，单一目标。命中：16（3d6+6）钝击伤害外加11（2d10）力场伤害。<br><STRONG >施法Spellcasting。</STRONG>弗摩尔巨人施展以下一道法术，使用智力作为施法属性（法术豁免DC17）：<br><EM >随意：法师护甲（仅自身），法师之手，魔法伎俩<BR>每项1/日：连锁闪电，寒冰锥（以6环施展），火球术（以6环施展），飞行术，位面转移（仅自身）</EM><br><STRONG style="FONT-WEIGHT: bold"><font color=#800000>附赠动作Bonus Actions</font></STRONG><br><STRONG >惑人仪态Beguiling 
 
-Presence。</STRONG>弗摩尔巨人指定一个它可见的位于其60尺内的生物。目标必须成功通过一次DC17的感知豁免否则陷入魅惑状态1分钟。一个受影响的目标可以在每个自己的回合结束时或是受到伤害时重复豁免，豁免成功结束该效应。若目标豁免成功或是其身上的该效应结束，则其在接下来的24小时内免疫所有弗摩尔巨人的惑人仪态。</P></body>
+Presence。</STRONG>弗摩尔巨人指定一个它可见的位于其60尺内的生物。目标必须成功通过一次DC17的感知豁免否则陷入魅惑状态1分钟。一个受影响的目标可以在每个自己的回合结束时或是受到伤害时重复豁免，豁免成功结束该效应。若目标豁免成功或是其身上的该效应结束，则其在接下来的24小时内免疫所有弗摩尔巨人的惑人仪态。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

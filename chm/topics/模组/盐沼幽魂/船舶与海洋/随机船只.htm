@@ -2644,7 +2644,45 @@ style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto">准备哗变的船
 
 <P class=MsoNormal 
 
-style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto">寻求交易的船员和乘客们用他们的货物或者服务换取行动、物品或者钱财。利用船的目的来导向他们必须要交易的东西。比如说，商业捕鱼者们可能会提供一箱子珍贵的螃蟹来换取一只一只对他们造成损失的鲨鱼的头颅，而海盗们则可能提供偷来的药水来换取宝石和黄金。大部分提供交易的人都愿意讨价还价。如果角色们拒绝交易，邪恶阵营的船员和乘客或许会发起攻击来得到他们想要的东西。</P></body>
+style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto">寻求交易的船员和乘客们用他们的货物或者服务换取行动、物品或者钱财。利用船的目的来导向他们必须要交易的东西。比如说，商业捕鱼者们可能会提供一箱子珍贵的螃蟹来换取一只一只对他们造成损失的鲨鱼的头颅，而海盗们则可能提供偷来的药水来换取宝石和黄金。大部分提供交易的人都愿意讨价还价。如果角色们拒绝交易，邪恶阵营的船员和乘客或许会发起攻击来得到他们想要的东西。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

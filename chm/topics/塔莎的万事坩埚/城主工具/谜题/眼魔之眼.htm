@@ -76,5 +76,43 @@ DC 10
 
 15：</STRONG>一个或多个正确答案后，角色发现每个答案都对应着一个正方向。</P>
 
-<P><STRONG><FONT color=#800000>定制谜题</FONT></STRONG><BR>角色可以轻易说服小地精加入他们的队伍。地精还知道哪些秘密？他是否有意帮助角色寻获自由？如果他知道出去的路，为何还要在迷宫里逗留？这位向导或许不止要吸引眼球。</P></body>
+<P><STRONG><FONT color=#800000>定制谜题</FONT></STRONG><BR>角色可以轻易说服小地精加入他们的队伍。地精还知道哪些秘密？他是否有意帮助角色寻获自由？如果他知道出去的路，为何还要在迷宫里逗留？这位向导或许不止要吸引眼球。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 </html>
+

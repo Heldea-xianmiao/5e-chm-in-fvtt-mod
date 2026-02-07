@@ -614,7 +614,45 @@ style="FONT-SIZE: 10.5pt; FONT-FAMILY: 宋体"><o:p></O:P></SPAN></P>
 
 style="FONT-SIZE: 10.5pt; FONT-FAMILY: Calibri; WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; FONT-WEIGHT: 400; FONT-STYLE: normal; TEXT-ALIGN: justify; ORPHANS: 2; WIDOWS: 2; MARGIN: 0pt; LETTER-SPACING: normal; TEXT-INDENT: 21pt; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial"><SPAN><FONT face=宋体>纽吉怪指定一个自身</FONT><FONT face=Calibri>30</FONT><FONT face=宋体>尺内它能看见的生物。该生物必须成功通过</FONT><FONT face=Calibri>DC14</FONT><FONT face=宋体>的感知豁免，否则被纽吉怪魔法性地魅惑一日，在纽吉怪死亡或与该生物距离超过1英里后魅惑也会提前结束。</FONT><FONT face=宋体>被魅惑对象不能违抗纽吉怪的命令，也不能执行任何<STRONG>反应</STRONG></FONT><FONT face=宋体></FONT></SPAN><SPAN 
 
-style="FONT-SIZE: 10.5pt; FONT-FAMILY: 宋体"><FONT face=宋体>，纽吉怪和奴役对象最远能够在一英里内用心灵感应交流。一旦被魅惑对象受到伤害，其就可以再次进行豁免检定，成功则该效应提前结束。</FONT></SPAN></P></body>
+style="FONT-SIZE: 10.5pt; FONT-FAMILY: 宋体"><FONT face=宋体>，纽吉怪和奴役对象最远能够在一英里内用心灵感应交流。一旦被魅惑对象受到伤害，其就可以再次进行豁免检定，成功则该效应提前结束。</FONT></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

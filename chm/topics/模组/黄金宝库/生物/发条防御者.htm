@@ -50,7 +50,45 @@ Nature。</STRONG>防御者不需要吃、喝、睡眠、以及呼吸。<BR><STR
 
 Bite。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：7（1d8+3）点穿刺伤害外加7（2d6）点闪电伤害。如果目标是生物，其必须通过一次DC13的力量豁免检定，否则将被擒抱（逃脱DC13）。被防御者擒抱的生物在防御者的每个回合开始时将再次受到这一伤害。防御者每次只能让一个生物以这种方式被擒抱，且擒抱期间防御者不能使用它的电气撕咬攻击。<BR><STRONG><FONT color=#800000>附赠动作Bonus Actions</FONT></STRONG><BR><STRONG>光束Light 
 
-Beam。</STRONG>防御者从它的眼睛里发出60尺锥状区域的明亮光照，或是关闭这一光照。</P></body>
+Beam。</STRONG>防御者从它的眼睛里发出60尺锥状区域的明亮光照，或是关闭这一光照。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -34,7 +34,45 @@ html,body {
 
 <P>某些世界上的巨人传说有着不同解释，将其与巨人们从安南的青睐中堕落联系起来。在这些故事中，序位并非天生；而是巨人堕落的一部分是安南的儿子们曲解了父亲意愿所发明出来的。还有的则将之解释为堕落的结果巨人们证明了自己缺乏统治世界的能力，安南于是降下了序位作为惩罚。序位也许是必要的，或者是巨人应当承受的负担，但持有这些观点的巨人们也通常期望安南能在某个神话般的应许之刻回归，废除序位。</P>
 
-<P>还有一些世界的巨人（包括艾伯伦）则是根本没有序位的概念。这些巨人或许会觉得自己属于一个单一物种，不同种类巨人之间的差异只不过是文化和地理使然，并非先天有之。他们可能生活在由多种巨人组成的群体中，也可能生活在单一种的家族里。或者不同种类的巨人根本无法认出彼此系出一脉。所有这些巨人都用和其他族裔类似的各种方法建立起各种社会结构，不把序位纳入考虑之中。</P></body>
+<P>还有一些世界的巨人（包括艾伯伦）则是根本没有序位的概念。这些巨人或许会觉得自己属于一个单一物种，不同种类巨人之间的差异只不过是文化和地理使然，并非先天有之。他们可能生活在由多种巨人组成的群体中，也可能生活在单一种的家族里。或者不同种类的巨人根本无法认出彼此系出一脉。所有这些巨人都用和其他族裔类似的各种方法建立起各种社会结构，不把序位纳入考虑之中。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

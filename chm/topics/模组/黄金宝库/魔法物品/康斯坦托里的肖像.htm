@@ -42,7 +42,45 @@ Information。</STRONG>这幅画的主要目的是观察和回忆对话。在过
 
 Portrait。</STRONG>当你与这幅画同调时，你可以命令它保护其自己的位置不受你所识别的一个或多个被认为是敌对生物的攻击。肖象执行此功能，直到你命令它停止或直到你对它的同调结束。<BR>这幅画有三发充能。当一个被画作识别为敌人的生物在画作所能看到的空间开始其回合时，画作将花费1充能发射以该生物为目标的<EM><FONT color=#800080>魔法飞弹magic missile</FONT></EM>（3枚飞弹）。每天黎明时这幅画恢复所有的充能。<BR>这幅画是一个具有AC 
 
-12，20HP和毒素伤害抗性的小型物体。这幅画的金叶框架重15磅。如果这幅画至少有1点生命值，并且被一个<EM><FONT color=#800080>修复术mending</FONT></EM>法术作为目标，它将获得2d6点生命值。</P></body>
+12，20HP和毒素伤害抗性的小型物体。这幅画的金叶框架重15磅。如果这幅画至少有1点生命值，并且被一个<EM><FONT color=#800080>修复术mending</FONT></EM>法术作为目标，它将获得2d6点生命值。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -122,7 +122,45 @@ Pen</FONT></STRONG><BR><EM>奇物，普通</EM><BR>如果你有抄录龙纹，�
 
 <P><STRONG><FONT color=#800000>风水舵轮 Wheel of Wind and 
 
-Water</FONT></STRONG><BR><EM>奇物，非普通</EM><BR>当这个舵轮装在元素帆船或飞空艇上时，能够让持有暴风龙纹的人通过心灵感应控制载具中束缚的元素。<BR>如果把风水舵轮装在一艘普通的帆船上，持有暴风龙纹的角色能够利用舵轮在帆船周围制造一个理想的行驶环境，这会让帆船的时速提高5英里。</P></body>
+Water</FONT></STRONG><BR><EM>奇物，非普通</EM><BR>当这个舵轮装在元素帆船或飞空艇上时，能够让持有暴风龙纹的人通过心灵感应控制载具中束缚的元素。<BR>如果把风水舵轮装在一艘普通的帆船上，持有暴风龙纹的角色能够利用舵轮在帆船周围制造一个理想的行驶环境，这会让帆船的时速提高5英里。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

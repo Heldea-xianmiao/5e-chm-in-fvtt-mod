@@ -94,7 +94,45 @@ Defense</FONT></STRONG><BR>10级起，在剑歌激活期间，你可以导引你
 
 <P><FONT size=3><STRONG><FONT color=#800000>胜利之歌 Song of 
 
-Victory</FONT></STRONG><BR>14级起，在你的剑歌激活期间，你将你的智力调整值（最低+1）加在你的近战武器伤害上。</FONT></P></body>
+Victory</FONT></STRONG><BR>14级起，在你的剑歌激活期间，你将你的智力调整值（最低+1）加在你的近战武器伤害上。</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

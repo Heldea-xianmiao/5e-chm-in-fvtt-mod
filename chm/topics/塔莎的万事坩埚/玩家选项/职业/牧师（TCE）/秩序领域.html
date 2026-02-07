@@ -66,5 +66,43 @@ Strike</FONT></STRONG>
 
 Wrath</FONT></STRONG> 
 
-<BR><EM>第17级秩序领域特性</EM><BR>在你与盟友的共同努力下，你们所面对的敌人必将被毁灭。你回合内对一名生物造成了神圣打击的伤害后，你可以诅咒该生物。下一次当你的一名盟友以一次攻击命中被诅咒的生物时，目标将额外受到2d8心灵伤害，随后诅咒结束。你一回合只能以这种方式诅咒生物一次，且没有使用的诅咒将在你的下回合的开始时消失。</P></BODY></HTML>
+<BR><EM>第17级秩序领域特性</EM><BR>在你与盟友的共同努力下，你们所面对的敌人必将被毁灭。你回合内对一名生物造成了神圣打击的伤害后，你可以诅咒该生物。下一次当你的一名盟友以一次攻击命中被诅咒的生物时，目标将额外受到2d8心灵伤害，随后诅咒结束。你一回合只能以这种方式诅咒生物一次，且没有使用的诅咒将在你的下回合的开始时消失。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

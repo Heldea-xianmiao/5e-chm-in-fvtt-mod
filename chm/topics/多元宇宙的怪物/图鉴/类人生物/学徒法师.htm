@@ -46,7 +46,45 @@ Wizard</FONT></STRONG><BR><EM>中型类人，任意阵营</EM><BR>护甲等级�
 
 Burst。</STRONG>近战或远程法术攻击：命中+4，触及5尺，或者射程120尺，单一目标。命中：7（1d10+2）点力场伤害。<BR><STRONG>施法Spellcasting。</STRONG>学徒施展以下法术之一，以智力作为其施法属性（法术豁免DC12）：<BR><EM><FONT color=#800080>随意：法师之手mage hand，魔法伎俩prestidigitation<BR>每项1/日：燃烧之手burning 
 
-hands，易容术disguise self，法师护甲mage armor</FONT></EM></P></body>
+hands，易容术disguise self，法师护甲mage armor</FONT></EM></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

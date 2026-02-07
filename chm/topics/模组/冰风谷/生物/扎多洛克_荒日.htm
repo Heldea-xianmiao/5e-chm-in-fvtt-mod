@@ -66,7 +66,45 @@ Gauntlet。</STRONG>近战武器攻击，命中+6，触及5尺，单一目标。
 
 Blast（戏法）。</STRONG>远程法术攻击，命中+7，射程120尺，单一生物。命中：9（1d10+4）点力场伤害。<BR><STRONG>变巨Enlarge（短休或长休后充能）。</STRONG>扎多洛克用魔法将自己连同其装备或携带的所有东西一起变得巨大，并持续1分钟。变巨效应持续时，扎多洛克体型变为大型，以力量为基础的武器攻击其伤害骰翻倍（已包含在攻击项中），且其进行的力量检定和力量豁免具有优势。当扎多洛克所处的空间不足够容纳大型体型生物时，变巨的尺寸会按照空间可容纳的最大值来确定。<BR><STRONG>隐形Invisibility（充能4~6）。</STRONG>扎多洛克用魔法隐去身形，效果持续到它发动攻击，施展法术，使用变巨特质或者其专注被打断（如同专注一个法术）。扎多洛克身上着装和携带的所有装备将随它一同隐形。<BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>炼狱叱喝Hellish 
 
-Rebuke(2/日)。</STRONG>当扎多洛克受到一名60尺内且它可见的生物的伤害时，该生物会被炼狱火焰吞噬且必须进行一次DC15的敏捷豁免，失败则受到16（3d10）点火焰伤害，豁免成功则伤害减半。</P></body>
+Rebuke(2/日)。</STRONG>当扎多洛克受到一名60尺内且它可见的生物的伤害时，该生物会被炼狱火焰吞噬且必须进行一次DC15的敏捷豁免，失败则受到16（3d10）点火焰伤害，豁免成功则伤害减半。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

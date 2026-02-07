@@ -202,7 +202,45 @@ Treasure Preferences</STRONG></FONT>
 
 Armaments,Imple-ments, or 
 
-Relics)<BR></STRONG>此怪物具有一份偏向于特定主题的库藏宝藏（详见第七章中“<STRONG>宝藏主题</STRONG>”一节）。你可以于<STRONG>随机库藏宝藏表</STRONG>中掷骰以决定其库藏宝藏的规模。如果其库藏宝藏中包含魔法物品，请使用第七章中的指南与表格来决定这些物品具体都是什么。</P></body>
+Relics)<BR></STRONG>此怪物具有一份偏向于特定主题的库藏宝藏（详见第七章中“<STRONG>宝藏主题</STRONG>”一节）。你可以于<STRONG>随机库藏宝藏表</STRONG>中掷骰以决定其库藏宝藏的规模。如果其库藏宝藏中包含魔法物品，请使用第七章中的指南与表格来决定这些物品具体都是什么。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

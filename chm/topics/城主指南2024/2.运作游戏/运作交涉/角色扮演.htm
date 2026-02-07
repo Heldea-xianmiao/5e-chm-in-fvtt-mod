@@ -120,7 +120,45 @@ NPC并从他的口袋里偷些东西。</P>
 
 拒绝给出直接回答，而是含糊其辞，角色必须东拼西凑来获得他们要找的信息。</P>
 
-<P><STRONG>感知Wisdom</STRONG>。一位NPC隐藏着重要的信息，角色们必须读懂他的在语言之外的留下的线索，才能分辨出哪些是真话，哪些在扯谎；或者关键信息隐藏在互动发生地的房间细节中，而敏锐的角色可能会注意到。</P></body>
+<P><STRONG>感知Wisdom</STRONG>。一位NPC隐藏着重要的信息，角色们必须读懂他的在语言之外的留下的线索，才能分辨出哪些是真话，哪些在扯谎；或者关键信息隐藏在互动发生地的房间细节中，而敏锐的角色可能会注意到。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -34,7 +34,45 @@ html,body {
 
 <P><FONT color=#800000 size=4><STRONG>美貌之池Pools of 
 
-Beauty</STRONG></FONT><BR>那些信仰哈娜丽的精灵会以她的名义在一汪天然清泉边建起神殿——作为“永金”的力量与纯洁的象征。她的祭司经常会在这种地方周围摆上鲜花与雕像来彰显此地的自然之美。若有一座神殿中供奉了多位精灵神祗，那么一只饰以黄花或花瓣的，盛着水的大理石碗便是会用于表达对哈娜丽的敬拜。<BR>哈娜丽的水池是返老还童的象征，池中之水更象征了奔涌不止的爱之力。对于哈娜丽的追随者而言，爱情鲜活如河水，它能够轻松蜿蜒绕过一切障碍;必要之时，它也能够在岩床中开辟一条通往相聚之海洋的道路，在那里，众爱汇聚并与宇宙合而为一。就像那些沿河而下之刃一般，哈娜丽的信徒们以追从本心而闻名，她们不愿偏离追求美丽的道路。<BR>哈娜丽的信者们也以主动美化他们周边的环境而闻名，它们从不要求回报，也不需要别人效仿。如果供奉诸神的神殿有些地方不整洁，那么它们会立刻把那里打扫干净，并带来鲜花与作为贡品的新鲜水、食物、红酒。特别敏感的信徒甚至会在别人不小心把饮料洒在酒馆的地上或是把狼藉的晚餐残羹留在桌上时前去打扫，只为谦卑地侍奉他们的神。</P></body>
+Beauty</STRONG></FONT><BR>那些信仰哈娜丽的精灵会以她的名义在一汪天然清泉边建起神殿——作为“永金”的力量与纯洁的象征。她的祭司经常会在这种地方周围摆上鲜花与雕像来彰显此地的自然之美。若有一座神殿中供奉了多位精灵神祗，那么一只饰以黄花或花瓣的，盛着水的大理石碗便是会用于表达对哈娜丽的敬拜。<BR>哈娜丽的水池是返老还童的象征，池中之水更象征了奔涌不止的爱之力。对于哈娜丽的追随者而言，爱情鲜活如河水，它能够轻松蜿蜒绕过一切障碍;必要之时，它也能够在岩床中开辟一条通往相聚之海洋的道路，在那里，众爱汇聚并与宇宙合而为一。就像那些沿河而下之刃一般，哈娜丽的信徒们以追从本心而闻名，她们不愿偏离追求美丽的道路。<BR>哈娜丽的信者们也以主动美化他们周边的环境而闻名，它们从不要求回报，也不需要别人效仿。如果供奉诸神的神殿有些地方不整洁，那么它们会立刻把那里打扫干净，并带来鲜花与作为贡品的新鲜水、食物、红酒。特别敏感的信徒甚至会在别人不小心把饮料洒在酒馆的地上或是把狼藉的晚餐残羹留在桌上时前去打扫，只为谦卑地侍奉他们的神。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

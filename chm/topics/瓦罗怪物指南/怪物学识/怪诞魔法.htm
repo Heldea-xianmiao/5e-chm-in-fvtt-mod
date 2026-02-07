@@ -24,4 +24,41 @@ mso-ansi-font-style:italic;mso-bidi-font-style:normal;
 
 mso-ansi-font-style:italic;mso-bidi-font-style:normal;
 
-" ><font>黑暗术</font><font>Darkness</font></span></i><span><font>（二环法术）。</font><br><br><font>鬼婆非常小心地照看着她怪诞魔法的使用，因为她列表中的物件经常是不可复制或替换的。为了反映这一事实，一个鬼婆应该能够在她的巢穴中每次使用一到两次怪诞魔法，或者如果当她在其他地方时，每次只使用一次。一个希望战斗的鬼婆可能会准备更加充分，并且能够（或者愿意）在每次战斗中多使用一次怪诞魔法。</font><br><br><font>如果一个鬼婆面临致命的危险，所有关于保存资源的顾虑都会荡然无存，如果这能帮助她活下来，她会使用任何的怪诞魔法。毕竟一个没有死掉的鬼婆有几乎无尽的时间来换回她所失去的。无论获取那罐死蛞蝓是多么困难，还是那本关于如何召唤剃须刀之风的书，或者刻着使血液结晶的三个字节的符石，使用这些东西总好过因为不这样做而面临死亡的危险。</font></span></p></div></body></html>
+" ><font>黑暗术</font><font>Darkness</font></span></i><span><font>（二环法术）。</font><br><br><font>鬼婆非常小心地照看着她怪诞魔法的使用，因为她列表中的物件经常是不可复制或替换的。为了反映这一事实，一个鬼婆应该能够在她的巢穴中每次使用一到两次怪诞魔法，或者如果当她在其他地方时，每次只使用一次。一个希望战斗的鬼婆可能会准备更加充分，并且能够（或者愿意）在每次战斗中多使用一次怪诞魔法。</font><br><br><font>如果一个鬼婆面临致命的危险，所有关于保存资源的顾虑都会荡然无存，如果这能帮助她活下来，她会使用任何的怪诞魔法。毕竟一个没有死掉的鬼婆有几乎无尽的时间来换回她所失去的。无论获取那罐死蛞蝓是多么困难，还是那本关于如何召唤剃须刀之风的书，或者刻着使血液结晶的三个字节的符石，使用这些东西总好过因为不这样做而面临死亡的危险。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

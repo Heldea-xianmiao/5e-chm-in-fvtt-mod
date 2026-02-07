@@ -40,4 +40,41 @@ align
 
 
 
-  FONT-WEIGHT: bold; COLOR: rgb(128,0,0);   "><font>形态各异</font></span></b><span><br><font>所有的蛇人都可以杂交。虽然诞下婴儿并不少见，但雌性通常会生下一堆卵，这些卵储存在公共孵化室里。不同类型的蛇人交配几乎总是产卵，孵化成蛇人父母中较弱的一方，因此，大多数蛇人选择相同类型的伴侣，以保持其个人血统的力量。</font></span></p><p   style="TEXT-ALIGN: left; mso-pagination: widow-orphan"><span><o:p> </o:p></span></p><p   style="TEXT-ALIGN: left;  mso-pagination: widow-orphan"><span><font>蛇人抛弃了他们的人性，并且把所有其他非蛇形类人种族都视作劣等生物。虽然有些纯血蛇人能够与人类繁殖，但大多数蛇人对这个想法感到厌恶，只有当纯血蛇人需要色诱才能保持其在人类社会中密友或顾问角色时，他们才肯这么做。这种非常罕见的结合所产生的后代总是纯血蛇人，尽管他们在出生时和以后的几年里可能表现得完全是人类。</font></span></p><p   style="TEXT-ALIGN: left;  mso-pagination: widow-orphan"><span><font> </font></span></p><p   style="TEXT-ALIGN: left;  mso-pagination: widow-orphan"><span><font>蛇人知道可以把个体转变为一个更强大存在形式的仪式。施展仪式所需的代价和时间令人望而却步，因此，大多数蛇人永远没有机会经历这样的转变。仪式的每一次使用都必须加以修改，以适应待转变的个体，并需要在仪式上献祭和祭祀稀有草药、奇特的魔法物质、蛇和一个或多个人类作为这一过程的一部分。</font></span></p></div></body></html>
+  FONT-WEIGHT: bold; COLOR: rgb(128,0,0);   "><font>形态各异</font></span></b><span><br><font>所有的蛇人都可以杂交。虽然诞下婴儿并不少见，但雌性通常会生下一堆卵，这些卵储存在公共孵化室里。不同类型的蛇人交配几乎总是产卵，孵化成蛇人父母中较弱的一方，因此，大多数蛇人选择相同类型的伴侣，以保持其个人血统的力量。</font></span></p><p   style="TEXT-ALIGN: left; mso-pagination: widow-orphan"><span><o:p> </o:p></span></p><p   style="TEXT-ALIGN: left;  mso-pagination: widow-orphan"><span><font>蛇人抛弃了他们的人性，并且把所有其他非蛇形类人种族都视作劣等生物。虽然有些纯血蛇人能够与人类繁殖，但大多数蛇人对这个想法感到厌恶，只有当纯血蛇人需要色诱才能保持其在人类社会中密友或顾问角色时，他们才肯这么做。这种非常罕见的结合所产生的后代总是纯血蛇人，尽管他们在出生时和以后的几年里可能表现得完全是人类。</font></span></p><p   style="TEXT-ALIGN: left;  mso-pagination: widow-orphan"><span><font> </font></span></p><p   style="TEXT-ALIGN: left;  mso-pagination: widow-orphan"><span><font>蛇人知道可以把个体转变为一个更强大存在形式的仪式。施展仪式所需的代价和时间令人望而却步，因此，大多数蛇人永远没有机会经历这样的转变。仪式的每一次使用都必须加以修改，以适应待转变的个体，并需要在仪式上献祭和祭祀稀有草药、奇特的魔法物质、蛇和一个或多个人类作为这一过程的一部分。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

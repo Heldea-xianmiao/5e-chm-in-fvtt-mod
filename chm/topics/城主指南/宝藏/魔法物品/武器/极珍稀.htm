@@ -66,7 +66,45 @@ Speed</FONT></STRONG><BR><EM>武器（弯刀），极珍稀（需同调）</EM><
 
 <P><STRONG><FONT color=#800000>锐锋之剑 Sword of 
 
-Sharpness</FONT></STRONG><BR><EM>武器（任意造成挥砍伤害的剑），极珍稀（需同调）</EM><BR>用这把魔法剑命中物件时，武器的伤害掷骰将直接取满。<BR>用这把武器攻击生物并投出20时，该目标额外受14点挥砍伤害。并再骰一次d20，如果结果依然为20，则你可以切掉目标一条肢体。对于没有肢体的生物，你可以切掉它躯体的一部分。由DM判断这种损伤的效应。<BR>另外，你可以说出剑的命令语使剑身放出亮光，提供10尺的明亮光照和额外10尺的微光光照。要熄灭亮光时，你可以再次说出命令语或是收起武器。</P></body>
+Sharpness</FONT></STRONG><BR><EM>武器（任意造成挥砍伤害的剑），极珍稀（需同调）</EM><BR>用这把魔法剑命中物件时，武器的伤害掷骰将直接取满。<BR>用这把武器攻击生物并投出20时，该目标额外受14点挥砍伤害。并再骰一次d20，如果结果依然为20，则你可以切掉目标一条肢体。对于没有肢体的生物，你可以切掉它躯体的一部分。由DM判断这种损伤的效应。<BR>另外，你可以说出剑的命令语使剑身放出亮光，提供10尺的明亮光照和额外10尺的微光光照。要熄灭亮光时，你可以再次说出命令语或是收起武器。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

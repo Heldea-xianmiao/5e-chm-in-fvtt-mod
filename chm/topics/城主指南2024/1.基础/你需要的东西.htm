@@ -160,7 +160,45 @@ cellSpacing=0 cellPadding=2 width="99%" bgColor=#fffbf0 border=1>
 
   Accessories<BR></STRONG>一些玩家和DM喜欢使用卡片的形式展现可用信息。你可以购买（或制作）独立的法术卡、魔法物品卡、怪物数据卡、规则参考卡，以及其他方便参考的信息。</DIV></LI></UL>
 
-<P> [插图附文]<EM>骰子滚落到地上了应该怎么办？见本章结尾获得相关建议。</EM></P></body>
+<P> [插图附文]<EM>骰子滚落到地上了应该怎么办？见本章结尾获得相关建议。</EM></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

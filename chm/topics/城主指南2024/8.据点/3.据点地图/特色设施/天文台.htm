@@ -72,6 +72,43 @@ Discovery</STRONG>
 
 ：当你对此设施下达增强指令时，你让自己或设施雇员在连续7天夜里探索奇异诡谲的星空之秘。在这段时间结束后，丢一个骰子。如果结果为偶数，那么一无所获；如果结果为奇数，那么某种未知的伟力向你或者你所选的一个与你同一位面的生物赠予了一个<STRONG>护咒Charm</STRONG>。该护咒为下列护咒之一：<STRONG>黑暗视觉护咒 Charm of Darkvision</STRONG>、<STRONG>英雄气概护咒Charm of Heroism</STRONG>、<STRONG>活力护咒Charm of Vitality</STRONG>（详细描述均见第三章）。</P>
 
-<P> </P></body>
+<P> </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>

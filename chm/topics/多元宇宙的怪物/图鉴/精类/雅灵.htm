@@ -42,7 +42,45 @@ html,body {
 
 Nature。</STRONG>
 
-每当这里列出的雅灵们结束一次长休后，只要不处于失能状态，他们便能让自己转变为另一种不同的季节。当雅灵做出改变时，他们使用新的资料卡替换原本的资料卡。在原本形态中受到的伤害、状态和其他效应依然延续至新的形态。</p></body>
+每当这里列出的雅灵们结束一次长休后，只要不处于失能状态，他们便能让自己转变为另一种不同的季节。当雅灵做出改变时，他们使用新的资料卡替换原本的资料卡。在原本形态中受到的伤害、状态和其他效应依然延续至新的形态。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

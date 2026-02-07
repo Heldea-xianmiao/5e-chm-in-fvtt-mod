@@ -44,7 +44,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000>米莎凯Mishakal</FONT></STRONG><BR>米莎凯是慈悲、医疗和爱之神。在医疗者和社群的守护者中，有许多人信仰她。纵观历史，她曾经选中一些英雄，让他们去缓解其他人的痛苦。米莎凯忠诚的信徒会向所有人提供治疗和安抚，哪怕是敌人也不例外。</P>
 
-<P><STRONG><FONT color=#800000>索林那瑞Solinari</FONT></STRONG><BR>索林那瑞是善良魔法之神，为高等术法会的白袍法师和其他善良的法师提供魔法。他的魔法通过克莱恩白色的月亮显现，这个月亮也是三个月亮中最为明亮的一个。索林纳瑞和他的族兄弟努林塔瑞和努塔瑞一起从天空中注视着克莱恩，他鼓励援助、治疗和保护性质的魔法。</P></body>
+<P><STRONG><FONT color=#800000>索林那瑞Solinari</FONT></STRONG><BR>索林那瑞是善良魔法之神，为高等术法会的白袍法师和其他善良的法师提供魔法。他的魔法通过克莱恩白色的月亮显现，这个月亮也是三个月亮中最为明亮的一个。索林纳瑞和他的族兄弟努林塔瑞和努塔瑞一起从天空中注视着克莱恩，他鼓励援助、治疗和保护性质的魔法。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

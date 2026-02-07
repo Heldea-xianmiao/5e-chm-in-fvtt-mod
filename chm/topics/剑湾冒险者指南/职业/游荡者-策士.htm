@@ -66,7 +66,45 @@ Intrigue</FONT></STRONG>
 
 Deceit</FONT></STRONG>   
 
-<BR>从17级起，除非经过你的同意，否则你的思想无法被心灵感应或者其他能力阅读。你还能在这种情况下，使用魅力（欺瞒）检定对抗思想阅读者的感知（洞悉）检定，对抗成功时你可以让其阅读到虚假的思想。<BR>此外，不管你在说什么，你总是可以选择让魔法判定你在说真话并显现出相应的迹象。你也不会因为魔法效应的影响而被强迫说出真话。</P></body>
+<BR>从17级起，除非经过你的同意，否则你的思想无法被心灵感应或者其他能力阅读。你还能在这种情况下，使用魅力（欺瞒）检定对抗思想阅读者的感知（洞悉）检定，对抗成功时你可以让其阅读到虚假的思想。<BR>此外，不管你在说什么，你总是可以选择让魔法判定你在说真话并显现出相应的迹象。你也不会因为魔法效应的影响而被强迫说出真话。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

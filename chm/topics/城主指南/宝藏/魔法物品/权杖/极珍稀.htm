@@ -50,7 +50,45 @@ Alertness</FONT></STRONG><BR><EM>权杖，极珍稀（需同调）</EM><BR>这�
 
 <P><STRONG><FONT color=#800000>庇护权杖 Rod of 
 
-Security</FONT></STRONG><BR><EM>权杖，极珍稀</EM><BR>持握这把权杖期间，你可以用一个动作启动它。权杖立刻将你和你能看到的至多199名自愿的其他生物传送到存在于异位面的一处乐园福地。你可以自行定义乐园的景观。它可以是宁静的花园、迷人的林间空地、热闹的酒馆、宽阔的宫殿、热带的海岛、奇妙的嘉年华会，或是任何你能想象到的美景。无论环境如何，乐园都有足够的食物和水供访客享用。除食水之外，乐园内的任何东西都只能在乐园的异位面空间中存在。例如，在乐园的花园中采的花在被带出异位面空间时将消失。<BR>在乐园中每度过1小时，每名访问者将如使用了1枚生命骰一般恢复生命值。虽然时间正常流动，但乐园中的生物并不会老化。访问者可以在乐园停留的时间为200天除以生物数量（向下取整）。<BR>当到达时限或你用一个动作解除权杖效应时，所有访客将被送回你权杖启动前的位置或是该位置最近的未占据空间。此后经过10日庇护权杖才能再次启动。</P></body>
+Security</FONT></STRONG><BR><EM>权杖，极珍稀</EM><BR>持握这把权杖期间，你可以用一个动作启动它。权杖立刻将你和你能看到的至多199名自愿的其他生物传送到存在于异位面的一处乐园福地。你可以自行定义乐园的景观。它可以是宁静的花园、迷人的林间空地、热闹的酒馆、宽阔的宫殿、热带的海岛、奇妙的嘉年华会，或是任何你能想象到的美景。无论环境如何，乐园都有足够的食物和水供访客享用。除食水之外，乐园内的任何东西都只能在乐园的异位面空间中存在。例如，在乐园的花园中采的花在被带出异位面空间时将消失。<BR>在乐园中每度过1小时，每名访问者将如使用了1枚生命骰一般恢复生命值。虽然时间正常流动，但乐园中的生物并不会老化。访问者可以在乐园停留的时间为200天除以生物数量（向下取整）。<BR>当到达时限或你用一个动作解除权杖效应时，所有访客将被送回你权杖启动前的位置或是该位置最近的未占据空间。此后经过10日庇护权杖才能再次启动。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

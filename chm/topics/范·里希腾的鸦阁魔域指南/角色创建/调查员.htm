@@ -334,7 +334,45 @@ style="WORD-BREAK: break-all; MARGIN: 0pt auto 11.25pt; LINE-HEIGHT: 18pt"><SPAN
 
 style="FONT-SIZE: 11pt;">你在接触他人和进入场所以获取你所需要的信息方面饶有经验。通过三寸不烂之舌、毅力和官方文件的结合，你可以访问一个与你正在调查的犯罪相关的地方或个人。那些没有参与你的调查的人会替你传递请求或者避免阻碍你。此外，当地执法部门对你有着坚定的看法，认为你是一个讨厌鬼，或者是一个自己人。</SPAN><SPAN 
 
-style="FONT-SIZE: 11pt;"><o:p></o:p></SPAN></P></body>
+style="FONT-SIZE: 11pt;"><o:p></o:p></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

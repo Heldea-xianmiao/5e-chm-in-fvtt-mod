@@ -644,7 +644,45 @@ style="MARGIN: 0pt; TEXT-INDENT: 21pt; mso-char-indent-count: 2.0000"><SPAN
 
 style="">咒解：直到角色被银质武器攻击降低到0 hp为止诅咒都不会被终止。如果角色幸存，诅咒可如第五章“狼化症”所述的解除。将受诅者作为一名其血祖已被杀死的浪人。</SPAN><SPAN 
 
-style="mso-bidi-font-family: 'Times New Roman'"><o:p></o:p></SPAN></P></body>
+style="mso-bidi-font-family: 'Times New Roman'"><o:p></o:p></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -190,9 +190,47 @@ Kenku</STRONG></FONT></span></p><p class=MsoNormal style="LAYOUT-GRID:  15.6pt n
 
  lang=EN-US><br>
 
-</span><FONT size=3>你可能会说，“折树者制造出一种铁锤缓慢、有节奏地敲打石头的声音来显现他有多百无聊赖。他把玩他的匕首并且研究坐在酒吧里的领主联盟的代理人。”创造一种声音并让其他玩家猜测其中所包含的含义也许听起来有趣，但它显然是分散注意力的并且会拖慢整个游戏的速度。</FONT></span></p></blockquote></body>
+</span><FONT size=3>你可能会说，“折树者制造出一种铁锤缓慢、有节奏地敲打石头的声音来显现他有多百无聊赖。他把玩他的匕首并且研究坐在酒吧里的领主联盟的代理人。”创造一种声音并让其他玩家猜测其中所包含的含义也许听起来有趣，但它显然是分散注意力的并且会拖慢整个游戏的速度。</FONT></span></p></blockquote><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

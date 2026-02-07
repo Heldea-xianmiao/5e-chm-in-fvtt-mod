@@ -46,7 +46,45 @@ Bastion（见第十章）。阿斯忒瑞亚想要保护那些偶然发现牌组�
 
   <p><strong>寻找牌组</strong>Hunting 
 
-  Decks：阿斯忒瑞亚尽最大努力跟踪多元宇宙中存在着的<font color=blue >万象无常牌</font>的每一次演化，以确保它们的力量不会落入堕落者之手；然而，她终究只是一个人，很多事情她都注意不到。阿斯忒瑞亚可能会让角色去找到一个她没有触及到的牌组，如果它被掌握在一个会滥用其改变命运之力的人手中，那么就会请冒险者们保护牌组的安全并将其交给她。</p></BLOCKQUOTE></body>
+  Decks：阿斯忒瑞亚尽最大努力跟踪多元宇宙中存在着的<font color=blue >万象无常牌</font>的每一次演化，以确保它们的力量不会落入堕落者之手；然而，她终究只是一个人，很多事情她都注意不到。阿斯忒瑞亚可能会让角色去找到一个她没有触及到的牌组，如果它被掌握在一个会滥用其改变命运之力的人手中，那么就会请冒险者们保护牌组的安全并将其交给她。</p></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

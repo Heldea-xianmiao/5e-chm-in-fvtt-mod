@@ -44,7 +44,45 @@ Arc</STRONG>一样：角色们是怎样遇到这个冲突的？随着时间的�
 
 、17 
 
-级是划分角色强度与实力的里程碑——同样也可以是划分战役弧线的里程碑。游戏阶段的提升，是结束战役中的旧冲突并引入影响更深、威胁更大的新冲突的理想时机；新阶段的故事层级也能让角色意识到，他们一直在处理的冲突规模：例如，玩家们也许会发现，他们在前4级中一直对抗的盗贼团，不过是他们在T2中将要直面的敌对国家手下的傀儡。<BR>本章中“<STRONG>灰鹰Greyhawk</STRONG>”一节给出了冲突弧线的范例。</P></body>
+级是划分角色强度与实力的里程碑——同样也可以是划分战役弧线的里程碑。游戏阶段的提升，是结束战役中的旧冲突并引入影响更深、威胁更大的新冲突的理想时机；新阶段的故事层级也能让角色意识到，他们一直在处理的冲突规模：例如，玩家们也许会发现，他们在前4级中一直对抗的盗贼团，不过是他们在T2中将要直面的敌对国家手下的傀儡。<BR>本章中“<STRONG>灰鹰Greyhawk</STRONG>”一节给出了冲突弧线的范例。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

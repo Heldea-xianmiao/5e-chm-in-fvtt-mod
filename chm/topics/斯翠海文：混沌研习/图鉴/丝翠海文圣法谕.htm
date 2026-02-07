@@ -44,7 +44,45 @@ Jadzi的老者。作为量析学院的毕业生，贾琦自那之后已经扩大
 
 20 尺半径球体中的每个生物必须进行一次 DC 18 
 
-的力量豁免，失败受到33（6d10）力场伤害并被径直向球体中心拉动15尺。成功则只受一半伤害且不被拉动。同时受到多个扭曲范围影响的生物只会被其中一个影响，由圣法谕选择。<BR><STRONG>施法。</STRONG>圣法谕施展下列法术之一，无需任何材料成分，以智力作为施法属性。（法术豁免dc18）<BR>随意：侦测魔法<BR>2/日：解除魔法，法师护甲，移除诅咒，短讯术<BR>1/日：律令震慑，探知术（施法时间变为1动作），力场墙<BR>传送。圣法谕带着她所有的装备和携带物传送到一个60尺内她能看到的未占据空间。<BR><STRONG><FONT color=#800000>传奇动作：</FONT></STRONG><BR>圣法谕可以进行3次传奇动作，从下列选项中选择。每次她只能选择一项传奇动作，且只有在其他生物的回合结束时才能使用。圣法谕在她的回合开始时恢复所有的传奇动作次数。<BR><STRONG>矢量变换。</STRONG>圣法谕传送她60尺内的一个可见生物以及它所有装备和携带物到她30尺内一个未占据空间，一个非自愿目标必须通过一个dc18的魅力豁免来避免受此效应影响。<BR><STRONG>施法（2动作）。</STRONG>圣法谕施展一个法术。<BR><STRONG>涡流瞬旅（2动作）。</STRONG>圣法谕使用传送，在她身形消失后的瞬间，她离开的位置30尺内的所有生物必须进行一次dc18体质豁免否则收到16（3d10）力场伤害。</P></body>
+的力量豁免，失败受到33（6d10）力场伤害并被径直向球体中心拉动15尺。成功则只受一半伤害且不被拉动。同时受到多个扭曲范围影响的生物只会被其中一个影响，由圣法谕选择。<BR><STRONG>施法。</STRONG>圣法谕施展下列法术之一，无需任何材料成分，以智力作为施法属性。（法术豁免dc18）<BR>随意：侦测魔法<BR>2/日：解除魔法，法师护甲，移除诅咒，短讯术<BR>1/日：律令震慑，探知术（施法时间变为1动作），力场墙<BR>传送。圣法谕带着她所有的装备和携带物传送到一个60尺内她能看到的未占据空间。<BR><STRONG><FONT color=#800000>传奇动作：</FONT></STRONG><BR>圣法谕可以进行3次传奇动作，从下列选项中选择。每次她只能选择一项传奇动作，且只有在其他生物的回合结束时才能使用。圣法谕在她的回合开始时恢复所有的传奇动作次数。<BR><STRONG>矢量变换。</STRONG>圣法谕传送她60尺内的一个可见生物以及它所有装备和携带物到她30尺内一个未占据空间，一个非自愿目标必须通过一个dc18的魅力豁免来避免受此效应影响。<BR><STRONG>施法（2动作）。</STRONG>圣法谕施展一个法术。<BR><STRONG>涡流瞬旅（2动作）。</STRONG>圣法谕使用传送，在她身形消失后的瞬间，她离开的位置30尺内的所有生物必须进行一次dc18体质豁免否则收到16（3d10）力场伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

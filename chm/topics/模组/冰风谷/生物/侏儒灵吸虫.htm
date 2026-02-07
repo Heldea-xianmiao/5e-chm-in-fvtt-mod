@@ -52,7 +52,45 @@ Spellcasting（灵能）。</STRONG>灵吸虫的天生施法关键属性是智�
 
 近战武器攻击：命中+0，触及5尺，一个被灵吸虫擒抱且陷入失能的生物。命中：27（5d10）穿刺伤害。若造成的伤害使目标HP降低至0，那么灵吸虫抽出并吞噬目标的大脑并以此杀死目标。<BR><STRONG>灵吸虫魔法（充能5~6）Mind Tickle(Recharge 
 
-5-6)。</STRONG>灵吸虫魔法般地发射出心灵能量并覆盖一处30尺的锥状区域。该区域内的每个生物必须在一次DC7的智力豁免检定中获得成功，否则受到2(1d4)心灵伤害并陷入震慑，直到它的下回合结束。</P></body>
+5-6)。</STRONG>灵吸虫魔法般地发射出心灵能量并覆盖一处30尺的锥状区域。该区域内的每个生物必须在一次DC7的智力豁免检定中获得成功，否则受到2(1d4)心灵伤害并陷入震慑，直到它的下回合结束。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

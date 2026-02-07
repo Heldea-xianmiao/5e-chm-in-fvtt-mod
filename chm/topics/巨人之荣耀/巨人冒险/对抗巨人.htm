@@ -104,7 +104,45 @@ html,body {
 
       <TD width=30>8</TD>
 
-      <TD>当角色探索属于一种巨人的场地时（你可以在桌子上投掷d6来决定角色为什么在那里），他们会发现一个强大的巨人的贵族正在指挥手下的巨人活动。</TD></TR></TABLE>  </P></BLOCKQUOTE></body>
+      <TD>当角色探索属于一种巨人的场地时（你可以在桌子上投掷d6来决定角色为什么在那里），他们会发现一个强大的巨人的贵族正在指挥手下的巨人活动。</TD></TR></TABLE>  </P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

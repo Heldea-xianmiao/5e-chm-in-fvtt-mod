@@ -58,7 +58,45 @@ Pathos</FONT></STRONG><BR>达到14级后，你能以一个动作触碰一位自�
 
 当该生物以一次武器攻击或法术攻击命中一个目标时，目标额外受到1d10光耀伤害。<BR> · 
 
-任何以该生物为目标进行的武器攻击在骰出18-20时即形成重击。<BR>当该效应结束时，那个生物的生命值将立刻降为0并陷入濒死。使用此特性后，直到你完成一次长休前你都无法再次使用它。</P></body>
+任何以该生物为目标进行的武器攻击在骰出18-20时即形成重击。<BR>当该效应结束时，那个生物的生命值将立刻降为0并陷入濒死。使用此特性后，直到你完成一次长休前你都无法再次使用它。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

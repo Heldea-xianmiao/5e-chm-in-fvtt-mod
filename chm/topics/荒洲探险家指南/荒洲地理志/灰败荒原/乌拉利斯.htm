@@ -36,7 +36,45 @@ html,body {
 
 Boroftkrah 
 
-矿石不惜一切代价避开乌拉利斯的摩拉丁神殿。神殿充满了矮人和精灵的幽灵，被一位大祭司抓获，在最后一次矿石袭击中，这位大祭司发疯了并将她的会众锁在神殿中。她所有的受害者都饿死了，牧师本人也一样，变成了幽灵。角色们可以来到这座建筑寻找摩拉丁遗失的宝藏，或者在穿过这座被毁的城镇时逃避其他威胁。</P></body>
+矿石不惜一切代价避开乌拉利斯的摩拉丁神殿。神殿充满了矮人和精灵的幽灵，被一位大祭司抓获，在最后一次矿石袭击中，这位大祭司发疯了并将她的会众锁在神殿中。她所有的受害者都饿死了，牧师本人也一样，变成了幽灵。角色们可以来到这座建筑寻找摩拉丁遗失的宝藏，或者在穿过这座被毁的城镇时逃避其他威胁。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

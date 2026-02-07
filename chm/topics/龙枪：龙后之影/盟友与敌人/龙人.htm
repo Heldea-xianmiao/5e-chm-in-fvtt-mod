@@ -6,6 +6,44 @@
 </head>
 <BODY>
 <P class=MsoNormal style="MARGIN: 0pt"><B><SPAN style="FONT-SIZE: 18pt; FONT-WEIGHT: bold; COLOR:#800000;"><FONT>龙人</FONT>Draconians</SPAN></B><B><SPAN style=" FONT-WEIGHT: bold; COLOR:#800000;"><BR></SPAN></B><SPAN style=""><FONT>龙人是一种生自金属龙蛋的二足站立怪物。这些龙蛋被扭曲的炼金术与龙后的</FONT></SPAN><SPAN style=""><FONT>污秽</FONT></SPAN><SPAN style=""><FONT>魔法所腐蚀。巨龙军团严密地保护着龙人来源的秘密，让克莱恩的金属龙以为自己的龙蛋仍然被其留作人质，使得金属龙不能</FONT></SPAN><SPAN style=""><FONT>反对</FONT></SPAN><SPAN style=""><FONT>龙后的征服。</FONT></SPAN><SPAN style=""></SPAN></P><!--EndFragment-->
-<P> </P></BODY>
+<P> </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+

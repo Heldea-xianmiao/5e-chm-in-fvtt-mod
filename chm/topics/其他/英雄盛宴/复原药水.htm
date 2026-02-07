@@ -58,7 +58,45 @@ dir=ltr>
 
   <P align=center><FONT size=4><STRONG>厨师笔记</STRONG></FONT></P>
 
-  <P>该饮品有一种来自混合其中的黑莓的紫色色调，但却使得颜色格外明亮，使用蝶豆花粉末，在如柠檬汁这样的酸性物质面前制造出了鲜艳的洋红色。蝶豆花粉末可以在网上或者在有优选香草及调味料的原生态食品店里买到。<BR>Crème de mure是一种黑莓利口酒。如果你找不到它，那么Crème de cassis，一种黑果干利口酒，会是种好的替代品。</P></DIV></BLOCKQUOTE></FONT></FONT></FONT></SPAN></body>
+  <P>该饮品有一种来自混合其中的黑莓的紫色色调，但却使得颜色格外明亮，使用蝶豆花粉末，在如柠檬汁这样的酸性物质面前制造出了鲜艳的洋红色。蝶豆花粉末可以在网上或者在有优选香草及调味料的原生态食品店里买到。<BR>Crème de mure是一种黑莓利口酒。如果你找不到它，那么Crème de cassis，一种黑果干利口酒，会是种好的替代品。</P></DIV></BLOCKQUOTE></FONT></FONT></FONT></SPAN><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

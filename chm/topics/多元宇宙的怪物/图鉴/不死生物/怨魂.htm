@@ -72,7 +72,45 @@ Lore</FONT></STRONG><br>
 
 <strong>混乱嚎叫Howling Babble（充能6）。</strong>任何位于怨魂30尺内且能听见它生物必须进行一次DC14的感知豁免。豁免失败者受到12（2d8+3）点心灵伤害并被<font color=maroon><strong>震慑</strong></font>直至它的下一回合结束。豁免成功则伤害减半且不会被<font color=maroon><strong>震慑</strong></font>。构装和亡灵生物免疫此效应。<br>
 
-<strong>疯狂低语Whisper of Madness。</strong>怨魂选择至多三名位于其60尺范围内的它可见的生物。每个目标都必须成功通过一次DC14的感知豁免否则受到12（2d8+3）点心灵伤害，且必须使用他的反应对一个怨魂可见的且由怨魂选择的生物进行一次近战武器攻击。构装和亡灵生物免疫此效应。</p></body>
+<strong>疯狂低语Whisper of Madness。</strong>怨魂选择至多三名位于其60尺范围内的它可见的生物。每个目标都必须成功通过一次DC14的感知豁免否则受到12（2d8+3）点心灵伤害，且必须使用他的反应对一个怨魂可见的且由怨魂选择的生物进行一次近战武器攻击。构装和亡灵生物免疫此效应。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

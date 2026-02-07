@@ -64,7 +64,45 @@ html,body {
 
 <strong>爪击Claw。</strong>近战武器攻击：命中+7，触及5 尺，单一目标。命中：11 （2d6+4）的挥砍伤害，外加4（1d8）毒素伤害。<br>
 
-<strong>毒气喷涌Venom Spray（充能6）。</strong>巨魔用爪子撕开自己的身体，向15尺立方范围喷出毒雾。巨魔受到7（2d6）的挥砍伤害（此伤害不能被任何方法减少），该范围内的每个生物都必须进行一次DC16的体质豁免，豁免失败者受到18（4d8）的毒素伤害并中毒一分钟，豁免成功则伤害减半且不会中毒。一个已中毒的生物可以在每个其自己回合结束时再进行一次该豁免，豁免成功则结束其身上的效应。</p></body>
+<strong>毒气喷涌Venom Spray（充能6）。</strong>巨魔用爪子撕开自己的身体，向15尺立方范围喷出毒雾。巨魔受到7（2d6）的挥砍伤害（此伤害不能被任何方法减少），该范围内的每个生物都必须进行一次DC16的体质豁免，豁免失败者受到18（4d8）的毒素伤害并中毒一分钟，豁免成功则伤害减半且不会中毒。一个已中毒的生物可以在每个其自己回合结束时再进行一次该豁免，豁免成功则结束其身上的效应。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

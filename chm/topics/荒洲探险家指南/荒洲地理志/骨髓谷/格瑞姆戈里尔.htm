@@ -92,7 +92,45 @@ Adventures</FONT>
 
 Mimics</STRONG>，能变形成镐子、矿车以及其他采矿工具。它们采用打了就跑的战术攻击角色们，随即退到黑暗中，并利用自身独特的能力与环境融为一体。</P>
 
-<P><STRONG><EM>蠕虫崛起Rise Of The Worms（史诗级）。</EM></STRONG>当角色们在格瑞姆戈里尔的时候，几条紫虫穿过隧道进入了城市，造成了大规模的破坏。在蠕虫被杀死或驱逐后，克灵王朝的部队穿过怪物开凿的隧道，在城市已经陷入混乱的时候，摧毁了战略军事前哨。克灵王朝深知这座城市对于训练敦达里安军队的重要性，所以他们先调动了这些蠕虫，再紧随其后，以便给予格瑞姆戈里尔决定性的打击。</P></body>
+<P><STRONG><EM>蠕虫崛起Rise Of The Worms（史诗级）。</EM></STRONG>当角色们在格瑞姆戈里尔的时候，几条紫虫穿过隧道进入了城市，造成了大规模的破坏。在蠕虫被杀死或驱逐后，克灵王朝的部队穿过怪物开凿的隧道，在城市已经陷入混乱的时候，摧毁了战略军事前哨。克灵王朝深知这座城市对于训练敦达里安军队的重要性，所以他们先调动了这些蠕虫，再紧随其后，以便给予格瑞姆戈里尔决定性的打击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

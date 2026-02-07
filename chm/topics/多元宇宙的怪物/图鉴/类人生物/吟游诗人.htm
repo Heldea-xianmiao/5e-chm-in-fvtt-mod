@@ -154,7 +154,45 @@ lights，法师之手mage hand, 魔法伎俩prestidigitation<BR>每项1/日：�
 
 Actions</FONT></STRONG><BR><STRONG>嘲讽Taunt（2/日）。</STRONG>吟游诗人指定周围30尺范围内的一个生物。如果目标能听到吟游诗人的声音，则该目标须成功于DC12的魅力豁免，豁免失败后该目标进行的属性检定、攻击检定、豁免检定将均具有劣势，持续直至吟游诗人的下回合开始为止。
 
-<P></P></body>
+<P></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

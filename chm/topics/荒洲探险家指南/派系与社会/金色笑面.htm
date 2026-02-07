@@ -46,7 +46,45 @@
 
 <P><STRONG><FONT color=#000000>杜萨德·基夫大师 Master Duasad Keef <BR>    
 
-</FONT></STRONG><FONT color=#000000><EM>混乱善良，男性人类<BR></EM>杜萨德是克洛维斯联邦上层社会的一位富裕贵族，是基夫家族世代相传的古老财富的继承者。杜萨德从小被当做女性抚养长大，但到在在青年时，他意识到有些不对劲，于是找了一个法师来帮助他变性，这在联邦里很容易做到，至少对于那些有钱的人而言。<BR>如今，杜萨德以强大的共情能力闻名，他利用自己的心灵天赋帮助他人抚平创伤或寻求更充实的人生道路。他已成为荒洲的金色笑面中最具影响力且最高效的成员之一。但是，他客户在人生选择上的激进变化并没有被忽视，杜萨德意识到，克洛维斯联邦警惕的目光已经牢牢地盯在了他身上。</FONT></P></body>
+</FONT></STRONG><FONT color=#000000><EM>混乱善良，男性人类<BR></EM>杜萨德是克洛维斯联邦上层社会的一位富裕贵族，是基夫家族世代相传的古老财富的继承者。杜萨德从小被当做女性抚养长大，但到在在青年时，他意识到有些不对劲，于是找了一个法师来帮助他变性，这在联邦里很容易做到，至少对于那些有钱的人而言。<BR>如今，杜萨德以强大的共情能力闻名，他利用自己的心灵天赋帮助他人抚平创伤或寻求更充实的人生道路。他已成为荒洲的金色笑面中最具影响力且最高效的成员之一。但是，他客户在人生选择上的激进变化并没有被忽视，杜萨德意识到，克洛维斯联邦警惕的目光已经牢牢地盯在了他身上。</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

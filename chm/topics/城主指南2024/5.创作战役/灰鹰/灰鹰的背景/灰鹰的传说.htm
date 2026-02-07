@@ -70,7 +70,45 @@ html,body {
 
   。终年飘着烟雾的白羽山坐落在大裂谷的南面，一直是附近村民迷信和敬畏的对象。人们需要走数里才能看到这座自然奇观，但很少有人胆敢接近，因为它被认为是恶魔和魔鬼的栖息地。太过靠近“白羽”的人的不时会消失无踪更是加剧了这种迷信。</DIV></LI></UL>
 
-<P>冒险《白羽山》详见《哈欠门故事集》。</P></body>
+<P>冒险《白羽山》详见《哈欠门故事集》。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

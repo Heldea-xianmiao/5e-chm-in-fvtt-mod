@@ -172,7 +172,45 @@ Portal</FONT></STRONG>
 
 Defense</FONT></STRONG>  
 
-<BR>在15级时，你的位面传送能力使你能在战斗中流转于空间边缘以减少伤害。当你因一次攻击而受到伤害时，你可以用你的反应以获取那次攻击伤害中包含的所有类型的抗性，持续直至当前回合结束。</P></body>
+<BR>在15级时，你的位面传送能力使你能在战斗中流转于空间边缘以减少伤害。当你因一次攻击而受到伤害时，你可以用你的反应以获取那次攻击伤害中包含的所有类型的抗性，持续直至当前回合结束。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

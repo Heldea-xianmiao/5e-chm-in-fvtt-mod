@@ -16,7 +16,45 @@
 
 <P>     
 
-维德礁岛被险恶的沿岸岩石和波涛汹涌的海水完全包围，因此大多数船只都会避开这里。岛屿地形以一系列崎岖的大山丘为主，环绕着一个小山谷，在这片山谷中，一个小型妖精社会生活在迷人的热带森林中。试图利用该岛的狂欢众船长们抱怨说，岛上有一个守护者——据说是一位仙灵女巫。她通过扰乱那些试图掠夺或奴役森林居民的人的心智，守护着整座岛屿。</P></body>
+维德礁岛被险恶的沿岸岩石和波涛汹涌的海水完全包围，因此大多数船只都会避开这里。岛屿地形以一系列崎岖的大山丘为主，环绕着一个小山谷，在这片山谷中，一个小型妖精社会生活在迷人的热带森林中。试图利用该岛的狂欢众船长们抱怨说，岛上有一个守护者——据说是一位仙灵女巫。她通过扰乱那些试图掠夺或奴役森林居民的人的心智，守护着整座岛屿。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

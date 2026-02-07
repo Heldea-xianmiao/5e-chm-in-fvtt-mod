@@ -58,7 +58,45 @@ Resistance：</STRONG>
 
 外加 
 
-18(4d8)点光耀伤害。<BR><STRONG>光耀击(1/日)：</STRONG>光辉偶像选择一处距离他60尺范围内的地面点，以其为中心召唤一道半径30尺、高40尺的光柱，持续至光辉偶像的下回合开始。光柱出现时位于其中的生物，和在自己回合结束时停留于光柱之中的生物，都要通过一次DC17的体质豁免，失败的生物受到36(8d8)点光耀伤害，成功的生物则只需受到一半伤害。<BR></P></body>
+18(4d8)点光耀伤害。<BR><STRONG>光耀击(1/日)：</STRONG>光辉偶像选择一处距离他60尺范围内的地面点，以其为中心召唤一道半径30尺、高40尺的光柱，持续至光辉偶像的下回合开始。光柱出现时位于其中的生物，和在自己回合结束时停留于光柱之中的生物，都要通过一次DC17的体质豁免，失败的生物受到36(8d8)点光耀伤害，成功的生物则只需受到一半伤害。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

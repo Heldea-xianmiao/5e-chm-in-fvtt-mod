@@ -824,7 +824,45 @@ style="FONT-SIZE: x-small; BORDER-TOP: rgb(0,0,0) 1px solid; FONT-FAMILY: Verdan
 
   ”<BR><STRONG>欧佐夫：</STRONG>“进步意味着承担风险。但是一旦与欧佐夫赌博，你的赌注可不止是金钱。”<BR><STRONG>拉铎司：</STRONG>“避开这些无知的暴乱恶魔。他们的热情你最好从远处欣赏。”<BR><STRONG>瑟雷尼亚：</STRONG>“这些狂热者与野兽一起奔跑，崇拜着过往的幻想。他们应该更明智点，拥抱属于未来的奇迹。”<BR><STRONG>析米克：</STRONG>“析米克确实有创造力，但是他们的造物却缺乏灵魂和热情。他们貌似是在打造生命，但是却缺少那种为作品赋予真正心灵的灵感。”</BLOCKQUOTE>
 
-</BODY>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </HTML>
+
 

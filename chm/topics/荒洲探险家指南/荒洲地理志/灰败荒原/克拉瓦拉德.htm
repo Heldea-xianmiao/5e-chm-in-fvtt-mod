@@ -38,7 +38,45 @@ Flotkets 苍白、白雪皑皑的小径中引人注目，使 Kravaraad
 
 <P>克拉瓦拉德的冒险Kravaraad Adventures<BR>火山吸引了足够危险的生物，让在克拉瓦拉德附近旅行成为一种冒险。<BR>火巨人之墓（高级）Vault Of The Fire Giants (High 
 
-Level)。克拉瓦拉德的火巨人从灾难发生前就开始贪婪地积累财宝。为了到达他们的地下金库，角色们必须偷偷溜过或穿过挑战过火巨人的最新生物（通常是霜巨人或其他可以忍受寒冷的生物）。但到达火巨人队只是成功的一半。火巨人在山下开辟了一个巨大的地牢，每当克拉瓦拉德让整个建筑群颤抖时，角色们必须在危险中导航，同时保持平衡。避难所本身由一条渴望自由的被奴役的成年红龙守卫。</P></body>
+Level)。克拉瓦拉德的火巨人从灾难发生前就开始贪婪地积累财宝。为了到达他们的地下金库，角色们必须偷偷溜过或穿过挑战过火巨人的最新生物（通常是霜巨人或其他可以忍受寒冷的生物）。但到达火巨人队只是成功的一半。火巨人在山下开辟了一个巨大的地牢，每当克拉瓦拉德让整个建筑群颤抖时，角色们必须在危险中导航，同时保持平衡。避难所本身由一条渴望自由的被奴役的成年红龙守卫。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

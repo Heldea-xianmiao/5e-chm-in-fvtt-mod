@@ -144,7 +144,45 @@ Undead</STRONG>
 
   
 
-，需要魔杖上骷髅头的英雄本尊将其带到正能量位面。要做到这点，必须先让这位故去已久的英雄重新复活——这并非易事，奥喀斯囚禁了他的灵魂，藏在一个守备森严的秘密地点。<BR>将魔杖浸没在正能量（例如弥漫在正位面的正能量）中将导致其崩坏炸裂，但如果无法满足上述的前提条件，破坏的魔杖将立即在奥喀斯所控制的深渊层域中重新形成。</P></body>
+，需要魔杖上骷髅头的英雄本尊将其带到正能量位面。要做到这点，必须先让这位故去已久的英雄重新复活——这并非易事，奥喀斯囚禁了他的灵魂，藏在一个守备森严的秘密地点。<BR>将魔杖浸没在正能量（例如弥漫在正位面的正能量）中将导致其崩坏炸裂，但如果无法满足上述的前提条件，破坏的魔杖将立即在奥喀斯所控制的深渊层域中重新形成。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

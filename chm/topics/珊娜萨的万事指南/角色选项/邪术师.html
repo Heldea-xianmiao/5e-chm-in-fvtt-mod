@@ -388,5 +388,43 @@ cellSpacing=0 cellPadding=0 width=433 border=0>
 
 <P class=MsoNormal>从<SPAN 
 
-lang=EN-US>1</SPAN>级起，魔契师获得异界宗主职业特性。在玩家手册提供的职业选项之外，魔契师可以选择下列的子职业选项：天界和咒剑。</P></DIV></BODY></HTML>
+lang=EN-US>1</SPAN>级起，魔契师获得异界宗主职业特性。在玩家手册提供的职业选项之外，魔契师可以选择下列的子职业选项：天界和咒剑。</P></DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

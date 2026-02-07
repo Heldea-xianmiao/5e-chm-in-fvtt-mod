@@ -80,7 +80,45 @@ style="    "><br></SPAN><span
 
 style="    "><font face=宋体>每次这种洗劫持续不多于一小时，最后眼魔将撤回其战力，留下惊恐的生还者担忧着下一次攻击的到来。在把所有人都赶走前，眼魔和它的兵力会在每天晚上回来继续扫荡，每次攻击都针对其关键防御点。最终所有生还者的士气崩溃，眼魔的手下就可以随意去俘虏所有人，并且随意去搜刮财物直至居住点被夷为平地。</FONT></SPAN><span 
 
-style="   "></SPAN></P></body>
+style="   "></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

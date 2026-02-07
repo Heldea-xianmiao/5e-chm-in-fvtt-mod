@@ -104,7 +104,45 @@ Rules For The Virtual
 
 Table</FONT></H3>
 
-<P>在虚拟环境下设置预期与面对面一样重要。<BR>一些桌将不符合角色设定的笑话、场外评论、梗图等内容限制在文本聊天里，而让语音频道专注于游戏本身。但另一些桌则会认为在游戏进行时单开一个聊天框会分散注意力。选择一个对你桌而言最好的方式。<BR>在虚拟桌面上谁来移动指示物？玩家们被希望使用内置的掷骰器，还是说，展示线下的掷骰结果也没问题？你正在使用的特定技术可能会给出这些问题的答案，而游玩中也可能会出现需要你解决的其他问题。</P></body>
+<P>在虚拟环境下设置预期与面对面一样重要。<BR>一些桌将不符合角色设定的笑话、场外评论、梗图等内容限制在文本聊天里，而让语音频道专注于游戏本身。但另一些桌则会认为在游戏进行时单开一个聊天框会分散注意力。选择一个对你桌而言最好的方式。<BR>在虚拟桌面上谁来移动指示物？玩家们被希望使用内置的掷骰器，还是说，展示线下的掷骰结果也没问题？你正在使用的特定技术可能会给出这些问题的答案，而游玩中也可能会出现需要你解决的其他问题。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

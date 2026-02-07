@@ -38,7 +38,45 @@ Hound</FONT></STRONG><BR><EM>中型妖精，绝对中立</EM><BR>AC 14(天生护
 
 <P><STRONG>结伴Bonding：</STRONG>维伦那猎犬可以与另一个它能看见的生物建立魔法纽带。为此它需要待在目标生物30英尺之内，花费至少1个小时进行观察。纽带一旦结成就将保持到有一方死亡，或是它与另一个生物建立新的纽带。成为伙伴之后，维伦那猎犬可以与结伴生物通过心灵感应交流，最大有效范围为100尺。<BR><STRONG>敏锐嗅听觉Keen 
 
-Hearing and Smell：</STRONG>维伦那猎犬在依赖听觉或嗅觉的感知（察觉）检定中具有优势。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>啮咬：</STRONG>近战武器攻击：命中+5，触及5尺，单个目标。命中：6(1d6+3)点穿刺伤害。如果命中生物，则其必须通过一次DC13的力量豁免否则被击倒在地。</P></body>
+Hearing and Smell：</STRONG>维伦那猎犬在依赖听觉或嗅觉的感知（察觉）检定中具有优势。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>啮咬：</STRONG>近战武器攻击：命中+5，触及5尺，单个目标。命中：6(1d6+3)点穿刺伤害。如果命中生物，则其必须通过一次DC13的力量豁免否则被击倒在地。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

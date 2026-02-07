@@ -184,7 +184,45 @@ html,body {
 
 另一种使用激励卡组的方式是让怪物和反派也能享受到它的效果。在这种变体规则中，每次玩家消耗激励时，DM同样也从卡组中抽一张卡。你将这张卡秘密地保留在手中，而不是将其加入激励牌池，并在之后让角色们的对手执行卡牌的效果。<br>
 
-你可以在抽到激励卡牌后马上用掉，也可以为日后重要的遭遇留着它们。但请注意，保留激励卡牌可能会让玩家们担心他们需要为以后的遭遇留着激励，因此在使用激励上变得不积极。你的玩家会将你的举止作为榜样，所以如果你想让玩家们更自由地使用激励的话，你自己也应该这么做。</p></body>
+你可以在抽到激励卡牌后马上用掉，也可以为日后重要的遭遇留着它们。但请注意，保留激励卡牌可能会让玩家们担心他们需要为以后的遭遇留着激励，因此在使用激励上变得不积极。你的玩家会将你的举止作为榜样，所以如果你想让玩家们更自由地使用激励的话，你自己也应该这么做。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

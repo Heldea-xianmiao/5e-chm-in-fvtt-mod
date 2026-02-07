@@ -580,7 +580,45 @@ cellSpacing=2 border=0>
 
 style="TEXT-ALIGN: left; MARGIN: 5pt 0pt 12pt;   mso-pagination: widow-orphan"><span 
 
-style="    "><font face=宋体>拥有很多纪念品的眼魔会在自己巢穴里设置一个区域作为陈列室。纪念品展厅通常是一个长型的洞室，其内装饰着眼魔所杀生物身上留下东西。小物件通常被安置在壁龛和底座上，而大物件则直接悬挂到天花板或者直接让其自由的立在房间里。为了防止手下们触碰或盗窃这些纪念品，眼魔会把最喜爱以及最有价值的物品摆放在高架上，从而可以让飞起来的眼魔自由观赏而使所有地面的生物难以碰触。</FONT></SPAN></P></body>
+style="    "><font face=宋体>拥有很多纪念品的眼魔会在自己巢穴里设置一个区域作为陈列室。纪念品展厅通常是一个长型的洞室，其内装饰着眼魔所杀生物身上留下东西。小物件通常被安置在壁龛和底座上，而大物件则直接悬挂到天花板或者直接让其自由的立在房间里。为了防止手下们触碰或盗窃这些纪念品，眼魔会把最喜爱以及最有价值的物品摆放在高架上，从而可以让飞起来的眼魔自由观赏而使所有地面的生物难以碰触。</FONT></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

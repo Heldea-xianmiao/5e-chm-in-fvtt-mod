@@ -52,7 +52,45 @@ Shape。</STRONG>祟魂魔法般地变为它在活着的时候的人形外观，
 
 Sorrow。</STRONG>祟魂置顶一个它可以看到、距它60英尺内的失去任意生命值的生物，并与这个痛苦的灵魂分享自己的痛苦。目标必须成功于DC 
 
-14感知豁免，否则将陷入失能（incapacitated）。<BR>生物可以在每回合结束时重复豁免投掷，成功后结束对其自身的影响。如果一个生物的豁免投掷成功或其效果结束，则该生物在接下来的24小时内对祟魂的共享悲伤免疫。</P></body>
+14感知豁免，否则将陷入失能（incapacitated）。<BR>生物可以在每回合结束时重复豁免投掷，成功后结束对其自身的影响。如果一个生物的豁免投掷成功或其效果结束，则该生物在接下来的24小时内对祟魂的共享悲伤免疫。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

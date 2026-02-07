@@ -62,7 +62,45 @@ Traits</FONT></H3>
 
 <P><STRONG>属性值加成Ability Score Increase</STRONG>。你的敏捷加2，感知加1<BR><STRONG>年龄Age</STRONG>。鸟羽人在3岁成年，他们通常活不过30年。<BR><STRONG>阵营Alignment</STRONG>。大多数鸟羽人是善良的，并且很少会在守序与混乱之间做出选择。部落的首领和战士可能是守序的，作为探索者和冒险者时可能会倾向混乱阵营。<BR><STRONG>体型Size</STRONG>。鸟羽人平均5尺高，他们有纤细而轻盈的身躯。你的体型为中型。下面是如何随机决定你的身高和体重的方法，首先投掷体型调整值：<BR>体型调整值=2d8<BR>身高= 
 
-4尺+3寸+体型调整值（寸）<BR>体重（磅）=70+（1d4*体型调整值）<BR><STRONG>速度Speed</STRONG>。你的基础步行速度为25尺。<BR><STRONG>飞行Flight</STRONG>。你有50尺的飞行速度。使用该速度时，你不能穿戴中甲和重甲。<BR><STRONG>禽爪Talons</STRONG>。你的禽爪是天生武器，你可以用它进行徒手打击，当你使用它们命中目标时，这次打击会造成1d4+你力量调整值的挥砍伤害，代替徒手打击原本的钝击伤害。<BR><STRONG>语言Laguages</STRONG>。你能够说、读、写鸟羽人语，气族语和通用语。</P></body>
+4尺+3寸+体型调整值（寸）<BR>体重（磅）=70+（1d4*体型调整值）<BR><STRONG>速度Speed</STRONG>。你的基础步行速度为25尺。<BR><STRONG>飞行Flight</STRONG>。你有50尺的飞行速度。使用该速度时，你不能穿戴中甲和重甲。<BR><STRONG>禽爪Talons</STRONG>。你的禽爪是天生武器，你可以用它进行徒手打击，当你使用它们命中目标时，这次打击会造成1d4+你力量调整值的挥砍伤害，代替徒手打击原本的钝击伤害。<BR><STRONG>语言Laguages</STRONG>。你能够说、读、写鸟羽人语，气族语和通用语。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

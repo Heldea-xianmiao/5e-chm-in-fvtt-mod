@@ -98,7 +98,45 @@ ward，行动自如 freedom of movement <BR>5 环（1 法术位）：驱逐善�
 
 Multiattack。</STRONG>瑞克塔维欧用他的剑杖攻击两次。 <BR><STRONG>剑杖 Sword 
 
-Cane。</STRONG>近战武器攻击：命中+4，触及 5 尺，单一目标。命中：4（1d6+1）钝击伤害（木杖）或者穿刺伤害（银剑）</P></body>
+Cane。</STRONG>近战武器攻击：命中+4，触及 5 尺，单一目标。命中：4（1d6+1）钝击伤害（木杖）或者穿刺伤害（银剑）</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -330,7 +330,45 @@ style="mso-bidi-font-family: Arial" >）心灵伤害且必须成功通过一次D
 
 style="mso-bidi-font-family: Arial" >19</SPAN><SPAN 
 
-style="mso-bidi-font-family: Arial" >的魅力豁免。豁免失败则法术被浪费，不会产生任何效应，但用来施法的法术位不会被消耗。</SPAN></body>
+style="mso-bidi-font-family: Arial" >的魅力豁免。豁免失败则法术被浪费，不会产生任何效应，但用来施法的法术位不会被消耗。</SPAN><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

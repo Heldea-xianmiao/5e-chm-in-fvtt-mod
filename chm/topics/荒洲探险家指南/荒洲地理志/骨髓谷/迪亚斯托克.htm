@@ -78,7 +78,45 @@ Kryn-filtration（任何级别）</EM></STRONG>。克灵王朝计划渗透迪亚
 
 20 年里声名鹊起，不仅因为所完成的事迹，还因为塔里翁自己出版的一系列大部分基于真实事件的书籍。<BR> 
 
-    达灵顿旅张开双臂欢迎热情的旅行者和冒险家，他们资助了多个活跃在西维南迪尔及其他地区的小型冒险团队。不仅如此，塔里翁仍经常被人发现他自己正进行一两次冒险，身边有他值得信赖的机器人多蒂和劳伦斯。</P></body>
+    达灵顿旅张开双臂欢迎热情的旅行者和冒险家，他们资助了多个活跃在西维南迪尔及其他地区的小型冒险团队。不仅如此，塔里翁仍经常被人发现他自己正进行一两次冒险，身边有他值得信赖的机器人多蒂和劳伦斯。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

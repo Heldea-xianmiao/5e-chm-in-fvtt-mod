@@ -68,7 +68,45 @@ lang=EN-US>+3</span>的魅力调整值，你可以重掷每道射线的一个伤
 
 <p class=MsoNormal><b><FONT size=3><FONT color=#800000>狂野术法Wild Magic 
 
-Sorcery 中，狂野魔法浪涌Wild Magic Surge 产生的效应是否会替换掉触发浪涌的法术的效应，还是两者皆会发生？</FONT><BR></FONT></b><FONT size=3>该法术的效应和狂野魔法浪涌效应皆会发生。</FONT></p></body>
+Sorcery 中，狂野魔法浪涌Wild Magic Surge 产生的效应是否会替换掉触发浪涌的法术的效应，还是两者皆会发生？</FONT><BR></FONT></b><FONT size=3>该法术的效应和狂野魔法浪涌效应皆会发生。</FONT></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

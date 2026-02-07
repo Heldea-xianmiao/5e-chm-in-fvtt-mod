@@ -88,7 +88,45 @@ Yrrosa的万象会Myriad的小头目，他有兴趣为更少的法律工作提�
 
 <P>边栏：普莱德丝绸 Pride Silk<BR>该地区独有的丰产的丝绸，很长一段时间以来都是当地人引以为傲的东西。经过适当的加工和编织，就能产出普莱德丝绸：这是一种非常柔韧的材料，具有鞣制皮革的耐久性。普莱德丝绸目前已成为军用船帆、战争旗帜和其他实用用途的最受欢迎的布料，并在富裕阶层之中也颇受欢迎。使用普莱德丝绸制作的服装既时尚又具防护性，这导致许多贵族和富商寻求这种丝绸所制的全套服装和正式礼服。有能力制作这种服装的裁缝很少，所以，尽管普莱德丝绸作为一种原材料可能很贵，对于大多数普通人来说，用这种布料制成的服装更是贵得令人望而却步。<BR>一平方尺的普莱德丝绸重量为1磅，价格为100gp。一套由普莱德丝绸制成的装备重量为4磅，售价为500gp。若你没有穿戴其他护甲，着装此护甲时，你的基础护甲等级为11+你的敏捷调整值。 
 
-</P></body>
+</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

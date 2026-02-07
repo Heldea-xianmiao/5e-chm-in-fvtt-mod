@@ -36,7 +36,45 @@ html,body {
 
 XP)</P>
 
-<P dir=ltr><STRONG>魔法抗性。</STRONG>橡木发射机在对抗法术和其他魔法效果的豁免检定上具有优势。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>橡木发射姬（误）使用两次发射投枪攻击或一次投枪攻击加一次飞叉攻击。<BR><STRONG>发射投枪。</STRONG>近战武器攻击或远程武器攻击：命中+7，触及5尺或100/400尺，单一目标。命中：15（2d10+4）穿刺伤害。<BR><STRONG>发射鱼叉。</STRONG>远程武器攻击：命中+7，射程50/200尺，单一目标。命中：9(1dl0+4)穿刺伤害，目标被擒抱(逃离DC12)。当处于这种受擒状态时，该生物的速度没有降低，但只能朝更靠近橡木发射机的方向移动。如果该生物从擒抱中逃脱或者做出尝试后失败了，它受到5(1d10)挥砍伤害。作为一种附赠动作，橡树发射机可以将被它擒抱的生物拉近20尺。一台橡木发射机同时只能擒抱一个生物。<BR><STRONG>爆炸投枪(充能5~6)。</STRONG>橡木发射机向120尺范围内的某一点发射一枚爆炸飞弹。距离爆炸点20尺内的每个生物必须通过DC15的敏捷豁免，否则受到17(5d6)点的火焰伤害，成功半伤。</P></body>
+<P dir=ltr><STRONG>魔法抗性。</STRONG>橡木发射机在对抗法术和其他魔法效果的豁免检定上具有优势。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>橡木发射姬（误）使用两次发射投枪攻击或一次投枪攻击加一次飞叉攻击。<BR><STRONG>发射投枪。</STRONG>近战武器攻击或远程武器攻击：命中+7，触及5尺或100/400尺，单一目标。命中：15（2d10+4）穿刺伤害。<BR><STRONG>发射鱼叉。</STRONG>远程武器攻击：命中+7，射程50/200尺，单一目标。命中：9(1dl0+4)穿刺伤害，目标被擒抱(逃离DC12)。当处于这种受擒状态时，该生物的速度没有降低，但只能朝更靠近橡木发射机的方向移动。如果该生物从擒抱中逃脱或者做出尝试后失败了，它受到5(1d10)挥砍伤害。作为一种附赠动作，橡树发射机可以将被它擒抱的生物拉近20尺。一台橡木发射机同时只能擒抱一个生物。<BR><STRONG>爆炸投枪(充能5~6)。</STRONG>橡木发射机向120尺范围内的某一点发射一枚爆炸飞弹。距离爆炸点20尺内的每个生物必须通过DC15的敏捷豁免，否则受到17(5d6)点的火焰伤害，成功半伤。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

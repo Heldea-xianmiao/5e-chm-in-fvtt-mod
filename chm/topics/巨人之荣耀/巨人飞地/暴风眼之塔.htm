@@ -118,7 +118,45 @@ Dragon</STRONG>
 
 <P><STRONG>混沌之触Touch of Chaos</STRONG>  
 
-<BR>归功于迷宫风漏与艾夸的联系，一件被宇宙中混乱之触所诅咒的神器可以在迷宫风漏中被净化。但当神器被带进塔内时，它又会反过来腐化迷宫风漏。来自“邪魔入侵遭遇表”（见第三章）的恶魔会如潮水般出现，阻止净化神器的尝试。</P></body>
+<BR>归功于迷宫风漏与艾夸的联系，一件被宇宙中混乱之触所诅咒的神器可以在迷宫风漏中被净化。但当神器被带进塔内时，它又会反过来腐化迷宫风漏。来自“邪魔入侵遭遇表”（见第三章）的恶魔会如潮水般出现，阻止净化神器的尝试。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

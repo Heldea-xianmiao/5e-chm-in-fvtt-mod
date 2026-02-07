@@ -44,7 +44,45 @@ Hidden Realm，远离所有物质位面和其他神。</P>
 
 <P>这篇萨迦所表达的观点不仅是迪安卡斯特拉的聪明才智。在应许女儿对神性的要求时，安南也承认，他的儿子和后代身上也存在着同样无穷变化的潜力。最终，的这种承认提供了一种可能性，即安南对于自己后代的信任可能会恢复，全父某一天会从自我放逐中回归。那一丝希望，尽管可能很微弱，但对于那些希望重拾昔日荣光的巨人们来说，却是一个中原的动力，这可能也是此萨迦在巨人中受欢迎的原因。</P>
 
-<div style="BORDER-TOP: black 1px solid; FONT-FAMILY: 华文仿宋; BORDER-RIGHT: black 1px solid;BORDER-BOTTOM: black 1px solid; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 50px;MARGIN-LEFT: 50px; MARGIN-RIGHT: 50px;BORDER-LEFT: black 1px solid; PADDING-RIGHT: 50px; BACKGROUND-COLOR: #ffffe6">这篇萨迦写得还行，如果讲得好，也能透露出说书人的情况。如果你够好彩和有自知，它还能让你了解自己。但它的主题就没啥多少值得了解的东西，韵脚和用典也不太行。毕格比给了我好几个版本的故事，是我坚持让他用这个，也就是说。他对这篇故事的解释是合理的。<br><div style="TEXT-ALIGN: right">迪安卡斯特拉</div></div></body>
+<div style="BORDER-TOP: black 1px solid; FONT-FAMILY: 华文仿宋; BORDER-RIGHT: black 1px solid;BORDER-BOTTOM: black 1px solid; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 50px;MARGIN-LEFT: 50px; MARGIN-RIGHT: 50px;BORDER-LEFT: black 1px solid; PADDING-RIGHT: 50px; BACKGROUND-COLOR: #ffffe6">这篇萨迦写得还行，如果讲得好，也能透露出说书人的情况。如果你够好彩和有自知，它还能让你了解自己。但它的主题就没啥多少值得了解的东西，韵脚和用典也不太行。毕格比给了我好几个版本的故事，是我坚持让他用这个，也就是说。他对这篇故事的解释是合理的。<br><div style="TEXT-ALIGN: right">迪安卡斯特拉</div></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

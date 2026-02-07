@@ -48,7 +48,45 @@ Attack。</STRONG>120尺内最多三名可以听到灰矮人督军的灰矮人�
 
 变巨的尺寸会按照空间可容纳的最大值来确定。<BR><STRONG>隐形Invisibility(充能4~6)。</STRONG>灰矮人神奇地隐去身形，效果将最多持续1小时，或直至他进行攻击，施放法术，亦或其专注被打断(这个效果如同他在专注一个法术)。灰矮人穿着及携带的所有装备也随他一起隐形。<BR><STRONG><FONT color=#800000>反应</FONT></STRONG><BR><STRONG>训斥下属Scouring 
 
-Instruction。</STRONG>当一名灰矮人督军可以看见的盟友投掷一枚d20时，灰矮人督军可以投掷一枚d6，盟友可以将结果加在那枚d20的结果中，并承受3(1d6)点心灵伤害。免疫心灵伤害的生物无法被训斥下属所影响。</P></body>
+Instruction。</STRONG>当一名灰矮人督军可以看见的盟友投掷一枚d20时，灰矮人督军可以投掷一枚d6，盟友可以将结果加在那枚d20的结果中，并承受3(1d6)点心灵伤害。免疫心灵伤害的生物无法被训斥下属所影响。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

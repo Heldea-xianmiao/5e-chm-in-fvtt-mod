@@ -538,7 +538,45 @@ DC 的智力（调查）检定，以判定是否看穿幻象。辨出幻象的�
 
 5 
 
-尺内的至多五个自愿生物一起瞬间传送到一个你事先设置好的圣坛。你和与你一起传送的生物将出现在你准备圣坛时指定的地点（见下）旁边最近的未被占据位置。如果你在施放法术前没有事先准备好圣坛，则该法术将不产生任何效应。<BR>设置圣坛时，你必须身处一个你所信仰神的神庙或与该神密切相关的地点，然后在该处施展此法术。如果你试图在一个并不供奉你所信仰神的地方施展此法术，则该法术将不产生任何效应。<BR></P></body>
+尺内的至多五个自愿生物一起瞬间传送到一个你事先设置好的圣坛。你和与你一起传送的生物将出现在你准备圣坛时指定的地点（见下）旁边最近的未被占据位置。如果你在施放法术前没有事先准备好圣坛，则该法术将不产生任何效应。<BR>设置圣坛时，你必须身处一个你所信仰神的神庙或与该神密切相关的地点，然后在该处施展此法术。如果你试图在一个并不供奉你所信仰神的地方施展此法术，则该法术将不产生任何效应。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

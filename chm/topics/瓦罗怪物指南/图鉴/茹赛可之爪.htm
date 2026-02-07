@@ -78,7 +78,45 @@ thaumaturgy<BR>1环(4法术位 ): 灾祸术 bane，疗伤术 cure wounds，光�
 
 guiding bolt<BR>2环(3 法术位): 卜筮术 augury，守护链接 warding bond<BR>3环(2 法术位): 降咒术 bestow curse，造粮术 create food and water<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击 Multiattack。</STRONG> 该兽人发动2次爪击，其生命值少过一半时发动4次爪击。<BR><STRONG>爪击 Claw。</STRONG> 近战武器攻击: 命中+4 
 
-，触及5 尺， 单一目标。命中：6 (1d8+2)挥砍伤害。</P></body>
+，触及5 尺， 单一目标。命中：6 (1d8+2)挥砍伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

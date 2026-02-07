@@ -54,7 +54,45 @@ Market</FONT></STRONG><BR>阿伯莱集市是一个巨大的露天市场，就在
 
 <P><STRONG><FONT color=#800000>女像柱林 Caryatid 
 
-Groves</FONT></STRONG><BR>卡拉美特拉和倪勒娅的圣林散布在城市各处，由几乎人形的细长树木组成。据说，任何进入这些圣林寻求平静的人都会找到平静，并在林中扎根，成为树林的一部分。这里的树是女像柱，能够活化去保卫树林或城市(作为活化树木)，除此之外都会保持无声的静止。</P></body>
+Groves</FONT></STRONG><BR>卡拉美特拉和倪勒娅的圣林散布在城市各处，由几乎人形的细长树木组成。据说，任何进入这些圣林寻求平静的人都会找到平静，并在林中扎根，成为树林的一部分。这里的树是女像柱，能够活化去保卫树林或城市(作为活化树木)，除此之外都会保持无声的静止。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

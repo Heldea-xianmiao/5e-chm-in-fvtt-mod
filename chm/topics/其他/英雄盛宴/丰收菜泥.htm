@@ -42,7 +42,45 @@ html,body {
 
 <FONT size=4 >
 
-<STRONG>厨师笔记</STRONG></FONT></P><P>将南瓜直接在烤盘上捣碎，可以得到浓郁、质朴的泥状物。如果你想让它变得更光滑，将南瓜和去皮的大蒜刮到料理机中，然后用脉冲将其处理成所需的光滑度。如果你想要粘稠度更低的糊状物，可以在料理机运作过程中通过进料管逐渐加入1/2到2/3杯热水。</P>  </div></body>
+<STRONG>厨师笔记</STRONG></FONT></P><P>将南瓜直接在烤盘上捣碎，可以得到浓郁、质朴的泥状物。如果你想让它变得更光滑，将南瓜和去皮的大蒜刮到料理机中，然后用脉冲将其处理成所需的光滑度。如果你想要粘稠度更低的糊状物，可以在料理机运作过程中通过进料管逐渐加入1/2到2/3杯热水。</P>  </div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -130,7 +130,45 @@ Gifts</font></strong></font></p><p>
 
 你可以施展法术<font color=purple><em>放逐术Banishment</em></font>而无需法术成分，且使用智力，感知，或魅力作为施法属性（由你选择）。当使用了3次之后，该护咒从你身上消失。</p>
 
-<div style="BORDER-TOP: black 1px solid; FONT-FAMILY: 仿宋; BORDER-RIGHT: black 1px solid;BACKGROUND: #a3e6f9; BORDER-BOTTOM: black 1px solid; PADDING-BOTTOM: 20px; TEXT-ALIGN: center; PADDING-TOP: 20px; PADDING-LEFT: 50px;MARGIN-LEFT: 50px; MARGIN-RIGHT: 50px;BORDER-LEFT: black 1px solid; PADDING-RIGHT: 50px">我曾从那个传说中妖精荒野的巫后那里<BR>得到了一个护咒，至今我依旧眷恋<BR>她的毒舌，与行事风格</DIV></body>
+<div style="BORDER-TOP: black 1px solid; FONT-FAMILY: 仿宋; BORDER-RIGHT: black 1px solid;BACKGROUND: #a3e6f9; BORDER-BOTTOM: black 1px solid; PADDING-BOTTOM: 20px; TEXT-ALIGN: center; PADDING-TOP: 20px; PADDING-LEFT: 50px;MARGIN-LEFT: 50px; MARGIN-RIGHT: 50px;BORDER-LEFT: black 1px solid; PADDING-RIGHT: 50px">我曾从那个传说中妖精荒野的巫后那里<BR>得到了一个护咒，至今我依旧眷恋<BR>她的毒舌，与行事风格</DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

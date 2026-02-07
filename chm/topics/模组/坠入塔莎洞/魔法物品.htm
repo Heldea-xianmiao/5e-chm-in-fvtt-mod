@@ -48,7 +48,45 @@ Polychromy</FONT></STRONG><BR><EM>药水，非普通</EM><BR>当你喝下这瓶�
 
 <P><STRONG><FONT color=#800000>塔莎的伏行龙骨船Tasha's Creeping 
 
-Keelboat</FONT></STRONG><BR><EM>奇物，极珍稀（需同调）</EM><BR>此魔法载具是一艘宽10尺，长30尺的船。它有四条腿，可以在陆地上行走，也可以在水上航行。它的步行和游泳速度为20尺，但不能在水下航行。你乘船期间，船会根据你的口头指示移动，你选择的生物处于船上期间在AC上获得+1加值。<BR>这艘船可以携带重达1,000磅的物品而不受影响。它可以携带多达此重量的两倍，但如果携带超过其正常载重的物品，其移动速度将减半。<BR></P></body>
+Keelboat</FONT></STRONG><BR><EM>奇物，极珍稀（需同调）</EM><BR>此魔法载具是一艘宽10尺，长30尺的船。它有四条腿，可以在陆地上行走，也可以在水上航行。它的步行和游泳速度为20尺，但不能在水下航行。你乘船期间，船会根据你的口头指示移动，你选择的生物处于船上期间在AC上获得+1加值。<BR>这艘船可以携带重达1,000磅的物品而不受影响。它可以携带多达此重量的两倍，但如果携带超过其正常载重的物品，其移动速度将减半。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

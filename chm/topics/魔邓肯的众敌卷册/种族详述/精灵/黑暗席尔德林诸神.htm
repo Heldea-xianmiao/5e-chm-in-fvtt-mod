@@ -222,7 +222,45 @@ Vulkoor</FONT></STRONG><BR>艾伯伦的卓尔信仰一位叫做乌库尔的蝎�
 
 <P><EM>“在克莱恩世界，罗丝与科瑞隆都不为人所知，但被称为“黑暗”精灵的精灵的确存在于哪个世界。那个世界的精灵们也相信黑暗精灵背叛了自己的人民，但却从未真正目睹过卓尔。对于精灵这样一个顽固的族群来说，我想他们会永远对卓尔保持这种态度。”</EM></P></BLOCKQUOTE>
 
-<P align=right>——魔邓肯</P></body>
+<P align=right>——魔邓肯</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

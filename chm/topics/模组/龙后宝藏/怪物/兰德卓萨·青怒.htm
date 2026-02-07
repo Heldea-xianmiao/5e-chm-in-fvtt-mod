@@ -46,7 +46,45 @@ Critical。</STRONG>兰德卓萨的武器攻击其攻击检定骰出19或20时�
 
 Breath（充能5~6）。</STRONG>兰德卓萨呼出闪电并覆盖30尺长、5尺宽的线状区域。该区域内的每个生物都必须进行一次DC 
 
-13的敏捷豁免，豁免失败者受到22（4d10）的闪电伤害，豁免成功则伤害减半。</P></body>
+13的敏捷豁免，豁免失败者受到22（4d10）的闪电伤害，豁免成功则伤害减半。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

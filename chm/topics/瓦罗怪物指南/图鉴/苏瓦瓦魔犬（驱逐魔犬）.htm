@@ -60,7 +60,45 @@ html,body {
 
 <STRONG>横冲直撞。</STRONG>当它在自己回合中通过一次近战攻击将一个生物的HP减少到0点，驱逐魔犬能够以一个附赠动作移动最多半速的距离并以啃咬发动一次攻击。<BR><STRONG >
 
-<FONT color=#800000>行动</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>驱逐魔犬发动两次攻击，一次啃咬，一次用尾巴毒刺。<BR><STRONG>啃咬。</STRONG>近战武器攻击：+7点命中，触及5尺，一个目标。命中：26（4dl0+4）穿刺伤害。<BR><STRONG>尾刺。</STRONG>近战武器攻击：+7命中，触及15尺，一个生物。命中：13（2d8+4）穿刺伤害，目标必须通过DC14的体质豁免否则中毒。在中毒的同时，目标麻痹。目标可以在每次回合结束时重复豁免，成功则结束毒刺对自己的影响。</P></body>
+<FONT color=#800000>行动</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>驱逐魔犬发动两次攻击，一次啃咬，一次用尾巴毒刺。<BR><STRONG>啃咬。</STRONG>近战武器攻击：+7点命中，触及5尺，一个目标。命中：26（4dl0+4）穿刺伤害。<BR><STRONG>尾刺。</STRONG>近战武器攻击：+7命中，触及15尺，一个生物。命中：13（2d8+4）穿刺伤害，目标必须通过DC14的体质豁免否则中毒。在中毒的同时，目标麻痹。目标可以在每次回合结束时重复豁免，成功则结束毒刺对自己的影响。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

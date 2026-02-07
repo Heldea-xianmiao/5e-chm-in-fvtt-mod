@@ -72,7 +72,45 @@ Shape）。</STRONG>布丁王神奇的将自己塑形为一只泥怪，或者恢
 
 Green Slime）（在一个长休后恢复充能）。</STRONG>布丁王生成一片绿软泥（见城主指南 
 
-第五章”地下城障碍物“）。软泥出现在布丁王30尺范围内墙上、天花板上或者地板上一块范围。</P></body>
+第五章”地下城障碍物“）。软泥出现在布丁王30尺范围内墙上、天花板上或者地板上一块范围。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

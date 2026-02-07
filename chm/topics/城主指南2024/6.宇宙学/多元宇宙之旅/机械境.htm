@@ -38,7 +38,45 @@ margin-bottom: -18px;
 
 <H3><FONT color=#800000>机械境冒险Mechanus Adventures</FONT></H3>
 
-<P>机械境象征绝对的秩序，其影响深刻而无形。凡身临此地，个体意识便会被逐渐消融于对完美秩序的追求中，“我”最终归于“我们”。<BR>在机械境的冒险可能促使角色反思自我的存在与冒险团队的关系。这里或许会迫使角色暂时搁置个人目标，以集体利益或宇宙法则的至高利益为先；抑或引导他们坚定自身的独特性，守护个人的目标与需求，在秩序的洪流中找回自我的与众不同。</P></body>
+<P>机械境象征绝对的秩序，其影响深刻而无形。凡身临此地，个体意识便会被逐渐消融于对完美秩序的追求中，“我”最终归于“我们”。<BR>在机械境的冒险可能促使角色反思自我的存在与冒险团队的关系。这里或许会迫使角色暂时搁置个人目标，以集体利益或宇宙法则的至高利益为先；抑或引导他们坚定自身的独特性，守护个人的目标与需求，在秩序的洪流中找回自我的与众不同。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

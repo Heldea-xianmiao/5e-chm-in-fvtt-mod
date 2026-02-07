@@ -66,9 +66,47 @@ Aspect of the Wilds</FONT>      </STRONG>
 
 <BR><STRONG>角羊Ram。</STRONG>狂暴激活期间，当你的近战攻击命中一名体型不超过大型的生物时，你可以令其陷入<STRONG><FONT color=#008000>倒地</FONT></STRONG>状态。<BR><FONT color=#808080 size=2>译注：武僧的无甲防御中特别强调了“未持用盾牌”而该特性没有，因此根据法师护甲的SA，你在使用盾牌时依然可以使用该飞行速度。</FONT></p>
 
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
 </body>
 
 </html>
+
 
 
 

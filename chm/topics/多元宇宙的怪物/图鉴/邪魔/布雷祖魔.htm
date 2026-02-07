@@ -42,7 +42,45 @@ Presence。</STRONG>当任何非恶魔的生物在此布雷祖魔30尺内开始�
 
 Leap。</STRONG>布雷祖魔可以跳远至多20尺，跳高至多10尺，无论起跳前有没有助跑。<BR><STRONG>步履稳健Sure-Footed。</STRONG>布雷祖魔在进行对抗使其倒地的力量豁免和敏捷豁免时具有优势。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>刺尾Barbed 
 
-Tail。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命中：8（1d12+2）点穿刺伤害外加4（1d8）点暗蚀伤害。若该目标是一个生物，其必须成功通过一个对抗疾病的DC13的体质豁免，否则中毒直至疾病结束。当因此而中毒时，该目标长出溃烂的疡肿、咳出苍蝇、皮肤腐烂剥落，且目标在之后每24小时便必须再次进行豁免。若豁免成功，则此疾病终止。若豁免失败，该目标的生命值上限减损4（1d8）点。若目标的生命值上限减至0，则目标死亡。</P></body>
+Tail。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命中：8（1d12+2）点穿刺伤害外加4（1d8）点暗蚀伤害。若该目标是一个生物，其必须成功通过一个对抗疾病的DC13的体质豁免，否则中毒直至疾病结束。当因此而中毒时，该目标长出溃烂的疡肿、咳出苍蝇、皮肤腐烂剥落，且目标在之后每24小时便必须再次进行豁免。若豁免成功，则此疾病终止。若豁免失败，该目标的生命值上限减损4（1d8）点。若目标的生命值上限减至0，则目标死亡。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

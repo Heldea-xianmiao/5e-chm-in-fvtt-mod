@@ -2620,9 +2620,47 @@ Reaction</span><span lang=EN-US style='FONT-SIZE:
 
  lang=EN-US><br>
 
-<span style="mso-spacerun: yes">    </span></span>如果对话总是由几名玩家作主导，你可能就要花点时间在其他玩家身上让他们也参与其中。喜欢的话，你可以直接用角色说：“那你的大块头朋友呢？说话，野蛮人！你要拿什么来换取我的支持？”或者只是问问该玩家在对话过程中其角色正在做什么。第一种方法比较适合那些习惯用角色的声线说话的玩家。第二种方法则比较适合那些需要鼓励参与游戏场景的玩家。</p></div></body>
+<span style="mso-spacerun: yes">    </span></span>如果对话总是由几名玩家作主导，你可能就要花点时间在其他玩家身上让他们也参与其中。喜欢的话，你可以直接用角色说：“那你的大块头朋友呢？说话，野蛮人！你要拿什么来换取我的支持？”或者只是问问该玩家在对话过程中其角色正在做什么。第一种方法比较适合那些习惯用角色的声线说话的玩家。第二种方法则比较适合那些需要鼓励参与游戏场景的玩家。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

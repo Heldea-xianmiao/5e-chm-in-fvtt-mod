@@ -136,7 +136,45 @@ Terror</STRONG>。首次触发本遭遇时，角色们会听到一阵诡异的�
 
 Connection</STRONG> 
 
-。矿洞底层东南角处便是通往幽暗地域的隧道。恐爪怪通过墙上的一处洞口进入矿道，但随后那处洞口就被崩塌的碎石堵住了。如果角色们清理掉了洞口的碎石，他们就能听到洞口另一侧传来的咔哒咔哒声与剐蹭的噪音。那只恐爪怪也会听到这些动静，并且会飞快地跑过来寻找同类。若是角色们不加以阻拦，这只恐爪怪便会无视角色们，爬回洞中，再也不回到到矿道。随后每名角色都获得200xp。</P></body>
+。矿洞底层东南角处便是通往幽暗地域的隧道。恐爪怪通过墙上的一处洞口进入矿道，但随后那处洞口就被崩塌的碎石堵住了。如果角色们清理掉了洞口的碎石，他们就能听到洞口另一侧传来的咔哒咔哒声与剐蹭的噪音。那只恐爪怪也会听到这些动静，并且会飞快地跑过来寻找同类。若是角色们不加以阻拦，这只恐爪怪便会无视角色们，爬回洞中，再也不回到到矿道。随后每名角色都获得200xp。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

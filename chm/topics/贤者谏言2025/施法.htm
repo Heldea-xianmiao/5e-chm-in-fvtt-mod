@@ -30,9 +30,47 @@
 
 版本吗，还是说它们其实是一样的？<BR></FONT></STRONG>只要你准备有一道有仪式标签的法术，你就可以仪式施展它。你并不需要为此准备两次该法术或是学习该法术的特殊版本。</P>
 
-<P><STRONG><FONT color=#800000>施法者可以不一次性准备好所有的法术，而是在一天之中的不同时间段分别准备法术吗？</FONT></STRONG><BR>不能。你的施法特性明确注明了你在何时能更换准备法术的列表的时机，以及能准备多少法术<BR>举个例子，作为一名牧师，你只有在完成长休时才能准备你的法术列表，你不能先准备一部分，然后在迟些时间再准备另外一部分。</P></body>
+<P><STRONG><FONT color=#800000>施法者可以不一次性准备好所有的法术，而是在一天之中的不同时间段分别准备法术吗？</FONT></STRONG><BR>不能。你的施法特性明确注明了你在何时能更换准备法术的列表的时机，以及能准备多少法术<BR>举个例子，作为一名牧师，你只有在完成长休时才能准备你的法术列表，你不能先准备一部分，然后在迟些时间再准备另外一部分。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

@@ -142,5 +142,43 @@ class=16><SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体; COLOR: black"><STRON
 
 ></SPAN><SPAN 
 
-style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体; COLOR: black">这里提供了怪物种族在游戏中的特性。有关他们的文化和角色扮演的注释，请参阅第一章。这些种族中有一些比典型D&amp;D种族弱小或是强大不少——这也是要在战役中小心使用这些怪物种族的原因。</SPAN></SPAN></SPAN></P></DIV></DIV></BODY></HTML>
+style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体; COLOR: black">这里提供了怪物种族在游戏中的特性。有关他们的文化和角色扮演的注释，请参阅第一章。这些种族中有一些比典型D&amp;D种族弱小或是强大不少——这也是要在战役中小心使用这些怪物种族的原因。</SPAN></SPAN></SPAN></P></DIV></DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

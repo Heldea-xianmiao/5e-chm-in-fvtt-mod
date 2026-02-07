@@ -52,7 +52,45 @@ Command</FONT></STRONG><BR><EM>武器（三叉戟），非普通（需同调）<
 
 <P><STRONG><FONT color=#800000>警戒武器 Weapon of 
 
-Warning</FONT></STRONG><BR><EM>武器（任意），非普通（需同调）</EM><BR>这把魔法武器能在危险时给你警告。持有此武器期间，你进行先攻检定时具有优势。除非因非魔法睡眠以外的原因陷入失能，否则你和你周围30尺内的同伴不会被突袭。如果战斗开始时你或范围内你的同伴处于自然睡眠状态，则该武器的魔法也会将你们唤醒。</P></body>
+Warning</FONT></STRONG><BR><EM>武器（任意），非普通（需同调）</EM><BR>这把魔法武器能在危险时给你警告。持有此武器期间，你进行先攻检定时具有优势。除非因非魔法睡眠以外的原因陷入失能，否则你和你周围30尺内的同伴不会被突袭。如果战斗开始时你或范围内你的同伴处于自然睡眠状态，则该武器的魔法也会将你们唤醒。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

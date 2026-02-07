@@ -32,7 +32,45 @@ html,body {
 
 但伊斯图斯的想法真的重要吗？还是其他人，神灵，亦或任何可能的存在的想法很重要？我们可以写下自己对于命运的遐想，直到笔墨耗尽，但最终，唯一能决定你命运如何的人只有你自己。</p><p>这一切都要追溯到万象无常牌，那个奇怪而臭名昭著的东西，它的表现改变了许多人的命运，或好或坏。遇到我的旅行者经常问我对牌组的看法。当他们问的时候，我可以看出有些人已经做出了决定。不管他们是把牌组当成讨厌的东西，工具，或者唯一的希望，他们都不是真的想要听我的意见，只是想获得我的认可。</p><p>对于那些真正想听取我意见的人来说，我的观点是:简单地将万象无常牌定义为完全好或完全坏的东西都没有抓住牌组的重点。即使没有万象无常牌的干扰，生活也是混乱而荒谬的混沌状态，充满了欢乐的高潮和痛苦的低谷，正确的选择和错误的决定，以及介于两者之间的一切。每副牌都给了我们一种进入混沌生活的方式，让它帮助我们成就自己。这只是将自己的故事掌握在你自己手中的诸多方法之一。</p><p>
 
-如果说我学到了什么的话，那就是只有你才能决定你故事的结局——直到你把最后一句话写在纸上，让墨水干涸。所以追逐你的梦想，抓住机会，并且还可以抽一两张牌。不管发生什么，这一定是一个精彩的故事。我已经迫不及待想听了。</p></body>
+如果说我学到了什么的话，那就是只有你才能决定你故事的结局——直到你把最后一句话写在纸上，让墨水干涸。所以追逐你的梦想，抓住机会，并且还可以抽一两张牌。不管发生什么，这一定是一个精彩的故事。我已经迫不及待想听了。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

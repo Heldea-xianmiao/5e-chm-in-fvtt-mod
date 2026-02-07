@@ -102,7 +102,45 @@ Ice</FONT></STRONG><BR>每10尺方形区域的薄冰，其能承受的最大重�
 
 <P><STRONG><FONT color=#800000>狂野魔法区域Wild Magic 
 
-Zone</FONT></STRONG><BR>过去发生的魔法灾难或者不受控制的力量肆虐，都可能导致某个地区的魔法结构崩溃，进而形成狂野魔法区域。这样的区域其直径通常不会超过300尺，而在此区域内，魔法可能会表现出不可预测的变化。<BR>每当一个生物在狂野魔法区域消耗一个法术位来施展法术时，投掷1d20，如果掷出的骰子是20，则在玩家手册中的狂野魔法浪涌表格上掷骰来创建一个魔法效应。</P></body>
+Zone</FONT></STRONG><BR>过去发生的魔法灾难或者不受控制的力量肆虐，都可能导致某个地区的魔法结构崩溃，进而形成狂野魔法区域。这样的区域其直径通常不会超过300尺，而在此区域内，魔法可能会表现出不可预测的变化。<BR>每当一个生物在狂野魔法区域消耗一个法术位来施展法术时，投掷1d20，如果掷出的骰子是20，则在玩家手册中的狂野魔法浪涌表格上掷骰来创建一个魔法效应。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -50,7 +50,45 @@ Gauntlet。</STRONG>近战武器攻击：命中+6，触及5尺，单一目标。
 
 for 
 
-Pursuit（3/日）。</STRONG>嗜血猎手尝试在其周围30尺范围内的一个可见生物身上打上印记。该生物必须通过一次DC13的魅力豁免，豁免失败其将被诅咒，持续24小时。若生物生命值不为满，则此次豁免将具有劣势。以此法诅咒期间，只要嗜血猎手与该生物同处一个存在位面中，嗜血猎手可以感知到自己与目标之间的方向与距离；如果它们处于不同位面之中，嗜血猎手将会知晓目标所处的那个位面是哪个。</P></body>
+Pursuit（3/日）。</STRONG>嗜血猎手尝试在其周围30尺范围内的一个可见生物身上打上印记。该生物必须通过一次DC13的魅力豁免，豁免失败其将被诅咒，持续24小时。若生物生命值不为满，则此次豁免将具有劣势。以此法诅咒期间，只要嗜血猎手与该生物同处一个存在位面中，嗜血猎手可以感知到自己与目标之间的方向与距离；如果它们处于不同位面之中，嗜血猎手将会知晓目标所处的那个位面是哪个。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

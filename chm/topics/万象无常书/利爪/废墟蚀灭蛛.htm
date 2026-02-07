@@ -68,7 +68,45 @@ HP 105（14d10+28）<br>
 
 <strong>毁蚀啃咬Ruinous Bite。</strong>近战武器攻击：命中+7，触及5尺，单一目标。命中：8（1d8+4）穿刺伤害外加9（2d8）强酸伤害。若目标为一个着装了非魔法护甲的生物，则其护甲提供的AC还将永久遭受-1减值且累计叠加。护甲提供AC被降至10时，该护甲将会被摧毁。<br>
 
-<strong>蛛网Web（充能5~6）。</strong>远程武器攻击：命中+7，射程30/60尺，单一生物。命中：目标受蛛网<font color=maroon><strong>束缚</strong></font>。以一个动作，被<font color=maroon><strong>束缚</strong></font>者可以进行一次DC13的力量检定，检定通过则挣脱蛛网。蛛网可以被攻击和被破坏（AC10，5点HP，火焰易伤，免疫钝击、毒素和心灵伤害）。</p></body>
+<strong>蛛网Web（充能5~6）。</strong>远程武器攻击：命中+7，射程30/60尺，单一生物。命中：目标受蛛网<font color=maroon><strong>束缚</strong></font>。以一个动作，被<font color=maroon><strong>束缚</strong></font>者可以进行一次DC13的力量检定，检定通过则挣脱蛛网。蛛网可以被攻击和被破坏（AC10，5点HP，火焰易伤，免疫钝击、毒素和心灵伤害）。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

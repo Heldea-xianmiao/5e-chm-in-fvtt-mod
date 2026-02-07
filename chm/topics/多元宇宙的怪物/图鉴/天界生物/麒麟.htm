@@ -152,7 +152,45 @@ Fire。</STRONG>
 
 远程法术攻击：命中+9，射程120尺，单一目标。命中：18（3d8+5）光耀伤害。<BR><STRONG>施法Spellcasting。</STRONG>麒麟施展以下法术中的一个，无需材料成分，其施法属性为感知（法术豁免DC17）<BR><EM><FONT color=#800080>随意：光亮术，高级幻影（6环版本），奇术<BR>每项3/日：疗伤术，解除魔法，次等复原术，短讯术<BR>每项1/日：放逐术，安定心神，创造食粮，高等复原术，位面转移，防护善恶，回生术，踏风而行</FONT></EM><BR><STRONG><FONT color=#800000>传奇动作Legendary 
 
-Actions</FONT></STRONG><BR>麒麟具有三个传奇动作，在以下选项中进行选择，但一次只能执行一个传奇行动选项并只有在另一个生物的回合结束时才能使用。麒麟在自己的回合开始时重获所有已消耗的传奇动作。<BR><STRONG>猛击Smite。</STRONG>麒麟发动一次蹄踢攻击、一次角撞攻击、或者一次圣焰击攻击。<BR><STRONG>移动Move。</STRONG>麒麟移动至多等同于其速度一半的距离，此移动不会引发借机攻击。</P></body>
+Actions</FONT></STRONG><BR>麒麟具有三个传奇动作，在以下选项中进行选择，但一次只能执行一个传奇行动选项并只有在另一个生物的回合结束时才能使用。麒麟在自己的回合开始时重获所有已消耗的传奇动作。<BR><STRONG>猛击Smite。</STRONG>麒麟发动一次蹄踢攻击、一次角撞攻击、或者一次圣焰击攻击。<BR><STRONG>移动Move。</STRONG>麒麟移动至多等同于其速度一半的距离，此移动不会引发借机攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

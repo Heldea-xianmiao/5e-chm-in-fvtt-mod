@@ -32,7 +32,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000>大地精破坏者</FONT></STRONG><BR><EM>中型类人（类地精），守序邪恶</EM><BR>=======================<BR>AC 
 
-13（镶嵌皮甲）<BR>HP 45（7d8+14）<BR>速度 30尺<BR>=======================<BR>力量13（+1），敏捷12（+1），体质14（+2），智力16（+3），感知13（+1），魅力11（+0）<BR>=======================<BR>技能 奥秘+5<BR>感官 黑暗视觉60尺，被动察觉11<BR>语言 通用语，地精语<BR>挑战等级 4（1100XP）<BR>=======================<BR><STRONG>奥秘优势。</STRONG>一回合一次，如果目标位于大地精盟友5尺范围内，并且盟友没有失能，那么大地精可以对被它的伤害性法术攻击命中的生物造成额外7（2d6）伤害。<BR><STRONG>军之奥秘。</STRONG>当大地精施放造成伤害的法术或强迫其他生物进行豁免时，它可以选择它自己和任意数量的盟友免受法术造成的伤害，以及在所需的豁免上成功。<BR><STRONG>施法。</STRONG>大地精是一名7级施法者。它的施法属性是智力（法术豁免DC13，法术攻击加值+5）。它准备了以下法师法术：<BR>戏法（随意）：酸液飞溅，火焰箭，寒冰射线，电爪<BR>1环（4法术位）：云雾术，魔法飞弹，雷鸣波<BR>2环（3法术位）：造风术，马友夫强酸箭，灼热射线<BR>3环（3法术位）：火球术，闪电束<BR>4环（1法术位）：冰风暴<BR>=======================<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>木杖。</STRONG>近战武器攻击：命中+3，触及5尺，单一目标。命中：4（1d6+1）钝击伤害，或者如果双手使用时的5（1d8+1）钝击伤害。</P></body>
+13（镶嵌皮甲）<BR>HP 45（7d8+14）<BR>速度 30尺<BR>=======================<BR>力量13（+1），敏捷12（+1），体质14（+2），智力16（+3），感知13（+1），魅力11（+0）<BR>=======================<BR>技能 奥秘+5<BR>感官 黑暗视觉60尺，被动察觉11<BR>语言 通用语，地精语<BR>挑战等级 4（1100XP）<BR>=======================<BR><STRONG>奥秘优势。</STRONG>一回合一次，如果目标位于大地精盟友5尺范围内，并且盟友没有失能，那么大地精可以对被它的伤害性法术攻击命中的生物造成额外7（2d6）伤害。<BR><STRONG>军之奥秘。</STRONG>当大地精施放造成伤害的法术或强迫其他生物进行豁免时，它可以选择它自己和任意数量的盟友免受法术造成的伤害，以及在所需的豁免上成功。<BR><STRONG>施法。</STRONG>大地精是一名7级施法者。它的施法属性是智力（法术豁免DC13，法术攻击加值+5）。它准备了以下法师法术：<BR>戏法（随意）：酸液飞溅，火焰箭，寒冰射线，电爪<BR>1环（4法术位）：云雾术，魔法飞弹，雷鸣波<BR>2环（3法术位）：造风术，马友夫强酸箭，灼热射线<BR>3环（3法术位）：火球术，闪电束<BR>4环（1法术位）：冰风暴<BR>=======================<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>木杖。</STRONG>近战武器攻击：命中+3，触及5尺，单一目标。命中：4（1d6+1）钝击伤害，或者如果双手使用时的5（1d8+1）钝击伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

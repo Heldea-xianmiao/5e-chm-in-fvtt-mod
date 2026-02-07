@@ -44,7 +44,45 @@ of Many Things</STRONG>       一起显现在多元宇宙中。这些新卡和�
 
 Harrow</STRONG>。这是一支无情的猎手，他们在多元宇宙中穿梭，搜寻并摧毁每一副现世的牌组，以结束他们命定的存在（关于这些存在的更多信息，请参见第十九章）。为了对抗这些危险，一位天使成立了<STRONG>炽天城塞Solar 
 
-Bastion</STRONG>  （见第十章），这是一个致力于保护无辜人民免受牌组危害和随之而来的众多危险的仁爱组织。</p><p>死惧刑徒和炽天城塞在这几世纪中已经获得了初始牌组的很多情报，但没有人比阿斯忒瑞亚自己更了解它，她仍然在多元宇宙中旅行，依照着伊斯图丝的遥久预言实现着自己的命运。</p><p>但在你的战役中，牌组的故事可能有所不同。也许万象无常牌在伊斯图丝用它来解读阿斯忒瑞亚的未来之前就已经存在，有着完全不同的起源。也许它是由一位强大的妖精诡术师，或是由想要考验贪婪的凡人的机遇之神创造的。挑一个最适合你战役的故事使用。</p></body>
+Bastion</STRONG>  （见第十章），这是一个致力于保护无辜人民免受牌组危害和随之而来的众多危险的仁爱组织。</p><p>死惧刑徒和炽天城塞在这几世纪中已经获得了初始牌组的很多情报，但没有人比阿斯忒瑞亚自己更了解它，她仍然在多元宇宙中旅行，依照着伊斯图丝的遥久预言实现着自己的命运。</p><p>但在你的战役中，牌组的故事可能有所不同。也许万象无常牌在伊斯图丝用它来解读阿斯忒瑞亚的未来之前就已经存在，有着完全不同的起源。也许它是由一位强大的妖精诡术师，或是由想要考验贪婪的凡人的机遇之神创造的。挑一个最适合你战役的故事使用。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

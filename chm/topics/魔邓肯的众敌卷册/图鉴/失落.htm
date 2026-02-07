@@ -58,7 +58,45 @@ Spike。</STRONG>近战武器攻击，+6命中，触及5尺，一个目标。命
 
 (4d10+3)穿刺伤害，如果目标是中型或更小的生物，将被擒抱(逃脱DC14)。在擒抱结束前，目标会受到恐惧，并且在每次其回合结束时受到27点(6d8)心灵伤害。迷失同时只能拥抱一个生物。<BR><STRONG><FONT color=#800000>反应</FONT></STRONG><BR><STRONG>收紧怀抱Tightening 
 
-Embrace。</STRONG>如果失落在擒抱着某个目标时受到了伤害，该目标将受到18（4D8）的心灵伤害。</P></body>
+Embrace。</STRONG>如果失落在擒抱着某个目标时受到了伤害，该目标将受到18（4D8）的心灵伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

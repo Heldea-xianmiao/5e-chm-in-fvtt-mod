@@ -78,7 +78,45 @@ Telepathy。</STRONG>
 
 即使你知晓其他语言，倘若没有魔法的协助，你也无法说出斯里克林语以外的语言。你使用心灵感应作为替代来传达你的想法。你拥有一种能将你的想法通过心灵传递给你120尺内且你可见的自愿生物的魔法能力。一个被你连接的生物无需与你拥有共通语言就可以理解你的思想，但是需要至少能够理解一种语言。你与一个生物的心灵感应连接会在以下情况下断裂：你和该生物之间的距离超过 
 
-120 尺，你们两者之一失能，或你们两者之一心灵上断开连接（无需动作）。</P></body>
+120 尺，你们两者之一失能，或你们两者之一心灵上断开连接（无需动作）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

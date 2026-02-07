@@ -22,7 +22,45 @@
 
 <p class=MsoNormal><FONT size=3><STRONG><FONT color=#800000>散打武者Warrior of the Open Hand 武僧Monk 的 散打技巧Open Hand 
 
-Technique 可以把大型（或更大的）生物推开或是给予 倒地Prone 状态吗？</FONT></STRONG><BR>散打技巧不写体型条件是我们的本意。武僧的能量能产生很多神奇的效果！如果某个特性限制其目标生物的体型，该特性会特别注明这一点的。</FONT></p></body>
+Technique 可以把大型（或更大的）生物推开或是给予 倒地Prone 状态吗？</FONT></STRONG><BR>散打技巧不写体型条件是我们的本意。武僧的能量能产生很多神奇的效果！如果某个特性限制其目标生物的体型，该特性会特别注明这一点的。</FONT></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

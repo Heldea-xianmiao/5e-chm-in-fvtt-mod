@@ -86,4 +86,41 @@ style
 
 
 
-  FONT-WEIGHT: bold; COLOR: rgb(128,0,0);   "> Leave No Survivors</span></b><span><br><font>一群鬣狗人生活在永恒的战争状态中，和他们所遇到的一切进行残杀，当然，除了同样信奉耶诺古的同伴。为了避免在几场主要的突袭之间被发现，鬣狗人会尽可能地隐秘地穿过荒野。他们绝不会在他们袭击的任何一个群体中留下幸存者，并且会追击一名逃亡的敌人数天以防止他到达任何一个城镇并引起警报。如果他们进行猎杀的地区变得过于警惕防守，鬣狗人们会迁移以寻找更容易杀死的猎物。在更广阔的世界都意识到鬣狗人的威胁之前，处于文明边缘的大片地区可能已经被其毁灭。</font></span></p></div></body></html>
+  FONT-WEIGHT: bold; COLOR: rgb(128,0,0);   "> Leave No Survivors</span></b><span><br><font>一群鬣狗人生活在永恒的战争状态中，和他们所遇到的一切进行残杀，当然，除了同样信奉耶诺古的同伴。为了避免在几场主要的突袭之间被发现，鬣狗人会尽可能地隐秘地穿过荒野。他们绝不会在他们袭击的任何一个群体中留下幸存者，并且会追击一名逃亡的敌人数天以防止他到达任何一个城镇并引起警报。如果他们进行猎杀的地区变得过于警惕防守，鬣狗人们会迁移以寻找更容易杀死的猎物。在更广阔的世界都意识到鬣狗人的威胁之前，处于文明边缘的大片地区可能已经被其毁灭。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

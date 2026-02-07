@@ -68,7 +68,45 @@ Susceptibility.</STRONG>如果沼喉怪受到闪电伤害，直到它的下一�
 
 20的体质豁免否则将吐出所有被吞下的生物，每个都摔下倒地于沼喉怪周边10尺范围内。如果该沼喉怪死亡，则被吞下的生物将不再受束缚，且可以消耗10尺移动力逃出，然后在尸体旁现身并陷入倒地状态。<BR><STRONG>舌卷Tongue。</STRONG>沼喉怪选择一个20尺内他能看见的中型或更小的生物。目标必须成功通过一个DC 
 
-18的力量豁免。若豁免失败，目标被拉进沼喉怪5尺内一个未被占用的空间，且沼喉怪能以附赠动作对他发动一次啃咬攻击。</P></body>
+18的力量豁免。若豁免失败，目标被拉进沼喉怪5尺内一个未被占用的空间，且沼喉怪能以附赠动作对他发动一次啃咬攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

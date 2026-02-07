@@ -48,7 +48,45 @@ S<BR><b>持续时间：</b>专注，至多 1 分钟<BR>你在施法距离内你�
 
 力场伤害）。<BR>你可以在自己回合内以一个附赠动作让该武器移动至多 30 
 
-尺到一个你可以看见的未占据空间，随后再用其进行两次近战法术攻击。<BR>该剑刃可以无害地通过任何屏障，包括一道力场墙。</P></body>
+尺到一个你可以看见的未占据空间，随后再用其进行两次近战法术攻击。<BR>该剑刃可以无害地通过任何屏障，包括一道力场墙。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

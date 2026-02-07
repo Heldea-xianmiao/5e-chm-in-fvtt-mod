@@ -50,7 +50,45 @@ Claw。</strong>近战武器攻击：命中+10，触及5尺, 单一生物。命�
 
 Breath。</strong>饮息者指定一个处于<font color=maroon><strong>失能</strong></font>状态或被饮息者<font color=maroon><strong>擒抱</strong></font>的非构装非不死的生物。目标必须通过一次DC18的魅力豁免。如果失败则目标受到36（8d8）暗蚀伤害，并且魅力减少1d6直到目标完成一次短休或长休。如果魅力降至0则目标死亡。死去的目标在饮息者死亡之前无法以任何弱于<font color=orange><strong>神圣干预Divine 
 
-Intervention</strong></font>的方式复活。豁免成功时目标只受到一半暗蚀伤害。无论豁免成功与否饮息者都恢复等同于造成的暗蚀伤害数值的生命值。<br><strong>隐形Invisibility。</strong>饮息者进入<font color=maroon><strong>隐形</strong></font>状态。隐形状态会在饮息者的攻击命中或失手，以及使用<strong>痛饮气息</strong>时立即解除。</P></body>
+Intervention</strong></font>的方式复活。豁免成功时目标只受到一半暗蚀伤害。无论豁免成功与否饮息者都恢复等同于造成的暗蚀伤害数值的生命值。<br><strong>隐形Invisibility。</strong>饮息者进入<font color=maroon><strong>隐形</strong></font>状态。隐形状态会在饮息者的攻击命中或失手，以及使用<strong>痛饮气息</strong>时立即解除。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -92,7 +92,45 @@ Bloodaxes </SPAN>。</FONT></STRONG></P>
 
 Moradin 
 
-Soulforger”</SPAN>其教义，而获罪被逐出自己氏族的矮人。于是他们开始以雇佣兵的方式为任何付得起钱的北地人服务。自那以后，该佣兵团开始接纳其他种族作自家成员，但其中的人或多或少都身为流亡者、罪犯或被排挤的异类，而他们最终都会将血斧当做自己新的开始和新的家园。</FONT></P></body>
+Soulforger”</SPAN>其教义，而获罪被逐出自己氏族的矮人。于是他们开始以雇佣兵的方式为任何付得起钱的北地人服务。自那以后，该佣兵团开始接纳其他种族作自家成员，但其中的人或多或少都身为流亡者、罪犯或被排挤的异类，而他们最终都会将血斧当做自己新的开始和新的家园。</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

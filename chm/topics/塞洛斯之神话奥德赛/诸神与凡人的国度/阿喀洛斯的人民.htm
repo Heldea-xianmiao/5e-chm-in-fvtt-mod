@@ -56,7 +56,45 @@ Serfs</FONT></STRONG><BR>光荣完成他们军事服务的勒克托伊通常会�
 
 <P><STRONG><FONT color=#800000>阿喀洛斯的非人类 Nonhumans in 
 
-Akros</FONT></STRONG><BR>阿喀洛斯对它的邻居保持着不友好——而且经常是敌对的——的态度，特别是腓拜洛斯的牛头人，俄瑞姿的狮族和斐力兹族半人马。这些族群的成员鲜少能在阿喀洛斯的领土中发现。不过，阿喀洛斯人尊敬英勇，忠诚和自我牺牲精神，并可能欢迎任何表现出这种美德的人。一些史崔提安也会去其他族群中进行军事训练，也坑邀请个人或小社群前去阿喀洛斯以学习他们的战术。<BR>在伊洛安斯运动会期间，任何人都被欢迎进入运动场。半羊人会涌入城市围观竞技，其中一些会成为永久居民，直到观看下次运动会的时候之前都会庆祝上一年的运动会成果。</P></body>
+Akros</FONT></STRONG><BR>阿喀洛斯对它的邻居保持着不友好——而且经常是敌对的——的态度，特别是腓拜洛斯的牛头人，俄瑞姿的狮族和斐力兹族半人马。这些族群的成员鲜少能在阿喀洛斯的领土中发现。不过，阿喀洛斯人尊敬英勇，忠诚和自我牺牲精神，并可能欢迎任何表现出这种美德的人。一些史崔提安也会去其他族群中进行军事训练，也坑邀请个人或小社群前去阿喀洛斯以学习他们的战术。<BR>在伊洛安斯运动会期间，任何人都被欢迎进入运动场。半羊人会涌入城市围观竞技，其中一些会成为永久居民，直到观看下次运动会的时候之前都会庆祝上一年的运动会成果。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

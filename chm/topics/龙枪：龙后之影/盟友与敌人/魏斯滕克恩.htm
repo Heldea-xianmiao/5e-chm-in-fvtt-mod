@@ -68,9 +68,47 @@ xmlns="http://www.w3.org/TR/REC-html40">
 
 <P class=MsoNormal style="MARGIN: 0pt"><B><SPAN style="FONT-WEIGHT: bold; " >震惧连祷</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; " >Terrifying</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; " > </SPAN></B><B><SPAN style="FONT-WEIGHT: bold; " >Litany（充能5</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; " >-6</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; " >）。</SPAN></B><SPAN style="" >魏斯滕诵念那些被索思及其盟友所杀之灵魂的名字，引导他们死前的惊惧。任何在她周围3</SPAN><SPAN style="" >0</SPAN><SPAN style="" >尺的非亡灵必须进行一次DC</SPAN><SPAN style="" >16</SPAN><SPAN style="" >的感知豁免。豁免失败者受到2</SPAN><SPAN style="" >2</SPAN><SPAN style="" >（4d</SPAN><SPAN style="" >10</SPAN><SPAN style="" >）心灵伤害并被魏斯滕</SPAN><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000; ">恐慌</SPAN></B><SPAN style="" >一分钟。豁免成功伤害减半且不会被</SPAN><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000; ">恐慌</SPAN></B><SPAN style="" >。被</SPAN><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000; ">恐慌</SPAN></B><SPAN style="" >的生物可以在自己回合结束时重新进行豁免，成功则结束该效应。</SPAN><SPAN style="" ><o:p></o:p></SPAN></P>
 
-<P></P></body>
+<P></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

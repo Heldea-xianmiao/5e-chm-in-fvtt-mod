@@ -66,7 +66,45 @@ Foretold。</strong>
 
 </em>以一个动作，你可以消耗2发充能指定距你30尺内的一个生物，引发它的厄运。只要该生物与你在同一存在位面，你就会感测到该生物的方位。如果该生物正在移动，则你也将知晓其移动的方向。此外，一回合一次，你对被此特性标记的生物造成伤害时，可以投掷1d6并将骰出的数值加入伤害骰中。这些增益持续1小时或你再次使用这一特性指定一个不同生物为止。<br><em><strong>扭曲命运Twist of 
 
-Fate。</strong></em>当距你60尺内的一个生物进行豁免检定或攻击检定时，你可以用一个反应消耗3发充能并改变其结果，将失败的豁免转变为成功，将未命中的攻击转变为命中，反之亦然。魔杖在每个黎明时恢复1d6发已消耗的充能。</p></body>
+Fate。</strong></em>当距你60尺内的一个生物进行豁免检定或攻击检定时，你可以用一个反应消耗3发充能并改变其结果，将失败的豁免转变为成功，将未命中的攻击转变为命中，反之亦然。魔杖在每个黎明时恢复1d6发已消耗的充能。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

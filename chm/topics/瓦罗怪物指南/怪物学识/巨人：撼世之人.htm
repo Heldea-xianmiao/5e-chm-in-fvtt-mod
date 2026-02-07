@@ -36,4 +36,41 @@ align =right style="LAYOUT-GRID-MODE: char; TEXT-ALIGN: right;  mso-pagination: 
 
 
 
- 12pt;   ; mso-ascii-font-family: Arial; mso-hansi-font-family: Arial; mso-bidi-font-family: Arial"><o:p> </o:p></span></p><p   style="     "><span><font>巨人族的英雄传说早在世界的太古时期就已在传颂。彼时，精灵们还正优雅的踱步走出妖精领域，龙族也还没意识到日后自己将拥有的力量与荣誉，而巨人脚步的惊雷却早已撼动世界的骨脊。随着人类族群踏上历史舞台，那个古老时代的记忆早已消散在传奇的迷雾中。现今就连巨人们也并不清楚本族起始时期的全部真相。</font><br><br><font>所有种类的巨人及其近亲都明确的认识到互相间近亲种族的关系。类人生物如精灵、人类和矮人彼此的身形尺寸，比不同种类的巨人彼此的身形尺寸更加相近</font> <font>，但这些种族并没有共同的传承。然而不管哪个种类的真巨人都可以追溯其血统至众神之父安南</font> Annam the All-Father <font>。大多数巨人还坚信，安南选择了包括其妻子欧缇雅</font> Othea<font>在内的数名配偶，以诞下不同相貌与能力的巨人诸族。</font><br><br><font>巨人及其近亲跻身于世界最可怕生物的行列，恰如其名的将年轻种族们踩在脚下。时至现代，大多巨人都已隐居到世界上不为人知的角落里，而其祖先从前恢弘的团结力量已经不复存在。</font></span></p></div></body></html>
+ 12pt;   ; mso-ascii-font-family: Arial; mso-hansi-font-family: Arial; mso-bidi-font-family: Arial"><o:p> </o:p></span></p><p   style="     "><span><font>巨人族的英雄传说早在世界的太古时期就已在传颂。彼时，精灵们还正优雅的踱步走出妖精领域，龙族也还没意识到日后自己将拥有的力量与荣誉，而巨人脚步的惊雷却早已撼动世界的骨脊。随着人类族群踏上历史舞台，那个古老时代的记忆早已消散在传奇的迷雾中。现今就连巨人们也并不清楚本族起始时期的全部真相。</font><br><br><font>所有种类的巨人及其近亲都明确的认识到互相间近亲种族的关系。类人生物如精灵、人类和矮人彼此的身形尺寸，比不同种类的巨人彼此的身形尺寸更加相近</font> <font>，但这些种族并没有共同的传承。然而不管哪个种类的真巨人都可以追溯其血统至众神之父安南</font> Annam the All-Father <font>。大多数巨人还坚信，安南选择了包括其妻子欧缇雅</font> Othea<font>在内的数名配偶，以诞下不同相貌与能力的巨人诸族。</font><br><br><font>巨人及其近亲跻身于世界最可怕生物的行列，恰如其名的将年轻种族们踩在脚下。时至现代，大多巨人都已隐居到世界上不为人知的角落里，而其祖先从前恢弘的团结力量已经不复存在。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

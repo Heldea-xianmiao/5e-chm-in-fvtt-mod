@@ -82,7 +82,45 @@ Zae</STRONG>
 
 <P><STRONG><FONT color=#800000>塔卡南家族冒险引子</FONT></STRONG><BR>塔卡南家族冒险引子表展示了围绕着塔卡南家族冒险的想法。</P>
 
-<P><STRONG>塔卡南家族冒险引子<BR>d4 冒险引子</STRONG><BR>1 塔卡南家族在一次前往老萨恩的远征中惊扰了死者，造成了亡灵对上面的城市的威胁。<BR>2 塔卡南家族在萨恩向龙纹家族宣战，并开始杀害街上的贵族。随着恐惧的蔓延，很多家族的生意都关闭了。<BR>3 一个被塔卡南家族刺客杀死的受害者以不死族的身份返回，试图杀死任何带有异种龙纹的人。<BR>4 塔卡南家族偷了一把钥匙，可以使奇械师制造的定时炸弹失效。</P></body>
+<P><STRONG>塔卡南家族冒险引子<BR>d4 冒险引子</STRONG><BR>1 塔卡南家族在一次前往老萨恩的远征中惊扰了死者，造成了亡灵对上面的城市的威胁。<BR>2 塔卡南家族在萨恩向龙纹家族宣战，并开始杀害街上的贵族。随着恐惧的蔓延，很多家族的生意都关闭了。<BR>3 一个被塔卡南家族刺客杀死的受害者以不死族的身份返回，试图杀死任何带有异种龙纹的人。<BR>4 塔卡南家族偷了一把钥匙，可以使奇械师制造的定时炸弹失效。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

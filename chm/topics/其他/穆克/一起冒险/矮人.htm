@@ -46,7 +46,45 @@ html,body {
 
 Resilience。</STRONG>矮人抵抗中毒进行的豁免检定具有优势，且它们具有毒素伤害抗性。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>手斧 
 
-Handaxe。</STRONG>近战武器攻击：命中+3*，触及5尺，单一目标。命中：4（1d6+1）点挥砍伤害。<BR><FONT color=#808080>（译者注：该怪物力量调整值错误，应为16（+3），动作的手斧使用了错误点的力量调整值计算命中，应为+5。）</FONT></P></body>
+Handaxe。</STRONG>近战武器攻击：命中+3*，触及5尺，单一目标。命中：4（1d6+1）点挥砍伤害。<BR><FONT color=#808080>（译者注：该怪物力量调整值错误，应为16（+3），动作的手斧使用了错误点的力量调整值计算命中，应为+5。）</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

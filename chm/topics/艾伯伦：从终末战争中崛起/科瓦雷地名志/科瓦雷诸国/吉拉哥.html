@@ -858,7 +858,44 @@ text-decoration-color: initial;float:none;word-spacing:0px'>然而，总的来�
 
 style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;color:black'> </span><span
 
-style='font-size:10.0pt;font-family:宋体;color:black'>在吉拉哥旅行的冒险者应该避免引起麻烦或吸引真知社的注意。</span></p></body>
+style='font-size:10.0pt;font-family:宋体;color:black'>在吉拉哥旅行的冒险者应该避免引起麻烦或吸引真知社的注意。</span></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 

@@ -50,7 +50,45 @@ html,body {
 
 <font color=purple><strong>紫色格龙蛙人Purple Grung。</strong></font>中毒生物感到自己迫切希望浸泡在液体或泥浆中。若生物没有接触到液体或泥浆，该生物只能执行用于触及液体或泥浆动作或移动，除此以外的动作与移动一律不能执行。<br>
 
-<font color=red><strong>红色格龙蛙人Red Grung。</strong></font>中毒生物必须使用它的动作来进食其触及范围内的食物。</P></BLOCKQUOTE></body>
+<font color=red><strong>红色格龙蛙人Red Grung。</strong></font>中毒生物必须使用它的动作来进食其触及范围内的食物。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -62,7 +62,45 @@ Rebuke。</STRONG>当被一次攻击命中时，夏梅恩说出一句火族语�
 
 Counterspell。</STRONG>夏梅恩打断一个60尺内她能看见的生物正在施展的法术。如果该法术为四环或更低环阶法术，则其法术失败且不产生任何效应。如果法术为五环或更高环阶，则夏梅恩进行一次智力检定（DC等于 
 
-10+法术的环阶）。检定成功则目标法术失败且不产生任何效应。无论法术环阶如何，如果法术失败，该生物都会受到10（3d6）火焰伤害</P></body>
+10+法术的环阶）。检定成功则目标法术失败且不产生任何效应。无论法术环阶如何，如果法术失败，该生物都会受到10（3d6）火焰伤害</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

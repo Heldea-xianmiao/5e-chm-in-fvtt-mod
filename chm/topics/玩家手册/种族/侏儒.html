@@ -1509,4 +1509,41 @@ style
 
 
 
- FONT-FAMILY: 'STHeiti light'; FONT-STYLE: italic; mso-spacerun: 'yes'; mso-hansi-font-family: Calibri; mso-bidi-font-family: Calibri; mso-ascii-font-family: Calibri"><font face="STHeiti light" >）以小集群散居在幽暗地域中。跟邻居灰矮人和卓尔不同，地底侏儒跟其地表近亲一样善良。只是他们的幽默感和热情依然会受压迫的环境影响而受抑制，而其创新天赋则大多表现在石艺领域。</font></span></i></p></SPAN></body></html>
+ FONT-FAMILY: 'STHeiti light'; FONT-STYLE: italic; mso-spacerun: 'yes'; mso-hansi-font-family: Calibri; mso-bidi-font-family: Calibri; mso-ascii-font-family: Calibri"><font face="STHeiti light" >）以小集群散居在幽暗地域中。跟邻居灰矮人和卓尔不同，地底侏儒跟其地表近亲一样善良。只是他们的幽默感和热情依然会受压迫的环境影响而受抑制，而其创新天赋则大多表现在石艺领域。</font></span></i></p></SPAN><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

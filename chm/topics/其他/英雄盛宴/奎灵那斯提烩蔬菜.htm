@@ -48,7 +48,45 @@ style="BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid; WIDTH: 400px;
 
   <P align=center>
 
-<FONT size=4><STRONG>厨师笔记</STRONG></FONT></P><P>日本和中国茄子比较细长，直径与香蕉西葫芦比较粗的那一端或者绿皮西葫芦接近。如果你用的是圆茄子，尽量选小个头的，将其切成与香蕉西葫芦和西红柿切片差不多的大小。在平底锅中摆放圆茄子切片的时候，弧形的那一边朝外。</P></div></body>
+<FONT size=4><STRONG>厨师笔记</STRONG></FONT></P><P>日本和中国茄子比较细长，直径与香蕉西葫芦比较粗的那一端或者绿皮西葫芦接近。如果你用的是圆茄子，尽量选小个头的，将其切成与香蕉西葫芦和西红柿切片差不多的大小。在平底锅中摆放圆茄子切片的时候，弧形的那一边朝外。</P></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

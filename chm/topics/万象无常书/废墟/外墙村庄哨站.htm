@@ -42,7 +42,45 @@ html,body {
 
 （她的资料卡在本章前文有所展示）正等待着这些历史学者找出神殿，之后她将杀掉这些家伙并将这座神殿遗址化为邪教所有。没有任何历史学者们发现了布鲁西法和她的追随者们的真面目，这些邪教徒们也会在那座毁坏的哨塔——一处被历史学者们认定为不适合探索的危险之地——中接头会面。</p><p>
 
-这些牛头人历史学者不擅战斗，也没用任何武器，但他们装备有用于挖掘寻找神殿的工具。他们有一名非正式的领导者，一名来自远方学院的和蔼可亲考古学教授，陶利安诺Tauriano。这些考古学者们都对推进他们任务的进展毫无信心，那头梅克卡拉斯只是众多危险之中最显眼突出的那位。他们也许会聘请角色们作为他们的斥候或护卫，虽然他们无法协助角色们战斗，但他们也许会将这些石化铁牛借给角色们，或是帮赢取他们信任的角色们，去哄骗梅克卡拉斯或分散梅克卡拉斯的注意力，或者也有可能帮角色们制造陷阱，以用于困住那头红龙。</p></body>
+这些牛头人历史学者不擅战斗，也没用任何武器，但他们装备有用于挖掘寻找神殿的工具。他们有一名非正式的领导者，一名来自远方学院的和蔼可亲考古学教授，陶利安诺Tauriano。这些考古学者们都对推进他们任务的进展毫无信心，那头梅克卡拉斯只是众多危险之中最显眼突出的那位。他们也许会聘请角色们作为他们的斥候或护卫，虽然他们无法协助角色们战斗，但他们也许会将这些石化铁牛借给角色们，或是帮赢取他们信任的角色们，去哄骗梅克卡拉斯或分散梅克卡拉斯的注意力，或者也有可能帮角色们制造陷阱，以用于困住那头红龙。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

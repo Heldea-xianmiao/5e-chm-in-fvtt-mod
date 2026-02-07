@@ -44,7 +44,45 @@ Heads。</STRONG>多头龙有五个脑袋。当多头龙在一回合内收到30�
 
 Heads。</STRONG>多头龙超过一个的每颗脑袋会使其多获得一次额外的反应，这些额外的反应只能用于借机攻击。<BR><STRONG>警醒Wakeful。</STRONG>当多头龙睡觉时，它的其中一个脑袋会保持清醒。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>多头龙发动多次啃咬攻击，其攻击次数等于其脑袋数量。<BR>啃咬Bite。近战武器攻击：命中+9，触及10尺，单一目标。命中：14（2d8+5）穿刺伤害。<BR><STRONG>龟壳防御Shell 
 
-Defense。</STRONG>多头龙把所有的脑袋和肢体缩回它的壳中。直至它以一个附赠动作出壳为止，它获得AC+4并在力量和体质豁免上具有优势。当处在龟壳内，多头龙处于倒地状态，其速度为0且不能增加，多头龙的脑袋不会死亡，它在敏捷豁免上具有劣势，且不能使用任何反应和动作。</P></body>
+Defense。</STRONG>多头龙把所有的脑袋和肢体缩回它的壳中。直至它以一个附赠动作出壳为止，它获得AC+4并在力量和体质豁免上具有优势。当处在龟壳内，多头龙处于倒地状态，其速度为0且不能增加，多头龙的脑袋不会死亡，它在敏捷豁免上具有劣势，且不能使用任何反应和动作。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

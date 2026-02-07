@@ -76,7 +76,45 @@ html,body {
 
 7（2900XP）</P>
 
-<P><STRONG>魔法武器。</STRONG>元素侍从的武器攻击被视为魔法的。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>元素侍从可以进行三次三叉戟攻击。<BR><STRONG>三叉戟。</STRONG>近战武器攻击：命中+7，触及5尺，单一目标。命中：7（1d6+4）穿刺伤害，或8（1d8+4）穿刺伤害如果它使用双手进行武器攻击。<BR><STRONG>冻寒强袭（充能6）。</STRONG>元素侍从使用它的多重攻击，并且每一次击中都会造成额外5（1d10）点寒冷伤害，并且目标的速度会下降10尺直到元素侍从的下个回合结束。</P></body>
+<P><STRONG>魔法武器。</STRONG>元素侍从的武器攻击被视为魔法的。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>元素侍从可以进行三次三叉戟攻击。<BR><STRONG>三叉戟。</STRONG>近战武器攻击：命中+7，触及5尺，单一目标。命中：7（1d6+4）穿刺伤害，或8（1d8+4）穿刺伤害如果它使用双手进行武器攻击。<BR><STRONG>冻寒强袭（充能6）。</STRONG>元素侍从使用它的多重攻击，并且每一次击中都会造成额外5（1d10）点寒冷伤害，并且目标的速度会下降10尺直到元素侍从的下个回合结束。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

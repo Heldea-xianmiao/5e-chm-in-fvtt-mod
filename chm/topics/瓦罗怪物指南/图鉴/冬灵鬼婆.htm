@@ -88,7 +88,45 @@ storm*，冰墙术wall  of  ice*<BR>1/日：操控天气control
 
 weather<BR><STRONG><FONT color=#800000>动作ACTIONS</FONT></STRONG><BR><STRONG>猛击 Slam。</STRONG>近战武器攻击： 命中+4，触及 5 尺，单一目标<BR>命中： 10（2d8+1）的钝击伤害，外加3（1d6）寒冷伤害。<BR><STRONG>癫狂盛宴Maddening  
 
-Feast.</STRONG>鬼婆啃食距离其五尺内一个一分钟内死去敌人的尸体。每个60尺内鬼婆选择的能看到她的生物必须成功通过DC15的感知豁免，否则在一分钟内对她陷入恐慌。因为这种方式恐慌时，生物会陷入失能，无法理解其他人说的话，无法阅读，只能胡言乱语；DM操控该生物混乱的移动。一个生物可以在每个其回合结束重复该豁免，成功则结束该效应。如果一个生物的豁免成功或者对其的效果结束，该生物在接下来的24小时内免疫鬼婆的癫狂盛宴。</P></body>
+Feast.</STRONG>鬼婆啃食距离其五尺内一个一分钟内死去敌人的尸体。每个60尺内鬼婆选择的能看到她的生物必须成功通过DC15的感知豁免，否则在一分钟内对她陷入恐慌。因为这种方式恐慌时，生物会陷入失能，无法理解其他人说的话，无法阅读，只能胡言乱语；DM操控该生物混乱的移动。一个生物可以在每个其回合结束重复该豁免，成功则结束该效应。如果一个生物的豁免成功或者对其的效果结束，该生物在接下来的24小时内免疫鬼婆的癫狂盛宴。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

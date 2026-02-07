@@ -180,7 +180,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
 使用一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>
 
-动作阅读这张卷轴会创建一个以你为源点的5尺光环。在5分钟内，指定类型的生物无法进入或影响该区域内的任何东西。但是，如果你移动的方式使得指定类型的生物进入到该区域，则效应结束。<BR>一个位于光环外5尺范围的生物可以使用一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作来尝试克服它，这会迫使该生物进行一次DC15的魅力豁免。若豁免成功，则该生物不再受这道光环的影响。</P></body>
+动作阅读这张卷轴会创建一个以你为源点的5尺光环。在5分钟内，指定类型的生物无法进入或影响该区域内的任何东西。但是，如果你移动的方式使得指定类型的生物进入到该区域，则效应结束。<BR>一个位于光环外5尺范围的生物可以使用一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作来尝试克服它，这会迫使该生物进行一次DC15的魅力豁免。若豁免成功，则该生物不再受这道光环的影响。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

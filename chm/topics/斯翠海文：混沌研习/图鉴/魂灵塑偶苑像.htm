@@ -58,7 +58,45 @@ Mascot</FONT></STRONG><BR>中型构装，任意阵营<BR>———————�
 
 尺，单一目标。命中：5（1d6+2）钝击伤害。<BR><STRONG>往昔忠告（2/日）。</STRONG>魂灵塑偶触碰一个生物。在接下来的10 
 
-分钟里，该生物能选择在一次属性检定的 d20 之后，立刻投掷一枚 d4，并将结果加入检定中。</P></body>
+分钟里，该生物能选择在一次属性检定的 d20 之后，立刻投掷一枚 d4，并将结果加入检定中。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

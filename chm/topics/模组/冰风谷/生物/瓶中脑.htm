@@ -62,7 +62,45 @@ Nature.</STRONG> 瓶中脑不需要空气和睡眠。<BR><STRONG><FONT color=#80
 
 Blast(Recharge 
 
-5-6).</STRONG>瓶中脑魔法般地放出一道60尺锥形的射线。每个区域内的生物需成功DC14智力豁免，否则受到17（3d8+4）心灵伤害，并震慑一分钟。一个生物在其每回合结束时重复豁免，若成功则效果结束。</P></body>
+5-6).</STRONG>瓶中脑魔法般地放出一道60尺锥形的射线。每个区域内的生物需成功DC14智力豁免，否则受到17（3d8+4）心灵伤害，并震慑一分钟。一个生物在其每回合结束时重复豁免，若成功则效果结束。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -96,7 +96,45 @@ Medium 的物体。<BR>在回合中第一次进入旋风的生物，或所在空
 
 尺。被束缚的生物会随着旋风移动，而法术终结时其会摔落，除非其具有其他方法保持悬浮。<BR>被束缚的生物可以使用一个动作来进行一次力量或敏捷检定，对抗你的法术豁免 
 
-DC。若成功，该生物不再被旋风束缚，并被向随机方向抛离 3d6×10 尺远。</P></body>
+DC。若成功，该生物不再被旋风束缚，并被向随机方向抛离 3d6×10 尺远。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

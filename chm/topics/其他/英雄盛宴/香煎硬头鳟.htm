@@ -42,7 +42,45 @@ html,body {
 
 <P>将烤箱预热到250华氏度，并在中间放一张架子。在一个宽但浅的容器，比如装馅饼的盘子，里面将面粉、辣椒粉、1/2 
 
-茶匙盐和胡椒拌在一起。给鳟鱼肉撒上一点盐和胡椒，并等约5分钟，直到它变得湿润发光。在一个大的不粘锅里，以中高火加热橄榄油和1汤匙黄油，搅拌至其完全变热融化。把鱼肉蘸在面粉里面，令其完全地被覆盖，并抖掉多余的面粉。轻轻地将每块鱼肉皮朝上地放进锅里，煎至其边角变不透明，底层呈金黄色，约2-3分钟。用铲子小心地把鱼肉翻面，把另一面也煎至金黄，2-3分钟（如果锅开始冒烟，降到中火）。把鱼肉放进一个耐高温的盘子里，在烤箱里保温。将柠檬的一半挤汁，另一半切成四块。将剩下的黄油写成四小块，在小的平底锅里融化。加入红葱头，不停搅拌，直到黄油呈棕黄色，有着坚果味的香气，约花2分钟。关火，加入柠檬汁、1/2茶匙盐，适量黑胡椒，轻摇至完全混合。尝味，并按需调整调味。将黄油浇在鱼上，撒上西芹，佐柠檬片趁热上菜。</P></body>
+茶匙盐和胡椒拌在一起。给鳟鱼肉撒上一点盐和胡椒，并等约5分钟，直到它变得湿润发光。在一个大的不粘锅里，以中高火加热橄榄油和1汤匙黄油，搅拌至其完全变热融化。把鱼肉蘸在面粉里面，令其完全地被覆盖，并抖掉多余的面粉。轻轻地将每块鱼肉皮朝上地放进锅里，煎至其边角变不透明，底层呈金黄色，约2-3分钟。用铲子小心地把鱼肉翻面，把另一面也煎至金黄，2-3分钟（如果锅开始冒烟，降到中火）。把鱼肉放进一个耐高温的盘子里，在烤箱里保温。将柠檬的一半挤汁，另一半切成四块。将剩下的黄油写成四小块，在小的平底锅里融化。加入红葱头，不停搅拌，直到黄油呈棕黄色，有着坚果味的香气，约花2分钟。关火，加入柠檬汁、1/2茶匙盐，适量黑胡椒，轻摇至完全混合。尝味，并按需调整调味。将黄油浇在鱼上，撒上西芹，佐柠檬片趁热上菜。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

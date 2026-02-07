@@ -104,7 +104,45 @@ Lord</STRONG>
 
 <P><STRONG>城市更新Urban Renewal</STRONG> 
 
-<BR>一个德鲁伊结社尝试用某种远古魔法放大水晶的威能，扩展其扭曲土地的效应。不断扩大的帷幕将要吞噬附近的一座城市，而这座城市的统治者在过去一直敌视着德鲁伊们。随着城市的变化，来自第三章“巨型动物世界遭遇表”中的生物开始出现在城市内，并开始进行破坏。</P></body>
+<BR>一个德鲁伊结社尝试用某种远古魔法放大水晶的威能，扩展其扭曲土地的效应。不断扩大的帷幕将要吞噬附近的一座城市，而这座城市的统治者在过去一直敌视着德鲁伊们。随着城市的变化，来自第三章“巨型动物世界遭遇表”中的生物开始出现在城市内，并开始进行破坏。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

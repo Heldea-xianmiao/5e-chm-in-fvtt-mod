@@ -174,9 +174,47 @@ lang=EN-US>3d6</span>。法术书暂时失去一些由你自选的法术，这�
 
 class=GramE>骰</span>值。例如，如果<span class=GramE>骰</span>值是<span lang=EN-US>9</span>，则从书中消失的法术环阶之和至少为<span lang=EN-US>9</span>或许是一个<span lang=EN-US>9</span>环法术，或是三个<span lang=EN-US>3</span>环法术，或其他组合方式。如果书中没有足够的法术来支付这个代价，你就会降到<span lang=EN-US>0</span>点生命。<span lang=EN-US><br></span>你必须完成<span lang=EN-US>1d6</span>次长休后，才能再次施放失去的法术；在此期间，即使你在卷轴上或其他法术书中找到这些法术，也无法施展它们。完成所需的长休次数后，法术会重新出现在法术书中。<span 
 
-lang=EN-US><br></span>用过这个反应之后，你必须完成<span class=GramE>一</span>次长<span class=GramE>休才能</span>再次使用它。 </p></div></BODY>
+lang=EN-US><br></span>用过这个反应之后，你必须完成<span class=GramE>一</span>次长<span class=GramE>休才能</span>再次使用它。 </p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

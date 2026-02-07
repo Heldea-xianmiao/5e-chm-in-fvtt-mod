@@ -74,7 +74,45 @@ cellSpacing=0 cellPadding=2 width="99%" bgColor=#fffbf0 border=1>
 
   。冒险者们需要一处住宿的地方，高塔旅店则有舒适的住宿，充足的麦酒和葡萄酒以及辛辣的食物。这里有六间单间，每一间每晚的价格为 3 gp 
 
-  ，其中三间客房位于塔楼内，每个独占一个楼层。</DIV></LI></UL></body>
+  ，其中三间客房位于塔楼内，每个独占一个楼层。</DIV></LI></UL><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

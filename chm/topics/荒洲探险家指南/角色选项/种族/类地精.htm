@@ -132,7 +132,45 @@ Attack</STRONG>。如果你突袭一个目标并在战斗中的第一回合击�
 
 。大地精因为害怕失去地位，小心亦亦地不在盟友面前展示软弱的一面。如果你的一次攻击检定中未命中，或在一次属性检定或豁免中失败了，你可以在这次检定中获得一个加值，该加值的数目等同于你30英尺内能见的盟友数（最多+5）。一旦你使用了这个特质，直到你完成一次短休或长休之前你不能再次使用。<BR><STRONG>语言Languages</STRONG>。 
 
-你可以说、读及写通用语和地精语。</P></body>
+你可以说、读及写通用语和地精语。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

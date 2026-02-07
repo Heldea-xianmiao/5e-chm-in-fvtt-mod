@@ -32,7 +32,45 @@ html,body {
 
 <P>炼狱河的冒险River Inferno Adventures<BR>避开河流是最好的选择，但是如果角色沿着河流行动，他们可能会遇到有趣的遭遇。<BR>傲慢的火巨灵（高级）Haughty Efreet (High 
 
-Level)。最近从炼狱河出现了两位火巨灵，而角色是他们发现的第一个智慧生物。通过使用巧言术，火巨灵要求角色将关于这片陌生土地的所有信息告诉他们，然后要求角色将其引导至最近的定居点。火巨灵计划奴役其中的居民，并让他们开始在炼狱河岸上建造一座黑曜石塔，每当火巨灵们打算前往多元宇宙的阴冷角落时，他们都可以呆在那里。</P></body>
+Level)。最近从炼狱河出现了两位火巨灵，而角色是他们发现的第一个智慧生物。通过使用巧言术，火巨灵要求角色将关于这片陌生土地的所有信息告诉他们，然后要求角色将其引导至最近的定居点。火巨灵计划奴役其中的居民，并让他们开始在炼狱河岸上建造一座黑曜石塔，每当火巨灵们打算前往多元宇宙的阴冷角落时，他们都可以呆在那里。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

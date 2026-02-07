@@ -78,7 +78,45 @@ DC23）：<BR>1 次/日：操控水体，造风术，石墙术。<BR><STRONG>元
 
 5（1d10）寒冷，火焰或闪电伤害（由加拉泽选择），每当这些艺元素的其中之一生命值降至 0 时，加拉泽可以飞行至多 20 尺且不会借机攻击，这些艺元素会在 10 
 
-分钟后，加拉泽死亡时或者她再次使用这个动作时消失。</P></body>
+分钟后，加拉泽死亡时或者她再次使用这个动作时消失。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

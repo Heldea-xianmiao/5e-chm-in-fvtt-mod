@@ -34,7 +34,45 @@ html,body {
 
 <P>当某人打结时，进行一次智力（巧手）检定，以检定最终结果作为DC。试图解开这个结须通过一次智力（巧手）检定，而想要挣脱这个结则须通过一次敏捷（杂技）检定。<BR>这一规则故意将巧手技能与智力属性搭配，而不是通常的敏捷。这是一个应用《玩家手册》第七章中“变体：技能搭配其他属性Variant: 
 
-Skills with Different Abilities”规则的例子。</P></body>
+Skills with Different Abilities”规则的例子。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

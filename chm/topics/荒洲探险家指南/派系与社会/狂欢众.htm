@@ -56,7 +56,45 @@ King<BR>
 
 Knuckle），她是灾厄之手（The Ill 
 
-Hand）的船长，声音洪亮且充满欢乐，并且喜欢痛快的打斗，就像她喜欢烈酒一样。佩吉因为她对克洛维斯联邦的憎恨而走上海盗之路，但她的行为被一种对被压迫者的强硬道德责任感所驱使。她从不袭击平民船只，并尽最大努力约束狂欢众中最残忍的船长，并将他们的目标集中在那些应当被劫掠的人身上。</FONT></P></body>
+Hand）的船长，声音洪亮且充满欢乐，并且喜欢痛快的打斗，就像她喜欢烈酒一样。佩吉因为她对克洛维斯联邦的憎恨而走上海盗之路，但她的行为被一种对被压迫者的强硬道德责任感所驱使。她从不袭击平民船只，并尽最大努力约束狂欢众中最残忍的船长，并将他们的目标集中在那些应当被劫掠的人身上。</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

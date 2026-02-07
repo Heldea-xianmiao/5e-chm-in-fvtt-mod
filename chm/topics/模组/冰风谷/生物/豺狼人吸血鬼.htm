@@ -126,7 +126,45 @@ Cackle
 
 15的感知豁免检定，否则就会在一分钟内处于恐慌状态。一个生物可以在每回合结束时重复进行豁免，豁免成功则结束对自身的影响。如果一个生物豁免成功，或者效果结束了，这个生物在接下来的24小时内对吸血鬼的可怕咯笑免疫。<BR><STRONG>恶心凝视Sickening 
 
-Gaze（鬣狗或吸血鬼形态）。</STRONG>吸血鬼选定一个30英尺内可见的类人生物作为目标。假如目标能够看到吸血鬼，则必须成功通过DC15的感知豁免检定以对抗此魔力，否则在24小时内便会处于中毒状态。如果一个生物的成功豁免，这个生物在接下来的24小时内对吸血鬼的恶心凝视免疫。</P></body>
+Gaze（鬣狗或吸血鬼形态）。</STRONG>吸血鬼选定一个30英尺内可见的类人生物作为目标。假如目标能够看到吸血鬼，则必须成功通过DC15的感知豁免检定以对抗此魔力，否则在24小时内便会处于中毒状态。如果一个生物的成功豁免，这个生物在接下来的24小时内对吸血鬼的恶心凝视免疫。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

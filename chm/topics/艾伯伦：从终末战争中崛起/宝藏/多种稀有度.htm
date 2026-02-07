@@ -32,7 +32,45 @@ html,body {
 
 Glamerweave</FONT></STRONG><BR><EM>奇物，普通或非普通</EM><BR>幻织是一种附有无害幻术系魔法的布料。当你穿着以普通稀有度的幻织制成的服饰时，你可以使用一个附赠动作在布料上绘制出活动的幻象图纹。</P>
 
-<P>稀有度为非普通的幻织则可以使幻象图纹飘出布料。举个例子，一件幻织礼服可能会环绕着无害的虚幻火焰，而一顶幻织帽子则可能有虚幻的蝴蝶在它四周飞舞。<BR>身着稀有度为非普通的幻织期间，你进行魅力（表演）或魅力（游说）检定时，可以额外投掷一粒d4，并将结果加入检定中。此能力被使用后，直到次日黎明前将无法再使用。</P></body>
+<P>稀有度为非普通的幻织则可以使幻象图纹飘出布料。举个例子，一件幻织礼服可能会环绕着无害的虚幻火焰，而一顶幻织帽子则可能有虚幻的蝴蝶在它四周飞舞。<BR>身着稀有度为非普通的幻织期间，你进行魅力（表演）或魅力（游说）检定时，可以额外投掷一粒d4，并将结果加入检定中。此能力被使用后，直到次日黎明前将无法再使用。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

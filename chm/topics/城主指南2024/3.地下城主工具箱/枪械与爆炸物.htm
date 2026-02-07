@@ -434,7 +434,45 @@ Grenade。</STRONG>
 
 <H3><FONT color=#800000>异域科技Alien Technology</FONT></H3>
 
-<P>当冒险者们发现一些并非来自他们所在世界或时代的科技产品时，他们可以通过一次成功的智力（调查）检定来判断这件物品是什么，DC基于物品的复杂度：相对简单的物品，如计算器和打火机，是DC10；相对复杂的物品，如电脑、电锯和气垫船，则是DC20。你也可以要求一次额外的智力（调查）检定来决定一个角色能否启动或操纵这件科技产物；而曾经看过该物品被使用的样子、或操作过类似物品的角色为此进行检定时具有优势或是直接成功（由你决定）。</P></body>
+<P>当冒险者们发现一些并非来自他们所在世界或时代的科技产品时，他们可以通过一次成功的智力（调查）检定来判断这件物品是什么，DC基于物品的复杂度：相对简单的物品，如计算器和打火机，是DC10；相对复杂的物品，如电脑、电锯和气垫船，则是DC20。你也可以要求一次额外的智力（调查）检定来决定一个角色能否启动或操纵这件科技产物；而曾经看过该物品被使用的样子、或操作过类似物品的角色为此进行检定时具有优势或是直接成功（由你决定）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

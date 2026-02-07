@@ -44,7 +44,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000>萨苟纳Sargonnas</FONT></STRONG><BR>萨苟纳是一位难以捉摸的神明，掌管着火焰、复仇和愤怒。尽管他是塔克西丝的配偶，但他阴谋暗算塔克西丝的时候和他为塔克西丝的利益而战的时候一样多。寻求报复的人们会信仰萨苟纳。他的真实形态是一个巨大而骇人的牛头人，有许多牛头人也崇敬他，在牛头人中他被称为萨迦斯Sargas。</P>
 
-<P><STRONG><FONT color=#800000>赛波音Zeboim</FONT></STRONG><BR>赛波音是象征着海洋破坏性的一面的神明，风暴和危险的海洋生物都包含在她的领域内。她性情善变，时常发怒，哪怕是她的追随者都难逃一劫。大多数水手会向哈巴库克祈祷，祈求他驱逐赛波音，但也有一些水手会向赛波音献上贡品以平息她的怒火。</P></body>
+<P><STRONG><FONT color=#800000>赛波音Zeboim</FONT></STRONG><BR>赛波音是象征着海洋破坏性的一面的神明，风暴和危险的海洋生物都包含在她的领域内。她性情善变，时常发怒，哪怕是她的追随者都难逃一劫。大多数水手会向哈巴库克祈祷，祈求他驱逐赛波音，但也有一些水手会向赛波音献上贡品以平息她的怒火。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

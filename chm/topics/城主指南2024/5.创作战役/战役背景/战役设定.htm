@@ -250,7 +250,45 @@ Consider</STRONG>。在构思新的战役设定时，可以思考并回答以下
 
 <DIV 
 
-  ><STRONG>诸神（如果有）在世界里扮演什么角色？</STRONG>你的世界里存在着哪些高阶神灵、次阶神灵或准神？其中又有哪些得到崇拜？如果神祇切实存在，祂们对世界的参与程度又是如何？祂们究竟是遥远而超然的存在，还是会出现在崇拜者面前、插手凡人事务的存在？</DIV></LI></UL></body>
+  ><STRONG>诸神（如果有）在世界里扮演什么角色？</STRONG>你的世界里存在着哪些高阶神灵、次阶神灵或准神？其中又有哪些得到崇拜？如果神祇切实存在，祂们对世界的参与程度又是如何？祂们究竟是遥远而超然的存在，还是会出现在崇拜者面前、插手凡人事务的存在？</DIV></LI></UL><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

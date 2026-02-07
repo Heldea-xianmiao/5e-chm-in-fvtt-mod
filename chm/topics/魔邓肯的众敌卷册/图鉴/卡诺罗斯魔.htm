@@ -78,7 +78,45 @@ Resistance。</STRONG> 披甲罗斯魔在对法术和其他魔法效果的豁免
 
 近战武器攻击，+7命中，达到5英尺，一个目标。命中造成15(2dl0+4)砍伤。<BR><STRONG>舌头 Tongue。</STRONG> 远程武器攻击，+7命中，射程30英尺，单个目标。命中造成17 
 
-(2dl2+4)穿刺伤害。如果目标是中等或更小体型，它会被擒抱(逃脱DC15)，并向着披甲罗斯魔被拉近30英尺，并被束缚直到擒抱结束。披甲罗斯魔只能同时擒抱一个目标。</P></body>
+(2dl2+4)穿刺伤害。如果目标是中等或更小体型，它会被擒抱(逃脱DC15)，并向着披甲罗斯魔被拉近30英尺，并被束缚直到擒抱结束。披甲罗斯魔只能同时擒抱一个目标。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -54,7 +54,45 @@ Sloth</FONT></STRONG><BR>巨型野兽，无阵营<BR>—————————
 
 尺，单一目标。命中：14（2d8+5）挥砍伤害，并且目标将被擒抱（挣脱 DC 
 
-15）。驮宝惰兽同时只能擒抱不超过两个目标。<BR>————————————————————————<BR><STRONG><FONT color=#800000>反应：</FONT></STRONG><BR><STRONG>缓慢但稳定。</STRONG>当驮宝惰兽受到一种将它移出当前空间或被击倒的效果时，它既不会移动也不会被撞倒。</P></body>
+15）。驮宝惰兽同时只能擒抱不超过两个目标。<BR>————————————————————————<BR><STRONG><FONT color=#800000>反应：</FONT></STRONG><BR><STRONG>缓慢但稳定。</STRONG>当驮宝惰兽受到一种将它移出当前空间或被击倒的效果时，它既不会移动也不会被撞倒。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

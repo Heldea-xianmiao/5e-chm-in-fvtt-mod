@@ -84,7 +84,45 @@ Actions</FONT></STRONG><BR>伊戈尔可以采取3个传奇行动，从下面的�
 
 the 
 
-Void（消耗3动作）。</STRONG>每一个在伊戈尔30尺范围内的非构装或亡灵生物必须进行DC22体质豁免来对抗熵之领主对生命的分解，否则受到42点（12d6）暗蚀伤害，或者成功后受到一半的伤害。伊戈尔的生命值恢复等于所有受影响生物所受伤害的一半。</P></body>
+Void（消耗3动作）。</STRONG>每一个在伊戈尔30尺范围内的非构装或亡灵生物必须进行DC22体质豁免来对抗熵之领主对生命的分解，否则受到42点（12d6）暗蚀伤害，或者成功后受到一半的伤害。伊戈尔的生命值恢复等于所有受影响生物所受伤害的一半。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -72,7 +72,45 @@ DC 14 的力量检定或者对地板造成超过 10
 
 点的伤害，就可以把地板掀起。随后，他们就可以够到那处空穴并抓取那块宝石。但是，如果任何人在小屋处于活动状态时尝试这么做的话，那处空穴就会长出木质的牙齿、变成一张嘴咬向任何意图夺走宝石的人。此时，尝试夺走宝石的人就必须过一个 
 
-DC 为 20 的敏捷豁免掷骰。如果豁免成功，他将会顺利夺得宝石并免于被咬；而当豁免失败，他就会被咬中并因此受到10（3d6）的穿刺伤害并且无法获得宝石。</P></body>
+DC 为 20 的敏捷豁免掷骰。如果豁免成功，他将会顺利夺得宝石并免于被咬；而当豁免失败，他就会被咬中并因此受到10（3d6）的穿刺伤害并且无法获得宝石。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

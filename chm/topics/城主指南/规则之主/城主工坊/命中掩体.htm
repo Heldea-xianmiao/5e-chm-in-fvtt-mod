@@ -50,7 +50,45 @@ style='FONT-FAMILY: "Times New&#13;&#10;&#13;&#10; Roman",serif; COLOR: maroon; 
 
 <p class=MsoNormal>先判定假定目标未处于该掩护时，该攻击检定是否可以命中该目标。如果该攻击检定不足以命中掩护后的目标却足以命中未掩护的该目标，则作为掩体的物件将被击中。如果为目标提供掩护的是一生物，而该攻击检定足以击破掩体生物的<span 
 
-lang=EN-US>AC，</SPAN>则该掩体生物被命中。</P></body>
+lang=EN-US>AC，</SPAN>则该掩体生物被命中。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

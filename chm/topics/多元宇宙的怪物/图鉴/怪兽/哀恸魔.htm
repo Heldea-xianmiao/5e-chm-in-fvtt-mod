@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>哀恸魔 Sorrowsworn</FONT></STRONG></P>
 
-<P>堕影冥界遍地哀鸿有时会塑成此世悲绝的诡异肉身。哀恸魔便是这阴影景图中苦难之具现，并又将恐惧迁于落入其中者。每一个哀恸魔皆为不同方面的不幸与绝望的人格化。</P></body>
+<P>堕影冥界遍地哀鸿有时会塑成此世悲绝的诡异肉身。哀恸魔便是这阴影景图中苦难之具现，并又将恐惧迁于落入其中者。每一个哀恸魔皆为不同方面的不幸与绝望的人格化。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

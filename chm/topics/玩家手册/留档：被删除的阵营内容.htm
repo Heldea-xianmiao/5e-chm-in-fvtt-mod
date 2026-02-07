@@ -70,7 +70,45 @@ evil</STRONG>（CE）其生物受贪婪、憎恨与嗜血驱策，行为随性�
 
 <P dir=ltr><STRONG><EM>阵营Alignment。</EM></STRONG>半兽人从其兽人先祖继承了混乱以及非善良的阵营倾向。通常在兽人族群中成长，并自愿生活在其中的半兽人都倾向于邪恶。</P>
 
-<P dir=ltr><STRONG><EM>阵营Alignment。</EM></STRONG>提夫林并不一定天生趋向邪恶，不过其中大多都选择了邪恶之路。不管邪恶与否，自恃的天性使得他们更倾向于混乱阵营。</P></BLOCKQUOTE></body>
+<P dir=ltr><STRONG><EM>阵营Alignment。</EM></STRONG>提夫林并不一定天生趋向邪恶，不过其中大多都选择了邪恶之路。不管邪恶与否，自恃的天性使得他们更倾向于混乱阵营。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

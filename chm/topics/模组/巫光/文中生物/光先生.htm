@@ -62,7 +62,45 @@ Actions</FONT></STRONG><BR><STRONG>鸦后祝福 Blessing of the Raven Queen（1
 
 次/天）。</STRONG>光先生和他所穿戴的东西如魔法般的传送至多 30 
 
-英尺，以到达一个他可见并且未占据空间。直到他的下一回合开始，他的身躯呈现出幽魂般的半透明，并获得所有伤害的抗性。</P></body>
+英尺，以到达一个他可见并且未占据空间。直到他的下一回合开始，他的身躯呈现出幽魂般的半透明，并获得所有伤害的抗性。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

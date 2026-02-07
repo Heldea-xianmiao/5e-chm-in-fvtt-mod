@@ -50,7 +50,45 @@ Actions</FONT></STRONG><FONT size=2><FONT color=maroon>
 
 <BR></FONT></FONT><STRONG>传送Teleport。</STRONG>舍米莎卡与任何其携带或着装的装备，一同传送至多60尺至一处她可见的未占据空间。<BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>堕落反咒Fell 
 
-Counterspell（3/日）。</STRONG>舍米莎卡念出一段魔法性的词语，扰乱一个她可见的正在施展一道法术的生物。若该法术为5环或更低环阶，则其失败并不产生任何效应。若该法术为6环或更高环阶，则舍米莎卡进行一次智力检定（DC为10+该法术的环阶）。检定成功则该法术失败并不产生任何效果。无论法术的环阶为多少，施法者都会获得中毒状态直至其下一回合结束。</P></body>
+Counterspell（3/日）。</STRONG>舍米莎卡念出一段魔法性的词语，扰乱一个她可见的正在施展一道法术的生物。若该法术为5环或更低环阶，则其失败并不产生任何效应。若该法术为6环或更高环阶，则舍米莎卡进行一次智力检定（DC为10+该法术的环阶）。检定成功则该法术失败并不产生任何效果。无论法术的环阶为多少，施法者都会获得中毒状态直至其下一回合结束。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

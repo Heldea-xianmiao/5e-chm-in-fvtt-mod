@@ -28,7 +28,45 @@ html,body {
 
 <body><STRONG><FONT color=#800000>神功绑带 Wraps of Unarmed 
 
-Prowess<br></FONT></STRONG><em>奇物，非普通（+1）/珍稀（+2）/极珍稀（+3）</EM><br>裹着这套布制的绑带期间，你的徒手打击在对抗非魔法攻击与伤害的免疫与抗性时被视为魔法性的。此外，你徒手打击的攻击检定与伤害掷骰获得加值，加值的数值取决于这套绷带的稀有度。<br><font color=#777777>（译者注：Warps通常是拳击用的“护手绷带”。但根据效果，似乎并没有说不能裹在脚上或者角上。）</FONT></body>
+Prowess<br></FONT></STRONG><em>奇物，非普通（+1）/珍稀（+2）/极珍稀（+3）</EM><br>裹着这套布制的绑带期间，你的徒手打击在对抗非魔法攻击与伤害的免疫与抗性时被视为魔法性的。此外，你徒手打击的攻击检定与伤害掷骰获得加值，加值的数值取决于这套绷带的稀有度。<br><font color=#777777>（译者注：Warps通常是拳击用的“护手绷带”。但根据效果，似乎并没有说不能裹在脚上或者角上。）</FONT><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

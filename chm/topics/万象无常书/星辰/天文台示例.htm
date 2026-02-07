@@ -66,7 +66,45 @@ Transporter</FONT></EM>
 
   
 
-（将在本章稍后描述）。天文台的天文学家们会无比自豪的、滔滔不绝的和游客们介绍他们的望远镜是如何设计、打造、组装的故事——以及这耗费了他们多大的资金。这些故事的最后往往总是以请求游客们捐献一些微博的资金，来帮助天文台渡过长久以来的财政困难，为结尾。</P></body>
+（将在本章稍后描述）。天文台的天文学家们会无比自豪的、滔滔不绝的和游客们介绍他们的望远镜是如何设计、打造、组装的故事——以及这耗费了他们多大的资金。这些故事的最后往往总是以请求游客们捐献一些微博的资金，来帮助天文台渡过长久以来的财政困难，为结尾。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

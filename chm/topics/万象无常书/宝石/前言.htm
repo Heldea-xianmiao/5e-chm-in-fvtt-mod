@@ -10,7 +10,45 @@
 
 
 
-<body><h1><IMG alt="" src="../pic/gem.jpg" align=right height=600 >第五章：宝石 Gem   </h1><p>从<EM><U>万象无常牌Deck of Many Things</U></EM>   中抽出<strong>宝石Gem</strong>   卡的人会得到其赋予的巨大财富，而本章为想要将这突如其来的财富融入游戏中的DM提供了建议。此外，本章还介绍了与万象无常牌有关并以其为设计灵感的全新魔法物品。</p></body>
+<body><h1><IMG alt="" src="../pic/gem.jpg" align=right height=600 >第五章：宝石 Gem   </h1><p>从<EM><U>万象无常牌Deck of Many Things</U></EM>   中抽出<strong>宝石Gem</strong>   卡的人会得到其赋予的巨大财富，而本章为想要将这突如其来的财富融入游戏中的DM提供了建议。此外，本章还介绍了与万象无常牌有关并以其为设计灵感的全新魔法物品。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

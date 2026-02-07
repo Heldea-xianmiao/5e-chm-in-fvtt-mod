@@ -46,7 +46,45 @@
 
 <P><FONT color=#800000 size=3><STRONG>依赖骗术</STRONG></FONT><BR>蛇人没有关于光荣的战斗的概念。他们天生善于潜行，如果他们能偷偷地接近敌人，不论是埋伏还是趁敌人睡觉时干掉他们，蛇人们都会去做——并且他们确实很喜欢用这些战术来作为战争的开幕。由于憎恶蛇人和恶咒蛇人能够变形成蛇，他们可以一直隐藏自己的存在，并进入他们正常形态无法进入的地方中去。</P>
 
-<P>它们对毒药的免疫力使所有蛇人在对付其他生物时具有战术方面的优势，充当皇室试毒人的纯血蛇人可能会在一道菜中下毒，并在尝过一口后宣布它“安全”。</P></body>
+<P>它们对毒药的免疫力使所有蛇人在对付其他生物时具有战术方面的优势，充当皇室试毒人的纯血蛇人可能会在一道菜中下毒，并在尝过一口后宣布它“安全”。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

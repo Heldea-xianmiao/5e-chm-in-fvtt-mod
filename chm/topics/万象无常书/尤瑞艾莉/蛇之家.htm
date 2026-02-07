@@ -32,7 +32,45 @@ html,body {
 
 现在，尤瑞艾莉照料着她的花园，也会偶尔招待迷路的旅行者。在不探索多元宇宙的时候，阿斯忒瑞亚也可以在蛇之家被找到，在开始另一场冒险之前，她总是会拜访她最亲爱的朋友并在这里好好修养一下。<br></p>
 
-<P align=center><IMG src="https://media.dndbeyond.com/compendium-images/tbomt/yRua5rTHzpkbrobT/map-21.01-cair-ophidian.png" height=600></P></body>
+<P align=center><IMG src="https://media.dndbeyond.com/compendium-images/tbomt/yRua5rTHzpkbrobT/map-21.01-cair-ophidian.png" height=600></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

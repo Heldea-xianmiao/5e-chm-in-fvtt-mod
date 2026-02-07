@@ -970,9 +970,47 @@
 
  style="FONT-SIZE: 10.5pt; mso-ascii-font-family: Cambria; mso-hansi-font-family: Cambria; mso-bidi-font-size: 14.0pt">级起，你获得命令动物和植物生物的能力。当生物受你的魅惑动植物特性魅惑时，你可以在自己回合内执行一个附赠动作并发出一个口头指令，而所有这些受魅惑生物都将在其下一回合执行该指令。</span><span
 
- lang=EN-US style="FONT-SIZE: 10.5pt; mso-bidi-font-size: 14.0pt"></span></p></div></U1:P></body>
+ lang=EN-US style="FONT-SIZE: 10.5pt; mso-bidi-font-size: 14.0pt"></span></p></div></U1:P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

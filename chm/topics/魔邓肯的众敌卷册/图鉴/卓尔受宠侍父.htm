@@ -48,7 +48,45 @@ Magic：</STRONG>当这名卓尔使用一个动作来释放法术时，他可以
 
 <BR><STRONG>手弩Hand 
 
-Crossbow。</STRONG>远程武器攻击：命中+11，射程30/120尺，单一目标。伤害8（1d6+5）穿刺伤害，目标必须通过一个DC13的体质豁免检定，否则中毒一小时。如果本次豁免检定失败且检定数值低出DC5点或更多，则该目标因中毒而失去意识。如果目标受到伤害或另一个生物以一个动作摇动他，目标就会恢复知觉。</P></body>
+Crossbow。</STRONG>远程武器攻击：命中+11，射程30/120尺，单一目标。伤害8（1d6+5）穿刺伤害，目标必须通过一个DC13的体质豁免检定，否则中毒一小时。如果本次豁免检定失败且检定数值低出DC5点或更多，则该目标因中毒而失去意识。如果目标受到伤害或另一个生物以一个动作摇动他，目标就会恢复知觉。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

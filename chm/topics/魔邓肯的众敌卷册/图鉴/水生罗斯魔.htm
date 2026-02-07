@@ -84,7 +84,45 @@ Resistance。</STRONG> 水生罗斯魔在对法术和其他魔法效果的豁免
 
 水生罗斯魔可以60尺内可以看到的一个生物为目标。目标受到4d6的心灵伤害，并且需要进行一个DC16的智力豁免。豁免成功，则该生物24小时内免疫该水生罗斯魔的记忆窃取。豁免失败，则目标失去所有熟练项，不能施法，不能理解语言，并且如果他的智力和魅力属性值大于5，则变为5。每当目标经过一次长休，便可以重新进行豁免，直到豁免成功，效应终止。高等复原术或者移除诅咒可以提前结束效应。<BR><STRONG>传送Teleport 。</STRONG> 
 
-水生罗斯魔可以通过魔法进行传送，携带装备传送到60内一个能看到且未占据空间。</P></body>
+水生罗斯魔可以通过魔法进行传送，携带装备传送到60内一个能看到且未占据空间。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

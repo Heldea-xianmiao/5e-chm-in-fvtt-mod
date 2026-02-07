@@ -46,7 +46,45 @@ Coast</FONT></H3>
 
 dwarves”。尽管有些灰矮人加入了克灵王朝并来到地表定居，大多数还是住在幽暗地域的古老隧道之间，并且对卓尔怀深深的敌意。</P>
 
-<P>灰矮人的叛乱者想要开拓出自己的地底疆土，他们袭击克灵的聚居点、或是从十几个小哨所寻找通往地表的隐藏通道。迄今为止，克灵军队都成功把他们遏制在了地底范围，但许多军官都在担忧，西边的战乱正不断的抽调他们在幽暗地域的驻军；如果无法约束住灰矮人的攻势，王朝将不得不把领土割让给这些叛军。</P></body>
+<P>灰矮人的叛乱者想要开拓出自己的地底疆土，他们袭击克灵的聚居点、或是从十几个小哨所寻找通往地表的隐藏通道。迄今为止，克灵军队都成功把他们遏制在了地底范围，但许多军官都在担忧，西边的战乱正不断的抽调他们在幽暗地域的驻军；如果无法约束住灰矮人的攻势，王朝将不得不把领土割让给这些叛军。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

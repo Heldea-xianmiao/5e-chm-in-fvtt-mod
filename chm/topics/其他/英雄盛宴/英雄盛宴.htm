@@ -64,7 +64,45 @@ Rations就馋了。你的剑湾海鲜汤里（见这页）会有什么样的海�
 
 龙与地下城的内涵远超越怪物和财宝；它的根基是社区、友情、想象力。这本烹饪大全书会通过烹饪这门工艺鼓励和激发同样的原则。同时，它也会给你的跑团体验带来一层发自本能的，令人兴奋的体验：不同的色调、香味、触感，当然还有风味。所以，什么是龙与地下城？和我们一起探索让这个多元宇宙变得如此美味的菜肴和美食，寻找我们的答案。
 
-</P></body>
+</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

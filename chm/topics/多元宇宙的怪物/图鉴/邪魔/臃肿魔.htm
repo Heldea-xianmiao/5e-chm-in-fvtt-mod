@@ -44,7 +44,45 @@ html,body {
 
 Vermin。</STRONG>除魔鬼以外，任何生物在一个或更多臃肿魔的20尺内开始其回合时，必须成功通过一个DC11的体质豁免，否则承受5（2d4）点强酸伤害。在两个或更多臃肿魔的虫群区域内的生物在进行此豁免时承受劣势。<BR><STRONG>驱使追踪Driven 
 
-Tracker。</STRONG>在九狱内，臃肿魔可以毫无误差地追踪任何在此前的24小时内曾经因任何臃肿魔的害虫之云而承受伤害的生物。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>啃咬Bite。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：6（1d6+3）点穿刺伤害。</P></body>
+Tracker。</STRONG>在九狱内，臃肿魔可以毫无误差地追踪任何在此前的24小时内曾经因任何臃肿魔的害虫之云而承受伤害的生物。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>啃咬Bite。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：6（1d6+3）点穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

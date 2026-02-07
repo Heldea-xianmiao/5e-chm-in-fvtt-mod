@@ -472,7 +472,45 @@ dance</em></span>法术。手风琴的此项属性直到下次黎明前，不能
 
 style="COLOR: navy"><span class=bbc_size 
 
-style="FONT-SIZE: 14pt"><strong>堕影冥界碎晶|Shadowfell Shard</strong></span></span><br><em>奇物, 珍稀（需术士同调）</em><br>这块黯淡冰冷的水晶摸起来如铅般沉重，满溢着堕影冥界的绝望。作为一个动作，你可以将碎晶附上一件微型物件（如一把武器或一块珠宝）或摘下。当同调结束时它会掉落下来。当你持握或穿戴碎晶时，你可以将其作为法器使用。<br>当你持握或穿戴碎晶，并在一道法术上应用一种超魔法选项时，你可以暂时诅咒一个该法术的目标生物：选择一项属性，直到你的下个回合结束前，目标生物在该属性的属性检定和豁免检定上具有劣势。</P></body>
+style="FONT-SIZE: 14pt"><strong>堕影冥界碎晶|Shadowfell Shard</strong></span></span><br><em>奇物, 珍稀（需术士同调）</em><br>这块黯淡冰冷的水晶摸起来如铅般沉重，满溢着堕影冥界的绝望。作为一个动作，你可以将碎晶附上一件微型物件（如一把武器或一块珠宝）或摘下。当同调结束时它会掉落下来。当你持握或穿戴碎晶时，你可以将其作为法器使用。<br>当你持握或穿戴碎晶，并在一道法术上应用一种超魔法选项时，你可以暂时诅咒一个该法术的目标生物：选择一项属性，直到你的下个回合结束前，目标生物在该属性的属性检定和豁免检定上具有劣势。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

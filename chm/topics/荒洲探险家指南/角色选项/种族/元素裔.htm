@@ -112,7 +112,45 @@ water，直到完成一次长休前，你不能再次使用该特质施展该法
 
 Water<BR> </STRONG>变化系 
 
-戏法<BR>施法时间：1个动作<BR>距离：30尺<BR>法术成分：姿势<BR>持续时间：立即或1个小时（见下文）<BR>你选定距离之内，你能看见的一处占据5立方英尺的水体。你能以下述方式之一来对其进行操控：<BR>·你立即在你选定的方向上，造成或改变水的流动，至多在任意方向上改变5英尺。此种运动的力量不足以造成伤害。<BR>·你令水体呈现出简单的形状，随你的意愿而运动。这种变化持续1个小时。<BR>·你改变了水体的颜色或透明度。水体必须被整体性的改变。此种变化持续1个小时。<BR>·你冻结了水，只要其中没有生物。水会在1小时内解冻。<BR>若你多次施放此法术，你可以同时维持至多两个非立即的效果生效，你也可以以一个动作解消上述效应之一。</P></body>
+戏法<BR>施法时间：1个动作<BR>距离：30尺<BR>法术成分：姿势<BR>持续时间：立即或1个小时（见下文）<BR>你选定距离之内，你能看见的一处占据5立方英尺的水体。你能以下述方式之一来对其进行操控：<BR>·你立即在你选定的方向上，造成或改变水的流动，至多在任意方向上改变5英尺。此种运动的力量不足以造成伤害。<BR>·你令水体呈现出简单的形状，随你的意愿而运动。这种变化持续1个小时。<BR>·你改变了水体的颜色或透明度。水体必须被整体性的改变。此种变化持续1个小时。<BR>·你冻结了水，只要其中没有生物。水会在1小时内解冻。<BR>若你多次施放此法术，你可以同时维持至多两个非立即的效果生效，你也可以以一个动作解消上述效应之一。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

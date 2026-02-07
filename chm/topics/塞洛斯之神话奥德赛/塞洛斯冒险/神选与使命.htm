@@ -52,7 +52,45 @@ html,body {
 
   >在极端的例子中，神祗可能对角色下达魔法命令，比如指使术。</P></BLOCKQUOTE>
 
-<P><STRONG><FONT color=#800000>基于神祗的战役God-Based Campaigns</FONT></STRONG><BR>本章的每个每位神灵条目都探索了可能驱动一场重心在于神选或这位神祗的意图的战役的主题和事件。</P></body>
+<P><STRONG><FONT color=#800000>基于神祗的战役God-Based Campaigns</FONT></STRONG><BR>本章的每个每位神灵条目都探索了可能驱动一场重心在于神选或这位神祗的意图的战役的主题和事件。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

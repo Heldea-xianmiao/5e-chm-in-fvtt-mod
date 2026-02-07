@@ -514,7 +514,45 @@ Temple Villains</FONT></STRONG><BR>墓园神殿反派包含想要掌控死亡和
 
         <P align=center>6</P></TD>
 
-      <TD>一群愚妄，无经验的<STRONG><FONT color=#ff0000>平民</FONT></STRONG>在猎杀转世者但最终版变成了折磨所有异乡人。</TD></TR></TABLE><BR></P></BLOCKQUOTE></body>
+      <TD>一群愚妄，无经验的<STRONG><FONT color=#ff0000>平民</FONT></STRONG>在猎杀转世者但最终版变成了折磨所有异乡人。</TD></TR></TABLE><BR></P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

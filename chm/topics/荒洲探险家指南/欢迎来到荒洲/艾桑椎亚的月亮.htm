@@ -18,9 +18,47 @@ Exandria</FONT></H2>
 
 <P>艾桑椎亚有两颗已知的月亮环绕这颗星球。卡萨Catha是较大且较近的月亮，被视为夜间旅行的使者，在天空中显现时散发明亮的白光。卡萨被认为与织月者莎罕妮有着内在的联系，有些人将其视为织月者的创作，用以守护正义之人并掩藏需要遮蔽的人。</P>
 
-<P>第二颗月亮茹蒂斯Ruidus则小得多，且距离更远。茹蒂斯的自转速度较慢，呈暗红褐色，常常在夜空中的星辰之间难以辨认，白天几乎无法看到。关于茹蒂斯所知不多，但古老文化和文献中将其视为不祥之兆，甚至被认为是某个叛神未实现阴谋的被遗弃残余。</P></body>
+<P>第二颗月亮茹蒂斯Ruidus则小得多，且距离更远。茹蒂斯的自转速度较慢，呈暗红褐色，常常在夜空中的星辰之间难以辨认，白天几乎无法看到。关于茹蒂斯所知不多，但古老文化和文献中将其视为不祥之兆，甚至被认为是某个叛神未实现阴谋的被遗弃残余。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 
 
 

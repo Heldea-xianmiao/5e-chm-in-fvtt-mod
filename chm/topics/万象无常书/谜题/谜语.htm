@@ -152,7 +152,45 @@ dove.<BR>抓挠强夺，撕扯裂破，斩切利落，猛攫攒掇。凶狞狮�
 
 beg for reprieve. But no one can outrun us or the destines we 
 
-weave.<BR>幸得吾等笑靥，成事之人自喜；乞求吾等缓刑，败事之人跪地。岂料吾等无常，众生庸庸碌碌，当知天网恢恢，万事早有定数。</EM><BR><STRONG>谜底：</STRONG>命运Fates</p></body>
+weave.<BR>幸得吾等笑靥，成事之人自喜；乞求吾等缓刑，败事之人跪地。岂料吾等无常，众生庸庸碌碌，当知天网恢恢，万事早有定数。</EM><BR><STRONG>谜底：</STRONG>命运Fates</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

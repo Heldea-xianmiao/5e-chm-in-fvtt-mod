@@ -128,7 +128,45 @@ Thunder。</STRONG>
 
  
 
-延西冰释放出一阵300尺内都能被听见的巨大雷鸣。在延西冰周围30尺内的每个生物受到5（1d10）雷鸣伤害。<BR><STRONG>传送Teleport（消耗2动作）。</STRONG>延西冰魔法性是传送至120尺内一处可见且未占据空间。延西冰穿戴和携带的任何物品会随他一同传送。<BR><STRONG>窒息Suffocate（消耗3动作）。</STRONG>延西冰窃走一个他60尺内可见的正在呼吸的生物的空气。目标必须进行DC21的体质豁免检定。若失败，目标的生命值降为0并且陷入濒死。若豁免成功，目标无法呼吸或说话直至其下个回合开始。</P></body>
+延西冰释放出一阵300尺内都能被听见的巨大雷鸣。在延西冰周围30尺内的每个生物受到5（1d10）雷鸣伤害。<BR><STRONG>传送Teleport（消耗2动作）。</STRONG>延西冰魔法性是传送至120尺内一处可见且未占据空间。延西冰穿戴和携带的任何物品会随他一同传送。<BR><STRONG>窒息Suffocate（消耗3动作）。</STRONG>延西冰窃走一个他60尺内可见的正在呼吸的生物的空气。目标必须进行DC21的体质豁免检定。若失败，目标的生命值降为0并且陷入濒死。若豁免成功，目标无法呼吸或说话直至其下个回合开始。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

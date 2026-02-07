@@ -68,7 +68,45 @@ Many Meanings of “Giant”<BR>在《龙与地下城》的规则术语以及英
 
 <P>“巨人Giant”也是《龙与地下城》规则中的一种生物类型，因此一般来说需要大写。这本书通常指的是“生物类型是巨人的生物”，以确保我们很清楚我们在讲什么。所有的巨人都是巨人类型的生物，就像是独眼巨人、双头巨人、废陋巨人，食人魔和巨魔一样。但后一类生物并非本书的重点。</P>
 
-<P>“巨人语Giant”（大写）也是大多数巨人类型生物（以及少数其他生物，如鬼婆）会使用的语言名称。在本书提到语言的时候，通常是指代“巨人语”或者“巨人符文”，所以应该不太容易搞混语言和生物类型。</P></body>
+<P>“巨人语Giant”（大写）也是大多数巨人类型生物（以及少数其他生物，如鬼婆）会使用的语言名称。在本书提到语言的时候，通常是指代“巨人语”或者“巨人符文”，所以应该不太容易搞混语言和生物类型。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

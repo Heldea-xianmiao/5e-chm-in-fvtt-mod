@@ -132,7 +132,45 @@ cellPadding=2 width=600 border=0>
 
 <TD width=30>4</TD><TD>多个神谕都提到了某个巨大邪恶穿过门户进入世界，所以冒险者们被派去寻找这个地方并保证门户紧闭。他们到达时却发现世界根结社的巨人们已经在对抗邪恶的战斗中节节败退。</TD></TR><TR><TD bgColor=#ffffc8 width=30>5</TD><TD bgColor=#ffffc8       >角色们找到了一根由世界树树枝做成的法杖，法杖给了其主人无法忘却的梦，而这个梦和世界根结社的仪式相呼应。</TD></TR><TR><TD width=30>6</TD>
 
-<TD       >世界根结社的一个巨人来到了一座城市，坚称通往遥远国度的某个传送门已经打开。冒险者的任务是帮助巨人找到并封印入口。</TD></TR></TABLE></P></body>
+<TD       >世界根结社的一个巨人来到了一座城市，坚称通往遥远国度的某个传送门已经打开。冒险者的任务是帮助巨人找到并封印入口。</TD></TR></TABLE></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

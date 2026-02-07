@@ -36,7 +36,45 @@
 
 <P><STRONG>功劳必赏</STRONG>。大地精们从来不会拒绝一个旗获得与之相配的晋升，也不会拒绝一个人获得应得的更高地位。如果一个旗在战斗中获得了巨大的荣耀，但却几乎被摧毁，剩下的少数成员会被欢迎加入另一个旗，带着他们的旗的名字和颜色，并在团队中担任领导职位。</P>
 
-<P><STRONG>拥护军团</STRONG>。大地精们更关心他们军团的生存而不是他们同类的生存。两个军团可能会为了领土、资源或权力而战，或者仅仅是出于骄傲。这种宿怨可以持续几代人，形成持续的报复循环。每个军团都有一张单子，上面写着对其他军团的不满，任何军团第一次见面时就会对彼此产生敌意。如果马格鲁比耶特没有召集军队，只有真正伟大的军阀才能迫使军团团结起来。</P></body>
+<P><STRONG>拥护军团</STRONG>。大地精们更关心他们军团的生存而不是他们同类的生存。两个军团可能会为了领土、资源或权力而战，或者仅仅是出于骄傲。这种宿怨可以持续几代人，形成持续的报复循环。每个军团都有一张单子，上面写着对其他军团的不满，任何军团第一次见面时就会对彼此产生敌意。如果马格鲁比耶特没有召集军队，只有真正伟大的军阀才能迫使军团团结起来。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

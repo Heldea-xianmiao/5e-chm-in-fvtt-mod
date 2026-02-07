@@ -68,7 +68,45 @@
 
 <P><STRONG><EM>寻求误导 Seeking 
 
-Misguidance（任意等级）</EM></STRONG>。克洛维斯联邦的一名高级官员正在奥瑟寻求关于如何处理万象会的指引。这个犯罪组织雇佣了角色们伪装成神圣指引者，并说服官员与万象会合作，而不是与他们对抗。</P></body>
+Misguidance（任意等级）</EM></STRONG>。克洛维斯联邦的一名高级官员正在奥瑟寻求关于如何处理万象会的指引。这个犯罪组织雇佣了角色们伪装成神圣指引者，并说服官员与万象会合作，而不是与他们对抗。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

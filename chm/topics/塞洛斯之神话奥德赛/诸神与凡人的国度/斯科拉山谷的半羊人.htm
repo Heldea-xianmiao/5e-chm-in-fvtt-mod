@@ -46,7 +46,45 @@ Favored</FONT></STRONG>
 
 <P><STRONG><FONT color=#800000>女先知 Sibyls</FONT></STRONG> 
 
-<BR>半羊人中最接近领导者形象的是他们的女先知，她们被祝福，拥有有限的窥探未来的能力。女先知警告社群危险何时会威胁山谷，选择迎日者，监督犄角教派的“入会仪式”，最年长的女先知是一名灰毛的半羊人，名叫柯丽萨，她坚信自己酒喝的越多，看到的未来就越远。</P></body>
+<BR>半羊人中最接近领导者形象的是他们的女先知，她们被祝福，拥有有限的窥探未来的能力。女先知警告社群危险何时会威胁山谷，选择迎日者，监督犄角教派的“入会仪式”，最年长的女先知是一名灰毛的半羊人，名叫柯丽萨，她坚信自己酒喝的越多，看到的未来就越远。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

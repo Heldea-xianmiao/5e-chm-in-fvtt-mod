@@ -62,7 +62,45 @@ Morale</STRONG></FONT></div>
 
 <P>若豁免失败，则受影响的生物或团体依最快捷的路线逃跑。若无法实现逃离，则该生物或团体投降。已投降的生物或团体若受其投降方攻击，则双方战斗会重新展开，且此后不太可能再次作逃跑或投降的尝试。</P>
 
-<P>这样的豁免失败在冒险者们看来不一定都是好事。例如，一个食人魔从战斗中逃跑，可能会导致地下城的其他地区敲响警报，或是它可能直接带着角色们要夺取的财宝逃之夭夭。<BR></P></body>
+<P>这样的豁免失败在冒险者们看来不一定都是好事。例如，一个食人魔从战斗中逃跑，可能会导致地下城的其他地区敲响警报，或是它可能直接带着角色们要夺取的财宝逃之夭夭。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

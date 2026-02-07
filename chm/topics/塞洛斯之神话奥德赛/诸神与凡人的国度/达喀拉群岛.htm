@@ -46,7 +46,45 @@ Ketaphos</FONT></STRONG><BR>因其在《卡莱斐纪》中的作用而闻名的�
 
 <P><STRONG><FONT color=#800000>斯卡索斯 
 
-Skathos</FONT></STRONG><BR>斯卡索斯岛曾经是一处神秘的法瑞卡教派的圣地，他们的仪式围绕着食用这个岛上特有的魔法花展开。现在这个岛屿已成为美杜莎女王许瞳涅娅（在第六章中描述）的家园。</P></body>
+Skathos</FONT></STRONG><BR>斯卡索斯岛曾经是一处神秘的法瑞卡教派的圣地，他们的仪式围绕着食用这个岛上特有的魔法花展开。现在这个岛屿已成为美杜莎女王许瞳涅娅（在第六章中描述）的家园。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

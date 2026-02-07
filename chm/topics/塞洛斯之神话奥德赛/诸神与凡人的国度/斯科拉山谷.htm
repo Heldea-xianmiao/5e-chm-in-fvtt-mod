@@ -34,7 +34,45 @@ html,body {
 
 <P align=right>——西斯比，半羊人迎日者</P>
 
-<P>在俄拉尼阿德山脉之间坐落着倪勒娅祝福的斯科拉山谷，里面青草茂密，树林点布。半羊人漫游在这舒适的山谷里而不用固定居所，山谷的魔法提供了他们生活所需之物。传说中，倪勒娅为山谷之美吸引，便将她的酒囊倾泻让神酒流进山谷使它永远繁茂，野山羊喝了这些神酒之后就变成了第一批以这片魔法山谷为家的半羊人。<BR>当斯科拉山谷进入狂欢时，它内部并非没有危险。半羊人在狂欢中会变得过于激动，而怪物会潜伏在周围的山脉和树林之中。</P></body>
+<P>在俄拉尼阿德山脉之间坐落着倪勒娅祝福的斯科拉山谷，里面青草茂密，树林点布。半羊人漫游在这舒适的山谷里而不用固定居所，山谷的魔法提供了他们生活所需之物。传说中，倪勒娅为山谷之美吸引，便将她的酒囊倾泻让神酒流进山谷使它永远繁茂，野山羊喝了这些神酒之后就变成了第一批以这片魔法山谷为家的半羊人。<BR>当斯科拉山谷进入狂欢时，它内部并非没有危险。半羊人在狂欢中会变得过于激动，而怪物会潜伏在周围的山脉和树林之中。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

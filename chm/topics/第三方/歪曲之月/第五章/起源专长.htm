@@ -236,7 +236,45 @@ border-bottom:2px #800000 solid }
 
 <DIV><STRONG>大隐于世Unremarkable。</STRONG>你失去了一部分“自我”，反而使你更容易隐入背景。当你身处至少有其他两名与你同生物类型的生物的群体中，且这些生物的体型与你相差不超过一个等级时，你可以对该群体外的生物执行躲藏动作，用魅力（欺瞒）检定替代敏捷（隐匿）检定，且无需躲在掩护后或处于重度遮蔽中。当你以此方式进行躲藏期间，如果你与至少两个这样的生物相距超过5尺，则你便会暴露。</DIV></LI></UL>
 
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
 </body>
 
 </html>
+
 

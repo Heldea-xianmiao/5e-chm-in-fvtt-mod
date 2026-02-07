@@ -68,7 +68,45 @@ Touch（戏法）。</STRONG>近战法术攻击：命中+5，触及5尺，单一
 
 Splash（戏法）。</STRONG>该拟像向它能看到的60尺内的一个生物（或两个相距不超过5尺的生物）投掷出酸液泡泡。所有目标都必须通过一次DC13敏捷豁免，豁免失败将受到7(2d6)点强酸伤害。<BR><STRONG>魔法飞弹Magic 
 
-Missile（1环法术，消耗一个法术位）。</STRONG>该拟像造出三支魔法飞镖。每支飞镖准确无误地击中一个在120英尺范围内的生物，造成3(1d4+1)力场伤害。如果该拟像使用一个二环的法术位来施放这个法术，它会多制造一支飞镖。</P></body>
+Missile（1环法术，消耗一个法术位）。</STRONG>该拟像造出三支魔法飞镖。每支飞镖准确无误地击中一个在120英尺范围内的生物，造成3(1d4+1)力场伤害。如果该拟像使用一个二环的法术位来施放这个法术，它会多制造一支飞镖。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

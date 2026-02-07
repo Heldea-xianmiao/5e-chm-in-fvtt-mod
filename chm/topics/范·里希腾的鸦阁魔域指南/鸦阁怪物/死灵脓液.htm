@@ -526,7 +526,45 @@ style="TEXT-ALIGN: left; MARGIN: 0pt; mso-pagination: widow-orphan"><SPAN
 
 >附着的死灵脓液可以用心灵感应控制目标的移动，动作，或两者兼之。当以这种方式控制时，目标只能采取攻击动作（死灵脓液选择目标）或疾走动作。附着的目标可以在每个回合结束时重复进行豁免，豁免成功则从死灵脓液身上脱离并迫使其移动到最近未占据空间。</SPAN><SPAN 
 
-style="mso-bidi-font-family: 'Times New Roman'"><o:p></O:P></SPAN></P></body>
+style="mso-bidi-font-family: 'Times New Roman'"><o:p></O:P></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

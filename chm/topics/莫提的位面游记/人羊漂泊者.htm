@@ -86,7 +86,45 @@ Javelin。</STRONG>近战或远程武器攻击：命中+6，触及5尺，或射�
 
 Leap。</STRONG>人羊跳跃至多等同于其步行速度的距离。<BR><FONT color=#777777>（译者注：也许是为了兼容2024的规则，它没有明确提及是跳远还是跳高，也没有明确是“往一个方向”，原文只有“The bariaur 
 
-jumps a distance up to its walking speed.”这么短。）</FONT></P></body>
+jumps a distance up to its walking speed.”这么短。）</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

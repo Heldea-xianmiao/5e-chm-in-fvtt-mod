@@ -20,4 +20,41 @@
 
    FONT-STYLE: italic;  "> eversmoking bottle</span></i><span> <font>为某个房间里的一片陷坑陷阱生成遮蔽，而一只更尚武的眼魔会认为其没有用处而将其归类为杂物。不同的状况也可能改变某个财宝的地位</font><font>——</font><font>一根用来支撑石砖陷阱的</font></span><i><span style="   FONT-STYLE: italic;  "><font>巨蟒法杖</font></span></i><i><span style="
 
-   FONT-STYLE: italic;  "> staff of the python</span></i><span> <font>，在眼魔获得一个可与之同调的手下时或许会作为礼物赠送出去。</font></span></p></div></body></html>
+   FONT-STYLE: italic;  "> staff of the python</span></i><span> <font>，在眼魔获得一个可与之同调的手下时或许会作为礼物赠送出去。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

@@ -44,7 +44,45 @@ html,body {
 
 <P>使用蔬菜削皮器，将橙皮削成宽条，并为每一杯酒保留一小条橙皮且将其密封冷藏直到上菜为止。然后将丁香切成两到三条易于调味的小条，放在一旁备用。将剥皮的橙子切成两半并榨汁（产量约为3/4杯橙汁）。用中火加热大锅，倒入橙汁和红糖并熬煮，搅拌使糖溶解。之后加入葡萄酒，肉桂棒和橙皮（包括丁香饰片），调整至中低火慢煮，搅拌且保证液体能覆盖一部分的材料。直到开始入味且散发酒香，大约花费一个小时（但不要使其沸腾）。此时加入香草和白兰地，继续煮，偶尔搅拌，以混合风味，大约再过2分钟品尝并调整风味。<BR>如有必要，还可以添加红糖或白兰地，或全部加入。最后用漏勺取出并丢弃肉桂棒、橙皮和丁香。<BR>同时，应预先为每一个宾客准备一个小杯子或耐热玻璃杯装满热水，预热杯身2分钟。之后倒空杯子或玻璃杯，将矮人香料酒盛入其中，装饰着保留的橙皮宽条之一，然后立刻上桌。<BR>厨师笔记<BR>香料酒的风味会因为静置而发生改变，因此请考虑提前几个小时制作。上菜前请小心地重新加热，注意不要使其沸腾（否则会引出氧化的味道），去除其中的香料之后加入香草和白兰地。<BR>香料酒的配方其实差异很大。这一份是深橘色，淡香味，低甜度，白兰地风味，可以适当增强功效。然而，它也可以使用不同的利口酒调配，例如甘曼怡（Grand 
 
-Marnier），君度（Cointreau）或圣日耳曼（St-Germain）。香料可换成小豆蔻荚，黑花椒或一整个多香果。</P></body>
+Marnier），君度（Cointreau）或圣日耳曼（St-Germain）。香料可换成小豆蔻荚，黑花椒或一整个多香果。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -40,7 +40,45 @@ dragon</STRONG>，或是邪恶阵营的<STRONG>风暴巨人storm giant</STRONG>�
 
 alignment</STRONG>。换句话说，你可以自行选择该怪物的阵营。某些怪物的阵营有着特定的倾向。例如，一名<STRONG>狂战士berserker</STRONG>可以是任意混乱阵营（混乱善良，混乱中立或混乱邪恶），以符合其狂野的天性。</P>
 
-<P>许多低智力生物无法理解秩序与混乱，善良与邪恶的意义。它们不会作道德或伦理性的选择，而是凭直觉行动。这些生物被视为<STRONG>无阵营unaligned</STRONG>，意指其不属于任何阵营。</P></body>
+<P>许多低智力生物无法理解秩序与混乱，善良与邪恶的意义。它们不会作道德或伦理性的选择，而是凭直觉行动。这些生物被视为<STRONG>无阵营unaligned</STRONG>，意指其不属于任何阵营。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

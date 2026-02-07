@@ -86,6 +86,43 @@ Options</STRONG> ：当你对此设施下达招募指令时，从下列选项中
 
   名这样的骑兵。你每天需要为军队内的每位士兵与每只马匹花费 1 GP 
 
-  以满足他们的粮草供应。军队在任何时候都必须由你本人或至少一位你的副官领导着，没有领导者的军队会立即解散。在1天时间里没有获得粮草供应的军队也会立即解散。如果上述情况没有发生，军队将维持至他们被击溃，或者维持至你命令他们解散。在你当前拥有的军队被击溃或解散之前，你不能招募新的军队。</DIV></LI></UL></body>
+  以满足他们的粮草供应。军队在任何时候都必须由你本人或至少一位你的副官领导着，没有领导者的军队会立即解散。在1天时间里没有获得粮草供应的军队也会立即解散。如果上述情况没有发生，军队将维持至他们被击溃，或者维持至你命令他们解散。在你当前拥有的军队被击溃或解散之前，你不能招募新的军队。</DIV></LI></UL><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>

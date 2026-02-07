@@ -42,7 +42,45 @@ html,body {
 
 <P><STRONG>湮灭灵光。</STRONG>所有在伏行夜影30尺内开始回合的生物必须成功通过一个DC21的体质豁免，否则受到14（4d6）暗蚀伤害并且伏行夜影对其有攻击骰优势直到该生物下一回合。亡灵免疫此灵光。<BR><STRONG>生命噬者。</STRONG>一个因伏行夜影造成的伤害而降至0HP的生物死亡，并且其无法被弱于祈愿的方式复活。<BR><STRONG><FONT color=#800000>动作 
 
-Actions</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>伏行夜影使用两次衰弱之力，或者其使用衰弱之力和厄运一指（若可用）。<BR><STRONG>衰弱之力。</STRONG>近战武器攻击：+12攻击,15尺触及，一个目标。命中：28（5d8+6）暗蚀伤害。该目标必须成功通过dc21的体质豁免或者其生命值上限下降等同造成的暗蚀伤害量。该减值持续直到目标通过完成一次长休。<BR><STRONG>厄运一指（充能6）。</STRONG>伏行夜影瞄准一个300尺内其可见的生物，目标必须通过一次dc21的感知豁免或者受到26（4d12）暗蚀伤害并且恐慌直到伏行夜影下一回合结束。因此而恐慌的生物陷入麻痹。如果一个生物豁免成功，其在接下来的24小时免疫伏行夜影的厄运一指。</P></body>
+Actions</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>伏行夜影使用两次衰弱之力，或者其使用衰弱之力和厄运一指（若可用）。<BR><STRONG>衰弱之力。</STRONG>近战武器攻击：+12攻击,15尺触及，一个目标。命中：28（5d8+6）暗蚀伤害。该目标必须成功通过dc21的体质豁免或者其生命值上限下降等同造成的暗蚀伤害量。该减值持续直到目标通过完成一次长休。<BR><STRONG>厄运一指（充能6）。</STRONG>伏行夜影瞄准一个300尺内其可见的生物，目标必须通过一次dc21的感知豁免或者受到26（4d12）暗蚀伤害并且恐慌直到伏行夜影下一回合结束。因此而恐慌的生物陷入麻痹。如果一个生物豁免成功，其在接下来的24小时免疫伏行夜影的厄运一指。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

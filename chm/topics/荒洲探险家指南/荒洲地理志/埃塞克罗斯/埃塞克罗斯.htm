@@ -94,7 +94,45 @@ data-slate-fragment="JTVCJTdCJTIydHlwZSUyMiUzQSUyMnBhcmFncmFwaCUyMiUyQyUyMmNoaWx
 
 <P>埃塞克罗斯的野人Wildfolk Of 
 
-Eiselcross<BR>尽管长久以来世界都不知道埃塞克罗斯的秘密，但这些岛屿还是人类和半身人游牧部落的家园。这些人跟随着一群麋鹿和猛犸象移动。他们不信神，而是崇拜动物和自然现象，例如风，雪和波涛。野人会避开艾欧尔废墟和潜伏在那里的可怕危险。<BR>埃塞克罗斯的野人过着简朴但恶劣的生活。他们一同捕猎，聚集，互相支持，躲在皮草制成的帐篷中。如果他们彼此之间有争议，他们会和解或走上不同道路。以任何理由夺走另一个埃塞克洛斯本地人生命的后果，比在荒洲其他地区的谋杀通常要更严重。此类犯罪的刑罚是用刀在脸上刻下印记，并从任何野人部落永久流放。<BR>尽管埃塞克罗斯的野人彼此之间会和平相处，但他们都是勇猛的斗士。寒冷的环境影响了他们的肉体，他们学会必须抵御剑齿虎，雪怪以及更危险的食肉动物，例如白龙。野人往往不信任外人，尤其是在看到来自大洋彼岸的探险者进入当地人不敢进入的地方，并使用奥术魔法揭示了他们土地的冰冻秘密之后。</P></body>
+Eiselcross<BR>尽管长久以来世界都不知道埃塞克罗斯的秘密，但这些岛屿还是人类和半身人游牧部落的家园。这些人跟随着一群麋鹿和猛犸象移动。他们不信神，而是崇拜动物和自然现象，例如风，雪和波涛。野人会避开艾欧尔废墟和潜伏在那里的可怕危险。<BR>埃塞克罗斯的野人过着简朴但恶劣的生活。他们一同捕猎，聚集，互相支持，躲在皮草制成的帐篷中。如果他们彼此之间有争议，他们会和解或走上不同道路。以任何理由夺走另一个埃塞克洛斯本地人生命的后果，比在荒洲其他地区的谋杀通常要更严重。此类犯罪的刑罚是用刀在脸上刻下印记，并从任何野人部落永久流放。<BR>尽管埃塞克罗斯的野人彼此之间会和平相处，但他们都是勇猛的斗士。寒冷的环境影响了他们的肉体，他们学会必须抵御剑齿虎，雪怪以及更危险的食肉动物，例如白龙。野人往往不信任外人，尤其是在看到来自大洋彼岸的探险者进入当地人不敢进入的地方，并使用奥术魔法揭示了他们土地的冰冻秘密之后。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -214,5 +214,43 @@ lang=EN-US>10</SPAN>尺宽的强风，席卷起死亡的迷雾。该区域内每
 
 lang=EN-US>DC18</SPAN>的体质豁免。失败的情况下，该生物受到<SPAN lang=EN-US>36</SPAN>（<SPAN 
 
-lang=EN-US>8d8</SPAN>）暗蚀伤害并应击倒地。豁免成功的情况下，该生物受到一半伤害且不会倒地。</P></DIV></BODY></HTML>
+lang=EN-US>8d8</SPAN>）暗蚀伤害并应击倒地。豁免成功的情况下，该生物受到一半伤害且不会倒地。</P></DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

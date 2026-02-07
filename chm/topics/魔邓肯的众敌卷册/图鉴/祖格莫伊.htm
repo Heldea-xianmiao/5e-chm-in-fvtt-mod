@@ -112,7 +112,45 @@ thrall）。</STRONG>当祖格莫伊被攻击时，其5尺范围内一个受她�
 
 传奇动作每次只能使用一个动作项，并且只能在目标生物回合结束时使用。祖格莫伊在她的回合开始时重新获得使用传奇动作的机会。<BR><STRONG>攻击（Attack）。</STRONG>祖格莫伊发动一个伪足攻击。<BR><STRONG>强令（Exert 
 
-Will）。</STRONG>祖格莫伊对可视范围内一个受其魅惑的生物发出命令，该生物必需使用其反应，按指示移动至多相当于其速度的距离，或者向其指定的目标进行一次武器攻击。</P></body>
+Will）。</STRONG>祖格莫伊对可视范围内一个受其魅惑的生物发出命令，该生物必需使用其反应，按指示移动至多相当于其速度的距离，或者向其指定的目标进行一次武器攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -58,7 +58,45 @@ Actions</FONT></STRONG><BR><STRONG>多重攻击（Multiattack）。</STRONG>诘�
 
 Grenade (1/day)。</STRONG>诘弗人 往60ft内一点投掷手榴弹。在手榴弹爆炸点20英尺的范围内，每个生物都必须成功于一个DC 
 
-15的敏捷豁免，否则承受17 （5d6）穿刺伤害，一次成功的豁免中承受一半的伤害。</P></body>
+15的敏捷豁免，否则承受17 （5d6）穿刺伤害，一次成功的豁免中承受一半的伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

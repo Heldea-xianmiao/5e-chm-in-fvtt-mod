@@ -144,7 +144,45 @@ style="  FONT-WEIGHT: bold;">。</SPAN></B><SPAN
 
 style=" ">黑暗领主永生不死是件稀松平常的事情，其中许多人对自己活了多久、死了几回或者复活了几遍都毫无概念。如果一个黑暗领主死了，这情况也只是暂时的，黑暗力量会将其复活。那些想要逃跑或者取代黑暗领主的人们，就得在这个黑暗领主缺位的时期中抓住机会了。</SPAN><SPAN 
 
-style=" "><o:p></o:p></SPAN></P></body>
+style=" "><o:p></o:p></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

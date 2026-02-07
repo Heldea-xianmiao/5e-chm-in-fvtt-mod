@@ -72,7 +72,45 @@ Xhorhas</FONT>
 
 <P><STRONG>属性值提升Ability Score Increase</STRONG>。你的力量加 2，你的体质加 1。<BR><STRONG>黑暗视觉Darkvision</STRONG>。在微光光照下，你身边60尺内可以视为等同于明亮光照。而在黑暗中，该范围内可视为等同于微光光照。你无法在黑暗中分辨颜色，只能看到有灰度的黑白画面。<BR><STRONG>复仇突击Vengeful Assault</STRONG> 
 
-。当你受到你所持武器射程内的生物的伤害时，你可以使用你的反应用该武器对该生物进行一次攻击。一旦你使用了这个特质，直到你完成一次短休或长休之前你不能再次使用。</P></body>
+。当你受到你所持武器射程内的生物的伤害时，你可以使用你的反应用该武器对该生物进行一次攻击。一旦你使用了这个特质，直到你完成一次短休或长休之前你不能再次使用。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

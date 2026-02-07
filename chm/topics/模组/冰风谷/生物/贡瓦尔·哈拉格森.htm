@@ -48,7 +48,45 @@ Wind（短休或长休后充能）。</STRONG>贡瓦尔可以用一个附赠动�
 
 5)的挥砍伤害，或使用双手攻击时10（1d10+5）的挥砍伤害。如果贡瓦尔使用恐吓连击时额外造成6（1d12）的挥砍伤害。<BR><STRONG>标枪Javelin。</STRONG>近战或远程武器攻击：命中+8，触及5尺或射程30/120尺，单一目标，命中：8 
 
-(1d6 + 5)的穿刺伤害。如果贡瓦尔使用恐吓连击时额外造成6（1d12）的穿刺伤害。</P></body>
+(1d6 + 5)的穿刺伤害。如果贡瓦尔使用恐吓连击时额外造成6（1d12）的穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

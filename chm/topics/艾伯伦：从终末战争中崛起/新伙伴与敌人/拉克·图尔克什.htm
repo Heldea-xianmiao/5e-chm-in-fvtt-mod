@@ -80,7 +80,45 @@ Actions</FONT></STRONG><BR>拉克·图尔克什拥有3传奇动作，用来选�
 
 Magic（消耗2动作）。</STRONG>拉克·图尔克什施展解除魔法dispel magic。<BR><STRONG>煽动怒火Provoke 
 
-Rage（消耗3动作）。</STRONG>每个位于拉克·图尔克什60尺内的生物必须成功通过DC24的感知豁免否则使用其反应对一个触及范围内的随机生物进行一次近战武器攻击。如果没有生物在触及范围内，它将对射程内的随机生物进行远程攻击，必要时投掷手中的武器。这次攻击带有优势，且在伤害骰上获得+4加值。</P></body>
+Rage（消耗3动作）。</STRONG>每个位于拉克·图尔克什60尺内的生物必须成功通过DC24的感知豁免否则使用其反应对一个触及范围内的随机生物进行一次近战武器攻击。如果没有生物在触及范围内，它将对射程内的随机生物进行远程攻击，必要时投掷手中的武器。这次攻击带有优势，且在伤害骰上获得+4加值。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

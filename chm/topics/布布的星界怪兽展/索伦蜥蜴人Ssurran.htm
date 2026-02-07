@@ -394,7 +394,45 @@ style="FONT-SIZE: 10.5pt; FONT-FAMILY: Calibri; WHITE-SPACE: normal; WORD-SPACIN
 
 style="FONT-SIZE: 10.5pt; FONT-FAMILY: 宋体"><FONT face=宋体>毒气炸弹</FONT><FONT face=Calibri>Poison Bomb</FONT><FONT face=宋体>。沙蜥人将一颗橘子大小的炸弹投掷到最远</FONT><FONT face=Calibri>60</FONT><FONT face=宋体>英尺外的地方，炸弹发生爆炸、释放出半径</FONT><FONT face=Calibri>10</FONT><FONT face=宋体>英尺的球型毒气并迅速扩散开来。位于球型范围中的每名生物都必须进行一次</FONT><FONT face=Calibri>DC11</FONT><FONT face=宋体>的体质豁免，豁免失败者会受到</FONT><FONT face=Calibri>10 
 
-(3d6)</FONT><FONT face=宋体>点毒素伤害，成功则伤害减半。在沙蜥人投掷炸弹之后，掷一个</FONT><FONT face=Calibri>d6</FONT><FONT face=宋体>；如果掷出</FONT><FONT face=Calibri>4</FONT><FONT face=宋体>或更低的数值，则沙蜥人没有更多可以投掷的炸弹。</FONT></SPAN></P></body>
+(3d6)</FONT><FONT face=宋体>点毒素伤害，成功则伤害减半。在沙蜥人投掷炸弹之后，掷一个</FONT><FONT face=Calibri>d6</FONT><FONT face=宋体>；如果掷出</FONT><FONT face=Calibri>4</FONT><FONT face=宋体>或更低的数值，则沙蜥人没有更多可以投掷的炸弹。</FONT></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

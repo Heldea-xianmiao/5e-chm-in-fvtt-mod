@@ -46,7 +46,45 @@ style="BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid; WIDTH: 400px;
 
 style="FONT-SIZE: 11pt; FONT-FAMILY: 'Arial Unicode MS'; mso-spacerun: 'yes'" 
 
-dir=ltr><FONT size=3 face="Arial Unicode MS">将马斯卡彭的混合物塞进厚厚的面包片中，需要很精细的操作（或者用小手指撑开）。如果在每片面包上都开口太麻烦了，你也可以把面包切成半英寸厚，然后把马斯卡彭涂抹在面包上，就像在做三明治。<BR>把橘子酱在平底锅里用小火加热，可以成为可替换的美味糖浆。（译注：不加水容易糊锅或者太粘稠）</FONT></SPAN></P></div></body>
+dir=ltr><FONT size=3 face="Arial Unicode MS">将马斯卡彭的混合物塞进厚厚的面包片中，需要很精细的操作（或者用小手指撑开）。如果在每片面包上都开口太麻烦了，你也可以把面包切成半英寸厚，然后把马斯卡彭涂抹在面包上，就像在做三明治。<BR>把橘子酱在平底锅里用小火加热，可以成为可替换的美味糖浆。（译注：不加水容易糊锅或者太粘稠）</FONT></SPAN></P></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

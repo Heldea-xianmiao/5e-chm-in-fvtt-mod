@@ -1874,7 +1874,45 @@ style="FONT-SIZE: 10pt; FONT-FAMILY: 'Segoe UI'; mso-spacerun: 'yes'"><BR></SPAN
 
 style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; FONT-WEIGHT: bold; mso-spacerun: 'yes'"><FONT face=宋体>封闭之环。</FONT></SPAN></B><SPAN 
 
-style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><FONT face=宋体>在这些奥法组织的历史中，有一个共同的黑暗的污点。三百年前，第三支奥法组织，邪恶的阴谋组织封闭之环出现在萨恩。这个组织专门研究变形和死灵法术，并涉足了异变魔和黄泉巨龙的禁忌知识。据说封闭之环的成员们疯了，想要召唤什么可怕的存在；不管其真相如何，封闭之环在两百多年前被银焰教会、奥林的秩序会和星光公会三家联手消灭。在萨恩仍然可能发现被隐藏起来的封闭之环的工坊，在那里可能藏着等待复仇的巫妖，也可能是正在重现封闭之环黑暗艺术的其他法师。</FONT></SPAN></P></body>
+style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><FONT face=宋体>在这些奥法组织的历史中，有一个共同的黑暗的污点。三百年前，第三支奥法组织，邪恶的阴谋组织封闭之环出现在萨恩。这个组织专门研究变形和死灵法术，并涉足了异变魔和黄泉巨龙的禁忌知识。据说封闭之环的成员们疯了，想要召唤什么可怕的存在；不管其真相如何，封闭之环在两百多年前被银焰教会、奥林的秩序会和星光公会三家联手消灭。在萨恩仍然可能发现被隐藏起来的封闭之环的工坊，在那里可能藏着等待复仇的巫妖，也可能是正在重现封闭之环黑暗艺术的其他法师。</FONT></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

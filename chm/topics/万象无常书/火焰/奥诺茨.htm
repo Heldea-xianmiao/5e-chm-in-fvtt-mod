@@ -42,7 +42,45 @@ Spray（充能5~6）。</strong>奥诺茨喷出黏液覆盖一处60尺锥形区�
 
 Actions</strong></font></font><br>奥诺茨拥有3传奇动作，用来选择执行下列动作项。它每次只可选择执行一个传奇动作项，且必须在另一生物回合结束时执行。奥诺茨在其回合开始时恢复所有消耗的传奇动作数。<br><strong>移动Move。</strong>奥诺茨移动至多等于其速度的距离。<br><strong>尾击攻击Tail 
 
-Attack。</strong>奥诺茨发动一次尾击攻击。<br><strong>施法Cast a Spell（消耗2动作）。</strong>奥诺茨使用其施法特性。<br><strong>烈火缠身Conflagration（消耗2动作）。</strong>奥诺茨临时性地被火焰包围。任何位于其15尺内的生物都必须进行一次DC20的敏捷豁免，豁免失败者受到18（4d8）火焰伤害，豁免成功则伤害减半。</p></body>
+Attack。</strong>奥诺茨发动一次尾击攻击。<br><strong>施法Cast a Spell（消耗2动作）。</strong>奥诺茨使用其施法特性。<br><strong>烈火缠身Conflagration（消耗2动作）。</strong>奥诺茨临时性地被火焰包围。任何位于其15尺内的生物都必须进行一次DC20的敏捷豁免，豁免失败者受到18（4d8）火焰伤害，豁免成功则伤害减半。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

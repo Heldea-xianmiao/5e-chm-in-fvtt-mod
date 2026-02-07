@@ -74,7 +74,45 @@ Ray。</STRONG>证心者选择一至三个可以在120英尺以内看到的目�
 
   Ray。</STRONG>如果目标是一个生物，它必须进行一次DC13的力量豁免。豁免失败时，证心者将其移动到30尺内的任何方向上，并且受射线束缚直到证心者的下个回合开始或者证心者失能。</P></BLOCKQUOTE>
 
-<P>如果目标是一个重量小于300磅的物体，且没有被佩戴或携带，则被念力移动到30尺内的任意方向上。证心者也可以用此射线很好地控制目标物体，比如操作简单的工具或打开门或容器。</P></body>
+<P>如果目标是一个重量小于300磅的物体，且没有被佩戴或携带，则被念力移动到30尺内的任意方向上。证心者也可以用此射线很好地控制目标物体，比如操作简单的工具或打开门或容器。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

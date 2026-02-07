@@ -38,7 +38,45 @@ html,body {
 
 <P>在乔哈斯（Xhorhas），驮兽随处可见。通常而言，马和其他的骑乘动物总是最好或是唯一的选择。对于那些需要赶路并且有着更充足资金的人来说，野跃兽（见第七章）通常是他们的首选。然而，如果野跃兽没有经过适当的训练，或者没有与主人建立信任关系的话，它们往往会攻击甚至吃掉他们的骑手。</P>
 
-<P>您可以在任何地方花费300gp至500gp雇佣一匹野跃兽。与罗索纳（Rosohna）这样的城市相比，通常在沿海的城镇，它们会更容易雇佣到、也更低价。</P></body>
+<P>您可以在任何地方花费300gp至500gp雇佣一匹野跃兽。与罗索纳（Rosohna）这样的城市相比，通常在沿海的城镇，它们会更容易雇佣到、也更低价。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

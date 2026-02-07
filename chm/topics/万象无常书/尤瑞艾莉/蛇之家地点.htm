@@ -106,7 +106,45 @@ Gardens</STRONG><BR>蛇之家的美食花园包括一个小葡萄酒庄，一个
 
 俯瞰波光粼粼的瀑布，蛇之家的别墅是阿斯忒瑞亚和尤瑞艾莉的家。第一层是休闲、用餐和会客的开放空间。第二层包含女士们的私人生活区，以及一个小型天文台和图书馆。阿斯忒瑞亚在这个图书馆里收藏了大量神奇的魔法卡牌，包括从多元宇宙中收集的多种版本的万象无常牌。这些卡牌中的一些牌组是不完整或包含独特卡牌的;有少许牌组以其他形式呈现，比如有二十二面的骰子或二十二个符文石的集合。<br>
 
-</p></body>
+</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

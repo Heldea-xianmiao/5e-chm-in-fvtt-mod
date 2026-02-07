@@ -52,7 +52,45 @@ Animals、植物交谈Speak with Plants。<BR></EM>1/日：<EM>问道自然Commu
 
 Nature</EM>（以一动作施展<EM>）、侦测魔法Detect Magic、易容术Disguise Self</EM></FONT><br><STRONG style="FONT-WEIGHT: bold"><font color=#800000>附赠动作Bonus Actions</font></STRONG><br><STRONG >神隐步Hidden 
 
-Step（2/日）。</STRONG>费尔伯格人魔法般变为隐形，直到它的下一回合开始，它进行一次攻击检定，或是迫使某人进行一次豁免检定。</P></body>
+Step（2/日）。</STRONG>费尔伯格人魔法般变为隐形，直到它的下一回合开始，它进行一次攻击检定，或是迫使某人进行一次豁免检定。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -36,7 +36,45 @@ Coast</FONT></H3>
 
 <H3><FONT color=#800000>乔哈斯的人类 Humans in Xhorhas</FONT></H3>
 
-<P>人类在乔哈斯十分罕见，能在这片大地上看到的人类往往是流浪氏族的成员、或是敦达里安帝国的士兵。除了这些士兵之外，大多数乔哈斯人并不会对人类带有天生的怀疑。然而，克灵王朝与敦达里安帝国之间的战事却让乔哈斯对所有人类旅行者而言都更为危险了。黑暗精灵与怪物在别处只会警惕地对待人类，但在乔哈斯，他们很可能看到人类就会袭击过来，因为他们知道，帝国人也会对他们采取同样的行动。</P></body>
+<P>人类在乔哈斯十分罕见，能在这片大地上看到的人类往往是流浪氏族的成员、或是敦达里安帝国的士兵。除了这些士兵之外，大多数乔哈斯人并不会对人类带有天生的怀疑。然而，克灵王朝与敦达里安帝国之间的战事却让乔哈斯对所有人类旅行者而言都更为危险了。黑暗精灵与怪物在别处只会警惕地对待人类，但在乔哈斯，他们很可能看到人类就会袭击过来，因为他们知道，帝国人也会对他们采取同样的行动。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

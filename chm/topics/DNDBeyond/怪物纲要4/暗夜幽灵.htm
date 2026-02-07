@@ -46,7 +46,45 @@ Resistance。</STRONG>恶灵为抵抗法术和其他魔法效应而作的豁免�
 
 Keening（充能6）。</STRONG>恶灵说出一道送终的哀嚎，呼唤那些临近死亡之人。任何位于恶灵120尺内的非亡灵生物都必须进行一次DC15的体质豁免。豁免失败者听到了这声哀嚎并被死亡所标记。<BR>一个被死亡标记的生物不能恢复生命值，并在死亡豁免中具有劣势，且所有对其发动的攻击检定具有优势。该效应持续1分钟或直到该生物被法术移除诅咒或类似魔法指定为目标。<BR><STRONG>掠魂巨镰Reaping 
 
-Scythe。</STRONG>近战武器攻击：命中+10，触及10尺，单一目标。命中：12（1d12+6）钝击伤害外加28（8d6）暗蚀伤害。若目标为一个生物，则其必须成功通过一次DC15的体质豁免否则获得一级力竭。</P></body>
+Scythe。</STRONG>近战武器攻击：命中+10，触及10尺，单一目标。命中：12（1d12+6）钝击伤害外加28（8d6）暗蚀伤害。若目标为一个生物，则其必须成功通过一次DC15的体质豁免否则获得一级力竭。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -44,7 +44,45 @@ style="FONT-SIZE: 10.5pt; FONT-FAMILY: 等线; mso-spacerun: 'yes'; mso-bidi-fon
 
 style="FONT-SIZE: 10.5pt; FONT-FAMILY: 等线; mso-spacerun: 'yes'; mso-bidi-font-family: 'Times New Roman'; mso-font-kerning: 1.0000pt"><FONT face=等线>以自身的意志</FONT></SPAN><SPAN 
 
-style="FONT-SIZE: 10.5pt; FONT-FAMILY: 等线; mso-spacerun: 'yes'; mso-bidi-font-family: 'Times New Roman'; mso-font-kerning: 1.0000pt"><FONT face=等线>四下游荡狩猎，污染的水体蹒跚上地吞噬路人</FONT><FONT face=等线>——就连街道上一阵清风吹来的空气也汇聚着污霭，化为变幻莫测的云雾尾随冒险者。这些魔法生物无时不刻都在提醒人们：这座城市里没有任何东西可以被信任，没有任何地方存在真正的安全。</FONT></SPAN></FONT><!--EndFragment--></FONT></P></body>
+style="FONT-SIZE: 10.5pt; FONT-FAMILY: 等线; mso-spacerun: 'yes'; mso-bidi-font-family: 'Times New Roman'; mso-font-kerning: 1.0000pt"><FONT face=等线>四下游荡狩猎，污染的水体蹒跚上地吞噬路人</FONT><FONT face=等线>——就连街道上一阵清风吹来的空气也汇聚着污霭，化为变幻莫测的云雾尾随冒险者。这些魔法生物无时不刻都在提醒人们：这座城市里没有任何东西可以被信任，没有任何地方存在真正的安全。</FONT></SPAN></FONT><!--EndFragment--></FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -2264,7 +2264,45 @@ Darklord's Demands. </SPAN></B><SPAN
 
 >伊凡会持续不断地用信件来骚扰两三个人。他常常会冒用收信人的暗恋者、需要帮助的年轻人或远方亲戚的身份来写信，尽管他的谎言随着时间推移会被戳穿。他的问候语常常令人不快或者带着孩子气的侮辱，比如“亲爱的美味指节”或“我打扮过的猪脸”。而他的信件内容通常集中在自己而非收件人身上，他沉迷于自己的感受、分心和自我放纵的咆哮。随着信件越来越包含占有欲和侮辱性，他的怯懦和残忍也会不可避免表现出来。一开始的时候，他劝说收件人给他礼物，或者削弱他的敌人，但他最终都会要求收信人到迪利斯尼亚的迪格雷沃庄园与他见面。</SPAN><SPAN 
 
-style="mso-bidi-font-family: 'Times New Roman'"><o:p></O:P></SPAN></P></body>
+style="mso-bidi-font-family: 'Times New Roman'"><o:p></O:P></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

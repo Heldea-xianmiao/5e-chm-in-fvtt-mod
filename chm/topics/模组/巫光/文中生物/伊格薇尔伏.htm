@@ -108,7 +108,45 @@ Beguilement（消耗3动作）。</STRONG>    伊格薇尔伏选择60 尺内她�
 
 DC22 
 
-魅力豁免，否则就会被一个妖精之精魂附体。在被附体时，目标必须遵从伊格薇尔伏的命令。目标可以在自己的回合结束时重复豁免，在成功时他将妖精之精魂驱逐并结束效应。</P></body>
+魅力豁免，否则就会被一个妖精之精魂附体。在被附体时，目标必须遵从伊格薇尔伏的命令。目标可以在自己的回合结束时重复豁免，在成功时他将妖精之精魂驱逐并结束效应。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

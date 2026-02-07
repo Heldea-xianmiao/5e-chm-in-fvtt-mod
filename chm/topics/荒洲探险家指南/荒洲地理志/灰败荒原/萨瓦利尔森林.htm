@@ -48,7 +48,45 @@ Level)。夜莺氏族抓获了一支穿越萨瓦利尔森林的商队，怀疑�
 
 Level)。在穿越森林时，角色们遇到了一位坚持要引导他们安全穿过萨瓦利尔森林的树人。树精声称知道森林中的每一个角落和缝隙，以及它的危险。从表面上看，它似乎很有帮助。然而，折磨森林的诅咒已经把树人逼疯了，并且产生了妄想。它所描述的所有危险都是它扭曲的头脑的发明，它有一种诀窍，可以将角色带入一个又一个危险的境地。<BR>树精拒绝透露它的名字是第一个线索，有些不对劲。事实上，树人已经不记得它的名字了。<BR>映射大门（高级）Mapping The Gates (High Level)。 Erma 
 
-Schnieb（混乱的中立轻足半身人法师）相信感染萨瓦利尔森林的诅咒创造了通往下层位面的传送门。她雇用角色与她一起探索森林，以找到并绘制这些大门。除了在森林小径上常见的噩梦外，恶魔还会在大门巡逻并攻击任何试图关闭位面门的人。</P></body>
+Schnieb（混乱的中立轻足半身人法师）相信感染萨瓦利尔森林的诅咒创造了通往下层位面的传送门。她雇用角色与她一起探索森林，以找到并绘制这些大门。除了在森林小径上常见的噩梦外，恶魔还会在大门巡逻并攻击任何试图关闭位面门的人。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

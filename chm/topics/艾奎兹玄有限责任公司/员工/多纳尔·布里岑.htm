@@ -78,7 +78,45 @@ XP）<BR><STRONG>捍卫挑战（短休或长休后充能）。</STRONG>作为一
 
 + 3） 挥砍伤害。<BR><STRONG>强酸吐息。</STRONG>多纳尔在30尺宽的5尺长的线上吐出强酸。该范围中的每个生物都必须进行 DC 
 
-12敏捷豁免投掷，失败会受到 7 （2d6） 强酸伤害，成功时受到一半的伤害。</P></body>
+12敏捷豁免投掷，失败会受到 7 （2d6） 强酸伤害，成功时受到一半的伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

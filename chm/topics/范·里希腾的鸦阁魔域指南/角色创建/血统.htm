@@ -148,7 +148,45 @@ Me?<BR>
 
   </SPAN></B>这一章节提供的血统表现了从根本上将你改变的物理与魔法转化。你可能看上去仍然和过去一样，但已经极大改变了，这种改变盖过了你原有的肉体与魔法能力。比如，一个龙裔变成了一名半血裔，吸血鬼的不死之力在其体内奔涌的同时，他便也失去了与自己龙类先祖的联系。这名龙裔曾经可以呼出毁灭性的能量，现在则不再如此，而是感到体内强烈的饥渴，其啃咬如今可以吸取生命。一些种族特质可以在你获得血统后得到保留，先祖遗赠特质会列出哪些特质是可以留下的。当你考虑在角色创建完成后再获得血统会如何让你的角色改变的细节时，请谨记这一点。</SPAN><SPAN 
 
-style="mso-bidi-font-family:  'Times New  Roman'"   ><o:p></O:P></SPAN></P></body>
+style="mso-bidi-font-family:  'Times New  Roman'"   ><o:p></O:P></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -126,7 +126,45 @@ Conflict</STRONG>：角色间的冲突有时是玩家间冲突的表象。这些
 
   Roleplaying</STRONG>：角色间的冲突并不总是不好的。例如：该怎么处置俘虏的敌人、或是该在即将到来的战争中支持哪方势力——角色（和玩家）对于这样的问题上产生异议是完全正常且可行的。不过如果异议发展得太过火了，请暂停游戏，跳出角色的视角，讨论玩家们想要如何进行。</DIV></LI></UL>
 
-<P>如果你无法辨识角色或玩家们是因上述哪种情况而冲突，请和他们谈一谈。。</P></body>
+<P>如果你无法辨识角色或玩家们是因上述哪种情况而冲突，请和他们谈一谈。。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

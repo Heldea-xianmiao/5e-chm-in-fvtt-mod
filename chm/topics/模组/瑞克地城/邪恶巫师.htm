@@ -38,7 +38,45 @@ html,body {
 
 魅力11（+0）<BR>豁免：智力+5，感知+3<BR>技能：奥秘+5，历史+5<BR>感官：被动察觉11<BR>语言：通用语，龙语，矮人语，精灵语<BR>挑战等级：1（200XP）</P>
 
-<P><STRONG>施法Spellcasting。</STRONG>巫师是一名4级施法者，使用智力作为其施法属性（法术豁免DC13；法术攻击加值+5）。巫师准备着以下法师法术列表的法术：<BR>戏法（随意）：光亮术，法师之手，电爪<BR>1环（4法术位）：魅惑类人，魔法飞弹<BR>2环（3法术位）：定身类人，迷踪步<BR><STRONG><FONT color=#800000>动作Actions<BR></FONT>长棍Quarterstaff。</STRONG>近战武器攻击：命中+1，触及5尺，单一目标。命中：3（1d8-1）钝击伤害</P></body>
+<P><STRONG>施法Spellcasting。</STRONG>巫师是一名4级施法者，使用智力作为其施法属性（法术豁免DC13；法术攻击加值+5）。巫师准备着以下法师法术列表的法术：<BR>戏法（随意）：光亮术，法师之手，电爪<BR>1环（4法术位）：魅惑类人，魔法飞弹<BR>2环（3法术位）：定身类人，迷踪步<BR><STRONG><FONT color=#800000>动作Actions<BR></FONT>长棍Quarterstaff。</STRONG>近战武器攻击：命中+1，触及5尺，单一目标。命中：3（1d8-1）钝击伤害</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

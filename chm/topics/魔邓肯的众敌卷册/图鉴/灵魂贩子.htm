@@ -72,7 +72,45 @@ dagger。</STRONG>近战武器攻击：命中+7，触及5尺，一个目标。�
 
 4~6）。</STRONG>灵魂贩子施放出一个60尺立方体的冲击波，该区域中的每一个生物必须成功于一个DC 
 
-16的体质豁免，失败则受到45（10d8）的心灵伤害，并获得1个力竭等级。若豁免成功，则受到22（5d8）心灵伤害。</P></body>
+16的体质豁免，失败则受到45（10d8）的心灵伤害，并获得1个力竭等级。若豁免成功，则受到22（5d8）心灵伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

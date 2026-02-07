@@ -64,7 +64,45 @@ People（中级）</EM></STRONG>。从迪亚斯托克、卡摩达Kamordah和特�
 
 <BR>这些始作俑者的狼人居住在长青林的阴暗深处，自称为“月亮兄弟会 Brotherhood Of The Moon 
 
-”，他们的目标旨在将诅咒传播到整个敦达里安帝国。他们坚信他们自己的使命将使类人生物进化成更强大、更完美的种族。</P></body>
+”，他们的目标旨在将诅咒传播到整个敦达里安帝国。他们坚信他们自己的使命将使类人生物进化成更强大、更完美的种族。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

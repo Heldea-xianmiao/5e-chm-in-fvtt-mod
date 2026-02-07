@@ -284,9 +284,47 @@ style="LAYOUT-GRID:  15.6pt none; MARGIN-RIGHT: 0px" dir=ltr><p class=MsoNormal>
 
 </span></span><span style="FONT-SIZE: 9.5pt; FONT-FAMILY: 宋体; COLOR: black"><span lang=EN-US><FONT size=3>如果你的DM同意，你可以把转变成邪恶阵营的守护/天罚阿斯莫改为堕落阿斯莫。如果你这么做了，替换你的亚种能力为堕落阿斯莫，包括属性值提升。<BR>同样，如果你的堕落阿斯莫转变为善良阵营，你的DM可能允许你成为一个守护或者天罚阿斯莫。</FONT>
 
-</span></span></p></blockquote></body>
+</span></span></p></blockquote><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

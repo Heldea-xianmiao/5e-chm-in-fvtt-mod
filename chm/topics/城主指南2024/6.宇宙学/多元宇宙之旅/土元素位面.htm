@@ -64,7 +64,45 @@ margin-bottom: 16px;
 
 Adventures</FONT></H3>
 
-<P>土象征着稳定、坚韧、不屈的意志与传统。土之位面在元素位面之环中，与气之位面位于对立的位置，体现了其与气之本质截然相反——它拒绝变动、飞扬与自由。<BR>然而，在邪恶元素的视角中，土象征着无情的毁灭。他们视其为摧毁一切的力量，毫不犹豫地碾碎古老的制度与尊崇的传统。邪土教徒渴望掌控地震、陷坑与山崩的力量，用以摧毁文明的创造，并相信大地渴望沐浴那些未曾恭敬膜拜者的鲜血。</P></body>
+<P>土象征着稳定、坚韧、不屈的意志与传统。土之位面在元素位面之环中，与气之位面位于对立的位置，体现了其与气之本质截然相反——它拒绝变动、飞扬与自由。<BR>然而，在邪恶元素的视角中，土象征着无情的毁灭。他们视其为摧毁一切的力量，毫不犹豫地碾碎古老的制度与尊崇的传统。邪土教徒渴望掌控地震、陷坑与山崩的力量，用以摧毁文明的创造，并相信大地渴望沐浴那些未曾恭敬膜拜者的鲜血。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

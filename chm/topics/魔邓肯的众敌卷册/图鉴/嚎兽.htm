@@ -76,7 +76,45 @@ Actions<BR><STRONG>多重攻击Multiattack</STRONG>
 
 Howl(充能6) 
 
-.</STRONG>嚎兽发出恸哭一般的嚎叫，在60尺锥状区域内每个未耳聋的生物必须成功通过DC16的感知豁免否则直到嚎兽的下一个回合结束陷入恐慌。当一个生物因为嚎哭陷入恐慌时，其速度减半并陷入失能。豁免成功的目标在接下来24小时内免疫所有嚎兽的裂魂哭嚎能力。</P></body>
+.</STRONG>嚎兽发出恸哭一般的嚎叫，在60尺锥状区域内每个未耳聋的生物必须成功通过DC16的感知豁免否则直到嚎兽的下一个回合结束陷入恐慌。当一个生物因为嚎哭陷入恐慌时，其速度减半并陷入失能。豁免成功的目标在接下来24小时内免疫所有嚎兽的裂魂哭嚎能力。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

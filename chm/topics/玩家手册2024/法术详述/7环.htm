@@ -500,7 +500,45 @@ Target。</STRONG>
 
 你和你的队伍（或目标物件）出现在目的地随机方向上2d12里距离的一点。骰1d8来判误差出现在目的地的哪个方向：1，正东；2，东南；3，正南；4，西南；5，正西；6，西北；7，正北；8，东北。<BR><STRONG>抵达地点On 
 
-Target。</STRONG>你和你的队伍（或目标物件）出现在你欲抵达的地点。</P></body>
+Target。</STRONG>你和你的队伍（或目标物件）出现在你欲抵达的地点。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

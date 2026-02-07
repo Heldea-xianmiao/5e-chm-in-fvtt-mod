@@ -52,7 +52,45 @@ Pattern</FONT></EM><BR><FONT color=#800000><STRONG>附赠动作Bonus
 
 Actions</STRONG></FONT><BR><STRONG>惑控之仪Enchanting 
 
-Presence。</STRONG>每个身处缪斯乐师周围30尺范围内的生物都必须通过一次DC13的感知豁免。豁免失败时，该生物将陷入 <STRONG>魅惑Charmed</STRONG> 状态，持续1分钟。豁免成功时，该生物接下来的24小时内免疫任何缪斯乐师的惑控之仪动作项。<BR>当缪斯乐师对自己魅惑的生物造成伤害时，该魅惑生物可以重复上述的豁免，豁免成功时结束其身上的魅惑效应。</P></body>
+Presence。</STRONG>每个身处缪斯乐师周围30尺范围内的生物都必须通过一次DC13的感知豁免。豁免失败时，该生物将陷入 <STRONG>魅惑Charmed</STRONG> 状态，持续1分钟。豁免成功时，该生物接下来的24小时内免疫任何缪斯乐师的惑控之仪动作项。<BR>当缪斯乐师对自己魅惑的生物造成伤害时，该魅惑生物可以重复上述的豁免，豁免成功时结束其身上的魅惑效应。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

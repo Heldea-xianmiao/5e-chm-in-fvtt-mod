@@ -212,7 +212,45 @@ Moon.</STRONG>你短暂地辐射出月光。每个你选择的距你30尺内的�
 
 Moon.</STRONG>你瞬间散发出幽暗。每个你选择的距你30尺内的生物必须通过一次DC对抗你法术豁免DC的敏捷豁免，否则受到3d10暗蚀伤害，并且速度降为0至其下一回合结束。此外，你变为隐形，直至你下一回合结束。你进行攻击或施放法术后，隐形也会立刻结束。<BR><STRONG>新月Crescent 
 
-Moon.</STRONG>你魔法性地传送至你60尺内可见的未被占据位置。你可以携带一个距你5尺内的可见自愿生物。该生物传送至你传送目的地内5尺你选择的可见未被占据位置。此外，直至你下一回合开始，你和该生物获得所有伤害的抗性。<BR>一旦你使用了上述附赠动作，在你完成一次长休之前再次使用需要消耗5点术法点。</P></body>
+Moon.</STRONG>你魔法性地传送至你60尺内可见的未被占据位置。你可以携带一个距你5尺内的可见自愿生物。该生物传送至你传送目的地内5尺你选择的可见未被占据位置。此外，直至你下一回合开始，你和该生物获得所有伤害的抗性。<BR>一旦你使用了上述附赠动作，在你完成一次长休之前再次使用需要消耗5点术法点。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -36,7 +36,45 @@ html,body {
 
 <strong>救赎Redemption。阿斯忒瑞亚Asteria</strong>（见22章）相信寂灭之死惧大君可能是她年轻时认识的某人，而如果她是对的，她确信对方能够够被带回到善良的正道上来。阿斯忒瑞亚请求冒险者们潜入衰朽花园，以了解大君的真实身份。如果大君是阿斯忒瑞亚怀疑的人，她希望角色们能将她引出来，带到一个她能够和大君正面对抗的地方。</p><p>
 
-<strong>不知情的棋子Unwitting Pawn。</strong>角色们由一位富有的赞助人维林·奥克雷勋爵招募，寻找一副万象无常牌。他声称自己是一副曾经拥有这副牌的骑士的后裔，有权继承先祖的遗产，并愿意支付丰厚的费用。维林派角色们进行各种各样的冒险，寻找万象无常牌的蛛丝马迹。但当他们最终找到它并归还给维林时，他们得知维林是一位死惧刑徒的代理人，希望获得吸血鬼或其他形式的永生，作为交出万象无常牌的奖励。</p></BLOCKQUOTE></body>
+<strong>不知情的棋子Unwitting Pawn。</strong>角色们由一位富有的赞助人维林·奥克雷勋爵招募，寻找一副万象无常牌。他声称自己是一副曾经拥有这副牌的骑士的后裔，有权继承先祖的遗产，并愿意支付丰厚的费用。维林派角色们进行各种各样的冒险，寻找万象无常牌的蛛丝马迹。但当他们最终找到它并归还给维林时，他们得知维林是一位死惧刑徒的代理人，希望获得吸血鬼或其他形式的永生，作为交出万象无常牌的奖励。</p></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

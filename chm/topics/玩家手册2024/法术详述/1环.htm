@@ -406,7 +406,45 @@ Water。</STRONG>你使施法距离内一个打开的容器里至多10加仑水�
 
 <H4 id="Wrathful_Smite">激愤斩｜Wrathful Smite</H4>
 
-<P><EM>一环 死灵（圣武士）</EM> <BR><STRONG>施法时间：</STRONG>附赠动作，当你使用近战武器或徒手打击命中一个生物后立即执行<BR><STRONG>施法距离：</STRONG>自身<BR><STRONG>法术成分：</STRONG>V<BR><STRONG>持续时间：</STRONG>1分钟<BR>被该次攻击检定命中的目标会在此次攻击中额外受到1d6点暗蚀伤害，并且目标必须通过一次感知豁免检定，否则直到法术结束为止陷入<U>恐慌</U>状态。在自己的每回合结束时，被<U>恐慌</U>的目标可以重复此豁免，成功则结束该法术对自身的影响。<BR><STRONG>升环施法。</STRONG>使用的法术位每比一环高一环，伤害就提高1d6。</P></U></EM></body>
+<P><EM>一环 死灵（圣武士）</EM> <BR><STRONG>施法时间：</STRONG>附赠动作，当你使用近战武器或徒手打击命中一个生物后立即执行<BR><STRONG>施法距离：</STRONG>自身<BR><STRONG>法术成分：</STRONG>V<BR><STRONG>持续时间：</STRONG>1分钟<BR>被该次攻击检定命中的目标会在此次攻击中额外受到1d6点暗蚀伤害，并且目标必须通过一次感知豁免检定，否则直到法术结束为止陷入<U>恐慌</U>状态。在自己的每回合结束时，被<U>恐慌</U>的目标可以重复此豁免，成功则结束该法术对自身的影响。<BR><STRONG>升环施法。</STRONG>使用的法术位每比一环高一环，伤害就提高1d6。</P></U></EM><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

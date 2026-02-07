@@ -76,7 +76,45 @@ html,body {
 
 4）穿刺伤害。<BR><STRONG>爪击（限混合形态）。</STRONG>近战武器攻击：+6命中，触及5尺，一个目标。命中：7（1d6 + 
 
-4）挥砍伤害。<BR><STRONG>心灵尖啸（限混合形式；短或长休后充能）。</STRONG>深渊子嗣发出可怕的尖叫声，300尺以内都能听到。深渊子嗣30尺以内的生物必须通过DC13的感知豁免，否则震慑直到深渊子嗣的下一回合结束。在水中，心灵尖啸也能如心灵感应般传送其24小时内的记忆，无论距离远近，只要它和目标位于同一个水域中即可。</P></body>
+4）挥砍伤害。<BR><STRONG>心灵尖啸（限混合形式；短或长休后充能）。</STRONG>深渊子嗣发出可怕的尖叫声，300尺以内都能听到。深渊子嗣30尺以内的生物必须通过DC13的感知豁免，否则震慑直到深渊子嗣的下一回合结束。在水中，心灵尖啸也能如心灵感应般传送其24小时内的记忆，无论距离远近，只要它和目标位于同一个水域中即可。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

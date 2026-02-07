@@ -82,7 +82,44 @@ Sculpt Spells</FONT>
 
 <p><STRONG><FONT color=#800000>14级：超限导能 Overchannel</FONT> 
 
-</STRONG><BR>你能增强你法术的力量。当你用一个一至五环的法术位施展一个会造成伤害的法师法术时，你能在施展它的回合中令其造成的伤害取最大值。<BR>你首次这么做时不会承受任何负面效应。但如果你在完成一次长休前再次使用该特性，则你会在施展法术后立即受到每环阶2d12暗蚀伤害。该伤害无视任何抗性或免疫。<BR>你在完成一次长休前每多使用此特性一次，每环阶造成的伤害就提升1d12。</p></body>
+</STRONG><BR>你能增强你法术的力量。当你用一个一至五环的法术位施展一个会造成伤害的法师法术时，你能在施展它的回合中令其造成的伤害取最大值。<BR>你首次这么做时不会承受任何负面效应。但如果你在完成一次长休前再次使用该特性，则你会在施展法术后立即受到每环阶2d12暗蚀伤害。该伤害无视任何抗性或免疫。<BR>你在完成一次长休前每多使用此特性一次，每环阶造成的伤害就提升1d12。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
@@ -91,6 +128,7 @@ Sculpt Spells</FONT>
 
 
 </html>
+
 
 
 

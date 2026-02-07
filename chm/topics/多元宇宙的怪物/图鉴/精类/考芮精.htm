@@ -76,7 +76,45 @@ Korred</strong></font></FONT> </p><p>
 
 Actions</FONT></STRONG><br>
 
-<strong>命令发绳Command Hair。</strong>考芮精拥有至少50尺以其头发编织的绳索。以一个附赠动作，考芮精可以命令一条30尺内的这种绳索移动20尺，随后纠缠一名它可以看见的大型或更小的生物。目标必须通过DC13的敏捷豁免检定或者被绳索擒抱（挣脱DC13）。目标被束缚直到擒抱结束。考芮精可以用它的附赠动作解放目标，如果考芮精死亡或者陷入失能目标也会被解放。 一条考芮精发绳拥有20AC和20点HP。如果它剩有至少1点HP且考芮精还存活，在每个考芮精的回合开始时它可以恢复1点HP。如果绳索的HP下降到0则被摧毁。</p></body>
+<strong>命令发绳Command Hair。</strong>考芮精拥有至少50尺以其头发编织的绳索。以一个附赠动作，考芮精可以命令一条30尺内的这种绳索移动20尺，随后纠缠一名它可以看见的大型或更小的生物。目标必须通过DC13的敏捷豁免检定或者被绳索擒抱（挣脱DC13）。目标被束缚直到擒抱结束。考芮精可以用它的附赠动作解放目标，如果考芮精死亡或者陷入失能目标也会被解放。 一条考芮精发绳拥有20AC和20点HP。如果它剩有至少1点HP且考芮精还存活，在每个考芮精的回合开始时它可以恢复1点HP。如果绳索的HP下降到0则被摧毁。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

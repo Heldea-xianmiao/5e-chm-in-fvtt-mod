@@ -12,7 +12,45 @@
 
 <H1>第三章：地下城主工具箱 DM's Toolbox</H1>
 
-<P> 第一章和第二章阐述了地下城主的基础工作，而本章将讨论一些在你主持游戏时可能出现的要素，例如追逐、门、还有陷阱等元素。本章还提供了关于如何使你创作的背景、生物、魔法物品、法术能更好地取悦玩家的建议。</P></body>
+<P> 第一章和第二章阐述了地下城主的基础工作，而本章将讨论一些在你主持游戏时可能出现的要素，例如追逐、门、还有陷阱等元素。本章还提供了关于如何使你创作的背景、生物、魔法物品、法术能更好地取悦玩家的建议。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -108,7 +108,45 @@ D6   缺陷<br>
 
 <P></P><p><font size=4><font color=#800000><strong>变体：万象会特工</strong></font></font><br>
 
-你的技能组可能会与许多扣环帮成员相似，但是你是在为一个远更复杂——甚至也更加隐秘的犯罪组织工作。作为塔尔多雷的一位万象会特工，你可能已被给予了一项特殊任务以促进该组织向荒州以外扩张的渴求，或者让其在与扣环帮的竞争中取得优势。而且，你了解让你的行动向罪犯同僚们与执法力量保持隐秘的智慧，因为如果你的真实身份暴露了的话，扣环帮的特工们可不会对你手下留情。</p></body>
+你的技能组可能会与许多扣环帮成员相似，但是你是在为一个远更复杂——甚至也更加隐秘的犯罪组织工作。作为塔尔多雷的一位万象会特工，你可能已被给予了一项特殊任务以促进该组织向荒州以外扩张的渴求，或者让其在与扣环帮的竞争中取得优势。而且，你了解让你的行动向罪犯同僚们与执法力量保持隐秘的智慧，因为如果你的真实身份暴露了的话，扣环帮的特工们可不会对你手下留情。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -788,9 +788,47 @@ to Use?<o:p></o:p></span></b></p>
 
 
 
-<p class=MsoNormal>尽管本书中收集了大量的怪物信息，你仍可能在为某个冒险选择合适生物时感到困惑。事实上，你可以随意调整现有的生物，以使其更适合你的使用环境。你甚至可以从不同怪物身上借鉴一两项特性，或是使用书中提及的某个变体或模板。另外，在修改怪物或是套用模板后，记得对其相应的挑战等级进行调整。<BR>关于如何自定生物以及计算其挑战等级的进一步建议，可以参考《城主指南》相应内容。</p></blockquote></body>
+<p class=MsoNormal>尽管本书中收集了大量的怪物信息，你仍可能在为某个冒险选择合适生物时感到困惑。事实上，你可以随意调整现有的生物，以使其更适合你的使用环境。你甚至可以从不同怪物身上借鉴一两项特性，或是使用书中提及的某个变体或模板。另外，在修改怪物或是套用模板后，记得对其相应的挑战等级进行调整。<BR>关于如何自定生物以及计算其挑战等级的进一步建议，可以参考《城主指南》相应内容。</p></blockquote><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

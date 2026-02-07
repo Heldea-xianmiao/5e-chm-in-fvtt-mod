@@ -38,7 +38,45 @@ Vale中永远存在的视觉地标。缕缕细细的蒸汽从散布在这座大�
 
 Call附近的北部土地已经被门提里下面的岩石放射出的元素力量所改变。<BR>这些地下热量的来源对帝国人民来说是个谜。学者们提出了许多理论，认为门提里可能是一座年轻的火山——或者它位于火元素位面的裂缝之上。<BR>他们的理论都不正确。事实是，暮光凤凰，阿斯蒙蒂斯的坐骑，被囚禁在山下的洞穴深处，她的监狱被火焰巨城乌索斯Vuthos包围着。自从卡摩达城建立以来，迪斯亚特Desirat的存在就一直影响着卡摩达的人民，她的讯息在梦中召唤着那些意志薄弱的人，敦促他们深入山底，把她当作神明来崇拜。 
 
-</P></body>
+</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

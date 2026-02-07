@@ -86,7 +86,45 @@ Peryroyl。那些致力于保护聚居地和旅行者的个体则会敬拜阿尔
 
 Rangers</FONT></STRONG><BR>大多数矮人喜欢在大山底下活动，而不是在地表或幽暗地域的野外漫游。矮人游荡者最常见的情况是，某个被自己氏族要塞放逐的盾矮人，或是某个没有氏族的矮人正四处寻找安身立命之地。有时候，矮人游侠还会是勘探世界寻找各种新矿石的专家。不管如何，这些矮人通常都是被两位矮人神纳入其下：马瑟摩·杜温Marthammor 
 
-Duin和杜马松Dumathoin。</P></body>
+Duin和杜马松Dumathoin。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

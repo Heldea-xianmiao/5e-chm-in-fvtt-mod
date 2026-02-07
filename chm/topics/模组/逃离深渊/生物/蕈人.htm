@@ -42,7 +42,45 @@ Spores）（1/日）。</STRONG>蕈人释放一片孢子云，并填满以自身
 
 <P><STRONG>狂喜孢子（Euphoria 
 
-Spores）（1/日）。</STRONG>蕈人释放一片孢子云，并填满以自身为中心的20尺半径的球形区域。区域内生物必须进行一个体质豁免检定，豁免失败者将持续中毒1分钟。豁免检定的DC为8+蕈人体质调整值+蕈人熟练加值。该生物在他的每个回合结束时可以再次进行该豁免，并在豁免成功时结束该伤害效果。当该效果结束时，该生物将获得一个等级的力竭。</P></body>
+Spores）（1/日）。</STRONG>蕈人释放一片孢子云，并填满以自身为中心的20尺半径的球形区域。区域内生物必须进行一个体质豁免检定，豁免失败者将持续中毒1分钟。豁免检定的DC为8+蕈人体质调整值+蕈人熟练加值。该生物在他的每个回合结束时可以再次进行该豁免，并在豁免成功时结束该伤害效果。当该效果结束时，该生物将获得一个等级的力竭。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

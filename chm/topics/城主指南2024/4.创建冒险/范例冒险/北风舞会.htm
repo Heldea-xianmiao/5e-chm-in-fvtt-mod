@@ -72,7 +72,45 @@ Warriors</U>
 
 <P><STRONG>尾声Conclusion</STRONG>。三支舞过后，北风舞会男爵便会现身。如果此时角色们的声望值已达到6，他便会为每名角色降下<STRONG><FONT color=#0000ff>北风舞会护咒</FONT></STRONG>（见第三章“<STRONG>超自然赠礼</STRONG>”部分）——角色们可以施展一次3环版本的法术<U><EM>冰刃Ice 
 
-Knife</EM></U>，随后此护咒便会消失。最后，奖励每名角色1,700xp。</P></body>
+Knife</EM></U>，随后此护咒便会消失。最后，奖励每名角色1,700xp。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

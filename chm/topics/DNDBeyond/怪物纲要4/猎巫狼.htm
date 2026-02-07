@@ -48,7 +48,45 @@ Magic。</STRONG>猎巫狼能够感觉到自身120尺内魔法的存在和具体
 
 Howl（充能5~6）。</STRONG>猎巫狼发出一阵可怖的嗥叫，30尺内能非怪兽的生物都必须进行一次感知豁免。失败的情况下，生物受到24（7d6）心灵伤害并直到下个回合结束为止在一次法术专注的体质豁免中具有劣势。成功的情况下，该生物仅受到一半伤害。<BR><FONT color=#808080>（译注：*漏写了DC，猜测为13或12（使用体质或感知作为关键属性））</FONT><BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>追猎魔法Spell 
 
-Stalk。</STRONG>在猎巫狼120尺内一个生物施展法术之后，猎巫狼立即以魔法传送到该生物5尺内它可见的一个未占据空间中，并且它还能对该生物进行一次啃咬攻击。</P></body>
+Stalk。</STRONG>在猎巫狼120尺内一个生物施展法术之后，猎巫狼立即以魔法传送到该生物5尺内它可见的一个未占据空间中，并且它还能对该生物进行一次啃咬攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -806,7 +806,45 @@ DC，</P>
 
 <P>检定的DC取决于地面有多清晰地显示了生物经过的痕迹。痕迹明显的情况下，例如沿着泥泞的道路跟随军队，则无需掷骰。除非被追踪的生物留下了明显的足迹，不然在裸露的岩石上发现痕迹会极具挑战性。此外，时间的流逝通常会使追踪变得更加困难。你可以在没有痕迹可循的情况下，断定进行追踪是不可能的。<BR>使用旅行地形表的搜索DC列来作为设置追踪 DC 
 
-的起点。如果你愿意，可以根据难度评估来选择DC——如果距离这个生物的经过已经过去几天，则难度较高；如果生物留下了明显的痕迹，例如血迹，则难度较低。当需要追踪的足迹不止一组时，你可以让检定获得优势；如果足迹一片穿过繁杂的区域，则使其获得劣势。<BR>如果检定失败，角色会失去这条路径，但可以通过仔细搜索该区域来再次寻找。在狭窄区域（如一连串的洞穴）中寻找踪迹需要10分钟，而在户外则需要1小时。</P></body>
+的起点。如果你愿意，可以根据难度评估来选择DC——如果距离这个生物的经过已经过去几天，则难度较高；如果生物留下了明显的痕迹，例如血迹，则难度较低。当需要追踪的足迹不止一组时，你可以让检定获得优势；如果足迹一片穿过繁杂的区域，则使其获得劣势。<BR>如果检定失败，角色会失去这条路径，但可以通过仔细搜索该区域来再次寻找。在狭窄区域（如一连串的洞穴）中寻找踪迹需要10分钟，而在户外则需要1小时。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

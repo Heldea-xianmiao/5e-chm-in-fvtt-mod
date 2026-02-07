@@ -66,7 +66,45 @@ Curse。</STRONG>飞首以自身周围5尺范围内的一个处于 <FONT color=g
 
 restoration</EM></FONT>、或是类似的法术便可以终止这一诅咒，并恢复其魅力属性。<BR><STRONG>汝之诡脸Horrific 
 
-Reflection（充能5~6）。</STRONG>飞首将头拟态成飞首周围120尺范围内它能看见的一个类人生物的模样。那个生物必须通过一次DC12的感知豁免，豁免失败将受到10（3d6）点心灵伤害并陷入 <FONT color=green><STRONG>恐慌Frightened</STRONG></FONT> 状态，持续1小时。若飞首的专注中断（如同专注于一个法术），恐慌效应也将提前结束。如果目标通过了这次豁免，或是它身上的汝之诡脸效应结束，这一目标就将在接下来的1小时内，免疫于任何诡脸飞首的汝之诡脸动作项。</P></body>
+Reflection（充能5~6）。</STRONG>飞首将头拟态成飞首周围120尺范围内它能看见的一个类人生物的模样。那个生物必须通过一次DC12的感知豁免，豁免失败将受到10（3d6）点心灵伤害并陷入 <FONT color=green><STRONG>恐慌Frightened</STRONG></FONT> 状态，持续1小时。若飞首的专注中断（如同专注于一个法术），恐慌效应也将提前结束。如果目标通过了这次豁免，或是它身上的汝之诡脸效应结束，这一目标就将在接下来的1小时内，免疫于任何诡脸飞首的汝之诡脸动作项。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

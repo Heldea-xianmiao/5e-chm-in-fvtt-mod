@@ -34,7 +34,45 @@ Aid。</STRONG>
 
 <strong>天文台的协助Observatory Assistance。</strong>附近天文台的学者们——比如第十三章中描述的天文台——用望远镜发现了一颗在夜空中漂流的不明天体。天文台呼吁勇敢的冒险者们使用他们的传送设备对其进行调查。</p><p>
 
-<strong>炽天之壁救援队Solar Bastion Rescue。</strong>炽天之壁的天使领袖希拉里恩（见第十章）最近派了三位骑士去调查球牢城堡，但他们却没有回来。在得知一位角色最近在万象无常牌抽到城堡牌后，希拉里恩提出将队伍传送到球牢内去拯救他们的朋友——并且，他希望还能找回失踪的骑士。</p></body>
+<strong>炽天之壁救援队Solar Bastion Rescue。</strong>炽天之壁的天使领袖希拉里恩（见第十章）最近派了三位骑士去调查球牢城堡，但他们却没有回来。在得知一位角色最近在万象无常牌抽到城堡牌后，希拉里恩提出将队伍传送到球牢内去拯救他们的朋友——并且，他希望还能找回失踪的骑士。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -50,7 +50,45 @@ Tusks.</STRONG>近战武器攻击： 命中+8，触及10尺，单一目标。若
 
 12 (2d6 + 5)钝击伤害加 7 (2d6)雷鸣伤害。<BR><STRONG>闪电束Lighting 
 
-Bolt（充能6）：</STRONG>戈索克向120尺内一个可见的生物射出一道闪电。目标必须通过DC15的敏捷豁免，否则受到18（4d8）点闪电伤害，通过豁免则该伤害减半。</P></body>
+Bolt（充能6）：</STRONG>戈索克向120尺内一个可见的生物射出一道闪电。目标必须通过DC15的敏捷豁免，否则受到18（4d8）点闪电伤害，通过豁免则该伤害减半。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

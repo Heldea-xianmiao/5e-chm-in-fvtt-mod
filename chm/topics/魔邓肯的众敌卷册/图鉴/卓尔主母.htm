@@ -82,7 +82,45 @@ Rod。</STRONG>近战武器攻击：命中+9，触及15尺，单一目标。命�
 
 Staff。</STRONG>卓尔使用恶魔法杖发动一次攻击<BR><STRONG>役使恶魔（消耗2动作）。</STRONG>在卓尔30尺内的一个友军恶魔使用反应对卓尔选择的目标进行一次攻击，卓尔必须能看到目标<BR><STRONG>施法（消耗1-3动作）Cast a Spell (Costs 
 
-1-3 Actions)。</STRONG>卓尔使用一个法术位释放一个1到3环法术。每环消耗1传奇动作次数。</P></body>
+1-3 Actions)。</STRONG>卓尔使用一个法术位释放一个1到3环法术。每环消耗1传奇动作次数。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

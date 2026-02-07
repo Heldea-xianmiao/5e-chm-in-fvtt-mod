@@ -122,7 +122,45 @@ Water</FONT></STRONG></P>
 
 <P><STRONG><FONT color=#800000>矮人 <BR></FONT></STRONG>大葱土豆浓汤<BR>熏香肠酸菜配矮人芥末<BR>矮人大饼<BR>黑布丁</P>
 
-<P><STRONG><FONT color=#800000>半身人</FONT></STRONG> <BR>芝士三明治配浓香番茄汤<BR>落叶林沙拉<BR>蜜汁火腿加菠萝酱<BR>央土玫瑰苹果和黑莓派</P></body>
+<P><STRONG><FONT color=#800000>半身人</FONT></STRONG> <BR>芝士三明治配浓香番茄汤<BR>落叶林沙拉<BR>蜜汁火腿加菠萝酱<BR>央土玫瑰苹果和黑莓派</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -50,7 +50,45 @@ Army</FONT></STRONG><BR>迈勒提斯重装步兵在一种宗教热情的氛围�
 
 <P><STRONG><FONT color=#800000>迈勒提斯的非人类 Nonhumans in 
 
-Meletis</FONT></STRONG><BR>迈勒提斯致力于成为所有迈勒提斯人的灯塔。任何文化中的善良成员都被迈勒提斯的街道欢迎，城邦居民也努力去赢得邻居的信任。<BR>在所有城邦中，迈勒提斯拥有和塞连海中的屈冬最紧密的关系。几个屈冬社群把迈勒提斯的海港和隐蔽的珊瑚庇护所作为他们的家园。许多屈冬参加了不适合其他人的水上或水下工作，但寻找与海洋无关的工作的屈冬也在日益增加，屈冬餐厅，药剂师和虔敬军团成员越来越常见。<BR>迈勒提斯人和拉苟那族半人马保持着脆弱的和平，进行常规贸易。小群半人马在城邦市场开设短期商铺并不是稀奇的事，不过很少有在城里待上超过一两夜，多数人觉得这最多是种幽闭恐惧症。<BR>少有狮族会前往迈勒提斯，他们对这片土地除他们故事里存在的阿格诺玛克思的暴政外并没多少。在统领统治的年代里，狮族大多把迈勒提斯看作诅咒之地。近几年旅行前往这个城邦的狮族发现它已经改变了，变得有很大贸易和合作潜力，但是现在海没有迈勒提斯或狮族主动发起两个群体间的正式外交行为。<BR>绝大多数半羊人对迈勒提斯的哲学没有什么耐心，游览的主要目的是好奇或尽情玩乐。牛头人极少在迈勒提斯发现，不过怀着和平目的的牛头人也是被欢迎的。<BR>整个塞洛斯的人们都来参观迈勒提斯，在城邦建筑和哲学讨论中留下自己的标记。</P></body>
+Meletis</FONT></STRONG><BR>迈勒提斯致力于成为所有迈勒提斯人的灯塔。任何文化中的善良成员都被迈勒提斯的街道欢迎，城邦居民也努力去赢得邻居的信任。<BR>在所有城邦中，迈勒提斯拥有和塞连海中的屈冬最紧密的关系。几个屈冬社群把迈勒提斯的海港和隐蔽的珊瑚庇护所作为他们的家园。许多屈冬参加了不适合其他人的水上或水下工作，但寻找与海洋无关的工作的屈冬也在日益增加，屈冬餐厅，药剂师和虔敬军团成员越来越常见。<BR>迈勒提斯人和拉苟那族半人马保持着脆弱的和平，进行常规贸易。小群半人马在城邦市场开设短期商铺并不是稀奇的事，不过很少有在城里待上超过一两夜，多数人觉得这最多是种幽闭恐惧症。<BR>少有狮族会前往迈勒提斯，他们对这片土地除他们故事里存在的阿格诺玛克思的暴政外并没多少。在统领统治的年代里，狮族大多把迈勒提斯看作诅咒之地。近几年旅行前往这个城邦的狮族发现它已经改变了，变得有很大贸易和合作潜力，但是现在海没有迈勒提斯或狮族主动发起两个群体间的正式外交行为。<BR>绝大多数半羊人对迈勒提斯的哲学没有什么耐心，游览的主要目的是好奇或尽情玩乐。牛头人极少在迈勒提斯发现，不过怀着和平目的的牛头人也是被欢迎的。<BR>整个塞洛斯的人们都来参观迈勒提斯，在城邦建筑和哲学讨论中留下自己的标记。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

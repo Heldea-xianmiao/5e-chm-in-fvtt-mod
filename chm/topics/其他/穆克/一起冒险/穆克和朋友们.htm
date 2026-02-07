@@ -166,7 +166,45 @@ Fishbone</FONT></STRONG><BR>鱼刺领主曾用名古克 Guk。古克一直梦想
 
 有一天古克失踪了，有传言说他终于找到了大城市。 几年后，古克以鱼刺领主的身份回来了，他穿着人类的衣服，留着优雅的小胡子。 
 
-鱼刺领主讲了很多关于他们在大城市里经历的各种奇异冒险的故事。鱼刺领主勇敢、充满活力，是一位潇洒、大胆的冒险家。</P></body>
+鱼刺领主讲了很多关于他们在大城市里经历的各种奇异冒险的故事。鱼刺领主勇敢、充满活力，是一位潇洒、大胆的冒险家。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

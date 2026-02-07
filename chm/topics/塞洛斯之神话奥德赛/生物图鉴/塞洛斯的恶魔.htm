@@ -856,4 +856,41 @@ person，暗示术suggestion</FONT>  </span></i><span style="FONT-SIZE:
 
  12pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'; mso-font-kerning: 0.0000pt"><font face="宋体" >牧者唤出来自冥界的扭曲灵魂：</font>1d6只幽影shadow（数值见怪物图鉴，但没有日照敏感特性）出现在牧者20尺内的未占据空间中。幽影使用相同的先攻，在牧者行动后行动，并会战斗直到被摧毁。如果牧者死亡，它们也会消失。</span><span style="FONT-SIZE:
 
- 12pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'; mso-font-kerning: 0.0000pt"><o:p></o:p></span></p></div></body></html>
+ 12pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'; mso-font-kerning: 0.0000pt"><o:p></o:p></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

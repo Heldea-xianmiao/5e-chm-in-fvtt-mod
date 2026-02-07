@@ -46,7 +46,45 @@ shift（仅自身）</FONT></EM><BR><STRONG><FONT color=#800000>附赠动作 Bon
 
 Actions</FONT></STRONG><BR><STRONG>灵体分身Spectral 
 
-Duplicate（短休或长休后充能）。</STRONG>分灵妖在其60尺内其可见的未占据空间内创造出一个自己的灵体分身。分身存在期间，分灵妖陷入昏迷状态。一个分灵妖同时拥有的分身数上限为一。分身会在分身或分灵妖生命值降至0，或分灵妖将其解散（无需任何动作）时消失。<BR>分身具有与分灵妖相同的数据和知识，分身所经历的一切也会为分灵妖所知。分身造成的所有伤害都是心灵伤害。</P></body>
+Duplicate（短休或长休后充能）。</STRONG>分灵妖在其60尺内其可见的未占据空间内创造出一个自己的灵体分身。分身存在期间，分灵妖陷入昏迷状态。一个分灵妖同时拥有的分身数上限为一。分身会在分身或分灵妖生命值降至0，或分灵妖将其解散（无需任何动作）时消失。<BR>分身具有与分灵妖相同的数据和知识，分身所经历的一切也会为分灵妖所知。分身造成的所有伤害都是心灵伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

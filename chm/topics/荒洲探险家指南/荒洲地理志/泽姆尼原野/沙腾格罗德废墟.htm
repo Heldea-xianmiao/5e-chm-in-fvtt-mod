@@ -36,7 +36,45 @@ Arcanum的一座著名城市的破碎废墟，名为 沙腾格罗Shattengrod。
 
 大量的挖掘将坑扩大成一个螺旋形的洞，深入地下城市，揭开破碎的遗迹和被遗忘的秘密，以及一些经久不衰的阴影和饥饿的实体现在苏醒了。对有益发现的承诺促使王室和三头犬密会Cerberus 
 
-Assembly对废墟进行了深入研究，但雇佣兵的死亡已经引起了人们的关注，因为关于下面危险的谣言传播开来，并吓跑了许多可能的雇佣兵。</P></body>
+Assembly对废墟进行了深入研究，但雇佣兵的死亡已经引起了人们的关注，因为关于下面危险的谣言传播开来，并吓跑了许多可能的雇佣兵。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

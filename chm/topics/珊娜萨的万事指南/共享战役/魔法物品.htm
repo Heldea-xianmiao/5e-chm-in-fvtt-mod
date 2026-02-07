@@ -284,7 +284,45 @@ cellPadding=2 width=300 >
 
               
 
-     许多物品所需的财宝点远超玩家能在2小时或4小时冒险中能获得的多。为了购买那样的物品，玩家可以进行借贷以获取那件物品——接下来的冒险中，直到还完欠款为止获得的财宝点将全部被用于这件物品的欠款上。</P></body>
+     许多物品所需的财宝点远超玩家能在2小时或4小时冒险中能获得的多。为了购买那样的物品，玩家可以进行借贷以获取那件物品——接下来的冒险中，直到还完欠款为止获得的财宝点将全部被用于这件物品的欠款上。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

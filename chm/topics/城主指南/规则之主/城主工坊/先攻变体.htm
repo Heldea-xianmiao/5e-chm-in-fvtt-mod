@@ -610,7 +610,45 @@ style="mso-bidi-font-style: normal"><span lang=EN-US
 
 style="mso-bidi-font-family: Arial">Turns</span></i></b><b><i style="mso-bidi-font-style: normal"><span style="FONT-FAMILY: 黑体; mso-bidi-font-family: Arial">。</span></i></b>生物在自己的回合里正常移动，但必须执行其所选的动作项，或者选择不执行任何动作。</p></BLOCKQUOTE>
 
-<p class=MsoNormal>每人执行完自己的动作后，再重新开始该每个步骤。战斗中的每个人再分别选择动作，骰先攻，并按序列进行相应回合。</p></body>
+<p class=MsoNormal>每人执行完自己的动作后，再重新开始该每个步骤。战斗中的每个人再分别选择动作，骰先攻，并按序列进行相应回合。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

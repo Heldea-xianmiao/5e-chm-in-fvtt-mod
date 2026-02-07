@@ -34,7 +34,45 @@ html,body {
 
 style="DISPLAY: inline !important" >吉斯泽莱人与吉斯洋基人有着共同的祖先——一个被夺心魔摧毁并改造的，古老的民族。许多吉斯泽莱人居于混沌海之中，在这混乱的位面中塑造家园，以磨练它们的灵能力量。而此处描述的吉斯泽莱人经常穿越印记城与外域的传送门至其他位面旅行，有关其他吉斯泽莱人的描述见</SPAN><STRONG>《怪物图鉴》</STRONG><SPAN 
 
-style="DISPLAY: inline !important" >。</SPAN></P></body>
+style="DISPLAY: inline !important" >。</SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

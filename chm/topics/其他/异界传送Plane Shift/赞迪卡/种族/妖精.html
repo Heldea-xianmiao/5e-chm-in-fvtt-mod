@@ -86,5 +86,43 @@ Daya Magic。</STRONG>你掌握戏法<EM>颤栗之触chill
 
 touch</EM>。达到3级后，你可以每日使用一次<EM>脆弱诅咒hex</EM>。达到5级后，你可以每日使用一次法术<EM>黑暗术darkness</EM>。这些每日施展一次的法术其施法属性是感知。你必须完成一次长休才能再次以该特质施展这些法术。<BR><STRONG>精灵武器训练Elf 
 
-Weapon Training。</STRONG>你拥有长剑、短剑、短弓和长弓等武器的熟练项。s</DIV></BODY></HTML>
+Weapon Training。</STRONG>你拥有长剑、短剑、短弓和长弓等武器的熟练项。s</DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

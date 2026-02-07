@@ -148,7 +148,45 @@ Demon</FONT></STRONG><BR><EM>中型邪魔（恶魔），普遍混乱邪恶</EM><
 
 XP） 熟练加值+2</P>
 
-<P><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>啃咬Bite。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命中：11（2d8+2）点穿刺伤害。<BR><STRONG>呕吐Disgorge（充能6）。</STRONG>此恶魔以呕吐物充满15尺见方的空间。区域内的每个生物都必须成功通过一个DC11的敏捷豁免，豁免失败将承受11（2d10）点强酸伤害并在呕吐物中倒地。</P></body>
+<P><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>啃咬Bite。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命中：11（2d8+2）点穿刺伤害。<BR><STRONG>呕吐Disgorge（充能6）。</STRONG>此恶魔以呕吐物充满15尺见方的空间。区域内的每个生物都必须成功通过一个DC11的敏捷豁免，豁免失败将承受11（2d10）点强酸伤害并在呕吐物中倒地。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -58,7 +58,45 @@ Walk Road与天堂公路Havenpath Road交叉的地方是一群酒馆、客栈、
 
 Arrisgon的人类铁匠在他最近一次收集原材料的旅程中再也没有回来。威廉的家人雇佣了这些角色来寻找铁匠，他们通过他追踪到了耶罗萨。在调查过程中，他们发现其他几个孤独的旅行者在经过这座城市时失踪了。Velima 
 
-Shanglian，一个住在耶罗萨郊外隐藏巢穴的吸血鬼，她把旅行者变成了她的血裔。万象会Myriad与吸血鬼达成协议，将受害者送到她那里，以换取各种令人讨厌的任务的帮助。如果角色消灭了吸血鬼，他们就会成为万象会的敌人。<BR></P></body>
+Shanglian，一个住在耶罗萨郊外隐藏巢穴的吸血鬼，她把旅行者变成了她的血裔。万象会Myriad与吸血鬼达成协议，将受害者送到她那里，以换取各种令人讨厌的任务的帮助。如果角色消灭了吸血鬼，他们就会成为万象会的敌人。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

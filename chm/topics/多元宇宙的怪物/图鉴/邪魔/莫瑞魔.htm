@@ -50,7 +50,45 @@ Resistance。</STRONG>莫瑞魔对抗法术和其他魔法效应时的豁免骰�
 
 Crossbow。</STRONG>远程武器攻击：命中+4，射程100/400尺，单一目标。命中：7（1d10+2）点穿刺伤害。<BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>忠诚护卫Loyal 
 
-Bodyguard。</STRONG>当莫瑞魔5尺内的另一个邪魔被一个攻击骰投出命中时，莫瑞魔改为让自己被命中。</P></body>
+Bodyguard。</STRONG>当莫瑞魔5尺内的另一个邪魔被一个攻击骰投出命中时，莫瑞魔改为让自己被命中。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

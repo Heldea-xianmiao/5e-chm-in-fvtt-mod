@@ -134,7 +134,45 @@ style=" "><FONT size=3><FONT size=3><FONT size=3><FONT size=3><FONT size=3><SPAN
 
 style="FONT-SIZE: 10pt; COLOR: black"></SPAN></FONT></FONT></FONT></FONT></FONT><FONT size=3><FONT size=3><FONT size=3><FONT size=3><FONT size=3><SPAN 
 
-style="FONT-SIZE: 10pt; COLOR: black"><FONT size=3>一个叛逆的灵吸怪依然害怕吉斯的袭击，并且很可能开始建立自己的社群，以便更好地保持隐匿。它会聚集仆从，建立巢穴，并把守卫自己的领土作为头等大事。与社群的夺心魔不同的是，游荡的灵吸怪对那些并非自己同类的存在保有一种健康的尊重。它们会平等对待那些特别强大的生物和个体，而非将其作为敌人，并且会寻求与他们合作。一个叛逆的夺心魔可能会成为一个值得信赖的顾问或者一个强大的盟友，当然，只要它吃得饱饱的。然而，如果它再次落入一个主脑的支配之下，它所建立的任何联盟都会瓦解。</FONT></SPAN></P></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></body>
+style="FONT-SIZE: 10pt; COLOR: black"><FONT size=3>一个叛逆的灵吸怪依然害怕吉斯的袭击，并且很可能开始建立自己的社群，以便更好地保持隐匿。它会聚集仆从，建立巢穴，并把守卫自己的领土作为头等大事。与社群的夺心魔不同的是，游荡的灵吸怪对那些并非自己同类的存在保有一种健康的尊重。它们会平等对待那些特别强大的生物和个体，而非将其作为敌人，并且会寻求与他们合作。一个叛逆的夺心魔可能会成为一个值得信赖的顾问或者一个强大的盟友，当然，只要它吃得饱饱的。然而，如果它再次落入一个主脑的支配之下，它所建立的任何联盟都会瓦解。</FONT></SPAN></P></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

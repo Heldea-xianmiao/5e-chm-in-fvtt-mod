@@ -74,7 +74,45 @@ Obedience.</STRONG>一个臃肿魔除了进食之外毫无自己的兴趣，它�
 
 任何除了魔鬼以外在臃肿魔20尺内开始其回合的生物必须进行DC11的体质豁免。一个在两只或以上臃肿魔区域内的生物进行该体质豁免时具有劣势。在失败的情况下，该生物受到2（1d4）穿刺伤害。<BR><STRONG>饥饿驱使Hunger-driven。</STRONG>在九狱中，臃肿魔能完美地追踪任一在24小时内受到任何臃肿魔的虫群之云伤害的生物。<BR><STRONG><FONT color=#800000>动作 Action<BR></FONT>啃咬Bite。</STRONG> 近战武器攻击： 命中+5，触及 5尺，单一目标。伤害 
 
-6（1d6+3）的挥砍伤害。</P></body>
+6（1d6+3）的挥砍伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

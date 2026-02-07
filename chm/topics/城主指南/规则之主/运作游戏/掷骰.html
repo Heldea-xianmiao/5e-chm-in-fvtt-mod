@@ -192,9 +192,47 @@ style='mso-spacerun:yes'>    </span></span>许多<span lang=EN-US>DM</span>认�
 
 <p class=MsoNormal><span lang=EN-US><span
 
-style='mso-spacerun:yes'>    </span></span>谨记一点，游戏的主宰不是骰子，而是你。骰子和规则一样，是辅助游戏运作的工具。你在任何时候都可以判定玩家的行为自动成功，也可以为角色的属性检定赋予优势，避免一次糟糕的掷骰破坏该角色的计划。同理，糟糕的计划或是不利的环境也可以让最简单的行动变得不可为，或者至少使之变得更加困难。</p></div></body>
+style='mso-spacerun:yes'>    </span></span>谨记一点，游戏的主宰不是骰子，而是你。骰子和规则一样，是辅助游戏运作的工具。你在任何时候都可以判定玩家的行为自动成功，也可以为角色的属性检定赋予优势，避免一次糟糕的掷骰破坏该角色的计划。同理，糟糕的计划或是不利的环境也可以让最简单的行动变得不可为，或者至少使之变得更加困难。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

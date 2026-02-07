@@ -82,7 +82,45 @@ Queen</FONT></STRONG><BR><EM>奇物，神器（需同调）</EM><BR>当两个或
 
 的充能。<BR><STRONG>致伤Wounding 。</STRONG>你与该武器同调后，任何被你以 哈兹瑞恩命中的生物在 1 
 
-分钟内无法恢复生命值。该目标在其每个自己回合结束时，可以进行一次 DC 15 的体质豁免，豁免成功则该效应提前终止。</P></body>
+分钟内无法恢复生命值。该目标在其每个自己回合结束时，可以进行一次 DC 15 的体质豁免，豁免成功则该效应提前终止。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

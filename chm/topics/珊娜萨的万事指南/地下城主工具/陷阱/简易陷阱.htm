@@ -54,7 +54,45 @@ html,body {
 
 <P>玩家应该特别说明他们想要怎样击败一个陷阱。简单的说想进行一次检定是不够的。向玩家提问他们的角色目标在哪里，想做什么来击败陷阱。玩家不能只是说，“我用盗贼工具来解除它。”这可太笼统了。玩家应该说类似下面的话，“我用我的盗贼工具检查锁头，并尝试解除其中的毒针。”你最应该避免的是，在陷阱激活时再考虑角色的所在位置。</P>
 
-<P>作为一条默认规则，克服一个简易陷阱不提供经验值奖励。若角色发现了陷阱并避开或解除了它，他们的回报将是避开地下城中的一个危险要素。若他们误入其中，他们必须承担陷入更加危险境地的后果。</P></body>
+<P>作为一条默认规则，克服一个简易陷阱不提供经验值奖励。若角色发现了陷阱并避开或解除了它，他们的回报将是避开地下城中的一个危险要素。若他们误入其中，他们必须承担陷入更加危险境地的后果。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

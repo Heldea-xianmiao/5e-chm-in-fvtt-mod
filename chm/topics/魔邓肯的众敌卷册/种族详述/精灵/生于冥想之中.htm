@@ -76,7 +76,45 @@ Elves</FONT></STRONG><BR>一个成年精灵生命中的某些时刻，他在出�
 
 <P><STRONG><FONT color=#800000>衰老与死亡 Aging and 
 
-Death</FONT></STRONG><BR>大部分精灵不像其他类人生物老者一样在外表上显老。成年精灵们的皮肤仍然光滑，他们的头发不会变得灰白，他们的骨骼亦不会变得脆弱。哪怕是最年老的精灵从外表上看去也不过是人类的三十多岁左右。<BR>但是有一个信号确确实实预示着一个精灵已经走到了他生命的末尾:在出神之时浮现于双眼的向上弯曲的新月形眼翳。这种被普遍称为“超度Transcendence”的变化，预示着莎罕妮·月弓已经开启门扉，允许这精灵魂归阿梵多——这是一个来自神祇们的喻言，祂们要让这精灵回归正轨了。<BR>你永远也无法确定一个精灵的凡躯在世间还能存留多久。也许有经年之漫长，也许仅数时辰之短，但这段时光必定为狂喜与哀伤所填满。有些凡间的精灵乐观而顺从地接受了将来之天命，而有些精灵则带着一种以在其他精灵眼中十分不雅观的怒意投身于生活、劳务之中。<BR>其他精灵相信那些没有经历过超度便死于衰老的精灵们被禁止进入阿梵多，他们的灵魂会前往其他位面并且不得转世。生者们猜测着为什么会有这种情况，但那些精灵们生时的所作所为通常都会对此做出解释。比如说，卓尔精灵们便不会经历超度，而对于那些崇拜席尔德林诸神以外神明的精灵来说也是一样。</P></body>
+Death</FONT></STRONG><BR>大部分精灵不像其他类人生物老者一样在外表上显老。成年精灵们的皮肤仍然光滑，他们的头发不会变得灰白，他们的骨骼亦不会变得脆弱。哪怕是最年老的精灵从外表上看去也不过是人类的三十多岁左右。<BR>但是有一个信号确确实实预示着一个精灵已经走到了他生命的末尾:在出神之时浮现于双眼的向上弯曲的新月形眼翳。这种被普遍称为“超度Transcendence”的变化，预示着莎罕妮·月弓已经开启门扉，允许这精灵魂归阿梵多——这是一个来自神祇们的喻言，祂们要让这精灵回归正轨了。<BR>你永远也无法确定一个精灵的凡躯在世间还能存留多久。也许有经年之漫长，也许仅数时辰之短，但这段时光必定为狂喜与哀伤所填满。有些凡间的精灵乐观而顺从地接受了将来之天命，而有些精灵则带着一种以在其他精灵眼中十分不雅观的怒意投身于生活、劳务之中。<BR>其他精灵相信那些没有经历过超度便死于衰老的精灵们被禁止进入阿梵多，他们的灵魂会前往其他位面并且不得转世。生者们猜测着为什么会有这种情况，但那些精灵们生时的所作所为通常都会对此做出解释。比如说，卓尔精灵们便不会经历超度，而对于那些崇拜席尔德林诸神以外神明的精灵来说也是一样。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -46,7 +46,45 @@ Sensitivity。</STRONG>在日光照射下，半蛛人的攻击检定具有劣势
 
 Web Sense。</STRONG>与蛛网接触时，半蛛人可以知晓其他与该蛛网接触生物的准确位置。<BR><STRONG>蛛网行者 Web 
 
-Walker。</STRONG>半蛛人在蛛网上移动时无视蛛网造成的移动限制。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>半蛛人进行三次匕首攻击。<BR><STRONG>匕首Dagger。</STRONG>近战或远程武器攻击：命中+4，触及5尺或射程20/60尺，单一目标。命中：4（1d4+2）点穿刺伤害。</P></body>
+Walker。</STRONG>半蛛人在蛛网上移动时无视蛛网造成的移动限制。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>半蛛人进行三次匕首攻击。<BR><STRONG>匕首Dagger。</STRONG>近战或远程武器攻击：命中+4，触及5尺或射程20/60尺，单一目标。命中：4（1d4+2）点穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

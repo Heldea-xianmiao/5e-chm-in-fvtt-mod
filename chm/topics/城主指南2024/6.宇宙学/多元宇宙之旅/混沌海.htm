@@ -52,7 +52,45 @@ margin-bottom: -18px;
 
 <H3><FONT color=#800000>混沌海冒险Limbo Adventures</FONT></H3>
 
-<P>混沌海即是变化。它永不停歇的变幻不仅体现于物质形态的流动，更深刻地影响着来访者的心灵与情感。进入混沌海的人常常被骤然涌现的杂乱思绪与无法掌控的情感洪流所淹没，被迫直面自身存在的短暂与无常。在这片动荡的领域中，只有确立清晰的自我意识，辨别混乱之下的恒久本质，方能在混沌海中塑造物理环境，掌控混沌地貌。<BR>吉斯泽莱人的修道院是混沌海中少数的庇护所之一。然而，这些避难所对来访者的内心同样敏感。若有人带着混乱的情感进入修道院，其动荡的心灵可能会迅速破坏避难所的稳定，令整个场所陷入无序。<BR>冒险者进入混沌海，或许是为了探索产卵石的奥秘。这块据说由魔冢之主奇点创造的神器，能够吸收混沌能量，在动荡的海洋中开辟出秩序的孤岛。然而，它吸收的混沌能量同时也导致了史拉蟾的诞生。</P></body>
+<P>混沌海即是变化。它永不停歇的变幻不仅体现于物质形态的流动，更深刻地影响着来访者的心灵与情感。进入混沌海的人常常被骤然涌现的杂乱思绪与无法掌控的情感洪流所淹没，被迫直面自身存在的短暂与无常。在这片动荡的领域中，只有确立清晰的自我意识，辨别混乱之下的恒久本质，方能在混沌海中塑造物理环境，掌控混沌地貌。<BR>吉斯泽莱人的修道院是混沌海中少数的庇护所之一。然而，这些避难所对来访者的内心同样敏感。若有人带着混乱的情感进入修道院，其动荡的心灵可能会迅速破坏避难所的稳定，令整个场所陷入无序。<BR>冒险者进入混沌海，或许是为了探索产卵石的奥秘。这块据说由魔冢之主奇点创造的神器，能够吸收混沌能量，在动荡的海洋中开辟出秩序的孤岛。然而，它吸收的混沌能量同时也导致了史拉蟾的诞生。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

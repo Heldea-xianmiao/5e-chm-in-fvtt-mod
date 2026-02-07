@@ -244,4 +244,41 @@
 
 
 
-  FONT-WEIGHT: bold; COLOR: rgb(128,0,0);   "> Transformation Chamber</span></b><span><br></span><span style=" FONT-FAMILY: Arial;   mso-fareast- "><font>转化室包含许多小的房间。有前途的实验的对象被保存在这里，他们会被灵能轰炸，以此试图扭曲他们的身体发育。大多数经历这个过程的生物都会变成扭曲的、残废的可怜虫，但也有少数会变得比以前更强壮、更坚韧。</font></span></p></div></body></html>
+  FONT-WEIGHT: bold; COLOR: rgb(128,0,0);   "> Transformation Chamber</span></b><span><br></span><span style=" FONT-FAMILY: Arial;   mso-fareast- "><font>转化室包含许多小的房间。有前途的实验的对象被保存在这里，他们会被灵能轰炸，以此试图扭曲他们的身体发育。大多数经历这个过程的生物都会变成扭曲的、残废的可怜虫，但也有少数会变得比以前更强壮、更坚韧。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

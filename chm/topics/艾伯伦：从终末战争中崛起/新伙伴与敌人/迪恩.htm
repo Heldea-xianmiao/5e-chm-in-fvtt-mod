@@ -114,7 +114,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000>传奇动作</FONT></STRONG><BR>迪恩有3个传奇动作，用于选择执行下列动作项。执行传奇动作时每项只可选择一次，且只能用于另一生物的回合结束时。迪恩在它的回合开始时恢复所有耗用的传奇动作数。<BR><STRONG>触手鞭击：</STRONG>迪恩施展一次触手鞭击攻击。<BR><STRONG>繁衍异怪（花费2动作）：</STRONG>迪恩反刍出一只噬脑怪（Intellect 
 
-devourer）（详见怪物手册）落在一处距离他五尺范围之内未占据空间。噬脑怪受迪恩控制，其先攻顺位调整至迪恩之后立即行动。<BR><STRONG>心灵震爆（花费3动作）：</STRONG>迪恩以魔法释放出一道60尺锥形的精神能量。区域内的每个生物必须通过难度（DC）23的智力豁免检定，否则受到30（5d8+8）点心灵伤害，并且震慑1分钟。每当被震慑的生物结束自己的回合时，他都能重试豁免检定，成功则本效果对其自身的影响终止。</P></body>
+devourer）（详见怪物手册）落在一处距离他五尺范围之内未占据空间。噬脑怪受迪恩控制，其先攻顺位调整至迪恩之后立即行动。<BR><STRONG>心灵震爆（花费3动作）：</STRONG>迪恩以魔法释放出一道60尺锥形的精神能量。区域内的每个生物必须通过难度（DC）23的智力豁免检定，否则受到30（5d8+8）点心灵伤害，并且震慑1分钟。每当被震慑的生物结束自己的回合时，他都能重试豁免检定，成功则本效果对其自身的影响终止。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

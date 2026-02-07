@@ -48,7 +48,45 @@ Resistance:</STRONG>魔卫在抵抗法术和其他魔法效应的豁免时具有
 
 Nature:</STRONG>魔卫不需要空气，食物，饮水或睡眠。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>心灵鞭挞Psychic 
 
-Lash。</STRONG>魔卫的眼睛在它看向60尺内他的一个可见目标时化为银色。目标必须通过DC12的感知豁免，否则会受到11(2d10)点心灵伤害。<BR><STRONG>暗示术Suggestion。</STRONG>魔卫施展暗示术(法术豁免DC12)且不需要材料成分。目标必须是一个魔卫能够以心灵感应与其交流的生物。若目标豁免成功，则其在接下来24小时内免疫魔卫的暗示术。魔卫的施法关键属性是智力。</P></body>
+Lash。</STRONG>魔卫的眼睛在它看向60尺内他的一个可见目标时化为银色。目标必须通过DC12的感知豁免，否则会受到11(2d10)点心灵伤害。<BR><STRONG>暗示术Suggestion。</STRONG>魔卫施展暗示术(法术豁免DC12)且不需要材料成分。目标必须是一个魔卫能够以心灵感应与其交流的生物。若目标豁免成功，则其在接下来24小时内免疫魔卫的暗示术。魔卫的施法关键属性是智力。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -48,7 +48,45 @@ Arvandor</FONT></STRONG><BR>只有那些抱着最强劲的韧性对精灵进行�
 
 <P><STRONG>边栏：科瑞隆的祝福 The Blessed of 
 
-  Corellon</STRONG><BR>易变、欢乐而美丽的原初精灵们可以变为它们想要的任何性别。当它们屈服于罗斯的影响并修改了自己的身体结构后，它们便无法再如此转换性别了。但少数生而雌雄同体的精灵被认为浸受过科瑞隆的祝福——它们是神恩的活见证，亦是原初精灵不定形态的证据。许多科瑞隆的大祭司都蒙受此等祝福。<BR>蒙福者中最稀少的那部分能够在完成一次长休后任意改变它的性别——这是一个被卓尔以外所有亚种的精灵庆贺的奇迹（DM决定一个精灵是否拥有此等奇迹）。黑暗精灵们因此能力而感到恐惧并把它当成一种诅咒，因为它会动摇他们社会的根基。如果科瑞隆的祝福显现在了一个卓尔身上，那么它通常会逃到地表并在科瑞隆的追随者之间寻求庇护。</P></BLOCKQUOTE></body>
+  Corellon</STRONG><BR>易变、欢乐而美丽的原初精灵们可以变为它们想要的任何性别。当它们屈服于罗斯的影响并修改了自己的身体结构后，它们便无法再如此转换性别了。但少数生而雌雄同体的精灵被认为浸受过科瑞隆的祝福——它们是神恩的活见证，亦是原初精灵不定形态的证据。许多科瑞隆的大祭司都蒙受此等祝福。<BR>蒙福者中最稀少的那部分能够在完成一次长休后任意改变它的性别——这是一个被卓尔以外所有亚种的精灵庆贺的奇迹（DM决定一个精灵是否拥有此等奇迹）。黑暗精灵们因此能力而感到恐惧并把它当成一种诅咒，因为它会动摇他们社会的根基。如果科瑞隆的祝福显现在了一个卓尔身上，那么它通常会逃到地表并在科瑞隆的追随者之间寻求庇护。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

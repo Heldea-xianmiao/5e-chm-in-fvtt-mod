@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>宝藏 Treasures</FONT></STRONG></P>
 
-<P>魔法在科瓦雷的日常生活中扮演着非常重要的角色。稀有度为普通的魔法物品俯拾皆是，魔法经济以一种被称为龙晶（dragonshard）的水晶为燃料蓬勃运转，而这种水晶也被用于增幅龙纹（dragonmark）的力量。</P></body>
+<P>魔法在科瓦雷的日常生活中扮演着非常重要的角色。稀有度为普通的魔法物品俯拾皆是，魔法经济以一种被称为龙晶（dragonshard）的水晶为燃料蓬勃运转，而这种水晶也被用于增幅龙纹（dragonmark）的力量。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

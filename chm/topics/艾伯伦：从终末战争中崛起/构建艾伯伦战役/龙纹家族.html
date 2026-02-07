@@ -98,7 +98,45 @@ Hooks龙纹家族冒险引子列表提供了一些方法来把角色拉进关于
 
 Dragonmarked House Adventure 
 
-Hooks<BR>d12 冒险引子</STRONG><BR>1 卡尼斯家的奇械师雇用冒险者从一个与其竞争的家族分支有关的铁匠铺偷取秘密。<BR>2 邓奈斯家族正在招募冒险者来对抗附近森林中突然增加的强盗和怪物活动。<BR>3 伽兰达家族经营的一家旅店因闹鬼而出名，而且这种骚乱正变得越来越危险。<BR>4 在当地的乔拉斯克飞地康复的人们突然展现出他们以前从未有过的奇异能力，不久之后，奇怪的诅咒也出现了。<BR>5 昆达拉克银行需要勇敢的冒险者来尝试闯入他们的金库，测试他们的新守卫。<BR>6 在最近的一次飞行怪物袭击中，一位林兰德的天空舰长失去了许多船员，并在返航时雇佣人手保护船只。<BR>7 一名梅丹尼的保镖在从刺客手中保护他们的付者时被杀害，但他成功地迫使袭击者留下了关于雇主身份的线索。<BR>8 角色们被雇用来在欧瑞恩的闪电列车上保护一个至关重要的运输货品。<BR>9 在一次由费奥兰家族举办的狂欢节上，客人们开始表现得怪怪的。他们都哼著同一首歌，当更多人听到这首歌的时候，它就像病毒一样传播开来。<BR>10 一位西维斯翻译被雇来辨识一批被认为在终末战争中被摧毁的卷轴，之后他失踪了。<BR>11 一座萨拉释克家族的矿坑崩塌，受困矿工的所剩时间不多了。<BR>12 瓦塔利斯家族需要帮助，好找回从当地牧场被偷走的一群魔育马匹。</P></body>
+Hooks<BR>d12 冒险引子</STRONG><BR>1 卡尼斯家的奇械师雇用冒险者从一个与其竞争的家族分支有关的铁匠铺偷取秘密。<BR>2 邓奈斯家族正在招募冒险者来对抗附近森林中突然增加的强盗和怪物活动。<BR>3 伽兰达家族经营的一家旅店因闹鬼而出名，而且这种骚乱正变得越来越危险。<BR>4 在当地的乔拉斯克飞地康复的人们突然展现出他们以前从未有过的奇异能力，不久之后，奇怪的诅咒也出现了。<BR>5 昆达拉克银行需要勇敢的冒险者来尝试闯入他们的金库，测试他们的新守卫。<BR>6 在最近的一次飞行怪物袭击中，一位林兰德的天空舰长失去了许多船员，并在返航时雇佣人手保护船只。<BR>7 一名梅丹尼的保镖在从刺客手中保护他们的付者时被杀害，但他成功地迫使袭击者留下了关于雇主身份的线索。<BR>8 角色们被雇用来在欧瑞恩的闪电列车上保护一个至关重要的运输货品。<BR>9 在一次由费奥兰家族举办的狂欢节上，客人们开始表现得怪怪的。他们都哼著同一首歌，当更多人听到这首歌的时候，它就像病毒一样传播开来。<BR>10 一位西维斯翻译被雇来辨识一批被认为在终末战争中被摧毁的卷轴，之后他失踪了。<BR>11 一座萨拉释克家族的矿坑崩塌，受困矿工的所剩时间不多了。<BR>12 瓦塔利斯家族需要帮助，好找回从当地牧场被偷走的一群魔育马匹。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

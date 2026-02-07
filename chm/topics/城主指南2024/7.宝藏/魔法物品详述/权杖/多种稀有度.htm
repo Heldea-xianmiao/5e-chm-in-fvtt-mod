@@ -26,7 +26,45 @@ Pact
 
 Keeper，+1、+2、+3</H6>
 
-<P><EM>权杖，非普通（+1），珍稀（+2），极珍稀（+3）（需魔契师同调）</EM><BR>当持握这根权杖时，你的魔契师法术的法术攻击检定和豁免DC获得加值。加值大小取决于权杖的稀有度。<BR>此外，持握这根权杖期间，你能够以一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作恢复一个法术位。该词条一经使用，你在完成一次长休后都无法再次使用。</P></body>
+<P><EM>权杖，非普通（+1），珍稀（+2），极珍稀（+3）（需魔契师同调）</EM><BR>当持握这根权杖时，你的魔契师法术的法术攻击检定和豁免DC获得加值。加值大小取决于权杖的稀有度。<BR>此外，持握这根权杖期间，你能够以一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作恢复一个法术位。该词条一经使用，你在完成一次长休后都无法再次使用。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

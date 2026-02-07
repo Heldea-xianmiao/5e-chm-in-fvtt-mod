@@ -50,7 +50,45 @@ Nature。</STRONG>钢铁掠夺者不需要空气、食物、水或睡眠。<BR><
 
 shift（仅自身）</FONT></EM><BR><STRONG>慑人咆哮Stunning 
 
-Roar（充能5~6)。</STRONG>钢铁掠夺者朝着60尺的锥状区域发出轰鸣声。该区域内的每个生物都必须进行一个DC19的体质豁免。豁免失败时则该生物受到33（6d10）点雷鸣伤害，掉落它所持有的所有物品，并陷入震慑1分钟。被震慑的生物可以在每次自己回合结束时重复豁免，以结束对自己的影响。在一次成功的豁免中，该生物会受到一半的伤害且不会陷入震慑。</P></body>
+Roar（充能5~6)。</STRONG>钢铁掠夺者朝着60尺的锥状区域发出轰鸣声。该区域内的每个生物都必须进行一个DC19的体质豁免。豁免失败时则该生物受到33（6d10）点雷鸣伤害，掉落它所持有的所有物品，并陷入震慑1分钟。被震慑的生物可以在每次自己回合结束时重复豁免，以结束对自己的影响。在一次成功的豁免中，该生物会受到一半的伤害且不会陷入震慑。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

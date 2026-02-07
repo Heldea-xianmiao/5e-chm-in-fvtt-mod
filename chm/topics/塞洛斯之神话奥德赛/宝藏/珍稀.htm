@@ -216,7 +216,45 @@ Skin</FONT></STRONG><BR><EM>护甲（胸甲、半身板甲或板甲），珍稀�
 
 Sling</FONT></STRONG> 
 
-<BR><EM>武器（投石索），珍稀</EM><BR>你使用这把武器发动的攻击检定与其伤害掷骰具有+1加值。<BR>当你用这把投石索发动远程攻击，并击中一个目标时，你可以使弹丸再弹向该目标周围10尺范围内的另一目标。之后，你对第二个目标发动一次远程攻击。<BR><FONT color=#808080>（注：著名罪大恶极武器。不过即便只能弹一次它也够强了，它的原文也没有明确提及一发子弹只能弹一次。）</FONT><BR></P></body>
+<BR><EM>武器（投石索），珍稀</EM><BR>你使用这把武器发动的攻击检定与其伤害掷骰具有+1加值。<BR>当你用这把投石索发动远程攻击，并击中一个目标时，你可以使弹丸再弹向该目标周围10尺范围内的另一目标。之后，你对第二个目标发动一次远程攻击。<BR><FONT color=#808080>（注：著名罪大恶极武器。不过即便只能弹一次它也够强了，它的原文也没有明确提及一发子弹只能弹一次。）</FONT><BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

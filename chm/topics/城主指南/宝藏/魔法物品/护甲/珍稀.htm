@@ -170,7 +170,45 @@ Attraction</FONT></STRONG><BR><EM>护甲（盾牌），珍稀（需同调）</EM
 
 <P><STRONG>诅咒Curse。</STRONG>与这面受诅咒的盾牌同调的生物将受到其诅咒影响。摘下盾牌不会终止诅咒，只有对你施展 
 
-  <EM><FONT color=#800080>移除诅咒remove curse</FONT></EM>或类似的魔法才能移除。因诅咒的影响，任何向你周围10尺内的目标发动的远程武器攻击都将转为攻击你。</P></BLOCKQUOTE></body>
+  <EM><FONT color=#800080>移除诅咒remove curse</FONT></EM>或类似的魔法才能移除。因诅咒的影响，任何向你周围10尺内的目标发动的远程武器攻击都将转为攻击你。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

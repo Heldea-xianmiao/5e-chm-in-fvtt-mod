@@ -106,4 +106,41 @@ border-top:none;border-bottom:none;" ><p><b><span style="line-height:130%;color:
 
 font-weight:bold;font-size:14.0000pt;" ><font>陷阱</font></span></b><b><span style="line-height:130%;color:rgb(128,0,0);
 
-font-weight:bold;font-size:14.0000pt;" ><span> </span>Traps</span></b><span></span></p></td></tr></table><p><span><font>狗头人建造陷阱时有着惊人的创造性，它们尤其擅长利用天然危害物和回收利用的物品。它们将钉子和尖刺刺穿树枝再弯起来作为弹簧摇臂，或者沿着坑洞或池塘铺设尖锐的碎石，又或者使超过单个狗头人承重的平台坍塌，等等。狗头人的陷阱看起来设计得既脆弱又寒酸，但是当某个生物被装饰着锋利牛油刀的小树枝刺伤后，总会对这些小生物悠然升起那么一点点的重视。</font><br><br><font>以下是一些常见的狗头人陷阱：</font><br><br><font>&#183;</font><font>桶装或小锅装的油（可以被煮沸、喷洒、点燃或者复合使用）</font><br><font>&#183;</font><font>能够夹到高个生物头颅的捕熊夹</font><br><font>&#183;</font><font>通报入侵的铃铛</font><br><font>&#183;</font><font>用滑轮组升起的矿车用作坠物</font><br><font>&#183;</font><font>浅淤泥泥沼或灰土层下的铁蒺藜（轻盈的狗头人可以在上面通过而不会陷入麻烦）</font><br><font>&#183;</font><font>天花板塌方</font><br><font>&#183;</font><font>箱装蜈蚣</font><br><font>&#183;</font><font>落石</font><br><font>&#183;</font><font>布满沥青或油的壕沟，狗头人可以在撤退后将其点燃</font><br><font>&#183;</font><font>连接着绳索的捕网，可以将生物垂直拉起，其支点设置在远处以使其他人无法提供帮助</font><br><font>&#183;</font><font>管道</font>/<font>天窗上倒下的开水（来自煮锅或者来自窑炉的冷却管）</font><br><font>&#183;</font><font>安置了致病尖刺的陷坑</font><br><font>&#183;</font><font>锅装的绿软泥</font><br><font>&#183;</font><font>滚石</font><br><font>&#183;</font><font>承重很低容易毁坏的小型桥或梯子</font><br><font>&#183;</font><font>圈套</font><br><font>&#183;</font><font>绊脚线，可以连接陷阱或者单纯用来绊倒生物</font><br><font>&#183;</font><font>连发的针</font></span></p></div></body></html>
+font-weight:bold;font-size:14.0000pt;" ><span> </span>Traps</span></b><span></span></p></td></tr></table><p><span><font>狗头人建造陷阱时有着惊人的创造性，它们尤其擅长利用天然危害物和回收利用的物品。它们将钉子和尖刺刺穿树枝再弯起来作为弹簧摇臂，或者沿着坑洞或池塘铺设尖锐的碎石，又或者使超过单个狗头人承重的平台坍塌，等等。狗头人的陷阱看起来设计得既脆弱又寒酸，但是当某个生物被装饰着锋利牛油刀的小树枝刺伤后，总会对这些小生物悠然升起那么一点点的重视。</font><br><br><font>以下是一些常见的狗头人陷阱：</font><br><br><font>&#183;</font><font>桶装或小锅装的油（可以被煮沸、喷洒、点燃或者复合使用）</font><br><font>&#183;</font><font>能够夹到高个生物头颅的捕熊夹</font><br><font>&#183;</font><font>通报入侵的铃铛</font><br><font>&#183;</font><font>用滑轮组升起的矿车用作坠物</font><br><font>&#183;</font><font>浅淤泥泥沼或灰土层下的铁蒺藜（轻盈的狗头人可以在上面通过而不会陷入麻烦）</font><br><font>&#183;</font><font>天花板塌方</font><br><font>&#183;</font><font>箱装蜈蚣</font><br><font>&#183;</font><font>落石</font><br><font>&#183;</font><font>布满沥青或油的壕沟，狗头人可以在撤退后将其点燃</font><br><font>&#183;</font><font>连接着绳索的捕网，可以将生物垂直拉起，其支点设置在远处以使其他人无法提供帮助</font><br><font>&#183;</font><font>管道</font>/<font>天窗上倒下的开水（来自煮锅或者来自窑炉的冷却管）</font><br><font>&#183;</font><font>安置了致病尖刺的陷坑</font><br><font>&#183;</font><font>锅装的绿软泥</font><br><font>&#183;</font><font>滚石</font><br><font>&#183;</font><font>承重很低容易毁坏的小型桥或梯子</font><br><font>&#183;</font><font>圈套</font><br><font>&#183;</font><font>绊脚线，可以连接陷阱或者单纯用来绊倒生物</font><br><font>&#183;</font><font>连发的针</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

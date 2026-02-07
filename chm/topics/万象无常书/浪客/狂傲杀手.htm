@@ -52,7 +52,45 @@ Dodge。</STRONG>当刺客被一个它所能够看见的攻击者命中时，刺
 
 Actions</FONT></STRONG><BR>刺客拥有3个传奇动作，用来选择执行下列动作项。他每次只可选择执行一个传奇动作项，且必须在另一生物回合结束时执行。刺客在其回合开始时恢复所有消耗的传奇动作数。<BR><STRONG>狡黠Cunning。</STRONG>刺客挣脱非魔法的拘束，并解除自身的受擒状态，随后其可移动至多等于其速度的距离，且不会引发借机攻击。<BR><STRONG>刺杀Stab（需要2个动作）。</STRONG>刺客发动一次毒刃攻击。<BR><STRONG>隐匿逃逸Vanishing 
 
-Escape（需要3个动作）。</STRONG>刺客制造出一些使人分神的东西，例如扩散的惑心烟雾或者炫目的闪光，在离刺客5尺的位置内出现一个10尺的立方体效应区域。刺客在该区域内所选择的每个生物将承受9（2d8）的心灵伤害，且刺客获得隐形状态。这种隐形状态持续到刺客的下一个回合结束为止。</P></body>
+Escape（需要3个动作）。</STRONG>刺客制造出一些使人分神的东西，例如扩散的惑心烟雾或者炫目的闪光，在离刺客5尺的位置内出现一个10尺的立方体效应区域。刺客在该区域内所选择的每个生物将承受9（2d8）的心灵伤害，且刺客获得隐形状态。这种隐形状态持续到刺客的下一个回合结束为止。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -50,7 +50,45 @@ html,body {
 
 <font color=#800000><strong>动作Actions</strong></font><br>
 
-<strong>角撞Gore。</strong>近战武器攻击：命中+3，触及5尺，单一目标。命中：4（1d6+1）点穿刺伤害。如果牛头人在直线向着目标移动了至少10尺后立刻用角撞命中目标，目标将额外受到3（1d6）点穿刺伤害。若目标是生物且其体型不超过大型，该生物还必须通过一次DC11的力量豁免，豁免失败将陷入 倒地Prone 状态或是被牛头人推离10尺。</p></body>
+<strong>角撞Gore。</strong>近战武器攻击：命中+3，触及5尺，单一目标。命中：4（1d6+1）点穿刺伤害。如果牛头人在直线向着目标移动了至少10尺后立刻用角撞命中目标，目标将额外受到3（1d6）点穿刺伤害。若目标是生物且其体型不超过大型，该生物还必须通过一次DC11的力量豁免，豁免失败将陷入 倒地Prone 状态或是被牛头人推离10尺。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -16,7 +16,45 @@
 
 <P>    
 
-轰鸣尖峰岛是一片美丽的世外桃源，岛上树木稀疏，白沙遍布，岛名源自其唯一的一座山峰。岛上仅有几十名原住民生活于此。小岛的浅滩在涨潮时常被海水淹没，而火山口则时常升起缕缕烟雾。尽管如此，岛屿周围的海域渔获丰富，因此在渔季不佳时，从尼科德拉纳斯出发的渔船经常会前往轰鸣尖峰捕鱼。</P></body>
+轰鸣尖峰岛是一片美丽的世外桃源，岛上树木稀疏，白沙遍布，岛名源自其唯一的一座山峰。岛上仅有几十名原住民生活于此。小岛的浅滩在涨潮时常被海水淹没，而火山口则时常升起缕缕烟雾。尽管如此，岛屿周围的海域渔获丰富，因此在渔季不佳时，从尼科德拉纳斯出发的渔船经常会前往轰鸣尖峰捕鱼。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

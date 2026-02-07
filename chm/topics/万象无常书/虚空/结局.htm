@@ -38,7 +38,45 @@ Ending</strong></font></font><br>
 
 <BLOCKQUOTE style="MARGIN-RIGHT: 0px" dir=ltr><p><STRONG><FONT color=#800000 size=4>可选项：束于面具Option：Mask 
 
-  Bond<br></FONT></STRONG>除了直接消散，面具还可以继续保持束缚着角色灵魂的现状。在这种情况下，角色必须戴上面具才能正常行动。如果面具被移除，角色的身体会陷入失能状态，直至面具被戴回到角色脸上。</p></BLOCKQUOTE></body>
+  Bond<br></FONT></STRONG>除了直接消散，面具还可以继续保持束缚着角色灵魂的现状。在这种情况下，角色必须戴上面具才能正常行动。如果面具被移除，角色的身体会陷入失能状态，直至面具被戴回到角色脸上。</p></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -34,7 +34,45 @@ html,body {
 
 们建立种种人际关系，包括建立友谊，相互竞争，加深联系等等。尽管这些交往完全可以通过玩家的角色扮演进行体验，你也可以利用下文的人际关系方面的规则来强化冒险中的这一部分。<BR>这些规则将给角色提供一些好处，但也会带来负面影响。基于他们对社交投入的努力和他们与其他学生的互动并对其使用权重分配，这个规则可以将学生生活中的这一不可分割的部分也成为游戏中的重要部分。<BR>这一规则只围绕和学生 
 
-NPC 的互动，和教授，管理员和其他成人 NPC 的交流并不属于此处的人际规则。</P></body>
+NPC 的互动，和教授，管理员和其他成人 NPC 的交流并不属于此处的人际规则。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

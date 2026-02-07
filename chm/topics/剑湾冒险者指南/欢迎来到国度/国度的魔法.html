@@ -450,9 +450,47 @@ Magic)</span></i></b><span lang=EN-US style='FONT-SIZE:
 
  lang=EN-US style='FONT-SIZE: 9pt; FONT-FAMILY: "Verdana",sans-serif; COLOR: black'>(tangled)</span><span
 
- style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; COLOR: black">，自发形成自我构造以及其结果的魔法。它也会倾向扭曲由施法所创造的魔网架构，导致不可预料的后果。</span></p></div></body>
+ style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; COLOR: black">，自发形成自我构造以及其结果的魔法。它也会倾向扭曲由施法所创造的魔网架构，导致不可预料的后果。</span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

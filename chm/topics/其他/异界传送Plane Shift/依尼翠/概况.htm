@@ -86,7 +86,45 @@
 
 <BR>艾维欣大法师是有与生俱来引导大天使神圣力量的天才施法者。每一个派系的大法师练习师生之间代代传承的独特技巧，这些技巧最终又追溯到大天使和艾维欣本身。矛法师，金夜派系大法师。接住太阳之力使用富有侵略性的强力咒语，以神圣光芒引导致盲射线和强力祝祷为同伴的成功和勇气带来支持。月智者，洁羽派系的大法师，与收福长眠的庇护相连，保护人们免受丧尸归返之伤，他们用保护和守卫法术，将不死者驱入虚空，并使墓穴禁闭。迎春祭司，苍鹭派系的大法师，是运用魔法救助个体，整个村庄乃至大地本身的治疗者，他们如修行武僧或漫游牧师般行动，旅至远所能及之处行牧师之事并救助他人。艾维欣大法师可以是牧师，法师，或者（详见迎春祭司）德鲁伊，UA里的天佑者（术士）也能浑然天成地与之配合，贤者是种比较理想的背景。
 
-</P></BODY>
+</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

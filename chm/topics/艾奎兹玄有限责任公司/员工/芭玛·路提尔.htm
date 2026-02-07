@@ -54,7 +54,45 @@ XP）<BR><STRONG>妖精血统。</STRONG>芭玛在对抗魅惑的豁免检定中
 
 钝击伤害。<BR><STRONG>统治之歌（3/天）。</STRONG>芭玛的目标是一个能听到她声音的生物，它必须在DC 
 
-13感知豁免投掷中成功，否则被她魅惑1分钟。目标可以在每个回合结束时再次投掷豁免，结束对自身的影响。如果被魅惑的是目标公开或秘密渴望的东西，那么这些豁免就有劣势。在魅惑效果结束后的1小时内，目标在与芭玛的对抗中进行的智力、感知或魅力豁免中处于劣势。</P></body>
+13感知豁免投掷中成功，否则被她魅惑1分钟。目标可以在每个回合结束时再次投掷豁免，结束对自身的影响。如果被魅惑的是目标公开或秘密渴望的东西，那么这些豁免就有劣势。在魅惑效果结束后的1小时内，目标在与芭玛的对抗中进行的智力、感知或魅力豁免中处于劣势。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -46,7 +46,45 @@ Trait。</STRONG>从以下两种特性中选择一个：</P>
 
 <P><STRONG>语言Language。</STRONG>你可以说、读、写通用语和另一门你和你的DM认为合适的语言。</P>
 
-<P>你的种族现在在任何要求特定种族——例如精灵或矮人——的游戏特性中，被视为一名“定制血统”的角色。<BR> <BR></P></body>
+<P>你的种族现在在任何要求特定种族——例如精灵或矮人——的游戏特性中，被视为一名“定制血统”的角色。<BR> <BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -200,7 +200,45 @@ Mephits</STRONG>
 
 <P><STRONG><EM>暮光凤凰 Twilight Phoenix（史诗级）。</EM></STRONG>卡摩达地热活动的真相远比许多人所知的更为险恶离奇。古老而疯狂的暮光凤凰德西拉特（见第一章）被囚禁在妄言山下。一个崇拜阿斯蒙蒂斯的<STRONG>大法师archmages</STRONG>秘密团体，试图解救这位九狱之王的坐骑，他们暗中收集了仪式所需的材料，意图撕裂山体，将这个疯狂的存在释放出来，焚毁周边的乡野。如果角色们未能阻止仪式，他们就必须亲自与扭曲且原始的凤凰本尊战斗。 
 
-</P></body>
+</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

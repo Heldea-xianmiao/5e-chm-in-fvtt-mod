@@ -82,7 +82,45 @@ Check Total Result
 
 该组织憎恨该特许经营的努力，并决定破坏角色的未来努力。<BR>2 一位当地的记者或官员开始相信，这个特许经营的所有努力都是为了角色的个人利益。 
 
-个人开始监督特许经营，并报告任何失误。<BR>3 一群个人反对特许经营的努力，他们认为所选择的原因背后的问题是自然秩序的一部分。该组织积极地试图说服其他人相信特许经营慈善事业的可怕副作用(真实的或其他)。<BR>4 另一个慈善组织已经参与了特许经营想要经营的事业。该组织试图将特许经营的努力描述为无效和不真诚的。<BR>5 听到特许经营的良好业绩，受到其他一些需要慈善援助的问题影响的人大量出现在特许经营总部。<BR>6 特许经营的成员与一个已成立的团体合作开展慈善事业。但很快就清楚了，该组织是一个骗局，当地官员正在调查他们的活动。角色需要改变现状，否则就有可能被牵连进丑闻。<BR>*可能涉及竞争对手</P></body>
+个人开始监督特许经营，并报告任何失误。<BR>3 一群个人反对特许经营的努力，他们认为所选择的原因背后的问题是自然秩序的一部分。该组织积极地试图说服其他人相信特许经营慈善事业的可怕副作用(真实的或其他)。<BR>4 另一个慈善组织已经参与了特许经营想要经营的事业。该组织试图将特许经营的努力描述为无效和不真诚的。<BR>5 听到特许经营的良好业绩，受到其他一些需要慈善援助的问题影响的人大量出现在特许经营总部。<BR>6 特许经营的成员与一个已成立的团体合作开展慈善事业。但很快就清楚了，该组织是一个骗局，当地官员正在调查他们的活动。角色需要改变现状，否则就有可能被牵连进丑闻。<BR>*可能涉及竞争对手</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

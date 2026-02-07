@@ -40,7 +40,45 @@ html,body {
 
 metal，浮空术levitate</FONT></EM><BR><STRONG>虚弱凝视Weakening 
 
-Gaze。</STRONG>巴布魔指定20尺内一个它可以看到的生物为目标。目标必须进行一个DC13的体质豁免。若豁免失败，则目标在接下来的1分钟里使用力量进行的武器攻击只造成一半伤害。目标在其每个回合结束时可以重复进行此豁免，豁免成功则终止其所承受的此效应。</P></body>
+Gaze。</STRONG>巴布魔指定20尺内一个它可以看到的生物为目标。目标必须进行一个DC13的体质豁免。若豁免失败，则目标在接下来的1分钟里使用力量进行的武器攻击只造成一半伤害。目标在其每个回合结束时可以重复进行此豁免，豁免成功则终止其所承受的此效应。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -212,7 +212,45 @@ style=" FONT-FAMILY: 等线; FONT-WEIGHT: bold; FONT-STYLE: italic; mso-bidi-fon
 
 style=" FONT-FAMILY: 等线; mso-bidi-font-family: 'Times New Roman'; mso-spacerun: 'yes'"><FONT face=等线>中所述。无论龙是反派、赞助者还是感兴趣的旁观者，都可以利用本章和第五章的表格和建议来充实龙的个性、目标和其他特征。龙的巢穴可能是冒险的关键地点（可以参考或使用第五章的地图），但龙的计划也可以把人物带到任何地方</FONT><FONT face=等线>——甚至是其他世界和星球。</FONT></SPAN><B><SPAN 
 
-style=" FONT-FAMILY: 等线; FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'; mso-spacerun: 'yes'"><o:p></o:p></SPAN></B></P></body>
+style=" FONT-FAMILY: 等线; FONT-WEIGHT: bold; mso-bidi-font-family: 'Times New Roman'; mso-spacerun: 'yes'"><o:p></o:p></SPAN></B></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

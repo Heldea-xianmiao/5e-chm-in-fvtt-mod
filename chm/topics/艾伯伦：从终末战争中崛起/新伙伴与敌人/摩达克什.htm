@@ -58,7 +58,45 @@ Orb。</STRONG>远程武器攻击：命中+10，距离120尺，单一目标；�
 
 传奇动作，用于选择执行下列动作选项。每次执行传奇动作时，每个选项只可以选用一次，且只能在另一生物的回合结束时执行。摩达克什在它的回合开始时恢 
 
-复其所有已消耗的传奇动作数。<BR><STRONG>攻击：</STRONG>摩达克什进行一次武器攻击或者施展繁彩球。<BR><STRONG>繁彩阻滞：</STRONG>摩达克什获得一种伤害类型的抗性，由他选择：强酸，寒冷，火焰，闪电，毒素或雷鸣，直到他的下个回合开始。<BR><STRONG>督军指令（花费2动作）：</STRONG>摩达克什选择距离他30尺内的两个盟友，若目标能看见并听见他，目标可以花费反应进行一次武器攻击，并获得攻击股的优势。</P></body>
+复其所有已消耗的传奇动作数。<BR><STRONG>攻击：</STRONG>摩达克什进行一次武器攻击或者施展繁彩球。<BR><STRONG>繁彩阻滞：</STRONG>摩达克什获得一种伤害类型的抗性，由他选择：强酸，寒冷，火焰，闪电，毒素或雷鸣，直到他的下个回合开始。<BR><STRONG>督军指令（花费2动作）：</STRONG>摩达克什选择距离他30尺内的两个盟友，若目标能看见并听见他，目标可以花费反应进行一次武器攻击，并获得攻击股的优势。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

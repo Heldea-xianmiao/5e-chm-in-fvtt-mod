@@ -70,5 +70,43 @@ Harm</FONT></STRONG><BR><EM>第11级命流宗特性</EM><BR>你现在能施以�
 
 Mercy</FONT></STRONG><BR><EM>第17级命流宗特性</EM><BR>你对生命能量的掌握打开了通往命流奥义的大门。以一个动作，你可以消耗5点气，触碰一个死亡不超过24小时的生物的尸体。该生物会起死回生，并恢复相当于 
 
-4d10+你的感知调整值 点的生命值。如果该生物死前具有以下这些状态，这些状态会在复活时被移除：目盲、耳聋、麻痹、中毒和震慑。<BR>一旦你使用了这个特性，直至你完成一次长休前你都不能再次使用它。</P> </BODY></HTML>
+4d10+你的感知调整值 点的生命值。如果该生物死前具有以下这些状态，这些状态会在复活时被移除：目盲、耳聋、麻痹、中毒和震慑。<BR>一旦你使用了这个特性，直至你完成一次长休前你都不能再次使用它。</P> <script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

@@ -68,7 +68,45 @@ html,body {
 
 <strong>长柄刀Glaive。</strong>近战武器攻击：命中+8，触及10尺，单一目标。命中：15（2d10+4）挥砍伤害。<br>
 
-<strong>心智毒烟Mind Poison（充能5~6）。</strong>魔象人喷出一道毒气，覆盖一处60尺锥状区域。任何位于其中的生物都必须进行一次DC16的体质豁免。豁免失败者收到39（6d12）毒素伤害并陷入<font color=maroon><strong>中毒</strong></font>状态。以此法<font color=maroon><strong>中毒</strong></font>期间，该生物失去任何武器与技能熟练，它不能施展法术，它也不能理解任何语言，并在进行智力豁免时具有劣势。目标可以在其回合结束时重复此豁免，豁免成功则结束此效应。豁免成功者只收到一半伤害并在接下来的24小时内免疫此魔象人的心智毒烟。</p></body>
+<strong>心智毒烟Mind Poison（充能5~6）。</strong>魔象人喷出一道毒气，覆盖一处60尺锥状区域。任何位于其中的生物都必须进行一次DC16的体质豁免。豁免失败者收到39（6d12）毒素伤害并陷入<font color=maroon><strong>中毒</strong></font>状态。以此法<font color=maroon><strong>中毒</strong></font>期间，该生物失去任何武器与技能熟练，它不能施展法术，它也不能理解任何语言，并在进行智力豁免时具有劣势。目标可以在其回合结束时重复此豁免，豁免成功则结束此效应。豁免成功者只收到一半伤害并在接下来的24小时内免疫此魔象人的心智毒烟。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

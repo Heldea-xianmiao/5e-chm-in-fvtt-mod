@@ -280,7 +280,45 @@ DC 20 的力量检定或者一次对雕像造成的超过 20 点伤害的攻击�
 
 的使用盗贼工具的敏捷检定，或者一次 DC 15 的试图用斗篷或相似的物品来阻塞雕像的力量检定，会降低毒性伤害 
 
-5（1d10）点。一旦角色检定成功，就需要一个人站在雕像旁边来维持阻塞。当四座雕像都被用这种方法阻塞了，陷阱也就解除了。</P></BLOCKQUOTE></body>
+5（1d10）点。一旦角色检定成功，就需要一个人站在雕像旁边来维持阻塞。当四座雕像都被用这种方法阻塞了，陷阱也就解除了。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

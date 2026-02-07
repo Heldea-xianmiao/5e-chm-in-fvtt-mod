@@ -64,7 +64,45 @@ Pit）那些遭到灾祸之战蹂躏的遗址附近较小的晶洞中发现、�
 
 1d4 小时内获得所有智力检定中的优势。每消耗一剂软体盐，该生物必须通过一次 Dc 15 
 
-的体质豁免，否则会获得一级力竭——这种效果会随着多次剂量的累积而累积。每剂软体盐价值 150 Gp。<BR></P></body>
+的体质豁免，否则会获得一级力竭——这种效果会随着多次剂量的累积而累积。每剂软体盐价值 150 Gp。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

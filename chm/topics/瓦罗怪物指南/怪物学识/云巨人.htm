@@ -54,7 +54,45 @@ Overlords</FONT></STRONG></P>
 
 <P><BR><STRONG><FONT color=#800000>贵族的面具 Masks of Nobility</FONT></STRONG></P>
 
-<P>在古代对于曼诺的描述中，他经常以佩戴双面面具的形象出现。正因为如此，云巨人贵族很少露出他们的脸，而是戴着用宝石装饰的珍贵材料制成的精美面具。每个贵族都有这些面具，这些面具可以掩盖自己的真容但也能反映自己当前的情绪；随着情绪发生变化，一个人可能会在一天中多次更换面具。<BR>一个面具价值因其物质价值和其表达它所代表的情绪的准确性而决定。只有那些最富裕的云巨人才能买得起成打的必要的面具，以显示同类之间可能存在的所有情感上的所有微妙差异。</P></body>
+<P>在古代对于曼诺的描述中，他经常以佩戴双面面具的形象出现。正因为如此，云巨人贵族很少露出他们的脸，而是戴着用宝石装饰的珍贵材料制成的精美面具。每个贵族都有这些面具，这些面具可以掩盖自己的真容但也能反映自己当前的情绪；随着情绪发生变化，一个人可能会在一天中多次更换面具。<BR>一个面具价值因其物质价值和其表达它所代表的情绪的准确性而决定。只有那些最富裕的云巨人才能买得起成打的必要的面具，以显示同类之间可能存在的所有情感上的所有微妙差异。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

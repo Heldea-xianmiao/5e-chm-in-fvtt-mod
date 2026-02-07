@@ -48,7 +48,45 @@ elemental（如同6级法术，只能召唤格莱石人galeb duhr,，石像鬼ga
 
 elemental和石鼎兽xorn），奥图迷舞Otto's irresistible 
 
-dance<BR><STRONG>岩石伪装。</STRONG>考芮精在试图躲藏于岩石地带中时，在敏捷（隐匿）检定中具有优势。<BR><STRONG>岩石力量。</STRONG>当位于地面上时，考芮精的任意武器攻击可以额外加上2个伤害骰（已经包含进它的攻击之中）。<BR><STRONG><FONT color=#800000>动作<BR></FONT>多重攻击。</STRONG>考芮精可以用巨木棒进行两次攻击，或投掷两次岩石。<BR><STRONG>巨木棒。</STRONG>近战武器攻击：命中+9，触及5尺，单一目标。命中：10（1d8+6）钝击伤害，若考芮精位于地面上则造成19（3d8+6）钝击伤害。<BR><STRONG>投石。</STRONG>远程武器攻击：命中+9，射程60/120尺，单一目标。命中：15（2d8+6）钝击伤害，若考芮精位于地面上则造成24（4d8+6）钝击伤害。</P></body>
+dance<BR><STRONG>岩石伪装。</STRONG>考芮精在试图躲藏于岩石地带中时，在敏捷（隐匿）检定中具有优势。<BR><STRONG>岩石力量。</STRONG>当位于地面上时，考芮精的任意武器攻击可以额外加上2个伤害骰（已经包含进它的攻击之中）。<BR><STRONG><FONT color=#800000>动作<BR></FONT>多重攻击。</STRONG>考芮精可以用巨木棒进行两次攻击，或投掷两次岩石。<BR><STRONG>巨木棒。</STRONG>近战武器攻击：命中+9，触及5尺，单一目标。命中：10（1d8+6）钝击伤害，若考芮精位于地面上则造成19（3d8+6）钝击伤害。<BR><STRONG>投石。</STRONG>远程武器攻击：命中+9，射程60/120尺，单一目标。命中：15（2d8+6）钝击伤害，若考芮精位于地面上则造成24（4d8+6）钝击伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

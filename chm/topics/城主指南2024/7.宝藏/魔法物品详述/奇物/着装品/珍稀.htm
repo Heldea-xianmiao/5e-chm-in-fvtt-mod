@@ -82,7 +82,45 @@ Senses</STRONG>。你具有120尺的黑暗视觉和真实视觉。<BR><STRONG>�
 
 <P><EM>
 
-奇物，珍稀（需同调）<BR></EM>着装这件斗篷期间，你能够以一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作将斗篷转变为你背上的一对翅膀。这对翅膀会持续1小时，或直至你使用一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作提前结束效应。这对翅膀会赋予你60尺飞行速度。如果翅膀消失时你仍在空中则你会坠落。翅膀消失后，你在1d12小时内无法再次使用它们。</P></body>
+奇物，珍稀（需同调）<BR></EM>着装这件斗篷期间，你能够以一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作将斗篷转变为你背上的一对翅膀。这对翅膀会持续1小时，或直至你使用一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作提前结束效应。这对翅膀会赋予你60尺飞行速度。如果翅膀消失时你仍在空中则你会坠落。翅膀消失后，你在1d12小时内无法再次使用它们。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -42,7 +42,45 @@ Blade</STRONG>。近战武器攻击：命中+5，触及5尺，单一目标，命
 
   随意：<FONT color=#ffff00><EM>舞光术</EM></FONT><BR>    每项1/日：<FONT color=pink><EM>易容术</EM></FONT>，<FONT color=#800000><EM>隐形术<BR></EM></FONT><FONT color=#800000><STRONG>反应Reactions</STRONG></FONT><BR><STRONG>散兵移动Skirmish 
 
-Movement</STRONG>。当一个生物在鼠首天的5尺内结束其回合时，鼠首天能够移动至多等于其速度一半的距离。该移动不会引起借机攻击。</P></body>
+Movement</STRONG>。当一个生物在鼠首天的5尺内结束其回合时，鼠首天能够移动至多等于其速度一半的距离。该移动不会引起借机攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

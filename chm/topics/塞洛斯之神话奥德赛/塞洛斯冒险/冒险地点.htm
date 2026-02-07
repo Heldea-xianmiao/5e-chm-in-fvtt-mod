@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>冒险之地 Adventure Locations</FONT></STRONG></P>
 
-<P>每个神祗章节都包含了一张通常与特定神祗联系起来的标志性地点的地图。每个地点的描述包含了一场基于该地的冒险的目标可能目标与角色们可能面对的敌人的表格。</P></body>
+<P>每个神祗章节都包含了一张通常与特定神祗联系起来的标志性地点的地图。每个地点的描述包含了一场基于该地的冒险的目标可能目标与角色们可能面对的敌人的表格。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

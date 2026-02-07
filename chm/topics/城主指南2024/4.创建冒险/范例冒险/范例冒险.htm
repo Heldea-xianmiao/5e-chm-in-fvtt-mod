@@ -58,7 +58,45 @@ cellSpacing=0 cellPadding=2 width="99%" bgColor=#fffbf0 border=1>
 
       <H3>新手教程A Starting Campaign</H3>
 
-      <P><FONT style="BACKGROUND-COLOR: #fffbf0" >你可以用本章中的冒险来拼出一场战役。这些冒险涉及的皆是自由城市灰鹰（见第五章）附近的地点。你可以按顺序运行前三次冒险，在每次冒险结束时令角色们升一级。他们也许会在冒险之间返回自己在灰鹰城中的基地，或是在完成“有翼之神”遭遇后首次旅行至灰鹰城。在此之后，你可以依照玩家在先前的遭遇中所做出的各种互动，并思考哪些情景使他们更加投入，以此来决定并规划未来的冒险。</FONT></P></TD></TR></TABLE></P></body>
+      <P><FONT style="BACKGROUND-COLOR: #fffbf0" >你可以用本章中的冒险来拼出一场战役。这些冒险涉及的皆是自由城市灰鹰（见第五章）附近的地点。你可以按顺序运行前三次冒险，在每次冒险结束时令角色们升一级。他们也许会在冒险之间返回自己在灰鹰城中的基地，或是在完成“有翼之神”遭遇后首次旅行至灰鹰城。在此之后，你可以依照玩家在先前的遭遇中所做出的各种互动，并思考哪些情景使他们更加投入，以此来决定并规划未来的冒险。</FONT></P></TD></TR></TABLE></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

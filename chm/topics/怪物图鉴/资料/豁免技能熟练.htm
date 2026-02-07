@@ -966,7 +966,45 @@ Throws</STRONG></FONT>
 
   Proficiencies</STRONG>     
 
-<BR>提前设定好生物对护甲，武器，以及工具的熟练情况。当你决定更换这些项目时，你可以自行决定该生物是否熟练其新装备。<BR>例如，你可以把穿厚皮甲挥舞巨棒的典型山丘巨人，换成穿锁甲并装备巨斧，并且自行设定该巨人对两样装备是否都熟练。<BR>关于无熟练度使用护甲或武器的规则，可以参照《玩家手册》的相关内容。</P></BLOCKQUOTE></body>
+<BR>提前设定好生物对护甲，武器，以及工具的熟练情况。当你决定更换这些项目时，你可以自行决定该生物是否熟练其新装备。<BR>例如，你可以把穿厚皮甲挥舞巨棒的典型山丘巨人，换成穿锁甲并装备巨斧，并且自行设定该巨人对两样装备是否都熟练。<BR>关于无熟练度使用护甲或武器的规则，可以参照《玩家手册》的相关内容。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

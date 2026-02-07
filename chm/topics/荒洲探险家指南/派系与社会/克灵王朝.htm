@@ -124,7 +124,45 @@ intelligent humanoid creature</STRONG> ： 监禁10-20个月，罚款1500GP。<B
 
 <P>在有关克灵王朝的方面，马修·默瑟使用了部分古希腊语词汇，如<STRONG>迷乱typhros</STRONG>。个人认为该词可能是<STRONG>typhus</STRONG>的错误拼写，该词源于古希腊词语，该词通常用于形容混乱或迷失的状态，因符合患者的精神神经症状，在医学上被引入，作为描述斑疹伤寒的词使用。斑疹伤寒的患者会出现如下精神神经症状：失眠、耳鸣、谵妄、狂躁，甚至昏迷（谵妄的主要症状包括意识模糊、注意力不集中、情绪激动、睡眠-觉醒周期改变等），个人建议如果DM想要构建一个陷入迷乱的角色不妨借鉴这些症状。<BR></P>
 
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
 </body>
 
 </html>
+
 

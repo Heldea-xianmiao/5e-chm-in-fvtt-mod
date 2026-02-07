@@ -96,7 +96,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
 <H3><FONT color=#800000>卡瑟利冒险Carceri Adventures</FONT></H3>
 
-<P>卡瑟利无烈日之光，只余绝望蔓延。这里是激情与毒物、背叛与痛苦的聚合地，仇恨如深流，缓缓蚕食一切，无法预测下一刻将毁灭何人何物。据说，囚徒想要逃离此地，唯有变得比囚禁他们的力量更为强大。但在这片滋生绝望与背叛的领域，众志难成，更遑论联合抗争。<BR>冒险者可能需要直面禁锢自身的种种力量——不仅是实体的桎梏，还有心理、灵魂的束缚，甚至恶魔的压迫。冒险任务或许包括解救一名囚徒，无论是一个蒙冤的灵魂，还是被流放至此的远古神祇。然而，这样的救赎是否会引来更深重的代价，则无人知晓。</P></body>
+<P>卡瑟利无烈日之光，只余绝望蔓延。这里是激情与毒物、背叛与痛苦的聚合地，仇恨如深流，缓缓蚕食一切，无法预测下一刻将毁灭何人何物。据说，囚徒想要逃离此地，唯有变得比囚禁他们的力量更为强大。但在这片滋生绝望与背叛的领域，众志难成，更遑论联合抗争。<BR>冒险者可能需要直面禁锢自身的种种力量——不仅是实体的桎梏，还有心理、灵魂的束缚，甚至恶魔的压迫。冒险任务或许包括解救一名囚徒，无论是一个蒙冤的灵魂，还是被流放至此的远古神祇。然而，这样的救赎是否会引来更深重的代价，则无人知晓。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

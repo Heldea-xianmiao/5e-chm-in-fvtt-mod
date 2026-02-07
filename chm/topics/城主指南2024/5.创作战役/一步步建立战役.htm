@@ -42,7 +42,45 @@ Adventures</STRONG>。战役中的大冲突是由更多细化的小冲突组成�
 
 It to an End</STRONG>。请考虑你的战役会以何种方式结束，以及在战役结束时角色们会升至几级。</P>
 
-<P>你也许注意到上述内容和第四章开头给出的“冒险的设计步骤”很贴近。这是因为，战役在各种意义上不过是一场更大层面的“冒险”。每当战役中的一场冒险结束，下一场冒险便会开始。<BR>本章中的后文给出了关于这四步的详解与灵感，还提供了一套范例战役设定。</P></body>
+<P>你也许注意到上述内容和第四章开头给出的“冒险的设计步骤”很贴近。这是因为，战役在各种意义上不过是一场更大层面的“冒险”。每当战役中的一场冒险结束，下一场冒险便会开始。<BR>本章中的后文给出了关于这四步的详解与灵感，还提供了一套范例战役设定。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

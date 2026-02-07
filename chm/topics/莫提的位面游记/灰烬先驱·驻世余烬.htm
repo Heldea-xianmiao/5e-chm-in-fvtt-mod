@@ -50,7 +50,45 @@ Hand，魔法伎俩Prestidigitation<BR>   每项1/日：灾祸术Bane，任意�
 
 Door，蛛网术Web</EM></FONT><BR><FONT color=#800000><STRONG>附赠动作Bonus 
 
-Actions</STRONG></FONT><BR><STRONG>虚相Phase（2/日）。</STRONG>驻世余烬的身体变得如同虚体魂灵一般，它获得钝击、穿刺、与挥砍伤害的抗性。为受益于此能力，驻世余烬需要为其保持专注（如同专注于一个法术一般）。</P></body>
+Actions</STRONG></FONT><BR><STRONG>虚相Phase（2/日）。</STRONG>驻世余烬的身体变得如同虚体魂灵一般，它获得钝击、穿刺、与挥砍伤害的抗性。为受益于此能力，驻世余烬需要为其保持专注（如同专注于一个法术一般）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

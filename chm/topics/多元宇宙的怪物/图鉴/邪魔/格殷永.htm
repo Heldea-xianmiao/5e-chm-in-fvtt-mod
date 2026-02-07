@@ -130,7 +130,45 @@ Sting（消耗2动作）。</STRONG>格殷永发动一次尾刺攻击。</P>
 
   Horn</STRONG><BR>格殷永可以采取一个动作召唤出牛头人们。<BR><STRONG>吹响号角Sound the 
 
-  Horn（1/日）。</STRONG>格殷永吹响祂的号角，使5d4个牛头人出现在600尺内祂选择的未占据空间。这些牛头人在出现时骰先攻，他们听从格殷永的命令。当这些牛头人出现的时候。他们持续存在，直到他们死亡或格殷永用一个动作解散他们中的任意个或全部。</P></BLOCKQUOTE></body>
+  Horn（1/日）。</STRONG>格殷永吹响祂的号角，使5d4个牛头人出现在600尺内祂选择的未占据空间。这些牛头人在出现时骰先攻，他们听从格殷永的命令。当这些牛头人出现的时候。他们持续存在，直到他们死亡或格殷永用一个动作解散他们中的任意个或全部。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

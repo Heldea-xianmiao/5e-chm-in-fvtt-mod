@@ -48,7 +48,45 @@ Sensitivity。</STRONG>处于日光照射下，狗头人进行的攻击检定和
 
 Bolt。</STRONG>远程法术攻击：命中+4，射程60尺，单一目标。命中：9（2d6+2）点伤害，伤害类型由狗头人在下列选项中选择其一：强酸、寒冷、火焰、闪电、毒素、雷鸣。<BR><STRONG>施法Spellcasting。</STRONG>狗头人施展以下法术之一，无需材料成分，以魅力为其施法属性（法术豁免DC12）：<BR><EM><FONT color=#800080>随意：法师之手mage hand，魔法伎俩prestidigitation<BR>每项2/日：魅惑类人charm 
 
-person，云雾术fog cloud，浮空术levitate</FONT></EM></P></body>
+person，云雾术fog cloud，浮空术levitate</FONT></EM></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

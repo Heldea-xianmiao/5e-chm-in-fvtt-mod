@@ -96,7 +96,45 @@ Wyrmling</STRONG>正于它藏在内层洞穴中的小小宝藏堆上休息，其
 
 <DIV>两份<FONT color=#0000ff><STRONG>法术卷轴</STRONG></FONT>（<STRONG><EM><FONT color=#800080>警报术</FONT></EM></STRONG>与<STRONG><EM><FONT color=#800080>通晓语言</FONT></EM></STRONG>）</DIV></LI></UL>
 
-<P>如果玩家打败或赶走了这条龙，那么每位玩家会额外获得400xp。</P></body>
+<P>如果玩家打败或赶走了这条龙，那么每位玩家会额外获得400xp。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

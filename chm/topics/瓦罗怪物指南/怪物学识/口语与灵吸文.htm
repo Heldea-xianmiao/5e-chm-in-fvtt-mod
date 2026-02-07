@@ -20,4 +20,41 @@
 
 <P></P><p   style="TEXT-ALIGN: left;  mso-pagination: widow-orphan"><span><font>夺心魔的</font><font>“书写”，也就是所谓的“灵吸文”，并不像一组代表声音或思想的符号那么简单。灵吸文的铭文捕捉了它的创造者的想法，并通过灵能将这些想法传递给之后用触须触摸铭文来阅读的夺心魔。夺心魔用触须抓或者摩挲非魔法、非生命的物质，以此用灵能将信息铭刻其上，通过这种方式，夺心魔书写下灵吸文。这铭刻会导致该物体表面发生难以察觉的变化，该物体的磨损或劣化会导致铭刻褪去和失效。</font></span></p><p   style="TEXT-ALIGN: left;  mso-pagination: widow-orphan"><span></span> </p><p   style="TEXT-ALIGN: left;  mso-pagination: widow-orphan"><span><font>灵吸文的表述是由四行文字组成的，这些文字被写成互相连接的区块，创造出其他生物无法理解的复杂图案。然而，触摸到灵吸文的人都可以获得对铭文所包含的复杂想法的零碎洞悉。想要理解灵吸文的非灵吸怪生物可以进行一次智力检定</font>(其DC基于灵吸文所包含想法的复杂性)，来尝试从中得出一些铭文的含义。多次成功的尝试可能会揭示关于灵吸怪作者的不同方面，它的预期意义，以及它的预期读者。一次失败的尝试则会导致剧烈的头痛，在极端情况下，甚至会导致疯狂。法术<EM><STRONG><FONT color=#800080>通晓语言Comprehend 
 
-Languages</FONT></STRONG></EM>所提供的对灵吸文铭文的理解与一个夺心魔从中所能获得的理解大致相同。 </span></p></div></body></html>
+Languages</FONT></STRONG></EM>所提供的对灵吸文铭文的理解与一个夺心魔从中所能获得的理解大致相同。 </span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

@@ -660,7 +660,45 @@ Drow'b<BR>任何一家有自尊的特许经营企业都不会因为资金耗尽�
 
 竞争对手和企业家可能嗅到血腥味，试图攻击特许经营或接管其市场。 邪恶的 NPCs 肯定会来找你。</P>
 
-<P>拖欠特许经营权的付款也会使他们与贵族、商人以及其他看重特许经营权的人的关系变得紧张。这种关系通常会变得冷淡，直到角色们能够证明这加盟业已经重新振作。</P></body>
+<P>拖欠特许经营权的付款也会使他们与贵族、商人以及其他看重特许经营权的人的关系变得紧张。这种关系通常会变得冷淡，直到角色们能够证明这加盟业已经重新振作。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

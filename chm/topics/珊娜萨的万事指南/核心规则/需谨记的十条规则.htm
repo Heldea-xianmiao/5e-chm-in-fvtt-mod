@@ -90,7 +90,45 @@ Protection 的范围内，你也只能从中获取加值更高的那个灵光的
 
 <P><STRONG><FONT color=#800000>【九】专注 Concentration</FONT></STRONG><BR>当你开始施展需要专注的法术、或开始使用一项需要专注的特殊能力时，你正对其他效应进行的专注将立即终止。</P>
 
-<P><STRONG><FONT color=#800000>【十】临时生命值 Temporary Hit Points</FONT></STRONG><BR>临时生命值无法累加。若你在拥有临时生命值时再次获得临时生命值效应，除非相应的游戏特性另有说明，否则你不能将其数值相加。不过你可以自行选择保留哪项临时生命值。<BR></P></body>
+<P><STRONG><FONT color=#800000>【十】临时生命值 Temporary Hit Points</FONT></STRONG><BR>临时生命值无法累加。若你在拥有临时生命值时再次获得临时生命值效应，除非相应的游戏特性另有说明，否则你不能将其数值相加。不过你可以自行选择保留哪项临时生命值。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

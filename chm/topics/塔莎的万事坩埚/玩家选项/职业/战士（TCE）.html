@@ -50,5 +50,43 @@ Features</FONT></STRONG>
 
 <P><STRONG><FONT color=#800000>替换武术Martial Versatility 
 
-<BR></FONT></STRONG><EM>第4级战士特性</EM><BR>当你的战士职业等级抵达能让你获得属性值提升职业特性时，你能进行以下一项改变。这种变化代表着你改变了武术训练和练习的重点<BR>·用一个战士可用的战斗风格替换原有的一个战斗风格。<BR>·如果你通过战技大师范型掌握了战技，你可以将你的一个已知战技替换为一个不同的战技。</P></BODY></HTML>
+<BR></FONT></STRONG><EM>第4级战士特性</EM><BR>当你的战士职业等级抵达能让你获得属性值提升职业特性时，你能进行以下一项改变。这种变化代表着你改变了武术训练和练习的重点<BR>·用一个战士可用的战斗风格替换原有的一个战斗风格。<BR>·如果你通过战技大师范型掌握了战技，你可以将你的一个已知战技替换为一个不同的战技。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

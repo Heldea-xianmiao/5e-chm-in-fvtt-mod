@@ -92,5 +92,43 @@ Rosewater关于自然与绿色处世哲学的文章可在这里找到。<BR><BR>
 
 <HR>
 
-<BR><STRONG>写在最后</STRONG>：实际上对于非万智牌粉丝的玩家，可以用的内容也就是一些新种族和怪物<EM>（长老恐龙！）</EM>资源，DM可以修改之后将他们加入自己的游戏。</DIV></BODY></HTML>
+<BR><STRONG>写在最后</STRONG>：实际上对于非万智牌粉丝的玩家，可以用的内容也就是一些新种族和怪物<EM>（长老恐龙！）</EM>资源，DM可以修改之后将他们加入自己的游戏。</DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

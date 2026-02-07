@@ -38,7 +38,45 @@ html,body {
 
 <P><STRONG>“龙之宝库”</STRONG>探讨了龙的宝库的大小与龙的魔法力量之间的关系。本节讨论了龙用将其宝库分割为多份的方式来扩大其魔法范围的做法，以及可以将这些宝库联系在一起的物品。这一节也探讨了包括闹鬼和诅咒在内的，可以产生大量的魔法力量并集中于一处的魔法异能。</P>
 
-<P><STRONG>“宝库里有啥？”</STRONG>提供了用来确定龙宝藏内容的表，并在《城主指南》中的宝藏表上展开。</P></body>
+<P><STRONG>“宝库里有啥？”</STRONG>提供了用来确定龙宝藏内容的表，并在《城主指南》中的宝藏表上展开。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

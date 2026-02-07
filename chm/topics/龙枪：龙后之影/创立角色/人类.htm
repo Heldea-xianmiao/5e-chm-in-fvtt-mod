@@ -52,7 +52,45 @@ Lands</FONT></STRONG><BR>安塞隆的其他部分是独立的游牧部落和形�
 
 虽然古德兰的居民以坎德人为主，仍有零散的人类部落在戴尔利平原Dairly 
 
-Plains以及伊斯塔血海沿岸地区游荡。许多人居住在古老的伊斯塔废墟中，偶尔被迫与半懂不懂的古代技术和魔法斗争。<BR><STRONG>冰触之地Icereach。</STRONG>冰触之地的人类生活在冰天雪地的南方，并与海象人thanoi群体争夺狩猎场。<BR><STRONG>克尔Khur。</STRONG>克尔的人类游牧部落居住在环境严酷、岩石遍地的土地上。当地领导人萨拉可汗Salah-Khan强行统合着这些部落，将他的族人与巨龙大军结盟。以胡里汗Khuri-Khan的贸易点为中心，一股强大的反抗力量正在抵抗着入侵者。<BR><STRONG>诺德玛Nordmaar。</STRONG>诺德玛的大多数人类要么生活在崎岖的北部沿海的聚落中，要么生活在南部的游牧部落中。这两个骄傲的群体都与索兰尼亚人有着密切的联系。</P></body>
+Plains以及伊斯塔血海沿岸地区游荡。许多人居住在古老的伊斯塔废墟中，偶尔被迫与半懂不懂的古代技术和魔法斗争。<BR><STRONG>冰触之地Icereach。</STRONG>冰触之地的人类生活在冰天雪地的南方，并与海象人thanoi群体争夺狩猎场。<BR><STRONG>克尔Khur。</STRONG>克尔的人类游牧部落居住在环境严酷、岩石遍地的土地上。当地领导人萨拉可汗Salah-Khan强行统合着这些部落，将他的族人与巨龙大军结盟。以胡里汗Khuri-Khan的贸易点为中心，一股强大的反抗力量正在抵抗着入侵者。<BR><STRONG>诺德玛Nordmaar。</STRONG>诺德玛的大多数人类要么生活在崎岖的北部沿海的聚落中，要么生活在南部的游牧部落中。这两个骄傲的群体都与索兰尼亚人有着密切的联系。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

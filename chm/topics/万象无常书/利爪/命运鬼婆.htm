@@ -80,7 +80,45 @@ HP 71（13d8+13）<br>
 
 <strong>织命缠运Tangle Threads。</strong>鬼婆魔法性地用灵体银丝缠上一个位于其60尺内的它可见的生物。该生物必须成功通过一次DC14的力量豁免，否则其速度降为0直至其下一回合结束。<br>
 
-<strong>厄运缠身Destiny Curse（消耗2动作）。</strong>鬼婆魔法性地诅咒一个位于其60尺内的它可见的生物。该生物必须进行一次DC14的感知豁免（若该生物在前一分钟内对该鬼婆造成过伤害，则此豁免具有劣势）。豁免失败者会在属性检定，攻击检定以及豁免检定上具有劣势，直至该诅咒结束。每回合一次，当被诅咒的生物进行一次上述的d20投掷并失败时，它都会受到7（2d6）力场伤害。诅咒会在一分钟后结束；若该生物在此期间累计成功了三次上述的d20投掷，或是鬼婆再次使用此动作，则诅咒也会结束。</p></body>
+<strong>厄运缠身Destiny Curse（消耗2动作）。</strong>鬼婆魔法性地诅咒一个位于其60尺内的它可见的生物。该生物必须进行一次DC14的感知豁免（若该生物在前一分钟内对该鬼婆造成过伤害，则此豁免具有劣势）。豁免失败者会在属性检定，攻击检定以及豁免检定上具有劣势，直至该诅咒结束。每回合一次，当被诅咒的生物进行一次上述的d20投掷并失败时，它都会受到7（2d6）力场伤害。诅咒会在一分钟后结束；若该生物在此期间累计成功了三次上述的d20投掷，或是鬼婆再次使用此动作，则诅咒也会结束。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

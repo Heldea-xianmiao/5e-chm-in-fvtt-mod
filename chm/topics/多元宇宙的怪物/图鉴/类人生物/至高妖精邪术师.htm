@@ -46,7 +46,45 @@ Archfey</FONT></STRONG><BR><EM>中型类人，任意阵营</EM><BR>护甲等级�
 
 Word。</STRONG>魔契师讲出一句魔法性的迷惑之语。指定其60尺内一个可见生物，该生物必须成功通过一次DC14的感知豁免否则受到9（2d8）心灵伤害且直到魔契师的下一回合结束前在攻击检定具有劣势。<BR><STRONG>施法Spellcasting。</STRONG>魔契师施展以下一个法术，使用魅力作为施法属性（法术豁免DC14）：<BR><EM><FONT color=#800080>随意：舞光术，易容术，法师护甲（仅自身），法师之手，次级幻象，魔法伎俩，动物交谈<BR>1/每日：魅惑类人，任意门，定身怪物</FONT></EM><BR><STRONG><FONT color=#800000>反应Reaction</FONT></STRONG><BR><STRONG>雾遁Misty 
 
-Escape（短休或长休后充能）。</STRONG>在受到伤害后，魔契师变为隐形，并带着任何其携带或着装的装备传送到60尺内一处他能看见的未占据空间。它保持隐形直到它的下回合开始或它进行攻击、造成伤害，或施放法术。</P></body>
+Escape（短休或长休后充能）。</STRONG>在受到伤害后，魔契师变为隐形，并带着任何其携带或着装的装备传送到60尺内一处他能看见的未占据空间。它保持隐形直到它的下回合开始或它进行攻击、造成伤害，或施放法术。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

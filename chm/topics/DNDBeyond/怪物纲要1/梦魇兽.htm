@@ -76,7 +76,45 @@ Attack。梦魇兽发动一次獠牙攻击。<BR>疾冲Charge ( 消耗2动作)�
 
 梦魇兽发出嚎叫声，并呼出一团 120 尺锥形的魔法可怖气体。在该气体区域内的任何生物都必须成功通过一次 DC 18的感知豁免，否则会陷入对梦魇兽的恐慌，持续 1 
 
-分钟。该生物可以在其每回合结束时重掷豁免检定，若成功则结束对自身的效果。</P></body>
+分钟。该生物可以在其每回合结束时重掷豁免检定，若成功则结束对自身的效果。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

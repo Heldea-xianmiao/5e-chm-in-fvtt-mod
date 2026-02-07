@@ -40,7 +40,45 @@ Spellcasting</FONT></STRONG><BR>某些天生具有施法能力的怪物拥有天
 
 bolt</EM>的卓尔魔法师，可以使用其5环法术位将闪电束作5环法术来施展。<BR>需要改变怪物已学习或是已准备的法术时，可以用相同职业的法术列表中相同环阶的法术进行互换。但是，这种变更会改变怪物的综合能力，并可能使其威胁度与其建议的挑战等级不相符。</P>
 
-<P><STRONG><FONT color=#800000>灵能Psionics</FONT></STRONG><BR>拥有灵能力的怪物只使用其心灵力量就可以施放法术，灵能标签一般会加在怪物的施法或者天生施法专有特质后。标签本身并不包含任何直接的规则，但可能会与游戏中的其他内容互动。具有灵能标签的怪物施法时都不需要任何的法术成分。</P></body>
+<P><STRONG><FONT color=#800000>灵能Psionics</FONT></STRONG><BR>拥有灵能力的怪物只使用其心灵力量就可以施放法术，灵能标签一般会加在怪物的施法或者天生施法专有特质后。标签本身并不包含任何直接的规则，但可能会与游戏中的其他内容互动。具有灵能标签的怪物施法时都不需要任何的法术成分。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -90,7 +90,45 @@ Wicked Magic</STRONG><br>众所周知，万象无常牌会无效掲示它们位�
 
 所有成员都是直接向他报告，并且大部分骑士在选择任务时也是自由抉择。不是一个自上而下的领导结构，希拉里恩和组织的其他成员都是骑士们在执行任务时可以利用的资源范围。在希拉里恩看来，达成炽天之壁的目标的重要程度远高于组织个体对他的忠诚或者遵守他的规则。<br>也就是说，炽天之壁的骑士们了解智慧和经验的价值。他们尊重年长骑士的权威，无论这些长者仍在 
 
-活跃或已经退休在本部担任教官了。这些年迈的骑士没有正式的等级制度来赋予以威信，但在实践中，他们对资历尚浅的骑士产生了重大影响。</P></body>
+活跃或已经退休在本部担任教官了。这些年迈的骑士没有正式的等级制度来赋予以威信，但在实践中，他们对资历尚浅的骑士产生了重大影响。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

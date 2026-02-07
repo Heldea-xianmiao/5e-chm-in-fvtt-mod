@@ -50,7 +50,45 @@ Multiattack。</STRONG>饥饿发动两次攻击：一次啃咬Bite，一次爪�
 
 bite。</STRONG>近战武器攻击：命中+8，触及5尺，单一目标。命中：8（1d8+4）的穿刺伤害外加13（3d8）暗蚀伤害。<BR><STRONG>爪击 
 
-Claw。</STRONG>近战武器攻击:命中+8，触及10尺，单一目标。命中：18（4d6+4）穿刺伤害。如果目标生物的体型为中体型或者更小，则其被擒抱（逃脱DC16）并被束缚直到擒抱结束。只要擒抱着一个生物，饥饿就不能用爪击进行攻击。</P></body>
+Claw。</STRONG>近战武器攻击:命中+8，触及10尺，单一目标。命中：18（4d6+4）穿刺伤害。如果目标生物的体型为中体型或者更小，则其被擒抱（逃脱DC16）并被束缚直到擒抱结束。只要擒抱着一个生物，饥饿就不能用爪击进行攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

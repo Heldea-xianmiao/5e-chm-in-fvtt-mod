@@ -56,7 +56,45 @@ Fear。</STRONG>目标和距离它10尺范围内最多4个由火惧之眼选择�
 
 of 
 
-Flame。</STRONG>目标必须通过DC16的敏捷豁免检定，否则受到44（8d10）点火焰伤害。如果它是生物或可燃物品，它会被点燃。若成功豁免，则目标受到一半的伤害并且不会被点燃。直到一个生物使用动作扑灭火焰为止，一个点燃的目标在其每个回合开始时受到5点（1d10）火焰伤害。</P></body>
+Flame。</STRONG>目标必须通过DC16的敏捷豁免检定，否则受到44（8d10）点火焰伤害。如果它是生物或可燃物品，它会被点燃。若成功豁免，则目标受到一半的伤害并且不会被点燃。直到一个生物使用动作扑灭火焰为止，一个点燃的目标在其每个回合开始时受到5点（1d10）火焰伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

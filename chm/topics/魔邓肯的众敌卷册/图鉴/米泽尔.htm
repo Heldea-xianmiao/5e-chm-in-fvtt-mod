@@ -90,7 +90,45 @@ Shortsword。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标�
 
 Shadow 
 
-Teleport（充能5~6）。</STRONG>只要开始的空间和目的地，处于微光或黑暗的环境中时，鬾魊及它所穿着或携带的任何装备，都能传送到距离它500英尺内的一个未占据空间。目的地必须是鬾魊曾经见过的地方，但不需要在其视线之内。如果目标空间被占据，则该次传送就会到达最近的、未占据空间。<BR>鬾魊传送时，若有任何其他生物，则会被阴影诅咒1个小时，在这个诅咒结束之前，每一个300英尺内的亡灵、以及来自堕影冥界的生物，都能够感知到它的存在。</P></body>
+Teleport（充能5~6）。</STRONG>只要开始的空间和目的地，处于微光或黑暗的环境中时，鬾魊及它所穿着或携带的任何装备，都能传送到距离它500英尺内的一个未占据空间。目的地必须是鬾魊曾经见过的地方，但不需要在其视线之内。如果目标空间被占据，则该次传送就会到达最近的、未占据空间。<BR>鬾魊传送时，若有任何其他生物，则会被阴影诅咒1个小时，在这个诅咒结束之前，每一个300英尺内的亡灵、以及来自堕影冥界的生物，都能够感知到它的存在。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

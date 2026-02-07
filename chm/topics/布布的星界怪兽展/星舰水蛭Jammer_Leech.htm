@@ -222,7 +222,45 @@ style="FONT-SIZE: 10.5pt; FONT-FAMILY: Calibri; WHITE-SPACE: normal; WORD-SPACIN
 
 style="FONT-SIZE: 10.5pt; FONT-FAMILY: 宋体"><FONT face=宋体>魔法冲击</FONT><FONT face=Calibri>Magical Discharge (1/</FONT><FONT face=宋体>日</FONT><FONT face=Calibri>)</FONT><FONT face=宋体>。当水蛭受到伤害时，它可以从眼睛中释放出一道由魔法能量凝成的箭矢，并选择一个距离水蛭自身<SPAN> </SPAN></FONT><FONT face=Calibri>30<SPAN> </SPAN></FONT><FONT face=宋体>英尺内的其可以看到的生物作为目标。目标必须成功通过一次<SPAN> </SPAN></FONT><FONT face=Calibri>DC 13<SPAN> </SPAN></FONT><FONT face=宋体>的敏捷豁免，否则会受到<SPAN> </SPAN></FONT><FONT face=Calibri>10 
 
-(3d6)<SPAN> </SPAN></FONT><FONT face=宋体>点力场伤害并陷入震慑直到其下一回合结束。</FONT></SPAN></P></body>
+(3d6)<SPAN> </SPAN></FONT><FONT face=宋体>点力场伤害并陷入震慑直到其下一回合结束。</FONT></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

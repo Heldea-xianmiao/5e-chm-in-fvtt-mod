@@ -530,7 +530,45 @@ style="TEXT-ALIGN: left; MARGIN: 0pt; TEXT-INDENT: 12.05pt; mso-pagination: wido
 
 style="FONT-SIZE: 12pt; FONT-FAMILY: 黑体; FONT-WEIGHT: bold; COLOR: rgb(0,0,0); FONT-STYLE: italic; mso-spacerun: 'yes'; mso-font-kerning: 1.0000pt"><FONT face=黑体>以石为墨</FONT> <FONT face=黑体>Written in Stone。</FONT></SPAN></I></B><SPAN 
 
-style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体; COLOR: rgb(0,0,0); mso-spacerun: 'yes'; mso-font-kerning: 1.0000pt"><FONT face=宋体>一股熔岩从地缝中渗出，迅速冷却成岩石。合同内容以发光的文本的形式在硬化的岩浆上显现。为了签订合同，魔鬼和交易的角色必须将左手放在熔岩中，熔岩不会伤害他们，并在石头上留下手形的印记。冷却后的熔岩块消失到一个安全的地方。如果魔鬼的左手和达成交易的角色的左手都被割断并放入手印中，那么两只手和契约就会被销毁，这也会使契约无效。</FONT></SPAN><!--EndFragment--></P></body>
+style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体; COLOR: rgb(0,0,0); mso-spacerun: 'yes'; mso-font-kerning: 1.0000pt"><FONT face=宋体>一股熔岩从地缝中渗出，迅速冷却成岩石。合同内容以发光的文本的形式在硬化的岩浆上显现。为了签订合同，魔鬼和交易的角色必须将左手放在熔岩中，熔岩不会伤害他们，并在石头上留下手形的印记。冷却后的熔岩块消失到一个安全的地方。如果魔鬼的左手和达成交易的角色的左手都被割断并放入手印中，那么两只手和契约就会被销毁，这也会使契约无效。</FONT></SPAN><!--EndFragment--></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

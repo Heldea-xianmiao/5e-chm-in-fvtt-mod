@@ -72,7 +72,45 @@ Multiattack。</STRONG>魅影武者用它的幽灵长剑攻击两次。<BR><STRO
 
 Longsword。</STRONG>近战武器攻击：命中+5，触及 5尺，单个目标。命中：7（1d8+3）力场伤害。 <BR><STRONG>以太化 
 
-Etherealness。</STRONG>魅影武者可以从物质位面进入以太位面，反之亦然。当处于以太位面时，它在物质位面是可见的，反之亦然。但它既不能影响到其他位面的任何事物也不会被其所影响。</P></body>
+Etherealness。</STRONG>魅影武者可以从物质位面进入以太位面，反之亦然。当处于以太位面时，它在物质位面是可见的，反之亦然。但它既不能影响到其他位面的任何事物也不会被其所影响。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

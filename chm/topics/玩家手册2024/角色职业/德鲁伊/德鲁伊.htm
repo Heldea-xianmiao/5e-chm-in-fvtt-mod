@@ -318,7 +318,44 @@ Boon<BR></FONT></STRONG>你获得一项传奇恩惠专长（见第五章）或�
 
 
 
-<p><STRONG><FONT color=#800000>20级：大德鲁伊 Archdruid<BR></FONT></STRONG>自然的活力在你的身上永不凋零，令你获得以下增益：<BR><b>不凋化形Evergreen Wild Shape。</b>当你投掷先攻时，若你没有荒野变形的使用次数，你获得一次荒野变形使用次数。<BR><b>自然术使Nature Magician。</b>你可以将荒野变形使用次数转化为法术位（无需任何动作）。选择一定数量的你未使用的荒野变形使用次数，将它们转化为一个法术位，每个使用次数可以转为2个法术环阶。比如说，如果你转化两个荒野变形使用次数，你就可以创造出一个四环法术位。此增益一经使用，直至完成长休你都无法再次使用。<BR><b>青春永驻Longevity。</b>你行使的原力魔法让你的衰老速度减缓。每经过10年的岁月，你的身体就仿佛只过了1年。</p></I></body>
+<p><STRONG><FONT color=#800000>20级：大德鲁伊 Archdruid<BR></FONT></STRONG>自然的活力在你的身上永不凋零，令你获得以下增益：<BR><b>不凋化形Evergreen Wild Shape。</b>当你投掷先攻时，若你没有荒野变形的使用次数，你获得一次荒野变形使用次数。<BR><b>自然术使Nature Magician。</b>你可以将荒野变形使用次数转化为法术位（无需任何动作）。选择一定数量的你未使用的荒野变形使用次数，将它们转化为一个法术位，每个使用次数可以转为2个法术环阶。比如说，如果你转化两个荒野变形使用次数，你就可以创造出一个四环法术位。此增益一经使用，直至完成长休你都无法再次使用。<BR><b>青春永驻Longevity。</b>你行使的原力魔法让你的衰老速度减缓。每经过10年的岁月，你的身体就仿佛只过了1年。</p></I><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
@@ -327,6 +364,7 @@ Boon<BR></FONT></STRONG>你获得一项传奇恩惠专长（见第五章）或�
 
 
 </html>
+
 
 
 

@@ -614,4 +614,41 @@ font-size:12.0000pt;" ><font face="宋体" >箭之雹</font>Hail of Arrows（长
 
 mso-font-kerning:0.0000pt;" ><font face="宋体" >半羊人射出一支箭矢，将其化作</font>30尺锥形范围内的魔法箭雨。每个该区域内的生物必须进行DC14的敏捷豁免，失败则受到17（5d6）穿刺伤害，成功则受到一半伤害。</span><span style="mso-spacerun:'yes';font-family:宋体;font-size:12.0000pt;
 
-mso-font-kerning:0.0000pt;" ><o:p></o:p></span></p></div></body></html>
+mso-font-kerning:0.0000pt;" ><o:p></o:p></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

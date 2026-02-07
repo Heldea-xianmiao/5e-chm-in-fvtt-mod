@@ -80,7 +80,45 @@ Longtooth</FONT></STRONG><BR>长牙化兽者凶猛好斗，但是他们也和朋
 
 Swiftstride</FONT></STRONG><BR>疾驰化兽者优雅而迅捷。他们多数像自然中的猫科动物一样冷漠而难以束缚（无论是从身体上，还是心灵上）。<BR><STRONG>属性值增加。</STRONG>你的敏捷和魅力属性增加1。<BR><STRONG>优雅。</STRONG>你熟练于特技技能。<BR><STRONG>迅捷步伐。</STRONG>你步行速度增加5英尺。<BR><STRONG>兽化特性。</STRONG>当你兽化时，步行速度增加5英尺。此外，当敌人在距离你5英尺处结束回合时，你能以一个反应移动10英尺。<BR>此移动不会引发借机攻击。</P>
 
-<P><STRONG><FONT color=#800000>狩猎 Wildhunt</FONT></STRONG> <BR>狩猎化兽者敏锐而富有洞察力。其中一部分人时常保持警惕，小心应对可能的威胁。其他的则专注于自己的直觉，用心进行搜索。狩猎化兽者是优秀的猎人，他们也经常会成为化兽者社区的精神领袖。<BR><STRONG>属性值增加。</STRONG>你的感知属性增加2。<BR><STRONG>自然追踪者。</STRONG>你熟练于求生技能。<BR><STRONG>追踪气味。</STRONG>以一个附赠动作，你能够锁定一个距离你10尺以内的生物。直到你下次长休结束，你在为了找到目标而进行的属性检定中具有双倍的熟练加值，并且当目标与你之间的距离不大于60尺时，你总是能够知道目标的位置。<BR>使用一次此能力后，必须经过一次短休或长休才能再次使用。<BR><STRONG>兽化特性。</STRONG>当你兽化时，你在感知检定中具有优势。</P></body>
+<P><STRONG><FONT color=#800000>狩猎 Wildhunt</FONT></STRONG> <BR>狩猎化兽者敏锐而富有洞察力。其中一部分人时常保持警惕，小心应对可能的威胁。其他的则专注于自己的直觉，用心进行搜索。狩猎化兽者是优秀的猎人，他们也经常会成为化兽者社区的精神领袖。<BR><STRONG>属性值增加。</STRONG>你的感知属性增加2。<BR><STRONG>自然追踪者。</STRONG>你熟练于求生技能。<BR><STRONG>追踪气味。</STRONG>以一个附赠动作，你能够锁定一个距离你10尺以内的生物。直到你下次长休结束，你在为了找到目标而进行的属性检定中具有双倍的熟练加值，并且当目标与你之间的距离不大于60尺时，你总是能够知道目标的位置。<BR>使用一次此能力后，必须经过一次短休或长休才能再次使用。<BR><STRONG>兽化特性。</STRONG>当你兽化时，你在感知检定中具有优势。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

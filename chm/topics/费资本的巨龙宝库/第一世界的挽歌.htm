@@ -64,7 +64,45 @@ html,body {
 
   <P 
 
-  ><EM>歌之以息，巨龙之嗣；<BR>歌唱往昔第一世界，<BR>支离破碎为无垠现实。<BR>歌唱巴哈姆特与提亚马特，<BR>悼其辛劳造物毁于一朝。<BR>亦歌唱萨迪沃，<BR>神识散作细微万千。<BR>歌之以息，巨龙之嗣：<BR>汝当继承龙神的伟业<BR>君临往昔第一世界——尽管它已是破碎过往。</EM></P></BLOCKQUOTE></body>
+  ><EM>歌之以息，巨龙之嗣；<BR>歌唱往昔第一世界，<BR>支离破碎为无垠现实。<BR>歌唱巴哈姆特与提亚马特，<BR>悼其辛劳造物毁于一朝。<BR>亦歌唱萨迪沃，<BR>神识散作细微万千。<BR>歌之以息，巨龙之嗣：<BR>汝当继承龙神的伟业<BR>君临往昔第一世界——尽管它已是破碎过往。</EM></P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

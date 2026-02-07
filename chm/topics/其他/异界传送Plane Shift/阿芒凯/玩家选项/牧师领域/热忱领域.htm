@@ -260,7 +260,45 @@ style='FONT-SIZE: 11pt; mso-bidi-font-family: "Times New Roman"; mso-bidi-font-s
 
 Glory</FONT></STRONG>   
 
-<BR>在第17级，你可以延迟死亡的瞬间以完成最终的英雄壮举。<BR>当你被当你被一个你能看到的攻击者降低到0点生命值时，即使你会被直接杀死，你也可以以你的一个反应，以你的移动速度向攻击者迈进并对其发起一次近战武器攻击。这次最后的攻击具有优势。如果攻击命中，该生物将额外受到武器类型的5D10伤害和5D10火焰伤害。然后你就失去意识并照常开始进行死亡豁免，如果遭受的伤害将您完全杀死，您将死亡。你必须完成一次长休才能再次使用此能力。</SPAN></SPAN></P></body>
+<BR>在第17级，你可以延迟死亡的瞬间以完成最终的英雄壮举。<BR>当你被当你被一个你能看到的攻击者降低到0点生命值时，即使你会被直接杀死，你也可以以你的一个反应，以你的移动速度向攻击者迈进并对其发起一次近战武器攻击。这次最后的攻击具有优势。如果攻击命中，该生物将额外受到武器类型的5D10伤害和5D10火焰伤害。然后你就失去意识并照常开始进行死亡豁免，如果遭受的伤害将您完全杀死，您将死亡。你必须完成一次长休才能再次使用此能力。</SPAN></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

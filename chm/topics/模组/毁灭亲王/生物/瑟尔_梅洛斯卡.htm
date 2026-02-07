@@ -74,7 +74,45 @@ fall、跳跃术jump<BR>2环（3法术位）：浮空术levitate、迷踪步mist
 
 step<BR>3环（3法术位）：加速术haste<BR><STRONG><FONT color=#800000>动作 
 
-Action</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>瑟尔使用两次近战武器攻击。<BR><STRONG>巨剑Greatsword。</STRONG>近战武器攻击：+5命中，触及5尺，一个目标。命中：10（2d6+3）挥砍伤害。<BR><STRONG>骑枪Lance。</STRONG>近战武器攻击：+5命中，触及10尺，一个目标。命中：9（1d12+3）挥砍伤害。<BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>格挡Parry。</STRONG>瑟尔可以对一次近战武器攻击命中时，令自身的AC+2。此时瑟尔必须能看见攻击者，且正持用一把近战武器。</P></STRONG></body>
+Action</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>瑟尔使用两次近战武器攻击。<BR><STRONG>巨剑Greatsword。</STRONG>近战武器攻击：+5命中，触及5尺，一个目标。命中：10（2d6+3）挥砍伤害。<BR><STRONG>骑枪Lance。</STRONG>近战武器攻击：+5命中，触及10尺，一个目标。命中：9（1d12+3）挥砍伤害。<BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>格挡Parry。</STRONG>瑟尔可以对一次近战武器攻击命中时，令自身的AC+2。此时瑟尔必须能看见攻击者，且正持用一把近战武器。</P></STRONG><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

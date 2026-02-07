@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>食人魔 Ogres</FONT></STRONG></P>
 
-<P>食人魔是臭名昭著的傻瓜,而倘若假以时日，其中一批也可被训练去执行战场上的特殊任务。他们依照职能被授予攻城锤、弩炮手、链斗士和轿舆之名。这些工作很简单,但是能有效利用一个食人魔的力量优势。</P></body>
+<P>食人魔是臭名昭著的傻瓜,而倘若假以时日，其中一批也可被训练去执行战场上的特殊任务。他们依照职能被授予攻城锤、弩炮手、链斗士和轿舆之名。这些工作很简单,但是能有效利用一个食人魔的力量优势。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

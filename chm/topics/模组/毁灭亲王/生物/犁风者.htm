@@ -60,7 +60,45 @@ Whispers、雷鸣波Thunderwave<BR>2环（3法术位）：隐形术Invisibility�
 
 Door<BR><STRONG><FONT color=#800000>动作 
 
-Action</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>犁风者使用两次近战武器攻击。<BR><STRONG>刺剑Rapier。</STRONG>近战武器攻击：+5命中，触及5尺，一个目标。命中：7（1d8+3）穿刺伤害。</P></body>
+Action</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>犁风者使用两次近战武器攻击。<BR><STRONG>刺剑Rapier。</STRONG>近战武器攻击：+5命中，触及5尺，一个目标。命中：7（1d8+3）穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

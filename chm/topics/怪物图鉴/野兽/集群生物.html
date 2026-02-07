@@ -68,9 +68,47 @@ Swarms<o:p></o:p></span></b></p>
 
  class=GramE>鼠集群</span>，而一只木乃伊本身的存在就可以使圣甲虫从其陵墓深处的沙土中翻涌而出。一个鬼<span class=GramE>婆可能</span>拥有召唤渡鸦集群攻击其敌人的力量，而<span
 
- class=GramE>一只蛇人却</span>可能会让毒蛇集群跟在自己的身后。德鲁伊无法魅惑这些集群，虽说它们的侵略性本身也很不符合自然的天性。</span></p><![if !supportLineBreakNewLine]><![endif]></div></body>
+ class=GramE>一只蛇人却</span>可能会让毒蛇集群跟在自己的身后。德鲁伊无法魅惑这些集群，虽说它们的侵略性本身也很不符合自然的天性。</span></p><![if !supportLineBreakNewLine]><![endif]></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

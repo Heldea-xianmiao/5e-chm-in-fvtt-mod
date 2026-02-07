@@ -44,7 +44,45 @@ html,body {
 
 Crossbow。</STRONG> 
 
-远程武器攻击：命中+2，射程100/400尺，单一目标。命中：5（1d10）点穿刺伤害。<BR><STRONG>领导Leadership（短休或长休后充能）。</STRONG>在1分钟内，骑士可以对身边30尺内一个他能看见，且正在进行攻击检定或豁免检定的非敌对生物，说出一条特殊的指令或警告。若该生物可以听到并理解骑士的话则其可以在当前的检定结果里加上一个d4。一个生物一次只能受益于一个领导骰。骑士陷入失能时，该效应也随之终止。<BR><STRONG><FONT color=#800000>反应</FONT></STRONG><BR><STRONG>格挡Parry。</STRONG>骑士在被一次近战攻击命中时，其AC加上2。此时该骑士必须能看见攻击者，且有在持用一把近战武器。</P></body>
+远程武器攻击：命中+2，射程100/400尺，单一目标。命中：5（1d10）点穿刺伤害。<BR><STRONG>领导Leadership（短休或长休后充能）。</STRONG>在1分钟内，骑士可以对身边30尺内一个他能看见，且正在进行攻击检定或豁免检定的非敌对生物，说出一条特殊的指令或警告。若该生物可以听到并理解骑士的话则其可以在当前的检定结果里加上一个d4。一个生物一次只能受益于一个领导骰。骑士陷入失能时，该效应也随之终止。<BR><STRONG><FONT color=#800000>反应</FONT></STRONG><BR><STRONG>格挡Parry。</STRONG>骑士在被一次近战攻击命中时，其AC加上2。此时该骑士必须能看见攻击者，且有在持用一把近战武器。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

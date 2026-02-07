@@ -76,7 +76,45 @@ Reality。</STRONG>被试者的朋友、敌人和爱人都可能随着各种形�
 
 <P><STRONG><FONT color=#800000>叛逆法师Enegade 
 
-Mages</FONT></STRONG><BR>如果一个施法者离开或被逐出高等术法会，又或者他们在大法师试炼中失败但生还了，高等术法会的领导者们会禁止他们继续习练魔法。违逆法师议会继续习练魔法的人将被视为叛逆法师。高等术法会的正式成员有义务举报和反对这些叛逆法师。有些成员会追捕叛逆法师，试图惩罚或杀死那些违逆高等术法会的人。</P></body>
+Mages</FONT></STRONG><BR>如果一个施法者离开或被逐出高等术法会，又或者他们在大法师试炼中失败但生还了，高等术法会的领导者们会禁止他们继续习练魔法。违逆法师议会继续习练魔法的人将被视为叛逆法师。高等术法会的正式成员有义务举报和反对这些叛逆法师。有些成员会追捕叛逆法师，试图惩罚或杀死那些违逆高等术法会的人。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

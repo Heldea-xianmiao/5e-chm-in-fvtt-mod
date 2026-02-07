@@ -38,7 +38,45 @@ html,body {
 
 又或者，当一个你可见的生物对你进行了一次攻击检定，或者其为对抗你的某个法术或特性而进行一次豁免检定时，你可以迫使该生物重掷该攻击检定或豁免检定。<br>
 
-如果触发了重骰的该检定含有优势或劣势，则两个d20均需重骰。一旦你使用了该特性，你便无法再次使用该特性直到你完成了一次长休。</p></body>
+如果触发了重骰的该检定含有优势或劣势，则两个d20均需重骰。一旦你使用了该特性，你便无法再次使用该特性直到你完成了一次长休。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

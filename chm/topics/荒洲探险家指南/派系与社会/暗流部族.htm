@@ -90,7 +90,45 @@ Run</FONT></H2>
 
 <P><STRONG><FONT color=#000000>艾欧诺斯·贾根索斯 lonos Jagentoth <BR>   
 
-</FONT></STRONG><FONT color=#000000><EM>守序邪恶，男性半精灵<BR></EM>艾欧洛斯以其谈判和欺骗技巧而闻名，他已证明自己是家庭分销网络的高手。他受到启发，为了将贾根索斯家族的商业联盟扩展到敦达里安帝国的北部边缘之外，艾欧洛斯一直在与万象会的特工进行安排，同时根除万象会在这些圈子中的影响力。要么绞索即将收紧，要么他设计了一个绝妙的策略来消除竞争对手。</FONT></P></body>
+</FONT></STRONG><FONT color=#000000><EM>守序邪恶，男性半精灵<BR></EM>艾欧洛斯以其谈判和欺骗技巧而闻名，他已证明自己是家庭分销网络的高手。他受到启发，为了将贾根索斯家族的商业联盟扩展到敦达里安帝国的北部边缘之外，艾欧洛斯一直在与万象会的特工进行安排，同时根除万象会在这些圈子中的影响力。要么绞索即将收紧，要么他设计了一个绝妙的策略来消除竞争对手。</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

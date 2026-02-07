@@ -88,7 +88,45 @@ Score Increase。</STRONG>你的敏捷增加1点。<BR><STRONG>林地之子One W
 
 Wood。</STRONG>你拥有自然技能的熟练项。<BR><STRONG>种子之语Seedspeech。</STRONG>你和伟大韵律Great 
 
-Rhythm的联系是如此紧密，以至于你可以与森林本身的青葱草木沟通。通过言语和触摸，你可以向活着的植物传递简单的想法。你可以用简单的语言解释他们的回答。森林中的植物不会通过视觉来感知世界，但是大多数植物可以感知温度的变化，描述触摸过它们的东西，以及听到周围发生的震动（包括说话）。</P></body>
+Rhythm的联系是如此紧密，以至于你可以与森林本身的青葱草木沟通。通过言语和触摸，你可以向活着的植物传递简单的想法。你可以用简单的语言解释他们的回答。森林中的植物不会通过视觉来感知世界，但是大多数植物可以感知温度的变化，描述触摸过它们的东西，以及听到周围发生的震动（包括说话）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

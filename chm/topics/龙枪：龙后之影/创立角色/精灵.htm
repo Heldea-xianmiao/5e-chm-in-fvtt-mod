@@ -70,7 +70,45 @@ elves，以浩瀚的海洋为家。而他们的族亲是狄摩那斯提精灵，
 
 elves。尽管狄摩那斯提精灵生活在距离岸边更近的地方，但他们也与海洋和其中全部的生命有着深深的联系。这两群精灵都生活在自己的水生社群里，很少被安塞隆的人们所目击到。尽管海精灵格外罕见，你还是可以用《魔邓肯出品：多元宇宙的怪物》 
 
-中的资源创建海精灵角色。</P></body>
+中的资源创建海精灵角色。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

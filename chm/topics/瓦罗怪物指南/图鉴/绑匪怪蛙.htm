@@ -66,7 +66,45 @@ Stealth。</STRONG>在微光光照或黑暗环境下，绑匪怪蛙能够以附�
 
 10(3d6)的暗蚀伤害。生命值以这种方式降至0的生物将不再受到暗蚀伤害并且伤势转为稳定。<BR>绑匪怪蛙不能同时吞下多于一个的生物。当绑匪怪蛙没有处于失能时，它可以在任意时间在它周围五尺的任意区域吐出该生物（不耗费动作）。且该生物陷入倒地状态。如果绑匪怪蛙死亡，它也将同样地吐出被吞咽的生物。<BR><STRONG>阴影步Shadow 
 
-Step。</STRONG>绑匪怪蛙能够神奇地传送至至多30尺内一个它能看见且未被占据并且处于微光光照或黑暗的位置。在传送前或传送后，它可以进行一次啃咬攻击或者弹舌攻击。</P></body>
+Step。</STRONG>绑匪怪蛙能够神奇地传送至至多30尺内一个它能看见且未被占据并且处于微光光照或黑暗的位置。在传送前或传送后，它可以进行一次啃咬攻击或者弹舌攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -62,7 +62,45 @@ html,body {
 
 <P>在加热苹果酒的同时, 
 
-在酒杯里倒入沸水，放置2分钟，用来加热它们。最后，在倒出沸水后，在每个杯子里倒入准备好的苹果酒，同时放入之前冰箱里静置的橙子皮，以及蔓越莓（如果使用的话）来点缀，最后将所有准备好的酒杯一并奉上。</P></body>
+在酒杯里倒入沸水，放置2分钟，用来加热它们。最后，在倒出沸水后，在每个杯子里倒入准备好的苹果酒，同时放入之前冰箱里静置的橙子皮，以及蔓越莓（如果使用的话）来点缀，最后将所有准备好的酒杯一并奉上。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -82,7 +82,45 @@ html,body {
 
 <strong>雷击Lightning Strike（消耗2动作）。</strong>古岚降下雷电之束，攻击其风暴下方的地面上的任意一点，在该点周围5尺内的生物进行一次DC21的敏捷豁免，豁免失败将受到16（3d10）点闪电伤害，豁免成功则只受半数伤害。<br>
 
-<strong>尖啸暴风Screaming Gale（消耗3动作）。</strong>古岚释放出一道由风与雷组成的，300尺长、20尺宽的线状爆破能量。该区域的所有物体都将受到22（4d10）点雷鸣伤害。该区域中的每个生物必须通过一次DC21的敏捷豁免，豁免失败将受到22（4d10）点雷鸣伤害并朝远离爆破能量中轴线的方向被击飞60尺。如果生物在被击飞的途中撞上了无法移动的物体（例如墙体或地板）并受到撞击伤害——在撞上之前每飞行了10尺，该生物此时就将受到3（1d6）点钝击伤害；如果目标撞上了另一个生物，则另一个生物必须通过一次DC19的敏捷豁免，豁免失败将受到与目标相同的撞击伤害并应击 倒地Prone 。</p></body>
+<strong>尖啸暴风Screaming Gale（消耗3动作）。</strong>古岚释放出一道由风与雷组成的，300尺长、20尺宽的线状爆破能量。该区域的所有物体都将受到22（4d10）点雷鸣伤害。该区域中的每个生物必须通过一次DC21的敏捷豁免，豁免失败将受到22（4d10）点雷鸣伤害并朝远离爆破能量中轴线的方向被击飞60尺。如果生物在被击飞的途中撞上了无法移动的物体（例如墙体或地板）并受到撞击伤害——在撞上之前每飞行了10尺，该生物此时就将受到3（1d6）点钝击伤害；如果目标撞上了另一个生物，则另一个生物必须通过一次DC19的敏捷豁免，豁免失败将受到与目标相同的撞击伤害并应击 倒地Prone 。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

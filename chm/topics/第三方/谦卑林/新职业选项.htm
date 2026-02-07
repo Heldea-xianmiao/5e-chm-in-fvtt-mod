@@ -38,7 +38,45 @@ html,body {
 
 <STRONG>旅路学院The College of the 
 
-Road</STRONG>。法外狂徒们在强盗联盟之间利用他们的技艺大展拳脚，而那些旅路学院的吟游诗人们会在谦卑林的家家户户的营火炉灶旁分享它们旅途中的故事。</P></body>
+Road</STRONG>。法外狂徒们在强盗联盟之间利用他们的技艺大展拳脚，而那些旅路学院的吟游诗人们会在谦卑林的家家户户的营火炉灶旁分享它们旅途中的故事。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

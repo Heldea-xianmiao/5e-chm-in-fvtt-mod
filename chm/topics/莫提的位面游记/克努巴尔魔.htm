@@ -56,7 +56,45 @@ Acid</STRONG></FONT>。克努巴尔魔喷出一条长60尺，宽5尺的酸液。
 
 Demodand（1/日）</STRONG>：克努巴尔魔有40%的成功率召唤1d2法拉斯特魔或1个克努巴尔魔。被召唤的妖魔出现在召唤者60尺内一处未占据空间处，作为克努巴尔魔的盟友行动且不能再召唤其他妖魔。被召唤的妖魔持续存在一分钟，直到召唤者死亡，或到它使用一动作解散。<BR><FONT color=green><STRONG><STRONG><FONT color=#000080>附赠动作Bonus Actions</FONT></STRONG><BR>恶臭烟雾Nauseating 
 
-Fog</STRONG></FONT>（充能6）。克努巴尔魔以魔法在它120尺内的一点上创造出填充20尺半径球型的绿色烟雾。这块云雾持续1分钟或直到它再次使用该附赠动作项。云雾视作重度遮蔽与困难地形。任何在云雾内开始其回合的生物或在一个回合里第一次进入其中的生物必须通过DC17体质豁免，否则就会陷入中毒状态，直到其自身下一个回合结束。</P></body>
+Fog</STRONG></FONT>（充能6）。克努巴尔魔以魔法在它120尺内的一点上创造出填充20尺半径球型的绿色烟雾。这块云雾持续1分钟或直到它再次使用该附赠动作项。云雾视作重度遮蔽与困难地形。任何在云雾内开始其回合的生物或在一个回合里第一次进入其中的生物必须通过DC17体质豁免，否则就会陷入中毒状态，直到其自身下一个回合结束。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

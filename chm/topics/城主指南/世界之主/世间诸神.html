@@ -2804,9 +2804,47 @@ the Gods<o:p></o:p></span></b></p>
 
  class=GramE>不</span>同类人种族相关联的神祇之间的差异。这些保有<span class=GramE>自己神系的</span>种族是否因神为其事务活跃而满足于他们在世界中的特殊位置？其他种族是否被这些神忽视，或者其他种族对神的倾向是否左右着神之间的力量平衡？<span
 
- lang=EN-US><![if !supportLineBreakNewLine]><![endif]></span></p></div></body>
+ lang=EN-US><![if !supportLineBreakNewLine]><![endif]></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

@@ -486,7 +486,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
 Adventures</FONT></H3>
 
-<P>旅行者造访星光位面往往是为了到达某个其他地方——可能是外层位面，也可能是穿越荒宇前往物质位面的其他世界。在旅途中，他们可能邂逅其他同行者，如天族、邪魔、史拉蟾、魔冢，或吉斯洋基人。<BR>作为思想、记忆与梦境的领域，星光位面本身也可以成为冒险的目的地。角色或许会尝试探究死去诸神的凝结思维，或者从心灵风暴的狂涌中筛选出有价值的信息。他们甚至可能面对自己记忆、恐惧与梦想的星光化身。</P></body>
+<P>旅行者造访星光位面往往是为了到达某个其他地方——可能是外层位面，也可能是穿越荒宇前往物质位面的其他世界。在旅途中，他们可能邂逅其他同行者，如天族、邪魔、史拉蟾、魔冢，或吉斯洋基人。<BR>作为思想、记忆与梦境的领域，星光位面本身也可以成为冒险的目的地。角色或许会尝试探究死去诸神的凝结思维，或者从心灵风暴的狂涌中筛选出有价值的信息。他们甚至可能面对自己记忆、恐惧与梦想的星光化身。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

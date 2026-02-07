@@ -14,7 +14,45 @@
 
 Sun</h1>这一章详细介绍了炽天之壁，一个保护多元宇宙免遭万象无常牌造就的混乱的救援组织。<br>
 
-这一章包括对该组织的描述和其总部的地图。它还探讨了DM如何将炽天之壁引入他们的战役，以及角色如何加入炽天之壁，或以其他方式被卷入该组织在多元宇宙中的行动。</body>
+这一章包括对该组织的描述和其总部的地图。它还探讨了DM如何将炽天之壁引入他们的战役，以及角色如何加入炽天之壁，或以其他方式被卷入该组织在多元宇宙中的行动。<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

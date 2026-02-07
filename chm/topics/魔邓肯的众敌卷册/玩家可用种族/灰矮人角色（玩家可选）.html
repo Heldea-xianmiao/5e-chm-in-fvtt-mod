@@ -226,9 +226,47 @@ lang=EN-US style='font-family:"Segoe UI",sans-serif'><br>
 
 class=16><span lang=EN-US style='font-family:"Segoe UI",sans-serif'>Sunlight
 
-Sensitivity</span></span><span style='font-family:宋体'>。当你进行攻击检定和依赖视觉的感知（察觉）检定时，如果你本人、你的攻击目标或你尝试察觉的东西位于阳光直射下，则你所进行的相应检定具有劣势。</span></p></div></body>
+Sensitivity</span></span><span style='font-family:宋体'>。当你进行攻击检定和依赖视觉的感知（察觉）检定时，如果你本人、你的攻击目标或你尝试察觉的东西位于阳光直射下，则你所进行的相应检定具有劣势。</span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

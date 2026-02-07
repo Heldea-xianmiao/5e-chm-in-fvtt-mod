@@ -24,7 +24,45 @@
 
  
 
-组成集会海岸的主要城市有达马里港、费奥林、奥瑟、尼科德拉纳斯、格瓦丹、佐恩港和图索阿。在沿海城市之外，斯瓦文群岛散布在卢西迪安海上，有着航运站、危险的暗礁，以及隐藏在饥饿的丛林深处的古老秘密。狂欢众的海盗徘徊于海上的贸易航线，骚扰商人、海军和冒险者。正如任何冒险者都能证明的那样，所有的这些危险保证了在集会海岸的旅行是一次紧张、刺激且有利可图的体验——如果你知道该往哪看的话。</P></body>
+组成集会海岸的主要城市有达马里港、费奥林、奥瑟、尼科德拉纳斯、格瓦丹、佐恩港和图索阿。在沿海城市之外，斯瓦文群岛散布在卢西迪安海上，有着航运站、危险的暗礁，以及隐藏在饥饿的丛林深处的古老秘密。狂欢众的海盗徘徊于海上的贸易航线，骚扰商人、海军和冒险者。正如任何冒险者都能证明的那样，所有的这些危险保证了在集会海岸的旅行是一次紧张、刺激且有利可图的体验——如果你知道该往哪看的话。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

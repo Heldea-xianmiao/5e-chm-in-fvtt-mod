@@ -60,7 +60,45 @@ Street)和霍格马歇尔路(Hogmarshal Road)的交汇处汇合。淀粉类食�
 
 如果角色进行调查，他们会发现一群捕获螃蟹，让它们挨饿，然后把它们释放到殖民地，并把供品据为自己所有。 这些恶棍和万象会Myriad有关系吗？ 
 
-被盗的贡品是否足以激怒湖的灵魂，以惩罚定居点的不尊重？ </P></body>
+被盗的贡品是否足以激怒湖的灵魂，以惩罚定居点的不尊重？ </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

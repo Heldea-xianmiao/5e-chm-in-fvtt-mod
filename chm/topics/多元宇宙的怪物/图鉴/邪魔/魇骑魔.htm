@@ -80,7 +80,45 @@ Tack</FONT></STRONG>
 
 一个骑手可以以炼狱鞍辔绑定一只梦魇为其服务，这套鞍辔包括笼头、嚼子、缰绳、马鞍和马镫，以及供骑手穿戴的马刺。一只装备了炼狱鞍辔的梦魇必须服从穿戴马刺的生物，直到其穿戴者死亡或鞍辔被移除。<BR> 
 
-你可以用一个动作，通过将马刺互相磕在一起或者用它们刮过鲜血来召唤一只装备了炼狱鞍辔的梦魇。该梦魇于你的下一回合开始时出现在你的20尺内。它作为你的盟友行动，并在你的先攻阶段进行其回合。它会保持存在1天，直到你或它死去，或直到你用一个动作遣返它。若该梦魇死亡，它会用24个小时在九狱中重构形体，在那之后你可以在此召唤它。<BR>此鞍辔并不会创造出一个梦魇；必须先制服一只梦魇，使得鞍辔可以被穿戴于其上。没有梦魇会自愿接受这强迫奴役，但其中一些最终会对它们的主人建立了强烈的忠诚，并成为了真正的邪恶伙伴。</P></body>
+你可以用一个动作，通过将马刺互相磕在一起或者用它们刮过鲜血来召唤一只装备了炼狱鞍辔的梦魇。该梦魇于你的下一回合开始时出现在你的20尺内。它作为你的盟友行动，并在你的先攻阶段进行其回合。它会保持存在1天，直到你或它死去，或直到你用一个动作遣返它。若该梦魇死亡，它会用24个小时在九狱中重构形体，在那之后你可以在此召唤它。<BR>此鞍辔并不会创造出一个梦魇；必须先制服一只梦魇，使得鞍辔可以被穿戴于其上。没有梦魇会自愿接受这强迫奴役，但其中一些最终会对它们的主人建立了强烈的忠诚，并成为了真正的邪恶伙伴。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

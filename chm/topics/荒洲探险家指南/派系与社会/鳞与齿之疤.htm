@@ -78,7 +78,45 @@ Tooth</FONT></H2>
 
 <P><STRONG><FONT color=#000000>特洛卡，无赖之王 Troka, The Scoundrel King<BR>   
 
-</FONT></STRONG><FONT color=#000000><EM>中立善良，男性龙裔<BR></EM>德鲁维斯最初注意到特洛卡是因为他那巧舌如簧的口才，因此派他渗透帝国并评估塔隆施塔特的局势。对他族人恶劣的生活条件和屈辱的待遇感到不满，于是特洛卡在敦达里安帝国周边领土制造混乱作为报复。特洛卡和他狡猾的盗贼团从王室窃取物资，扰乱当地军队，同时密切关注龙裔难民的状况，这让他成为了龙裔社区中的民间英雄。</FONT></P></body>
+</FONT></STRONG><FONT color=#000000><EM>中立善良，男性龙裔<BR></EM>德鲁维斯最初注意到特洛卡是因为他那巧舌如簧的口才，因此派他渗透帝国并评估塔隆施塔特的局势。对他族人恶劣的生活条件和屈辱的待遇感到不满，于是特洛卡在敦达里安帝国周边领土制造混乱作为报复。特洛卡和他狡猾的盗贼团从王室窃取物资，扰乱当地军队，同时密切关注龙裔难民的状况，这让他成为了龙裔社区中的民间英雄。</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

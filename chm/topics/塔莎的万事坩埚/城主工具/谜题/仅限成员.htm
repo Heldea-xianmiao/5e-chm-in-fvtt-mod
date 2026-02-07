@@ -66,7 +66,45 @@ DC 12
 
 角色推断出没有数学公式可以将守卫和访客之间的数字联系起来。<BR><STRONG>感知（洞悉）DC 15：</STRONG>该角色怀疑答案与单词而不是数字有关。</P>
 
-<P><STRONG><FONT color=#800000>定制谜题</FONT></STRONG><BR>此道谜题的挑战性部分在于对玩家的误导使他们以为自己偷听到的是某个数学公式。要想找出答案，他们必须首先克服自己的假设。此道谜题的一个简单版本可能包括计数警卫提供的任何类型单词中的字母，然后用那个数字来回答。或者，对警卫提供数字的回答可能是任何与该数字具有相同字母数的单词——例如，“五（five）”有四个字母，因此“鸭子（duck）”或“烟雾（smog）”是适当答案。你的谜题越是把数字当作单词而不是数字，就越可能有挑战性。</P></body>
+<P><STRONG><FONT color=#800000>定制谜题</FONT></STRONG><BR>此道谜题的挑战性部分在于对玩家的误导使他们以为自己偷听到的是某个数学公式。要想找出答案，他们必须首先克服自己的假设。此道谜题的一个简单版本可能包括计数警卫提供的任何类型单词中的字母，然后用那个数字来回答。或者，对警卫提供数字的回答可能是任何与该数字具有相同字母数的单词——例如，“五（five）”有四个字母，因此“鸭子（duck）”或“烟雾（smog）”是适当答案。你的谜题越是把数字当作单词而不是数字，就越可能有挑战性。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

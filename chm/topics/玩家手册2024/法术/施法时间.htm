@@ -34,7 +34,45 @@ Longer Casting Times</FONT>
 
 </STRONG><BR>某些法术（包括作为<FONT color=#008000><STRONG>仪式</STRONG></FONT>施展的法术）要数分钟甚至数小时来进行施展。当你所施展法术的施法时间为1分钟或更久时，你必须在法术施展期间每个自己的回合里都执行魔法动作来施展该法术，同时还必须保持专注（见术语汇编）。如果你失去专注，则法术失败，不过你并不会因此消耗法术位。如果你想再次施展该法术，则必须重新开始其施法程序。</p>
 
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
 </body>
 
 </html>
+
 

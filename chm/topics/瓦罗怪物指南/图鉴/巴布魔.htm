@@ -38,7 +38,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000>动作Actions<BR></FONT>多重攻击。</STRONG>巴布魔可以进行两次近战攻击。它也可以在攻击之前或之后使用弱化凝视。<BR><STRONG>爪击。</STRONG>近战武器攻击：+6命中，触及5尺，一个目标。命中：8（1d8+4）挥砍伤害。<BR>矛。近战或远程武器攻击：+6命中，触及5尺或射程20/60尺，一个目标。命中：7（1d6+4）穿刺伤害，或8（1d8 + 
 
-4）穿刺伤害（当双手持握时）。<BR><STRONG>弱化凝视。</STRONG>巴布魔指定一个在它的20尺内并且可见的目标。目标必须通过一个DC13的体质豁免。若豁免失败，目标用武器攻击造成伤害减半，持续1分钟。目标可以在每次回合结束时重复豁免，若成功则结束效果。</P></body>
+4）穿刺伤害（当双手持握时）。<BR><STRONG>弱化凝视。</STRONG>巴布魔指定一个在它的20尺内并且可见的目标。目标必须通过一个DC13的体质豁免。若豁免失败，目标用武器攻击造成伤害减半，持续1分钟。目标可以在每次回合结束时重复豁免，若成功则结束效果。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -1616,4 +1616,41 @@ mso-hansi-font-family:Cambria;mso-bidi-font-family:Arial;font-size:10.5000pt;
 
 mso-font-kerning:0.0000pt;" ><font face="宋体" >这里所述的隐士背景特别之处是其设定了一个避世研习或祈祷的场所。如果你想要扮演一个在荒野离群索居的粗犷隐居者，也可以参考化外之民背景。而如果你想扮演的角色要更偏宗教色彩，则可以参考侍僧背景。或者你也可以扮演一名骗子，假装自己是一个睿智而神圣的人以骗取虔诚蠢蛋们为你提供帮助。</font></span><span style="mso-spacerun:'yes';font-family:宋体;mso-bidi-font-family:Arial;
 
-font-size:10.5000pt;mso-font-kerning:0.0000pt;" ></span></p></div></body></html>
+font-size:10.5000pt;mso-font-kerning:0.0000pt;" ></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

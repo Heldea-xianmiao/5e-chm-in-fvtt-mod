@@ -60,7 +60,45 @@ From
 
 Beyond（1/日）.</STRONG>斯普鲁格斯声复诵他自另一个世界走回这个世界的时候，从他进入的某个地方记住的一些词句。每个30尺内他所选择的生物必须成功通过DC12的感知豁免否则直到他的下一个回合结束被震慑。<BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>吸收攻击Absorb Attack.</STRONG> 
 
-当一个斯普鲁格斯可以看到的生物以一次近战攻击命中他时，武器会被剩着复活能量的口袋勾住并被迅速吸住。本次攻击无效，且直到该生物通过DC12的力量（运动）检定将其从斯普鲁格斯那里拉回来，该项攻击无法使用。天生武器的攻击可以被该特性无效，但在攻击生物的回合结束时会自动收回。</P></body>
+当一个斯普鲁格斯可以看到的生物以一次近战攻击命中他时，武器会被剩着复活能量的口袋勾住并被迅速吸住。本次攻击无效，且直到该生物通过DC12的力量（运动）检定将其从斯普鲁格斯那里拉回来，该项攻击无法使用。天生武器的攻击可以被该特性无效，但在攻击生物的回合结束时会自动收回。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

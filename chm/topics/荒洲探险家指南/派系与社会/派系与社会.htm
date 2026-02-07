@@ -24,7 +24,45 @@ Societies</FONT></H1>
 
 <P><STRONG>章节封面</STRONG>：受拉克桑Luxon之光的启发，光明女王和她的议会勾画了一个大陆的命运。</P>
 
-<P>在灾祸之战摧毁的大地灰烬中，新时代的文明逐渐崛起。幸存者在整个大陆上占据土地，结成联盟，同时也树立了敌人，他们为权力与影响力而战。荒洲受其各种势力的理念和利益所塑造，从强大的政权到隐秘的社团，这片饱受战火蹂躏的大陆为那些追寻伟大冒险的冒险者提供了肥沃的土壤。</P></body>
+<P>在灾祸之战摧毁的大地灰烬中，新时代的文明逐渐崛起。幸存者在整个大陆上占据土地，结成联盟，同时也树立了敌人，他们为权力与影响力而战。荒洲受其各种势力的理念和利益所塑造，从强大的政权到隐秘的社团，这片饱受战火蹂躏的大陆为那些追寻伟大冒险的冒险者提供了肥沃的土壤。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

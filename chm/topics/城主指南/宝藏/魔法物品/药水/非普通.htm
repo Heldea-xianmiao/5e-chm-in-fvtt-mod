@@ -192,7 +192,45 @@ cellPadding=2 width=400 align=center>
 
 <P><STRONG><FONT color=#800000>水下呼吸药水Potion of Water 
 
-Breathing</FONT></STRONG><BR><EM>药水，非普通</EM><BR>饮用此药水后，1小时内，你获得在水下呼吸的能力。这种浑浊的绿色药水闻起来有海水的味道，其中漂浮着一个水母形状的气泡。</P></body>
+Breathing</FONT></STRONG><BR><EM>药水，非普通</EM><BR>饮用此药水后，1小时内，你获得在水下呼吸的能力。这种浑浊的绿色药水闻起来有海水的味道，其中漂浮着一个水母形状的气泡。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

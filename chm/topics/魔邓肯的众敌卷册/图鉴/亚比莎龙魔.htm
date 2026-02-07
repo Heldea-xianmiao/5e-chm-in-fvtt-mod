@@ -202,7 +202,45 @@ Reckless。</STRONG>亚比莎龙魔从其自己回合开始起，直到它的下
 
 Magic Weapon。</STRONG>亚比莎龙魔的武器攻击视为魔法攻击。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>亚比莎龙魔进行两次攻击，一次使用它的长剑，一次使用它的爪子。<BR><STRONG>长剑Longsword。</STRONG>近战武器攻击：命中+6，触及5尺，单一目标.命中：7（1d8+3）挥砍伤害，或使用双手时8（1d10+3）挥砍伤害。<BR><STRONG>爪击Claws。</STRONG>近战武器攻击：命中+6，触及5尺，单一目标。命中：8（1d10+3）挥砍伤害<BR><STRONG>啃咬Bite。</STRONG>近战武器攻击：命中+6，触及5尺，单一目标。命中：5（1d4+3）穿刺伤害外加3（1d6）寒冷伤害。<BR><STRONG><FONT color=#800000>反应</FONT></STRONG><BR><STRONG>恶毒报复Vicious 
 
-Reprisal。</STRONG>作为受到伤害的回应，亚比莎龙魔对五尺内一个随机目标进行一次啃咬攻击。如果范围内没有生物，则亚比莎龙魔对其能看见的一个生物进行最多其一半速度的移动，这一移动不会触发借机攻击。</P></body>
+Reprisal。</STRONG>作为受到伤害的回应，亚比莎龙魔对五尺内一个随机目标进行一次啃咬攻击。如果范围内没有生物，则亚比莎龙魔对其能看见的一个生物进行最多其一半速度的移动，这一移动不会触发借机攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

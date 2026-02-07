@@ -62,7 +62,45 @@ html,body {
 
 <P>乌尔津的冒险<BR>仅仅是找到这个聚集地并赢得乌尔津人的信任，就可称得上是一场冒险。逃亡中的角色们也可以尝试躲在乌尔津，聚集地可以将他们偷渡出去。</P>
 
-<P>龟背上的恐惧（中级）：一头天际龟（见第七章）脱离了乌尔津龟群，横冲直撞向吉高而去。兽人与地精一起试图控制它，但是他们对乌龟造成的伤口似乎都在愈合！某个曾经领导巨魔部落并被兽人击败的恶魔为了报复，设计了一个从巨魔血液中提取成分的炼金术。恶魔将炼金术产品注射到天际龟身上，赋予了它巨魔的再生能力，并使它发狂。这不仅使吉高的居民感到恐惧，也会吓到那些住在龟背上的人。</P></body>
+<P>龟背上的恐惧（中级）：一头天际龟（见第七章）脱离了乌尔津龟群，横冲直撞向吉高而去。兽人与地精一起试图控制它，但是他们对乌龟造成的伤口似乎都在愈合！某个曾经领导巨魔部落并被兽人击败的恶魔为了报复，设计了一个从巨魔血液中提取成分的炼金术。恶魔将炼金术产品注射到天际龟身上，赋予了它巨魔的再生能力，并使它发狂。这不仅使吉高的居民感到恐惧，也会吓到那些住在龟背上的人。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

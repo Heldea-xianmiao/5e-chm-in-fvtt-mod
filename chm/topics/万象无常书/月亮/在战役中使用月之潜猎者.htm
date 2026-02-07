@@ -80,7 +80,45 @@ html,body {
 
 完成三项任务的新月会得到首领们的祝贺，然后首领们决定新月成为哪种类型的兽化人。在被另一名月之潜猎者仪式性咬上一口之后，新月就成为了正式的公会成员。<br>
 
-公会的正式成员不必把所有时间都花在会馆里，但他们确实需要随时准备响应接到的任何任务。如果您正在为月之潜猎者任务寻找灵感，可以考虑使用<strong>《黄金宝库之钥》</strong>中的抢劫任务。</p></body>
+公会的正式成员不必把所有时间都花在会馆里，但他们确实需要随时准备响应接到的任何任务。如果您正在为月之潜猎者任务寻找灵感，可以考虑使用<strong>《黄金宝库之钥》</strong>中的抢劫任务。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

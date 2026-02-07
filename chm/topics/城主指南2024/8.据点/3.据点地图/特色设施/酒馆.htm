@@ -110,6 +110,43 @@ Research：Information Gathering</STRONG>
 
 Facility</STRONG> ：你可以花费 2000 GP 
 
-，将酒馆扩大为庞大设施。这样做之后，酒馆将同时供应两种酒馆特饮。庞大的酒馆获得额外三名雇员，共计四名雇员。新招募的雇员将担任酒馆的服务生，你可以按自己的喜好为他们分配姓名和个性。<BR></P></body>
+，将酒馆扩大为庞大设施。这样做之后，酒馆将同时供应两种酒馆特饮。庞大的酒馆获得额外三名雇员，共计四名雇员。新招募的雇员将担任酒馆的服务生，你可以按自己的喜好为他们分配姓名和个性。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>

@@ -48,7 +48,45 @@ Valley的穷人。角色们必须决定他们是愿意交出这些小偷以获�
 
 <P>战争计划(中级)War Plans (Mid 
 
-Level)。这些角色受雇于万象会Myriad或克灵王朝，在他们从Rexxentrum前往扎达什Zadash的途中拦截帝国文件。第一个快递员把文件送到十字路，然后交给第二个快递员。两名信使都是骑着战马的王冠卫队Crownsguard骑士。这些文件是带有魔法结界和国王印章的战争计划。</P></body>
+Level)。这些角色受雇于万象会Myriad或克灵王朝，在他们从Rexxentrum前往扎达什Zadash的途中拦截帝国文件。第一个快递员把文件送到十字路，然后交给第二个快递员。两名信使都是骑着战马的王冠卫队Crownsguard骑士。这些文件是带有魔法结界和国王印章的战争计划。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

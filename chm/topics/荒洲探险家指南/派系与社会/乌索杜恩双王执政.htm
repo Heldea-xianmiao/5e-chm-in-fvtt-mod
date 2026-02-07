@@ -82,7 +82,45 @@ Interest</FONT></H3>
 
  </FONT></STRONG><FONT color=#000000><EM>守序善良，男性矮人 
 
-<BR> </EM>古尔利姆被誉为勇敢（尽管或许有些疯狂）的探险家，他说服了弗鲁纳斯特女王允许他的团队穿越深寒海渊。他和他的测量员发现了神秘的埃塞尔克罗斯的海岸，建立了锡林利亚前哨，并找回了以前在冰雪中丢失的古代遗物碎片。古尔利姆教授现在领导着乌索杜恩人努力扩张锡林利亚，并进一步了解隐藏在冰原之中的奥秘。</FONT></P></body>
+<BR> </EM>古尔利姆被誉为勇敢（尽管或许有些疯狂）的探险家，他说服了弗鲁纳斯特女王允许他的团队穿越深寒海渊。他和他的测量员发现了神秘的埃塞尔克罗斯的海岸，建立了锡林利亚前哨，并找回了以前在冰雪中丢失的古代遗物碎片。古尔利姆教授现在领导着乌索杜恩人努力扩张锡林利亚，并进一步了解隐藏在冰原之中的奥秘。</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

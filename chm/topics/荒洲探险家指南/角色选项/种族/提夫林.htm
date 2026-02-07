@@ -44,6 +44,43 @@ Coast</FONT></H3>
 
 <H3><FONT color=#800000>乔哈斯的提夫林 Tieflings in Xhorhas</FONT></H3>
 
-<P>有些传说讲述了第一批提夫林是如何在古尔德拉纳斯出生的。据说，九狱之主阿斯蒙蒂斯曾诱惑了这座城市的部分原住民，将他们的血脉与他的地狱之力联系起来，以换取魔法知识。虽然无法证实这一传说的真实性，但罗索纳拥有大量的提夫林，他们在克灵社会中很常见。</P></body>
+<P>有些传说讲述了第一批提夫林是如何在古尔德拉纳斯出生的。据说，九狱之主阿斯蒙蒂斯曾诱惑了这座城市的部分原住民，将他们的血脉与他的地狱之力联系起来，以换取魔法知识。虽然无法证实这一传说的真实性，但罗索纳拥有大量的提夫林，他们在克灵社会中很常见。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>

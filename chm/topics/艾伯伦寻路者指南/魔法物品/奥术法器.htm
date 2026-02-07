@@ -42,7 +42,45 @@ Shielding</FONT></STRONG><BR><EM>奇物，普通（需同调）</EM><BR>防护�
 
 <BLOCKQUOTE style="MARGIN-RIGHT: 0px" dir=ltr>
 
-<P><STRONG>可选规则：双手奥术法器</STRONG><BR>在艾伯伦，奥术法器是一种武器。正因为如此，关注一些与普通武器相同的权衡取舍是很有趣的：你是否为了获得更大的力量而牺牲一只手的自由？<BR>如果你使用这个可选规则，当施法者使用双手奥术法器来施展攻击性戏法（即需要豁免或掷攻击骰的戏法）时，该戏法的射程增加50%。<BR>在使用此规则时，法杖总是占据双手，而权杖既能够单手使用，又能双手使用。使用双手奥术法器能够满足法术的姿势成分。</P></BLOCKQUOTE></body>
+<P><STRONG>可选规则：双手奥术法器</STRONG><BR>在艾伯伦，奥术法器是一种武器。正因为如此，关注一些与普通武器相同的权衡取舍是很有趣的：你是否为了获得更大的力量而牺牲一只手的自由？<BR>如果你使用这个可选规则，当施法者使用双手奥术法器来施展攻击性戏法（即需要豁免或掷攻击骰的戏法）时，该戏法的射程增加50%。<BR>在使用此规则时，法杖总是占据双手，而权杖既能够单手使用，又能双手使用。使用双手奥术法器能够满足法术的姿势成分。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

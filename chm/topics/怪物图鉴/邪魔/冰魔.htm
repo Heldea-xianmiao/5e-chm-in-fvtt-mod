@@ -788,9 +788,47 @@ style="FONT-SIZE: 10.5pt; FONT-FAMILY: 等线; mso-bidi-font-style: normal; mso-
 
 style="FONT-SIZE: 10.5pt; FONT-FAMILY: 等线; mso-spacerun: 'yes'"><FONT face=等线>14（2d8+5）点穿刺伤害，外加10（3d6）点寒冷伤害。如果目标是一个生物，则其必须进行一次DC 
 
-15的体质豁免，豁免失败则在1分钟时间里速度下降10尺，该目标可以在自己的回合里执行动作或附赠动作，但只能两者选择执行其一，并且不能执行反应。目标可以在自己回合结束时在进行一次该豁免，豁免成功则终止其身上的效应。</FONT></SPAN></P></body>
+15的体质豁免，豁免失败则在1分钟时间里速度下降10尺，该目标可以在自己的回合里执行动作或附赠动作，但只能两者选择执行其一，并且不能执行反应。目标可以在自己回合结束时在进行一次该豁免，豁免成功则终止其身上的效应。</FONT></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

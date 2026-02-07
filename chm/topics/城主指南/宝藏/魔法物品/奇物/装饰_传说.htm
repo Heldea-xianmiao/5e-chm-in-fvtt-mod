@@ -44,7 +44,45 @@ Sphere</FONT></STRONG><BR>奇物，传说（需同调）<BR>持握此护符期�
 
 Evil</FONT></STRONG><BR><EM>奇物，传说（需邪恶阵营生物同调）</EM><BR>这枚护符是至恶的象征。尝试接触护符的非善良非邪恶生物将受到6d6点暗蚀伤害，善良生物则受到8d6点暗蚀伤害。如果这两类生物在自己回合结束时仍握持或携带着护符，则会再次受到等量伤害。<BR>邪恶的牧师或圣武士可以将至恶护符当作圣徽使用，持握或佩戴它期间进行的法术攻击检定获得+2加值。<BR>至恶护符有7发充能。如果你持握或佩戴着它，你可以用一个动作，消耗1发充能并选择你周围120尺内地面上一个你能看见的生物。如果目标属于善良，则一道冒着火焰的裂隙将在它脚下打开。目标必须成功通过一次DC 
 
-20的敏捷豁免否则坠入裂隙，尸骨无存。裂隙随后将不留痕迹地关闭。充能耗尽后，护符将被摧毁，化为散发着恶臭的粘液。</P></body>
+20的敏捷豁免否则坠入裂隙，尸骨无存。裂隙随后将不留痕迹地关闭。充能耗尽后，护符将被摧毁，化为散发着恶臭的粘液。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

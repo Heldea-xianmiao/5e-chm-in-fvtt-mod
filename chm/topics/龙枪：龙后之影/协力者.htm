@@ -42,7 +42,45 @@ War</FONT></STRONG><BR>以下NPC可以以协力者的身份加入角色们的冒
 
 <P><STRONG><FONT color=#800000>协力者等级 Sidekick 
 
-Levels</FONT></STRONG><BR>本小节中的表格详述了本章所给出的协力者们在提升等级时所获得的生命值和特性。协力者们以首字母顺序排列。<BR><FONT color=#c0c0c0>（注：已放到对应协力者页面下方）</FONT></P></body>
+Levels</FONT></STRONG><BR>本小节中的表格详述了本章所给出的协力者们在提升等级时所获得的生命值和特性。协力者们以首字母顺序排列。<BR><FONT color=#c0c0c0>（注：已放到对应协力者页面下方）</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

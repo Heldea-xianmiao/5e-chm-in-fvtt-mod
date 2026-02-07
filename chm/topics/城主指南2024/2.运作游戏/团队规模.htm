@@ -148,7 +148,45 @@ Survivor<BR></STRONG>新角色是一群命运多舛的冒险者们中的唯一�
 
  
 
-<BR>如果你想要在单次游戏回中把玩家加进团队里，也可以用导入新玩家的故事引子。例如，你可能有一位外地来的朋友，想暂时加入你的游戏。又或许你有一位正在考虑加进团队的玩家，但你想要确保它会是位不错的增加成员。偶尔引入客串的玩家是个很好的点子，这可以保留备用的玩家名单，以防你的固定玩家临时请假。</P></body>
+<BR>如果你想要在单次游戏回中把玩家加进团队里，也可以用导入新玩家的故事引子。例如，你可能有一位外地来的朋友，想暂时加入你的游戏。又或许你有一位正在考虑加进团队的玩家，但你想要确保它会是位不错的增加成员。偶尔引入客串的玩家是个很好的点子，这可以保留备用的玩家名单，以防你的固定玩家临时请假。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

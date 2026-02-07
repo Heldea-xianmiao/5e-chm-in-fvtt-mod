@@ -64,7 +64,45 @@ style="HEIGHT: 400px; FONT-FAMILY: 华文楷体; WIDTH: 350px; BACKGROUND-IMAGE:
 
 <p align=left>一个星期。这些数也数不清的家伙们席卷而来之后只过了一个星期。我感觉过了十年，一切都被颠覆了。<BR>到处都是这些家伙。我们避开了主力部队，但它们的巡逻队像筛子似的在乡间巡查，镇压抵抗者，搜刮货物。听传言说，这些怪物叫做“龙人”。<BR>就算是死了，这些爬行类的战士也能造成灾难，它们会爆出酸液或者瓦斯气体。要当心。<BR>哪怕我们没有死在入侵中，也没有足够的食物可以吃了，这支军队还在行进，附近的农作物几乎一点都不剩了。我们要怎么在一个颗粒无收的年份中活下来？<BR>我们不知道还能坚持多久，也不知道谁会读到这封信。我只希望这些话能成为对某人的警告。</p>
 
-<p align=left>轮望哨站指挥官 奥伦·纳莱德</p></div></DIV></body>
+<p align=left>轮望哨站指挥官 奥伦·纳莱德</p></div></DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

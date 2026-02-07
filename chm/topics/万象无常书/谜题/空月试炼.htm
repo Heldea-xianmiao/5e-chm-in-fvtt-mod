@@ -48,7 +48,45 @@ html,body {
 
 当拉杆被拉下后，四只 <font color=red><strong>赭冻怪Ochre Jelly</strong></font> 将被释放出来，它们将爬出管道，沿着天花板爬行并落到角色身上。每一只赭冻怪都重500磅。<br>
 
-<font color=#777777>（译注：这谜题也没说房间多高，也没说砸到角色会怎么样。而且这里的文本很奇怪，正常情况下难道不该是从管道里爬出来么，结果是从天花板爬出来。也许这里的文本可以当“泥怪刷在每个角色身旁”来看待，别去考虑摔落伤害之类的吧。）</font></p></body>
+<font color=#777777>（译注：这谜题也没说房间多高，也没说砸到角色会怎么样。而且这里的文本很奇怪，正常情况下难道不该是从管道里爬出来么，结果是从天花板爬出来。也许这里的文本可以当“泥怪刷在每个角色身旁”来看待，别去考虑摔落伤害之类的吧。）</font></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

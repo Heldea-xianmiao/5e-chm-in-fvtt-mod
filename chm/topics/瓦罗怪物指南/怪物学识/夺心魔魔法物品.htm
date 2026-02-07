@@ -20,4 +20,41 @@ font-weight:bold;" ><font>远视之盾</font></span></b><b><span style="color:rg
 
 font-weight:bold;" > <font>Shield of Far Sight</font></span></b><span></span></p><p><span><font>护甲（盾牌），珍稀</font><br><font>一只擅长制造魔法武器的夺心魔能够通过从一名智能类人生物的身上获取一只眼睛，并把它奇妙地植入一面非魔法盾牌的表面，以此创造出一面远视之盾。一旦眼睛被植入，盾牌就会变成魔法物品，夺心魔可以把它交给一个奴仆或者把它挂在巢穴的墙上，只要盾牌和其创造者在同一个位面上，夺心魔就能通过这面盾牌的眼睛看到东西。并且该盾牌的眼睛具有</font>60<font>尺的黑暗视觉。当夺心魔通过这只魔法眼睛窥视时，它可以使用动作心灵震爆，就好像它正站在盾牌后一样。</font></span><span style="mso-fareast-
 
-" ></span></p><p><span><font>如果远视之盾被摧毁，创造它的夺心魔将失明</font>2d12<font>小时。</font></span></p></div></body></html>
+" ></span></p><p><span><font>如果远视之盾被摧毁，创造它的夺心魔将失明</font>2d12<font>小时。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

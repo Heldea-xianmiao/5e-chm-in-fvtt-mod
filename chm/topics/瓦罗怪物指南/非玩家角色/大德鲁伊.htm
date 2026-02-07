@@ -66,7 +66,45 @@ Actions</FONT><BR>弯刀
 
 Scimitar。</STRONG>近战武器攻击：+6命中，触及5尺，单一目标。命中：5（1d6+2）挥砍伤害。<BR><STRONG>变形 Change 
 
-Shape（2次/天）。</STRONG>大德鲁伊魔法变形为挑战等级6或更低的野兽或元素，并且可以保持这种形态长达9个小时。大德鲁伊可以选择它的装备是掉到地上，与它的新形态融合，还是被新形态穿戴。如果大德鲁伊死了或者昏迷了，它就会恢复到原来的形态。大德鲁伊可以在自己的回合中使用附赠动作回复到它的真实形态。<BR>在新形态之下，保留其游戏数据和对话能力，但其AC、移动方式、力量、敏捷和特殊感官将被新形态的对应条目取代，获得新形态的特殊感官，熟练加值和特征、行动和反应（除了职业特性，传奇的行动，以及巢穴动作）。它可以以新的形态使用带有语言或姿势成分的咒语。新形态的攻击在对非魔法攻击的免疫方面被视为魔法攻击。</P></body>
+Shape（2次/天）。</STRONG>大德鲁伊魔法变形为挑战等级6或更低的野兽或元素，并且可以保持这种形态长达9个小时。大德鲁伊可以选择它的装备是掉到地上，与它的新形态融合，还是被新形态穿戴。如果大德鲁伊死了或者昏迷了，它就会恢复到原来的形态。大德鲁伊可以在自己的回合中使用附赠动作回复到它的真实形态。<BR>在新形态之下，保留其游戏数据和对话能力，但其AC、移动方式、力量、敏捷和特殊感官将被新形态的对应条目取代，获得新形态的特殊感官，熟练加值和特征、行动和反应（除了职业特性，传奇的行动，以及巢穴动作）。它可以以新的形态使用带有语言或姿势成分的咒语。新形态的攻击在对非魔法攻击的免疫方面被视为魔法攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -42,7 +42,45 @@ Fun(RAF)<BR></STRONG>甭管书上到底写了啥，也甭管设计师到底在�
 
 最好的DM可以放飞自我来给其玩家带来最好的游戏体验。这种DM瞄准了RAF，“怎么裁让大家高兴，就怎么裁定”。在DM运作某些特殊战役，或者要为特定玩家谋求至高愉悦时，偏离规则也是一种我们推荐的选择。</FONT></FONT></P>
 
-<P>总之，我们推荐同时运用RAW、RAI与RAF组合起来解释规则！</P></body>
+<P>总之，我们推荐同时运用RAW、RAI与RAF组合起来解释规则！</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -176,7 +176,45 @@ style="FONT-SIZE: 10.5pt; FONT-FAMILY: 等线; FONT-WEIGHT: bold; mso-spacerun: 
 
 style="FONT-SIZE: 10.5pt; FONT-FAMILY: 等线; mso-spacerun: 'yes'; mso-bidi-font-family: 'Times New Roman'; mso-font-kerning: 1.0000pt"><FONT face=等线>若催眠魔花对抗某一法术的豁免成功，且该法术的目标有且仅有催眠魔花一个生物（且不具有区域性的魔法效应），或当一次以它为目标的法术攻击未命中时，魔花可以选择让另一个、它周围</FONT>30尺范围内的、它可见的生物（可以是施法者本人）代替催眠魔花承受这一法术的效应。如果法术迫使生物进行一次豁免，则该生物必须为自己进行一次豁免；如果法术是一次攻击，那次攻击检定需要重新投掷（此时攻击目标为代替承受的那个生物）。</SPAN></FONT></P>
 
-<P><!--EndFragment--></FONT></P></body>
+<P><!--EndFragment--></FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

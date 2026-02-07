@@ -40,7 +40,45 @@ margin-bottom: -18px;
 
 Adventures</FONT></H3>
 
-<P>遥远国度是凡人无法理解的存在之家园。凡人无法揣测这些存在的动机，也难以承受它们的全貌。凝视它们，便是被其宏大所吞噬，领悟到凡人从未、永不会、也无法对浩瀚宇宙产生意义的冰冷真相。<BR>涉及遥远国度或其影响渗入物质位面的冒险，往往触及根本性的哲学问题：什么是个体？精神与身体的自主性意味着什么？这些问题是否有意义？凡人是否能够掌控自己的命运，或在宇宙中拥有任何价值？（在设计这些主题的冒险时，建议参考第一章“确保所有人玩得开心”的相关部分，与玩家沟通这些议题的界限。）</P></body>
+<P>遥远国度是凡人无法理解的存在之家园。凡人无法揣测这些存在的动机，也难以承受它们的全貌。凝视它们，便是被其宏大所吞噬，领悟到凡人从未、永不会、也无法对浩瀚宇宙产生意义的冰冷真相。<BR>涉及遥远国度或其影响渗入物质位面的冒险，往往触及根本性的哲学问题：什么是个体？精神与身体的自主性意味着什么？这些问题是否有意义？凡人是否能够掌控自己的命运，或在宇宙中拥有任何价值？（在设计这些主题的冒险时，建议参考第一章“确保所有人玩得开心”的相关部分，与玩家沟通这些议题的界限。）</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

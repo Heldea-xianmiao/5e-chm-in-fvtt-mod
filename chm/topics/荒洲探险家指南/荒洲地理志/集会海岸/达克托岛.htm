@@ -22,7 +22,45 @@
 
   
 
-多年来，围绕着达克托岛的拖船浅礁已经吞没许多船只。它们的残骸被拖到岩石上，作为对入侵者的额外屏障和对闯入者的警告。一只名叫伊多克的龙龟在暗礁徘徊，但狡猾的龙龟和跳板王本人达成了协议，使伊多克远离海盗船。作为交换，龙龟可以对任何进入该岛曲折水道的其他船只为所欲为。达克托的居民进一步加强了这些暗礁，在上面布置了哨所、隐藏的武器和可部署的陷阱，以防止未经授权的人从南部通道进入。通道的守军接到命令，可以在没有警告的情况下向任何不挂狂欢众旗的船只开火。</P></body>
+多年来，围绕着达克托岛的拖船浅礁已经吞没许多船只。它们的残骸被拖到岩石上，作为对入侵者的额外屏障和对闯入者的警告。一只名叫伊多克的龙龟在暗礁徘徊，但狡猾的龙龟和跳板王本人达成了协议，使伊多克远离海盗船。作为交换，龙龟可以对任何进入该岛曲折水道的其他船只为所欲为。达克托的居民进一步加强了这些暗礁，在上面布置了哨所、隐藏的武器和可部署的陷阱，以防止未经授权的人从南部通道进入。通道的守军接到命令，可以在没有警告的情况下向任何不挂狂欢众旗的船只开火。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -52,7 +52,45 @@ Actions</FONT></STRONG><BR><STRONG>星界步Astral
 
 Step。</STRONG>吉斯洋基至高指挥官连同它着装和携带的所有装备一起传送至一处30尺内且未被占据的可见空间。<BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>格挡Parry。</STRONG>一次近战攻击命中吉斯洋基至高指挥官时其AC加上5。此时吉斯洋基至高指挥官必须能看见攻击者且正持用一把近战武器。<BR><STRONG><FONT color=#800000>传奇动作Legendary Actions</FONT></STRONG><BR>吉斯洋基至高指挥官拥有3传奇动作，用于选择执行下列动作选项。每次执行传奇动作时，每个选项只可以选用一次，且只能在另一生物的回合结束时执行。该吉斯洋基人在它的回合开始时恢复其所有已消耗的传奇动作数。<BR><STRONG>攻击Attack（消耗2动作）。</STRONG>吉斯洋基至高指挥官发动一次巨剑攻击。<BR><STRONG>指挥盟友Command 
 
-Ally。</STRONG>吉斯洋基至高指挥官指定其30尺范围内一个它能看见的盟友为目标。如果该目标可以看见或听到该吉斯洋基人，则该目标可以使用其反应发动一次近战武器攻击，且这次攻击检定具有优势。<BR></P></body>
+Ally。</STRONG>吉斯洋基至高指挥官指定其30尺范围内一个它能看见的盟友为目标。如果该目标可以看见或听到该吉斯洋基人，则该目标可以使用其反应发动一次近战武器攻击，且这次攻击检定具有优势。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

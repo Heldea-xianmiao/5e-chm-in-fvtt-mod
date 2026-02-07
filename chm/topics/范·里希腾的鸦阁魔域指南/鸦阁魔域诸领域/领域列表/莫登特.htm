@@ -1092,7 +1092,45 @@ style="  ; "><o:p></o:p></SPAN></P>
 
 style="  ; ">它会如何结束？在莫登特中，死者的精魂不会自然迎来最终的安息，但是角色们可以阻止死者进一步干涉生者的事务。这通常包括完成一个鬼魂的未竟之事，斩断鬼魂对生者世界中的某人或某物的依恋，或者找到一种方法摧毁鬼魂，使它们无法归来，这通常也是利用他们对某人或某地的关系。</SPAN><SPAN 
 
-style="  ; "><o:p></o:p></SPAN></P></body>
+style="  ; "><o:p></o:p></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

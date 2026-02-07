@@ -82,7 +82,45 @@ ACTIONS</FONT></STRONG> <BR><STRONG>多重攻击 Multiattack。</STRONG>切裂�
 
 （充能4~6）。</STRONG> 
 
-切裂者对一个目标进行六次爪击，在这些攻击之前或之后，它都可以用一个附赠动作进行再一次移动，而不会引起借机攻击。</P></body>
+切裂者对一个目标进行六次爪击，在这些攻击之前或之后，它都可以用一个附赠动作进行再一次移动，而不会引起借机攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

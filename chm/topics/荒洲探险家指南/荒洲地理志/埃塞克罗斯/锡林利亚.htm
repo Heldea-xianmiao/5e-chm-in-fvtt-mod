@@ -40,7 +40,45 @@ html,body {
 
 Level)。当角色在锡林利亚中时，玛格·德尔沃带着一袋五颗绿色种子从一次探险中返回，这些种子来自埃塞克罗斯的一个艾欧瑞安遗迹。当熊人向人们炫耀时，他把一粒种子落在了雪地里，一夜后营地里就长出了一棵高15英尺的绿树。每当90尺内的一个生物施展可以恢复生命值或对另一个生物造成光耀伤害的法术时，树根就会从地面 
 
-拔出并攻击该生物。在杀死施法者和其他威胁之后，树根会重新回到地下。每隔1d10天，树就会授种，让30尺内的地面长出一棵同类型的新树。如果树木酿成了问题，古利姆·谢尔布鲁教授会要求角色处理。<BR>活化树使用树人作为数据基础，并拥有以下变动：<BR>·阵营为无阵营。<BR>·拥有对暗蚀和光耀伤害的抗性。<BR>·它可以理解通用语，德鲁伊语，精灵语和木族语，但是不会说。</P></body>
+拔出并攻击该生物。在杀死施法者和其他威胁之后，树根会重新回到地下。每隔1d10天，树就会授种，让30尺内的地面长出一棵同类型的新树。如果树木酿成了问题，古利姆·谢尔布鲁教授会要求角色处理。<BR>活化树使用树人作为数据基础，并拥有以下变动：<BR>·阵营为无阵营。<BR>·拥有对暗蚀和光耀伤害的抗性。<BR>·它可以理解通用语，德鲁伊语，精灵语和木族语，但是不会说。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

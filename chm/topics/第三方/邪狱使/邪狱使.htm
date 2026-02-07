@@ -242,7 +242,45 @@ Majesty</FONT></STRONG><BR>  你的大魔鬼赋予你以它们力量武装的权
 
 Hell<BR></FONT></STRONG>你学会了如何撕开九狱的裂隙向敌人发泄你的狂怒。以一个动作，你以150尺内你可见的一点为中心，召唤地狱风暴。风暴充斥以该点为中心半径50尺球状区域，选择一种以下效应：<BR><STRONG>炼狱Inferno。</STRONG>地狱火向众敌倾泻而下。区域内每名敌人必须进行一次敏捷豁免。豁免失败则该生物受到5d10火焰伤害和5d10暗蚀伤害并被点燃，持续一分钟。豁免成功则受到的伤害减半并不会被点燃。因此被点燃的生物在其每个回合结束时，重新进行该豁免，失败则受到1d10火焰伤害和1d10暗蚀伤害。豁免成功则其身上的该效应提前结束。地狱火无法被非魔法手段扑灭。<BR><STRONG>瘟疫Pestilence。</STRONG>恶臭的瘴气环绕众敌。区域内每名敌人必须进行一次体质豁免。豁免失败则该生物受到5d10毒素伤害和5d10暗蚀伤害并陷入中毒，持续一分钟。豁免成功则受到的伤害减半并不会陷入中毒。<BR><STRONG>深暗Darkness。</STRONG>残酷的风暴袭击众敌。区域内每名敌人必须进行一次体质豁免。豁免失败则受到10d10寒冷伤害，成功则伤害减半。此外，深暗的风暴持续1分钟，区域内的敌人在持续时间内陷入目盲，离开区域后，目盲提前结束。<BR>  一旦你召唤了地狱风暴，直至完成长休你都无法再次召唤。 </P>     
 
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
 </body>
 
 </html>
+
 

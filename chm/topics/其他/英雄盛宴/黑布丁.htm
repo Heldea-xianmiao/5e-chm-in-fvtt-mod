@@ -52,7 +52,45 @@ style="BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid; WIDTH: 400px;
 
 <P align=center><FONT size=4><STRONG>厨师笔记</STRONG></FONT></P>
 
-<P>尽量避免使用其他种类的可可粉，碱化可可粉不仅更加浓厚还具有一种独特的风味。你可以在布丁中尝出可可的味道，不过浓缩咖啡将会主导整体的风味。</P></div></body>
+<P>尽量避免使用其他种类的可可粉，碱化可可粉不仅更加浓厚还具有一种独特的风味。你可以在布丁中尝出可可的味道，不过浓缩咖啡将会主导整体的风味。</P></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

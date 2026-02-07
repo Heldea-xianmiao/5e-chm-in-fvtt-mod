@@ -46,7 +46,45 @@ html,body {
 
 玛拉希克斯不会在此之后就立即亮相——他很可能会先为团队量身打造额外的诅咒物品，让角色们在冒险中找到，然后兴高采烈地看着角色们在被这些邪恶兵装折腾来折腾去。只有当玛拉希克斯对角色们感到厌倦之后，他才会传送至角色们面前，取回自己的宝藏，顺便弄死这群滑稽的凡人。</p><p><font color=maroon><font size=4><strong>扮演玛拉希克斯Roleplaying Malaxxix</strong></font></font><br>
 
-玛拉希克斯诡诈至极而又极端易怒，热衷于喜欢传播苦痛，更喜欢看到血流成河。然而，屈尊与他人交谈时的玛拉希克斯措辞华丽，举止浮夸——完全不像是一个本该易怒的尤格罗斯魔。</p></body>
+玛拉希克斯诡诈至极而又极端易怒，热衷于喜欢传播苦痛，更喜欢看到血流成河。然而，屈尊与他人交谈时的玛拉希克斯措辞华丽，举止浮夸——完全不像是一个本该易怒的尤格罗斯魔。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

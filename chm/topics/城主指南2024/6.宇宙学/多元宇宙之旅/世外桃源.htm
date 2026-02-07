@@ -92,7 +92,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
 Adventures</FONT></H3>
 
-<P>在世外桃源中，一切都为实现共同利益和无瑕存在而运转。在这里，纯净永恒，和谐无扰。个体意志融入安宁的社区生活中，而任何破坏这份和平的力量都可能遭到强大的武力回应。<BR>在世外桃源展开冒险，是探讨个体自由与集体责任之间张力的绝佳机会。即便是倾向守序的冒险者也难以完全融入这里严格的社会预期，而一次到访往往会放大这种冲突。</P></body>
+<P>在世外桃源中，一切都为实现共同利益和无瑕存在而运转。在这里，纯净永恒，和谐无扰。个体意志融入安宁的社区生活中，而任何破坏这份和平的力量都可能遭到强大的武力回应。<BR>在世外桃源展开冒险，是探讨个体自由与集体责任之间张力的绝佳机会。即便是倾向守序的冒险者也难以完全融入这里严格的社会预期，而一次到访往往会放大这种冲突。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

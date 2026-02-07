@@ -448,7 +448,45 @@ style="FONT-SIZE: 9pt; FONT-FAMILY: 黑体; FONT-WEIGHT: normal; mso-spacerun: '
 
 的中立邪恶的伪龙魔宠。它不会离开主人太远。在召唤提亚马特的仪式中，它藏在中央神殿顶的一个壁架后。如果赛维林被杀，奈维克会愿意成为冒险者的魔宠，然后等待适当的时间为原主人报复。</FONT></FONT></SPAN></P>
 
-<P><!--EndFragment--></FONT></P></body>
+<P><!--EndFragment--></FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

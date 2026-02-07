@@ -206,7 +206,45 @@ Object。</STRONG>
 
 <P>除了模仿其他法术外，施展该法术以达成的任何其他目的都会使你的身躯承受极大的负担，令你变得无比虚弱。承受负担后，直到你完成<U>长休</U>之前，你每次施展法术时都将受到一定伤害（伤害数值取决于你施展的法术的环阶，每环阶1d10点的暗蚀伤害），此伤害无法被任何方式减免。此外，你的<U>力量</U>属性值将变为3，持续2d4日。这段时间内，你每花一整日休息（不从事轻度活动以外的行为），恢复需要的日数就减少 
 
-2 日。最后，承受负担时，你将有33%的概率永远也无法再次施展<U><EM>祈愿术Wish</EM></U>            。</P></body>
+2 日。最后，承受负担时，你将有33%的概率永远也无法再次施展<U><EM>祈愿术Wish</EM></U>            。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

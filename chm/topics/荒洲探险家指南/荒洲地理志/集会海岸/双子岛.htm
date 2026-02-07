@@ -20,7 +20,45 @@
 
 作为海岸原住民的圣地，这对高得惊人的岛屿全部由悬崖构成，没有海滩。尽管周遭的水域因海浪撞击附近的母亲之叹礁而时常波涛汹涌，但海边的悬崖上却蕴藏着丰富的健康果实和可供狩猎的野生动物。在克洛维斯联邦成立之初，基瑙人要求岛上的自然资源必须始终保持原样。这项协议在几个世纪以来一直被忠实地履行着。</P>
 
-<P>虽然岛屿对大众开放，但徒步旅行的危险仍然限制了那些敢于使用这片土地的人。传说一个羽蛇灵体被束缚在岛屿内陆密林的深处，愿意将智慧和洞察力赐予那些带来珍贵贡品的人。</P></body>
+<P>虽然岛屿对大众开放，但徒步旅行的危险仍然限制了那些敢于使用这片土地的人。传说一个羽蛇灵体被束缚在岛屿内陆密林的深处，愿意将智慧和洞察力赐予那些带来珍贵贡品的人。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

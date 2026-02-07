@@ -58,7 +58,45 @@ html,body {
 
 <STRONG><FONT color=#800000>托凡旷野 Tovian Fields</FONT></STRONG><BR > 天裔传奇们在这里展开了一场永不停息的光荣战争。不同于任何凡间的环境，托凡的战场充满了浩瀚的能量，对立的哲学之间的冲突显现为成群的传奇战士的战斗。在这场战斗中，墨癸司和伊洛安斯宫殿般的战争帐篷矗立，他们领导着这场无休止的战斗。
 
-<BR>克罗芬斯声称托凡旷野的边界是他的领土。他没有中央领地。相反，他的力量将冲突限制，审视并阻止了战斗蔓延到天界的其他部分</P></body>
+<BR>克罗芬斯声称托凡旷野的边界是他的领土。他没有中央领地。相反，他的力量将冲突限制，审视并阻止了战斗蔓延到天界的其他部分</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

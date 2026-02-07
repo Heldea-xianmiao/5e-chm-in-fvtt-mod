@@ -38,7 +38,45 @@ Shattered Teeth
 
  从方圆一英里的礁石顶部，到承载像鲁克瓦这样城市的大岛。群岛主要由两个组织统治。“骨缝之主”（Ossended 
 
-Host）是由渔夫文化对梦境与梦魇的崇拜形成的。“流浪者集会”是一家来自集会海岸，有着数百年历史的贸易公司，自从他们的主要成员被飓风困在破碎之牙后就成立了，在荣誉与感情的旗帜下，是不加掩饰的资本主义的残酷。两个组织一直很紧张，最近还发生了流血事件。多年来，他们都相信对方正在摧毁自己的生存之道。<BR></body>
+Host）是由渔夫文化对梦境与梦魇的崇拜形成的。“流浪者集会”是一家来自集会海岸，有着数百年历史的贸易公司，自从他们的主要成员被飓风困在破碎之牙后就成立了，在荣誉与感情的旗帜下，是不加掩饰的资本主义的残酷。两个组织一直很紧张，最近还发生了流血事件。多年来，他们都相信对方正在摧毁自己的生存之道。<BR><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

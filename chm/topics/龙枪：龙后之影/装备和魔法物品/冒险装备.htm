@@ -38,7 +38,45 @@ html,body {
 
 <BR><STRONG>伤害：</STRONG>1d6穿刺（近战）或1d4钝击（远程）<BR><STRONG>重量：</STRONG>2磅<BR><STRONG>属性：</STRONG>弹药（射程40/160尺），灵巧，特殊，双手<BR>胡帕克杖是一根结实的棍子，一端挂有投石索的结构，另一端被削成尖头。<BR><STRONG>特殊Special。</STRONG>当你使用这种武器发动近战攻击时，你忽略其弹药词条。你同样可以将胡帕克杖当做一把军用远程武器使用。这样做时，此次攻击使用其弹药词条（用投石索子弹作为弹药），在命中时造成1d4钝击伤害。</P>
 
-<P><STRONG><FONT color=#800000>防止跌落背包Narycrash</FONT></STRONG><BR>这个背包大小的装置内置了一个基于气球设计的降落伞。如果你在穿戴这个装置时坠落，你可以使用一个反应来展开降落伞，降落伞一旦展开会迅速充气，使你的坠落速度变为每轮60尺，并且不会受到坠落伤害。当你离地面10尺远时，掷一个d20。如果你掷出5或更低，降落伞就会失灵，你开始正常坠落。</P></body>
+<P><STRONG><FONT color=#800000>防止跌落背包Narycrash</FONT></STRONG><BR>这个背包大小的装置内置了一个基于气球设计的降落伞。如果你在穿戴这个装置时坠落，你可以使用一个反应来展开降落伞，降落伞一旦展开会迅速充气，使你的坠落速度变为每轮60尺，并且不会受到坠落伤害。当你离地面10尺远时，掷一个d20。如果你掷出5或更低，降落伞就会失灵，你开始正常坠落。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

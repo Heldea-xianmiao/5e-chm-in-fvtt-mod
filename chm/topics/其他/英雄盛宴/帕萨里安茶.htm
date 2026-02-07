@@ -52,7 +52,45 @@ style="FONT-SIZE: 11pt; FONT-FAMILY: 'Arial Unicode MS'; mso-spacerun: 'yes'"
 
 dir=ltr><FONT size=3 face="Arial Unicode MS">生姜可以不用去皮。<BR>在饮用时，柠檬皮和姜会继续在茶水中释放香气。如果想喝味道浓烈的茶水，可以将其一直留在杯中。如果你觉得风味已经足够，就可以取出茶水中的柠檬皮和姜了。</FONT></SPAN></P></div>
 
-<P><EM></EM> </P></body>
+<P><EM></EM> </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

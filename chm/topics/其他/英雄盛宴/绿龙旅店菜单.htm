@@ -66,7 +66,45 @@ html,body {
 
 <BLOCKQUOTE style="MARGIN-RIGHT: 0px" dir=ltr>
 
-  <P><BR><EM>“向冒险者致敬！<BR>这里是绿龙旅馆，如果你知道什么对你有好处，你就会睁大眼睛，低头闭嘴。这里的酒水很烈，食物也……吃不死人。我们今晚有海鲜特价，如果你看到喜欢的食物，只要你付得起钱，你就可以大快朵颐。”</EM></P></BLOCKQUOTE></body>
+  <P><BR><EM>“向冒险者致敬！<BR>这里是绿龙旅馆，如果你知道什么对你有好处，你就会睁大眼睛，低头闭嘴。这里的酒水很烈，食物也……吃不死人。我们今晚有海鲜特价，如果你看到喜欢的食物，只要你付得起钱，你就可以大快朵颐。”</EM></P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

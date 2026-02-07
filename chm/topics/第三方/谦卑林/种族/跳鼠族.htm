@@ -54,7 +54,45 @@ Leap。</STRONG>你的基础跳远距离是30尺，基础跳高距离是15尺，
 
 Heart。</STRONG>你的力量豁免检定获得优势。只要你距离你的盟友在5尺之内，彼此能够互相看到听到，并且盟友没有恐慌或失能，你对抗恐慌的豁免检定具有优势。<BR><STRONG>团体战术Team 
 
-Tactics。</STRONG>你能以附赠动作执行协助动作。<BR><STRONG>语言Language。</STRONG>你能够说、读、写鸟族语（Birdfolk）和跳鼠语（Jerbeen）。</P></body>
+Tactics。</STRONG>你能以附赠动作执行协助动作。<BR><STRONG>语言Language。</STRONG>你能够说、读、写鸟族语（Birdfolk）和跳鼠语（Jerbeen）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

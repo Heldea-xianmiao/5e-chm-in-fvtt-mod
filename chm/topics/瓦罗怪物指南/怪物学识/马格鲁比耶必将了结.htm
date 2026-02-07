@@ -28,7 +28,45 @@ DONE</FONT></STRONG></P>
 
 <P>类地精们由被马格鲁比耶征服的各自的神明联系在一起，所有的类型的类地精都畏惧着马格鲁比耶的怒火，不过每一个族群都以不同的方式执行至大者伟大的神圣意志。地精们通常会逃避那些显而易见的威胁，大地精不得不先围捕并恐吓他们才能让他们派上用场。熊地精们只是不情愿的勉强为大地精提供协助，而且必须时常用战利品、灵魂、战斗装备或敌人首领的头颅——一份特殊的神圣的礼物——来贿赂他们。大地精独立的维持着他们的军事堡垒，满足于处理内部的等级政治和防卫事务上，但是当他们遭遇（或者捉到）其他类型的类地精时，它就会被视为一个神圣的标志——马格鲁比耶在召集他们去完成祂宏大的命令。</P>
 
-<P><FONT size=4><STRONG>边栏：其他神都得死</STRONG></FONT><FONT size=4><BR></FONT>类地精族群从很小的时候就被灌输，除了自己的神之外，所有的神都是渺小的、虚假的存在。他们知道，马格鲁比耶是唯一真正的神，终有一日，k将征服所有的神明，将混乱与绝望带到这个世界。类地精们对敌方神灵的神职人员怀有特殊的仇恨，会在战斗中集火他们，一有机会就亵渎他们的神庙。一个神是善的，恶的还是中立的都不重要。除了马格卢比耶和他的仆人之外，所有的神都是虚假的，必须被毁灭。</P></body>
+<P><FONT size=4><STRONG>边栏：其他神都得死</STRONG></FONT><FONT size=4><BR></FONT>类地精族群从很小的时候就被灌输，除了自己的神之外，所有的神都是渺小的、虚假的存在。他们知道，马格鲁比耶是唯一真正的神，终有一日，k将征服所有的神明，将混乱与绝望带到这个世界。类地精们对敌方神灵的神职人员怀有特殊的仇恨，会在战斗中集火他们，一有机会就亵渎他们的神庙。一个神是善的，恶的还是中立的都不重要。除了马格卢比耶和他的仆人之外，所有的神都是虚假的，必须被毁灭。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

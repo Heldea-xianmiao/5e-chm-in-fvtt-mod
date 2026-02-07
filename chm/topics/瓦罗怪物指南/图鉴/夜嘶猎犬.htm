@@ -92,7 +92,45 @@ Bond。</strong>如果夜嘶猎犬同它的主人存在于同一个位面中，�
 
 Baying。</strong>夜嘶猎犬发出具有魔法的嗥叫。当猎犬嗥叫时，任何在其300尺范围内可听见嚎叫的敌人必须通过DC 
 
-13的感知豁免检定，否则他将处于恐慌状态直到夜嘶猎犬下一轮行动结束或是该猎犬陷入失能。如果该被恐慌目标生物在夜嘶猎犬30尺范围内，当期开始回合时他必须使用其全部移动力尽可能地远离夜嘶猎犬，而且必须在做出动作前结束移动，必须采取最直接的路线，即使路上存在危险。当一个目标生物成功豁免后，则其在24小时内都免疫所有夜嘶猎犬的嗥叫。</p></body>
+13的感知豁免检定，否则他将处于恐慌状态直到夜嘶猎犬下一轮行动结束或是该猎犬陷入失能。如果该被恐慌目标生物在夜嘶猎犬30尺范围内，当期开始回合时他必须使用其全部移动力尽可能地远离夜嘶猎犬，而且必须在做出动作前结束移动，必须采取最直接的路线，即使路上存在危险。当一个目标生物成功豁免后，则其在24小时内都免疫所有夜嘶猎犬的嗥叫。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

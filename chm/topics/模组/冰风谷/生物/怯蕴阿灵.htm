@@ -102,7 +102,45 @@ Charm</FONT></STRONG><BR>该部分描述了一些居住在冰风谷或其他寒�
 
   of Traveler's Haven。</STRONG>这道护符拥有3发充能。以一个动作，你可以消耗一发充能以施展<EM><FONT color=#800080>李欧蒙小屋Leomund's tiny 
 
-  hut</FONT></EM>而无需任何法术成分。当所有的充能都被消耗时，这道护符从你身上消失。</P></BLOCKQUOTE></body>
+  hut</FONT></EM>而无需任何法术成分。当所有的充能都被消耗时，这道护符从你身上消失。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

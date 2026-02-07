@@ -64,7 +64,45 @@ Tentacles</FONT></EM><BR><STRONG>克拉肯之声Voice of the
 
 Kraken（短休或长休后充能）。</STRONG>克拉肯通过祭司呼喊出雷鸣之语，（300尺范围内都能听到，使用深渊语、炼狱语、或原初语）。祭司选择的能够听到祭司话语的生物必须成功通过一次 
 
-DC 14 的感知豁免，否则将陷入恐慌1分钟。一个恐慌的目标可以在它的每个回合结束时重复豁免，豁免成功则终止对自身的影响。</P></body>
+DC 14 的感知豁免，否则将陷入恐慌1分钟。一个恐慌的目标可以在它的每个回合结束时重复豁免，豁免成功则终止对自身的影响。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -34,7 +34,45 @@ html,body {
 
 <P align=right>——莉雅拉，太阳向导主母</P>
 
-<P>俄瑞姿是一个广阔的干燥草原山谷，坐落在卡塔冲山脉和俄拉尼阿德山脉之间，是狮族的家园。在这里漫步的是成群角上如结的羚羊，象鸟群，骄傲的精瘦狮族以及其他的野兽。食肉的狮鹫和翼狮经常出没在该地区的草海上，而像维鲁斯山的锻铸生物或天界的天裔生物经常把俄瑞姿作为他们进入这个广阔世界的第一站。</P></body>
+<P>俄瑞姿是一个广阔的干燥草原山谷，坐落在卡塔冲山脉和俄拉尼阿德山脉之间，是狮族的家园。在这里漫步的是成群角上如结的羚羊，象鸟群，骄傲的精瘦狮族以及其他的野兽。食肉的狮鹫和翼狮经常出没在该地区的草海上，而像维鲁斯山的锻铸生物或天界的天裔生物经常把俄瑞姿作为他们进入这个广阔世界的第一站。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

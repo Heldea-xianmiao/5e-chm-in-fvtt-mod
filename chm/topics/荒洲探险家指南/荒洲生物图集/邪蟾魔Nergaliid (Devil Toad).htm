@@ -308,9 +308,47 @@ style='font-family:宋体;color:black'>（</span><span lang=EN-US style='font-fa
 
 color:black'>）的心灵伤害，邪蟾魔获得等同于该生物所受伤害的临时生命值；如果豁免成功，则该生物受到一半的心灵伤害，而邪蟾魔也不会获得临时生命值。如果该目标生物死于这次伤害，则他无生气的身体将在邪蟾魔回合结束时复生为一只空壳僵尸。</span><span
 
-lang=EN-US> </span></p></body>
+lang=EN-US> </span></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

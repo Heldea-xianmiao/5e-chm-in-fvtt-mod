@@ -210,4 +210,41 @@ style
 
      > </span>Disintegration Ray</span></b><span style="  " 
 
-     ></span></p></td></tr></table></div><p   style=" MARGIN: 5pt 0pt 12pt;   mso-pagination: widow-orphan"><span><font>眼魔的瓦解射线是它用来挖掘的好工具。眼魔还可以精细的控制射线来对物件进行切割或塑性，就如同使用一把优秀的凿子一样。它可以钻出刚好够一根箭通过的小孔，将粗糙的石头切割成砖石的形状，截断肢体或者给生物打上烙印标签。这种射线和念力射线是眼魔塑造自己巢穴的基础工具，用以精确满足其具体要求，包括塑造房间和设置陷阱。</font></span></p></body></html>
+     ></span></p></td></tr></table></div><p   style=" MARGIN: 5pt 0pt 12pt;   mso-pagination: widow-orphan"><span><font>眼魔的瓦解射线是它用来挖掘的好工具。眼魔还可以精细的控制射线来对物件进行切割或塑性，就如同使用一把优秀的凿子一样。它可以钻出刚好够一根箭通过的小孔，将粗糙的石头切割成砖石的形状，截断肢体或者给生物打上烙印标签。这种射线和念力射线是眼魔塑造自己巢穴的基础工具，用以精确满足其具体要求，包括塑造房间和设置陷阱。</font></span></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

@@ -38,7 +38,45 @@ Fields</SPAN><BR>罗所纳北部的山谷有着参差不齐的地貌，包括破
 
 <P>棘刺荒野的冒险<BR>棘刺荒野伤痕累累的土地上满是从两个位面交汇之处最脆弱的地方流出的实体血液。</P>
 
-<P>黑暗之日（史诗级）：当卡萨之月和瑞迪斯之月在太阳前重叠时，极为罕见的双重月食即将发生，覆盖整个乔哈斯。先知与牧师们预警说无法控制的位面交叉即将发生，多重位面也许会发生断在的碰撞。克林王朝雇佣角色们来加强他们的防御级别，然而没有想到的是九狱的一支军队将在两个国度交汇时进攻荒野。邪恶军队由一名叫做瓦那托斯的深狱炼魔率领。</P></body>
+<P>黑暗之日（史诗级）：当卡萨之月和瑞迪斯之月在太阳前重叠时，极为罕见的双重月食即将发生，覆盖整个乔哈斯。先知与牧师们预警说无法控制的位面交叉即将发生，多重位面也许会发生断在的碰撞。克林王朝雇佣角色们来加强他们的防御级别，然而没有想到的是九狱的一支军队将在两个国度交汇时进攻荒野。邪恶军队由一名叫做瓦那托斯的深狱炼魔率领。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

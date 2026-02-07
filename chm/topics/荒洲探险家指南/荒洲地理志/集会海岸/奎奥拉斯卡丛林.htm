@@ -22,7 +22,45 @@
 
 <P> 
 
- 这片饥饿的雨林中隐藏着无数秘密，从失落的基瑙部族到那些因为无法适应这片饥饿丛林而被强盗遗弃的走私窝点。人们对奎奥拉斯卡丛林日益浓厚，起因是最近发现了一些关于奎奥拉斯卡失落文明的文字记载，这些文字似乎暗示他们可能知道失落已久的奥哈拉城，以及它在奥法纪之后消失的原因和地点。</P></body>
+ 这片饥饿的雨林中隐藏着无数秘密，从失落的基瑙部族到那些因为无法适应这片饥饿丛林而被强盗遗弃的走私窝点。人们对奎奥拉斯卡丛林日益浓厚，起因是最近发现了一些关于奎奥拉斯卡失落文明的文字记载，这些文字似乎暗示他们可能知道失落已久的奥哈拉城，以及它在奥法纪之后消失的原因和地点。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

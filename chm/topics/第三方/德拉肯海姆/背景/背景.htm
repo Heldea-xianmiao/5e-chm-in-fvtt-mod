@@ -30,7 +30,45 @@ html,body {
 
 <P class=MsoNormal style="MARGIN: 0pt"><SPAN 
 
-style="FONT-SIZE: 10.5pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'; mso-font-kerning: 1.0000pt"><FONT color=#000000 face=宋体>许多种类的冒险者涉足德拉肯海姆的废墟，怀抱着揭开失落之事的希望。无论他们为何而来，他们的经历或许都充满了隐患。有些人拥有丰富多彩的过去，使他们对前方的危险有所准备；有些人则想在废墟中掩盖自己的罪行和错误；还有些人与那些为了保护崩溃帝国残留之物而奋斗的人紧密相连。</FONT></SPAN></P><!--EndFragment--></FONT></body>
+style="FONT-SIZE: 10.5pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'; mso-font-kerning: 1.0000pt"><FONT color=#000000 face=宋体>许多种类的冒险者涉足德拉肯海姆的废墟，怀抱着揭开失落之事的希望。无论他们为何而来，他们的经历或许都充满了隐患。有些人拥有丰富多彩的过去，使他们对前方的危险有所准备；有些人则想在废墟中掩盖自己的罪行和错误；还有些人与那些为了保护崩溃帝国残留之物而奋斗的人紧密相连。</FONT></SPAN></P><!--EndFragment--></FONT><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -50,9 +50,47 @@ xmlns="http://www.w3.org/TR/REC-html40">
 
  lang=EN-US><br>
 
-<span style="mso-spacerun: yes">    </span></span>创建一场冒险，包括将探索、社交互动和战斗的场景融合到一个统一的整体中，以满足玩家和战役本身的需要。但它仍不止于此。好故事的基本要素应该引导你贯穿整个过程，才能够让你的玩家体验冒险的故事，而不仅仅是一系列不连贯的遭遇。</p><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]></div></body>
+<span style="mso-spacerun: yes">    </span></span>创建一场冒险，包括将探索、社交互动和战斗的场景融合到一个统一的整体中，以满足玩家和战役本身的需要。但它仍不止于此。好故事的基本要素应该引导你贯穿整个过程，才能够让你的玩家体验冒险的故事，而不仅仅是一系列不连贯的遭遇。</p><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

@@ -424,9 +424,47 @@ Lantomir</span>偷走的法球教授自称为<span lang=EN-US>Skant</span>教授
 
 触碰密瑟能核任何触碰密瑟能核球体部分的生物必须进行一次<span lang=EN-US>DC22</span>的体质豁免。豁免失败者将受到<span
 
- lang=EN-US>180</span>（<span lang=EN-US>20d10+70</span>）光耀伤害，豁免成功则伤害减半。亡灵在这次豁免中拥有劣势。除了用来放置它的托架，其他任何接触到球体部分的物件将被立刻解离（不进行豁免）。</p></div></body>
+ lang=EN-US>180</span>（<span lang=EN-US>20d10+70</span>）光耀伤害，豁免成功则伤害减半。亡灵在这次豁免中拥有劣势。除了用来放置它的托架，其他任何接触到球体部分的物件将被立刻解离（不进行豁免）。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

@@ -66,7 +66,45 @@ data-slate-fragment="JTVCJTdCJTIydHlwZSUyMiUzQSUyMnBhcmFncmFwaCUyMiUyQyUyMmNoaWx
 
 <P>查瑞斯的冒险<BR>找寻查瑞斯是一个冒险者或许会接受的任务，来找寻某个拥有某件特殊物品的人，或是某条信息对于他们其他任务有用的信息。</P>
 
-<P>过度生长之主宰（中级）：一个恶魔把查瑞斯附近的森林变变为了自己的巢穴，每天这头狂蟾魔都试图召唤更多的恶魔进入森林。现在森林里满是怯魔，查瑞斯的人们正在寻求帮助来击败恶魔，并一劳永逸结束恶魔的仪式。</P></body>
+<P>过度生长之主宰（中级）：一个恶魔把查瑞斯附近的森林变变为了自己的巢穴，每天这头狂蟾魔都试图召唤更多的恶魔进入森林。现在森林里满是怯魔，查瑞斯的人们正在寻求帮助来击败恶魔，并一劳永逸结束恶魔的仪式。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

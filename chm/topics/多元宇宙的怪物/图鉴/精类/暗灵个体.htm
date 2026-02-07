@@ -58,7 +58,45 @@ Darkling</strong></font></font>
 
 <strong>光照敏感Light Sensitivity。</strong>当位于明亮光照下时，暗灵在攻击检定，以及依靠视觉的感知（察觉）上有劣势。<br><STRONG><FONT color=#800000>动作Action</FONT></STRONG><br>
 
-<strong>匕首Dagger。</strong>近战或远程武器攻击：命中+5，触及5尺或射程20/60尺，单一目标。命中：5（1d4 + 3）外加7（2d6）暗蚀伤害。</p></body>
+<strong>匕首Dagger。</strong>近战或远程武器攻击：命中+5，触及5尺或射程20/60尺，单一目标。命中：5（1d4 + 3）外加7（2d6）暗蚀伤害。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

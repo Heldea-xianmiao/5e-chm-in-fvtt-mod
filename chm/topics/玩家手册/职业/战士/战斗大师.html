@@ -1464,4 +1464,41 @@ mso-font-kerning:0.0000pt;" ><font face="黑体" >。</font></span></i></b><span
 
 mso-hansi-font-family:Cambria;font-size:10.5000pt;mso-font-kerning:0.0000pt;" ><font face="宋体" >你以武器攻击命中敌人时，可以消耗一粒卓越骰以尝试击倒该目标。使用此战技时，你将所消耗的卓越骰加在此次攻击的伤害骰中。如果该目标为大型或更小体型，则其必须进行一次力量豁免。豁免失败则其应击倒地。</font></span><span style="mso-spacerun:'yes';font-family:宋体;font-size:10.5000pt;
 
-mso-font-kerning:0.0000pt;" ></span></p></div></body></html>
+mso-font-kerning:0.0000pt;" ></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

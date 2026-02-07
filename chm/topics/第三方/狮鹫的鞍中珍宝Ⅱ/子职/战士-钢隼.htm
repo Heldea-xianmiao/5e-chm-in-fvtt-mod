@@ -68,7 +68,45 @@ Launch</FONT></STRONG><BR>第18级起，当你在跃空的过程中，或在跃�
 
 <BR>此外，当你使用跃空特性时，你可以将你的自身能力推升至极限。当你这样做时，你可以至多弹射90尺，而不是30尺，并且你不会因再一次着陆而承受任何坠落伤害。一旦你使用过该特性，直到你完成一次短休或长休前你都无法再这样做。每当你再次这样做时，你都会积累一级力竭。你不能在具有2层或更多力竭时以此法使用该特性。</p>
 
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
 </body>
 
 </html>
+
 

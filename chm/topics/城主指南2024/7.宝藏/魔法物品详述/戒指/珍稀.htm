@@ -236,7 +236,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
 <H6>X射线戒指 Ring of X-Ray Vision</H6>
 
-<P><EM>戒指，珍稀（需同调）</EM><BR>着装此戒指期间，你可以执行<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作以获得范围30尺的X射线视觉，持续1分钟。对你来说，半径内的固态物件变为透明，并且不会阻碍光线通过。这种视觉可以穿透1尺厚的石头，1寸厚的常见金属或最多3尺厚的木头或泥土。更厚的物质或一张薄铅片会阻挡这种视觉。<BR>每当你在完成一次长休前再次使用这枚戒指时，你必须成功通过一次DC15的体质豁免，否则获得1级<STRONG><FONT color=#008000>力竭</FONT></STRONG>。</P></body>
+<P><EM>戒指，珍稀（需同调）</EM><BR>着装此戒指期间，你可以执行<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作以获得范围30尺的X射线视觉，持续1分钟。对你来说，半径内的固态物件变为透明，并且不会阻碍光线通过。这种视觉可以穿透1尺厚的石头，1寸厚的常见金属或最多3尺厚的木头或泥土。更厚的物质或一张薄铅片会阻挡这种视觉。<BR>每当你在完成一次长休前再次使用这枚戒指时，你必须成功通过一次DC15的体质豁免，否则获得1级<STRONG><FONT color=#008000>力竭</FONT></STRONG>。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

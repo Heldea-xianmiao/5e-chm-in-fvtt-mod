@@ -50,7 +50,45 @@ Secrets</FONT></STRONG><BR><EM>魔杖，非普通</EM><BR>这把魔杖有3发充
 
 Web</FONT></STRONG><BR><EM>魔杖，非普通（需施法者同调）</EM><BR>这把魔杖有7发充能，且每天黎明时恢复1d6+1发已消耗的充能。当充能耗尽时，骰一次d20。如果骰值为1，魔杖将化为灰烬而毁灭。<BR>持握此魔杖期间，你可以用一个动作并消耗1发充能以施展法术 
 
-<EM><FONT color=#800080>蛛网术web</FONT></EM>（豁免DC 15）。</P></body>
+<EM><FONT color=#800080>蛛网术web</FONT></EM>（豁免DC 15）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

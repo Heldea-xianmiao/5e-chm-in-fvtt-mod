@@ -54,7 +54,45 @@ magic，解除魔法dispel magic，定身怪物hold monster，隐形术invisibil
 
 Plagues（充能5~6）。</STRONG>瘟疫罗斯魔污染以它为中心30尺半径球形范围区域。污染持续24小时。当污染在区域内生效时，该区域内所有普通植物枯萎死亡。<BR>此外，当一个生物移动进入污染区域或在区域内开始其回合时，该生物必须进行一次DC16的体质豁免。豁免失败则该生物受到14（4d6）点暗蚀伤害并陷入中毒。豁免成功则该生物在接下来的24小时内免疫瘟疫罗斯魔带来的污染。<BR>中毒生物不能恢复生命值。每过24小时，中毒的生物就可以重新进行一次豁免。豁免失败则该生物的生命值上限降低5 
 
-(1d10)。这种减少效果将持续到中毒结束，如果目标的生命值上限降低到0，则死亡。该生物成功豁免三次之后，中毒效果结束。</P></body>
+(1d10)。这种减少效果将持续到中毒结束，如果目标的生命值上限降低到0，则死亡。该生物成功豁免三次之后，中毒效果结束。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

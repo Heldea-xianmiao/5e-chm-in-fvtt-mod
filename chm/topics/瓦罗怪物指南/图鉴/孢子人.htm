@@ -80,7 +80,45 @@ ft.<BR>力量13(+1) 敏捷12(+1) 体质13（+1) <BR>智力4(-2) 感知10(+0) 魅
 
 <P><STRONG>植物伪装：</STRONG>荆棘兽在任何有充足遮挡植物的地形上进行的敏捷(隐匿)检定上具有优势。<BR><STRONG>再生：</STRONG>荆棘兽在自己回合开始时恢复5点生命值。如果它受到寒冷、火焰或暗蚀伤害，这种特性在荆棘兽下一轮的回合开始时不会发挥作用。只有当它以0点开始其回合并且不能再生时，荆棘兽才会死亡。<BR><STRONG>荆棘之躯：</STRONG>在它的回合开始，荆棘兽对任何擒抱它的生物造成2(1d4)穿刺伤害。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>啃咬。</STRONG>近战武器攻击，+3命中，触及 5 
 
-ft.，单一目标。造成 8 (2d6+1)穿刺伤害。</P></body>
+ft.，单一目标。造成 8 (2d6+1)穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

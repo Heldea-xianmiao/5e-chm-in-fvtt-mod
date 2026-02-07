@@ -52,7 +52,45 @@ door、暗示术suggestion</FONT></EM><BR><STRONG><FONT color=#800000>附赠动�
 
 Actions</FONT></STRONG><BR><STRONG>变形Change 
 
-Shape。</STRONG>犬魔可以变形成一只小地精或是变回它本来面目。除了它的大小和速度，它的所有数据均不会发生改变，任何犬魔穿戴或携带的装备都不会产生影响。当犬魔死亡时他将变回真实形态。</P></body>
+Shape。</STRONG>犬魔可以变形成一只小地精或是变回它本来面目。除了它的大小和速度，它的所有数据均不会发生改变，任何犬魔穿戴或携带的装备都不会产生影响。当犬魔死亡时他将变回真实形态。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

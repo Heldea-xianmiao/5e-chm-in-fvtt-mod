@@ -46,7 +46,45 @@ Water。</STRONG>大水蛞完全浸入水中时进入处于隐形状态。<BR><S
 
 Bound。</STRONG>大水蛞离开所绑定的水体或该水体干涸时死亡。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>绞缠Constrict。</STRONG>近战武器攻击：命中+5，触及10尺，单一生物。命中：13（3d6+3）点钝击伤害。如果目标体型为中型或更小体型，则目标被擒抱（挣脱DC 
 
-13）并向大水蛞所在方向拉近5尺。直至擒抱终止前，目标被束缚，同时大水蛞尝试淹没目标，而水诡也不能同时绞缠其他目标。</P></body>
+13）并向大水蛞所在方向拉近5尺。直至擒抱终止前，目标被束缚，同时大水蛞尝试淹没目标，而水诡也不能同时绞缠其他目标。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

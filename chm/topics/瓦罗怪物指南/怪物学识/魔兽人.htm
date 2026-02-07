@@ -10,4 +10,41 @@
 
 
 
-  FONT-WEIGHT: bold; COLOR: rgb(128,0,0);   "><font>打破常规</font>BREAKING  THE  MOLD</span></b><span></span></p><p   style="     "><span><font>一个兽人生活在混乱与愤怒的边缘，而魔兽人也不例外。有时，一个魔兽人会变为离群者并成为部族的破坏力量，试图通过对神的忠诚分裂集体。如果那些崇拜茹赛可的兽人和崇拜格乌什的兽人对立，部落可能会因此分裂。</font><br><br><font>在另一种极端情况下，魔兽人可能会在特殊情况下接受战斗或者领导位置的角色。如果部族发现自己面临强大或者意想不到的抵抗，魔兽人作为首领或者战斗大师的耐性和卓越智慧足够为他们赢得能力较弱的首领失去地位的一天。</font></span></p></div></body></html>
+  FONT-WEIGHT: bold; COLOR: rgb(128,0,0);   "><font>打破常规</font>BREAKING  THE  MOLD</span></b><span></span></p><p   style="     "><span><font>一个兽人生活在混乱与愤怒的边缘，而魔兽人也不例外。有时，一个魔兽人会变为离群者并成为部族的破坏力量，试图通过对神的忠诚分裂集体。如果那些崇拜茹赛可的兽人和崇拜格乌什的兽人对立，部落可能会因此分裂。</font><br><br><font>在另一种极端情况下，魔兽人可能会在特殊情况下接受战斗或者领导位置的角色。如果部族发现自己面临强大或者意想不到的抵抗，魔兽人作为首领或者战斗大师的耐性和卓越智慧足够为他们赢得能力较弱的首领失去地位的一天。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

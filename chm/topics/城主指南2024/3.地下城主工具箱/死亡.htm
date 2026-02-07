@@ -112,7 +112,45 @@ Council</STRONG><BR></FONT>角色们发现自己正位于一座属于诸神的�
 
 <P><FONT color=#800000><STRONG>雷霆拯救队Rescue 
 
-Mission</STRONG><BR></FONT>玩家们车一张临时的新卡，用来执行寻回这些陨落英雄之遗体的任务——这样英雄们就能得以复生或被好好安葬。如果死去的角色拥有据点（见第八章），这样的替补小队便有可能是由据点的雇员所组成的。</P></body>
+Mission</STRONG><BR></FONT>玩家们车一张临时的新卡，用来执行寻回这些陨落英雄之遗体的任务——这样英雄们就能得以复生或被好好安葬。如果死去的角色拥有据点（见第八章），这样的替补小队便有可能是由据点的雇员所组成的。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

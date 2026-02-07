@@ -2046,9 +2046,47 @@ style='mso-spacerun:yes'>    </span></span>在属性检定或豁免检定中骰�
 
 lang=EN-US>20</span>或<span lang=EN-US>1</span>通常没有任何特殊效果。然而，你也可以在处理后果时把这两种掷骰情况特殊化。而这将由你决定如何将其表现在游戏中。一种简单的方法就是加强其成败的影响。例如，游荡者尝试开锁时掷出<span
 
-lang=EN-US>1</span>，则他这次行动失败且他使用的工具也会坏掉。一次成功的智力（调查）检定掷出<span lang=EN-US>20</span>时，则可能会发现一条额外的线索。</p></div></body>
+lang=EN-US>1</span>，则他这次行动失败且他使用的工具也会坏掉。一次成功的智力（调查）检定掷出<span lang=EN-US>20</span>时，则可能会发现一条额外的线索。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

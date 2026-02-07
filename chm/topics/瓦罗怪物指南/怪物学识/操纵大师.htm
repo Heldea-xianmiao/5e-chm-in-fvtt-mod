@@ -50,4 +50,41 @@ font-size:10.0000pt;" > </span><span style="
 
 font-size:10.0000pt;" ></span></p><p><span style="
 
-font-size:10.0000pt;" ><o:p> </o:p></span></p><p><span><font>当一个鬼婆慷慨地提出帮助，或者仅仅要求一个简单的任务作为回报时，这并不能保证这场交易最终能让双方都如愿以偿。通过提出一个看上去，或者实际上就是公平的建议，鬼婆可能在追寻某个隐藏的事项。她仍想让这件事有利于她或者让某人堕落，但她间接做这件事的方式与自己并没有明显的关联。一个简单的交易，比如一个村民同意在某一天的中午在十字路口递交一封神秘的信，可能是毁灭一个凡俗生命的关键。在几年甚至几十年间，鬼婆的理由可能都并不明显，或者除非在特殊的情况下，比如一个预兆的诞生或者与一个危险罪犯的激烈冲突。即使她提出了一项看似没有负面影响的交易，鬼婆也总是对她的动机，她要回报的原因，或这些东西如何使她受益守口如瓶。</font><br><br><font>一个在人类聚居地附近呆了很长时间的鬼婆常常会让善良人们的社区枯竭，因为他们屈服于她的邪恶和自私的计划。镇上的气氛变得排外、冷酷、喜怒无常，或者对新来者和旅行者完全敌对。即使是鬼婆在这个地方做了最坏的事情之后，通过保持他们对她有朝一日能解除对他们的诅咒的希望，她也依然对受害者保持影响力。因此，当地领导人不会允许任何外人对她采取不利的行为（包括暗中妨碍可能决定与她对抗的冒险者）。</font></span></p></div></body></html>
+font-size:10.0000pt;" ><o:p> </o:p></span></p><p><span><font>当一个鬼婆慷慨地提出帮助，或者仅仅要求一个简单的任务作为回报时，这并不能保证这场交易最终能让双方都如愿以偿。通过提出一个看上去，或者实际上就是公平的建议，鬼婆可能在追寻某个隐藏的事项。她仍想让这件事有利于她或者让某人堕落，但她间接做这件事的方式与自己并没有明显的关联。一个简单的交易，比如一个村民同意在某一天的中午在十字路口递交一封神秘的信，可能是毁灭一个凡俗生命的关键。在几年甚至几十年间，鬼婆的理由可能都并不明显，或者除非在特殊的情况下，比如一个预兆的诞生或者与一个危险罪犯的激烈冲突。即使她提出了一项看似没有负面影响的交易，鬼婆也总是对她的动机，她要回报的原因，或这些东西如何使她受益守口如瓶。</font><br><br><font>一个在人类聚居地附近呆了很长时间的鬼婆常常会让善良人们的社区枯竭，因为他们屈服于她的邪恶和自私的计划。镇上的气氛变得排外、冷酷、喜怒无常，或者对新来者和旅行者完全敌对。即使是鬼婆在这个地方做了最坏的事情之后，通过保持他们对她有朝一日能解除对他们的诅咒的希望，她也依然对受害者保持影响力。因此，当地领导人不会允许任何外人对她采取不利的行为（包括暗中妨碍可能决定与她对抗的冒险者）。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

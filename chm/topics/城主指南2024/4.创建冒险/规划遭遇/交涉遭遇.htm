@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>交涉遭遇 Social Interaction Encounters</FONT></STRONG></P>
 
-<P>第二章的“<STRONG>运作交涉</STRONG>”一节提供了一些处理交涉遭遇的建议，它们可以帮助你创作这些遭遇。第三章的“<STRONG>非玩家角色</STRONG>”一节对于这些遭遇的创作也是必需的。</P></body>
+<P>第二章的“<STRONG>运作交涉</STRONG>”一节提供了一些处理交涉遭遇的建议，它们可以帮助你创作这些遭遇。第三章的“<STRONG>非玩家角色</STRONG>”一节对于这些遭遇的创作也是必需的。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

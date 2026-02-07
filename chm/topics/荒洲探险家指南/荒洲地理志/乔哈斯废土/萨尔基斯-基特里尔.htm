@@ -72,7 +72,45 @@ html,body {
 
 <P>独善其身（中级）：城内一个杰出的矿业公司最近发现了一块来历不明的神秘紫色石头，大概直径约15英尺。几十个迷信的矿工已经逃离了这个地方，因此公司雇佣角色们调查石头，揭开它的真相。让石头的任何一个光滑平面受到伤害，这个被掩埋的阴影城遗迹就会开始召唤影魂与影子猎手（见第七章），并且速度越来越快。角色们必须在城市毁灭前，找到摧毁、放逐或是重新封印石头的办法。</P>
 
-<P>&nbsp;</P></body>
+<P>&nbsp;</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

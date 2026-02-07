@@ -18,7 +18,45 @@ style="FONT-SIZE: 18pt;  FONT-WEIGHT: bold; ;"><o:p></o:p></SPAN></B></H2>
 
 style="">这一节的指导方针帮助你创造你自己独特的恐惧领域。这一设定的细节应当反映了领域的黑暗领主，并映射反派的邪恶与经历的折磨。使用这章后面的恐怖题材一节或你自己恶毒的想象来作为丰富你恐惧领域细节的灵感。</SPAN><SPAN 
 
-style="mso-bidi-font-family: 'Times New Roman'"><o:p></o:p></SPAN></P></body>
+style="mso-bidi-font-family: 'Times New Roman'"><o:p></o:p></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -70,7 +70,45 @@ html,body {
 
 <P>过去的残影（中级）：一位混乱善良的男性黑暗精灵，吉布·科林，卓那萨幸存者。作为在阿莱西贡，一位政府副秘书手下以在阿萨瑞斯谋生。某个熊地精与大地精的邪教，自称争斗之王，在听闻吉布是躲在阿萨瑞斯的卓那萨末裔时，开始追捕他。他们的首领是一名叫戈苏克斯的大地精队长，拥有每天一次变形为骨魔的能力，计划把吉布作为给班恩的祭品。</P>
 
-<P>吉布听说过角色们的英雄事迹，并且用隐语联系他们，他请求冒险者们在他处理阿萨瑞斯的事务及前往荒滩的隐居处时提供保护。</P></body>
+<P>吉布听说过角色们的英雄事迹，并且用隐语联系他们，他请求冒险者们在他处理阿萨瑞斯的事务及前往荒滩的隐居处时提供保护。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -40,7 +40,45 @@ Holdings</FONT></STRONG>
 
 <P><STRONG><FONT color=#800000>拉苟那族领地 Lagonna 
 
-Grounds</FONT></STRONG><BR>在迈勒提斯北部领地边缘，在大海和奈西安森林之间，拉苟那族半人马于彼处流浪。不同于残暴的斐力兹族，拉苟那族半人马通常平和且不参与迈勒提斯领土中的劫掠。他们频繁造访利斯忒斯，科瑞诺斯和迈勒提斯本城，并在迈勒提斯和瑟特萨之间交换商品，因为他们比多数迈勒提斯商人更熟悉奈西安森林。<BR>自然和文明在瑟特萨城邦中和谐共存。</P></body>
+Grounds</FONT></STRONG><BR>在迈勒提斯北部领地边缘，在大海和奈西安森林之间，拉苟那族半人马于彼处流浪。不同于残暴的斐力兹族，拉苟那族半人马通常平和且不参与迈勒提斯领土中的劫掠。他们频繁造访利斯忒斯，科瑞诺斯和迈勒提斯本城，并在迈勒提斯和瑟特萨之间交换商品，因为他们比多数迈勒提斯商人更熟悉奈西安森林。<BR>自然和文明在瑟特萨城邦中和谐共存。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

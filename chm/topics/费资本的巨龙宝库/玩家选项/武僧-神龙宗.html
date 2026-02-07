@@ -188,7 +188,45 @@ Aspect</FONT></STRONG><BR><EM>第17级神龙宗特性</EM><BR>你的龙之魂巅
 
 <P dir=ltr><STRONG>怒气爆发Explosive 
 
-  Fury。</STRONG>当你使用古龙之姿时，龙族之怒从你体内爆发。选择你灵光内可见的任意数量的生物，每个生物必须通过一次对抗你的气豁免DC的敏捷豁免，豁免失败者受到3d10强酸，寒冷，火焰，闪电或毒素伤害（由你选择）。</P></BLOCKQUOTE></body>
+  Fury。</STRONG>当你使用古龙之姿时，龙族之怒从你体内爆发。选择你灵光内可见的任意数量的生物，每个生物必须通过一次对抗你的气豁免DC的敏捷豁免，豁免失败者受到3d10强酸，寒冷，火焰，闪电或毒素伤害（由你选择）。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

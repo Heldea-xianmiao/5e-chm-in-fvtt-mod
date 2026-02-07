@@ -46,7 +46,45 @@ Giants</FONT></STRONG><BR>你可能会把你的战役设定在一个巨人仍然
 
 <P><BR><STRONG><FONT color=#800000>由巨人塑造 Shaped by 
 
-Giants</FONT></STRONG><BR>你也可以在建立战役时，将注意力放在古代巨人居住的世界上，这可能包括也可能不包括大量的活着的巨人。这样一场战役的核心理念可能是，巨人们主宰着世界的历史，所以他们负责创造了所有充满你的冒险的古代遗址、魔法和宝藏。<BR>基于这个想法的战役可能会有一种后启示录的感觉，类人生物开始传播，并开始探索被巨人摧毁的世界的废墟。或者巨人的帝国可能是一个古老的谜团，在现代世界已经完全被遗忘，伴随着古老的遗迹和它的宝藏重见天日，历史也就此被改写。<BR>冒险者们所探索的地牢和废墟可能都是巨人建造的地方。有些则可能是巨人的敌人建造的要塞，比如地下堡垒，矮人在那里躲避巨人的攻击。如果探索巨人尺寸的地牢是常态，角色很可能会准备好爬上巨人的楼梯，和越过在巨人尺寸的地点的其他挑战（参见第四章）。<BR>D&amp;D世界通常会设定一些魔法物品（尤其是神器）是在古代使用被遗忘已久的技术创造出来的。你可能会设定，在你的战役中，这些物品是由巨人或那些与巨人作战的人制造的。巨人制造的魔法物品可能会魔法性质地调整其尺寸以适应较小的种族，或者熟练的工匠可能已经学会了调整这些物品的技术。第五章提供了更多关于由巨人制作的魔法物品和其他宝藏的信息和建议。</P></body>
+Giants</FONT></STRONG><BR>你也可以在建立战役时，将注意力放在古代巨人居住的世界上，这可能包括也可能不包括大量的活着的巨人。这样一场战役的核心理念可能是，巨人们主宰着世界的历史，所以他们负责创造了所有充满你的冒险的古代遗址、魔法和宝藏。<BR>基于这个想法的战役可能会有一种后启示录的感觉，类人生物开始传播，并开始探索被巨人摧毁的世界的废墟。或者巨人的帝国可能是一个古老的谜团，在现代世界已经完全被遗忘，伴随着古老的遗迹和它的宝藏重见天日，历史也就此被改写。<BR>冒险者们所探索的地牢和废墟可能都是巨人建造的地方。有些则可能是巨人的敌人建造的要塞，比如地下堡垒，矮人在那里躲避巨人的攻击。如果探索巨人尺寸的地牢是常态，角色很可能会准备好爬上巨人的楼梯，和越过在巨人尺寸的地点的其他挑战（参见第四章）。<BR>D&amp;D世界通常会设定一些魔法物品（尤其是神器）是在古代使用被遗忘已久的技术创造出来的。你可能会设定，在你的战役中，这些物品是由巨人或那些与巨人作战的人制造的。巨人制造的魔法物品可能会魔法性质地调整其尺寸以适应较小的种族，或者熟练的工匠可能已经学会了调整这些物品的技术。第五章提供了更多关于由巨人制作的魔法物品和其他宝藏的信息和建议。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

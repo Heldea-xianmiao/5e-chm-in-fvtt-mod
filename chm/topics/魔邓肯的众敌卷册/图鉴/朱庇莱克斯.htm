@@ -132,7 +132,45 @@ splash）。<BR><STRONG>攻击（Attack）。</STRONG>朱庇莱克斯进行一�
 
 Touch）。</STRONG>近战武器攻击：命中+14，触及 
 
-10尺，单一目标。命中：21（4d6+7）毒素伤害，被命中的目标被软泥缠身。目标身边10尺范围内，所有非泥怪生物包括目标本身陷入中毒状态。被命中的目标可以用一个动作把身上的软泥刮下来，并结束该状态。</P></body>
+10尺，单一目标。命中：21（4d6+7）毒素伤害，被命中的目标被软泥缠身。目标身边10尺范围内，所有非泥怪生物包括目标本身陷入中毒状态。被命中的目标可以用一个动作把身上的软泥刮下来，并结束该状态。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

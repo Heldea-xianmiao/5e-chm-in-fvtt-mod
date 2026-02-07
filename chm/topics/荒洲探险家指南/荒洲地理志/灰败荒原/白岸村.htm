@@ -34,7 +34,45 @@ Aldataur被任命为该村的领袖。他将任务委托给久经考验的朋友
 
 Aldataur）带领，他是一名饱经风霜的精灵护林员，大约在60年前帮助发现了帕莱班克。埃尔罗性格坚忍，缺乏幽默，在这个羽翼未丰的前哨几乎经常被危险所困扰时，表现出领导才能。埃尔罗赢得了当地居民的信任和尊重，他们请他治理巴勒班克。他勉强接受了，并监督了村庄的扩建和保护工作。Elro通常有60到90把玻璃刀片供其使用。<BR>犯罪Crime<BR>在这片寒冷的土地上，帕累班克的人们必须齐心协力才能生存下去，而在这个小社区里，几乎没有空间进行任何有价值的盗窃或不道德的活动。真正发生的犯罪都是出于必然，并受到Elro的相应惩罚。<BR>地理位置Geography<BR>被四个瞭望塔和十英尺高的削尖圆木栅栏包围的帕勒班克是一个摇摇晃晃的村庄，永远被关在冬天里。这个村庄由一百多间小木屋和棚屋组成。它太小了，没有独特的社区，所以大多数商业和住宅都建在当时适合它们的地方，形成了一个蜿蜒的布局。在北边的悬崖下，大约有15人下到沙滩上，码头上停泊着大约12艘船，从渔船到小型货船，这些船载着探险队往返于艾塞尔克罗斯。<BR>帕莱班克村的冒险Palebank Village Adventures<BR>如果不是因为热心的探险者的出现，以及作为乌托敦和艾塞尔克罗斯岛之间的重要驿站，帕勒班克村将是一个安静的地方，不会有太多的兴奋。<BR>巨魔之夜(中级)Troll Night (Mid 
 
-Level)。当角色们呆在帕莱班克村时，一个倒霉的“玻璃之刃”Glassblades巡逻队的唯一幸存者摇摇晃晃地走进了村子。一支有组织的巨魔队伍正从Flotket阿尔卑斯山脉向定居点进发，那里需要每一个强壮的战士来阻止巨魔。这些巨魔是如何变得如此有组织的，他们在村子里寻找什么?</P></body>
+Level)。当角色们呆在帕莱班克村时，一个倒霉的“玻璃之刃”Glassblades巡逻队的唯一幸存者摇摇晃晃地走进了村子。一支有组织的巨魔队伍正从Flotket阿尔卑斯山脉向定居点进发，那里需要每一个强壮的战士来阻止巨魔。这些巨魔是如何变得如此有组织的，他们在村子里寻找什么?</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

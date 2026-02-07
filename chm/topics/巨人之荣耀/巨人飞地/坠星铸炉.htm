@@ -102,7 +102,45 @@ Sands</STRONG>
 
 <P><STRONG>无餍妖星Ravenous Star</STRONG> 
 
-<BR>一个<STRONG>火矮人Azer</STRONG>请求角色们提供帮助。其他位于坠星铸炉的火矮人正在被一条<STRONG>底栖魔鱼Aboleth</STRONG>强迫工作，其自称是活体星辰，“乌黯之饥渴”哈达的后嗣。火矮人的工作给予了底栖魔鱼一些来自“废陋巨人遭遇表”（见第三章）的仆从，以及令人畏怖的武器与护甲。</P></body>
+<BR>一个<STRONG>火矮人Azer</STRONG>请求角色们提供帮助。其他位于坠星铸炉的火矮人正在被一条<STRONG>底栖魔鱼Aboleth</STRONG>强迫工作，其自称是活体星辰，“乌黯之饥渴”哈达的后嗣。火矮人的工作给予了底栖魔鱼一些来自“废陋巨人遭遇表”（见第三章）的仆从，以及令人畏怖的武器与护甲。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -72,7 +72,45 @@ languages,  侦测思想detect thoughts<BR>每项1/日：困惑术confusion，�
 
 monster<BR><STRONG>集群Swarm.</STRONG>集群可以进驻另一生物身处的空间位置，反之亦然。而且集群可以通过任何足够一只微型老鼠通过的通道。集群不能恢复生命值也不能获得临时生命值。<BR><STRONG>心灵帷幕Telepathic  
 
-Shroud.</STRONG>颅鼠对任何能感知其情绪或阅读其思想的效果以及所有预言法术免疫。<BR><STRONG><FONT color=#800000>动作ACTIONS</FONT></STRONG><BR><STRONG>啃咬Bite.</STRONG>近战武器攻击：+5命中，触及0尺，单一处于鼠群空间内的目标<BR>命中：14（4d6）穿刺伤害，或者当集群剩下一半以下生命值时7（2d6）穿刺伤害。</P></body>
+Shroud.</STRONG>颅鼠对任何能感知其情绪或阅读其思想的效果以及所有预言法术免疫。<BR><STRONG><FONT color=#800000>动作ACTIONS</FONT></STRONG><BR><STRONG>啃咬Bite.</STRONG>近战武器攻击：+5命中，触及0尺，单一处于鼠群空间内的目标<BR>命中：14（4d6）穿刺伤害，或者当集群剩下一半以下生命值时7（2d6）穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

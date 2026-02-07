@@ -50,7 +50,45 @@ Bubbles。是否以及如何打破艾欧尔的静止泡取决于你，但是这�
 
 Level)。一位名叫埃索拉的八岁野人孩子在坠落地附近与其他人一起玩耍，当时一位朋友怂恿她去站到废墟上的冰上。埃索拉坠入冰层，并且没有从这座城市的废墟中离开。没有一个野人愿意冒险去废墟里拯救埃索拉。孩子的祖母莉莉亚乞求角色将埃索拉带回家。埃索拉在寻找离开废墟的出路时，找到了魔法工棚并喝下了一种药，这使她染上了寒症。废墟深处有一小瓶解毒剂。<BR>战争武器（高等级）Weapons Of War (High 
 
-Level)。角色被敦达里安帝国，克灵王朝，万象会或其他派系的代表所雇用，前往艾欧尔坠落地，并寻找装有乳白色液体（寒症液体）的金色小瓶。先前的一次探险发现了一份这种小瓶，而角色的赞助者想要更多。队伍的赞助者要防止小瓶落入不法之徒的手中，或者要把它们卖给出价最高的人。为了在坠落地的深处找到隐蔽的小瓶，角色必须战胜艾欧瑞安猎手（见第七章）和敌方的高级冒险者搜寻小队。</P></body>
+Level)。角色被敦达里安帝国，克灵王朝，万象会或其他派系的代表所雇用，前往艾欧尔坠落地，并寻找装有乳白色液体（寒症液体）的金色小瓶。先前的一次探险发现了一份这种小瓶，而角色的赞助者想要更多。队伍的赞助者要防止小瓶落入不法之徒的手中，或者要把它们卖给出价最高的人。为了在坠落地的深处找到隐蔽的小瓶，角色必须战胜艾欧瑞安猎手（见第七章）和敌方的高级冒险者搜寻小队。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

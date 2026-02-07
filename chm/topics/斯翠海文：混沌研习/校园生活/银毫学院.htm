@@ -104,7 +104,45 @@ Blackstone，混乱善良，半血裔，银毫学院黯影教授）是研究魔�
 
 <P><STRONG><FONT color=#800000>蔷薇舞台</FONT></STRONG><BR>蔷薇舞台是一座位于银毫校区且不停旋转的圆形平台，背景是一面由魔法墨水构成的蔷薇（由过往表演的观众所献上的花朵），创造出绝佳的声音效果。修习法师在蔷薇舞台碰面以练习表演、比划，或进行荣誉决斗。教授和教职员经常在蔷薇舞台观赏表演，一边从场外查看与辅导学生的魔法表现。 
 
-戏剧馆一个让银毫学生锻炼体适能、舞蹈、武术，以及其他体能活动的设施。学生能使用被称作灰室的准备空间（其实是一连串房间），里面有妆发沙龙、声音排练室、镜面演讲排练空间，以及水疗设施。戏剧馆后方有一间特殊的感官剥夺室供修习法师在完全安静的空间里进行冥想并使自己专注。</P></body>
+戏剧馆一个让银毫学生锻炼体适能、舞蹈、武术，以及其他体能活动的设施。学生能使用被称作灰室的准备空间（其实是一连串房间），里面有妆发沙龙、声音排练室、镜面演讲排练空间，以及水疗设施。戏剧馆后方有一间特殊的感官剥夺室供修习法师在完全安静的空间里进行冥想并使自己专注。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

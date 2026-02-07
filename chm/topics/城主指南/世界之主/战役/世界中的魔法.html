@@ -360,9 +360,47 @@ the Dead<o:p></o:p></span></b></p>
 
  class=SpellE><span lang=EN-US>Takhisis</span></span>（恶龙之神）的高阶女祭司手上。此时，史东可能会不愿意被这位祭司复活，而她所进行的任何复活尝试都会直接判为失败。如果这名邪恶牧师想要复活史东来对其进行审讯，她必须设法瞒过他的灵魂，比如蒙骗某个善良牧师复活他，并在他复活的当时马上将其抓住。<span
 
- lang=EN-US><o:p></o:p></span></p></div></body>
+ lang=EN-US><o:p></o:p></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

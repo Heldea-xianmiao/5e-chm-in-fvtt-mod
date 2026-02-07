@@ -36,7 +36,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000>攀爬Climb</FONT></STRONG><BR>具有攀爬速度的怪物可以使用其速度行走于垂直表面之上。攀爬怪物进行攀爬时，无需花费额外的移动力。<BR> <BR><STRONG><FONT color=#800000>飞行Fly</FONT></STRONG><BR>具有飞行速度的怪物可以使用其速度进行飞行。某些有悬浮能力的怪物在空中时难被击落（关于飞行的规则，可以参见《玩家手册》的相关内容）。该怪物在死亡时结束悬浮。</P>
 
-<P><STRONG><FONT color=#800000>游泳Swim</FONT></STRONG><BR>具有游泳速度的怪物游泳时，无需花费额外的移动力。</P></body>
+<P><STRONG><FONT color=#800000>游泳Swim</FONT></STRONG><BR>具有游泳速度的怪物游泳时，无需花费额外的移动力。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

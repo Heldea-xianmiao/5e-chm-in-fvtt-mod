@@ -66,7 +66,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000>奈落诺境Nerono</FONT></STRONG><BR>奈落诺是记忆残留着的和在海上迷失的水手的灵魂的最后家园。<BR>广阔的海洋遍奈落诺，这是一个由孤独的岛屿点缀的王国，漫无目的的船只纵横交错。泰坦的废墟和巨大的浮在水面的海藻链，还有传说中的沉船褪色的船体。天空颜色模糊，悬在水面上，像玻璃一样静止。尽管海洋通常外表平静，但强大的风暴却常常不知从何而来，将无数的灵魂抛入海浪和漩涡。在浩瀚的海洋的某个地方，隐藏着扭曲纠结的潮汐和风，它们被称为悲忆迷宫。这迷宫般的水道让粗心的旅行者感到困惑和曲折<BR>当一个灵魂到达奈落诺时，塞壬、水灵或斯芬克斯可能会引导他们进入冥境。</P>
 
-<P><STRONG><FONT color=#800000>提泽拉司境 Tizerus</FONT></STRONG><BR>提泽拉司境是冥界最深处的冥境，是对谋杀者和那些对诸神犯下不可饶恕罪行的人的最后惩罚。<BR>这片冥境是一个阴郁、悲惨的广阔区域，巨大建筑的废墟在黑色岩石的荒原上隐约可见。在它的中心隐现着厄睿柏斯的宫殿，那是一个不祥的建筑，反光的黑石装饰着黄金饰品和深红色的丝绸飘带。冥界之神在他的大厅里沉思，偶尔用他的鞭子把不规矩的灵魂拖进他的王国。在宫殿的深处，存在着冥境黑暗中唯一的希望之光:一个叫拉索斯的传送门，它通向生者的世界。在厄睿柏斯宫殿的后面是一片腐臭和腐烂植物沉积的沼泽，名为惩戒泥沼。灵魂在其中永远接受恶魔和其他怪物利爪的折磨。<BR>当被诅咒的灵魂到达蒂塞洛斯时，他们会很快发现自己被痛苦和恐惧的旋风带走。恶魔，冥界的鸟妖，拉迷亚，和梦魇争夺机会，对注定受苦的人实行私刑。</P></body>
+<P><STRONG><FONT color=#800000>提泽拉司境 Tizerus</FONT></STRONG><BR>提泽拉司境是冥界最深处的冥境，是对谋杀者和那些对诸神犯下不可饶恕罪行的人的最后惩罚。<BR>这片冥境是一个阴郁、悲惨的广阔区域，巨大建筑的废墟在黑色岩石的荒原上隐约可见。在它的中心隐现着厄睿柏斯的宫殿，那是一个不祥的建筑，反光的黑石装饰着黄金饰品和深红色的丝绸飘带。冥界之神在他的大厅里沉思，偶尔用他的鞭子把不规矩的灵魂拖进他的王国。在宫殿的深处，存在着冥境黑暗中唯一的希望之光:一个叫拉索斯的传送门，它通向生者的世界。在厄睿柏斯宫殿的后面是一片腐臭和腐烂植物沉积的沼泽，名为惩戒泥沼。灵魂在其中永远接受恶魔和其他怪物利爪的折磨。<BR>当被诅咒的灵魂到达蒂塞洛斯时，他们会很快发现自己被痛苦和恐惧的旋风带走。恶魔，冥界的鸟妖，拉迷亚，和梦魇争夺机会，对注定受苦的人实行私刑。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

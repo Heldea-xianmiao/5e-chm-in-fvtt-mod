@@ -58,7 +58,45 @@ Rest</FONT></STRONG><BR>虽然长休并非强制性的，但是不睡觉的确�
 
 10的体质检定，失败则增加一级力竭状态。</P>
 
-<P>如果你连续几天不眠不休，将很难解除力竭状态。在第一个24小时时段后，每过一个未完成长休的24小时时段，体质检定DC便增加5。当你完成长休时，DC重置为10。</P></body>
+<P>如果你连续几天不眠不休，将很难解除力竭状态。在第一个24小时时段后，每过一个未完成长休的24小时时段，体质检定DC便增加5。当你完成长休时，DC重置为10。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

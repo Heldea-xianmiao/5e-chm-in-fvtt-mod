@@ -46,7 +46,45 @@ Bash。</STRONG>近战武器攻击：命中+6，触及5尺，单一
 
 目标。命中：15（2d10+4）的钝击伤害，并且食人魔攻城锤可以将目标推离五尺，如果其为巨型体型或者更小。<BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>拦路虎Block the 
 
-Path。</STRONG>当一个生物进入食人魔5尺攻击范围内的空间时，食人魔对该生物进行一次痛击。如果攻击命中，目标的速度将降低到0，直到食人魔下一回合开始。</P></body>
+Path。</STRONG>当一个生物进入食人魔5尺攻击范围内的空间时，食人魔对该生物进行一次痛击。如果攻击命中，目标的速度将降低到0，直到食人魔下一回合开始。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

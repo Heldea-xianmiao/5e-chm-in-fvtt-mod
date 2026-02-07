@@ -52,7 +52,45 @@ html,body {
 
   当好人无法理解世界的复杂性时，银印映影就说明了问题所在。 他们戴着面具四处游荡，表现得英勇无畏、 任劳任怨、伸张正义、保护弱者 …… 
 
-毫无益处!这种狂热是危险的，因为你不能相信任何一个人， 他有时会为了诚实的工资而做不诚实的工作。</P></body>
+毫无益处!这种狂热是危险的，因为你不能相信任何一个人， 他有时会为了诚实的工资而做不诚实的工作。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

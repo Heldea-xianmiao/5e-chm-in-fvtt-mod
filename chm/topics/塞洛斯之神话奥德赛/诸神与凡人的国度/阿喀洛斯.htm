@@ -34,7 +34,45 @@ html,body {
 
 <P align=right>——阿喀洛斯人 穆托</P>
 
-<P align=left>高墙环绕的城邦阿喀洛斯桀骜的坐落在一座陡峭悬崖的顶部。险峻的群山围绕着它，充当它的要塞和塞洛斯其他地方之剑的盾牌。鲜少有人胆敢进犯它久负盛名的要塞，克洛丰，而且从未有过可以触及它城墙的攻击。对塞洛斯的居民来说，阿喀洛斯人拥有着接近传说的地位：一个以为了战争而完善肉体精神为中心的文化里产生的令人畏惧的战士。他们的军队在扩张阿喀洛斯的边境，攫取新的土地和财富时鲜有败绩。</P></body>
+<P align=left>高墙环绕的城邦阿喀洛斯桀骜的坐落在一座陡峭悬崖的顶部。险峻的群山围绕着它，充当它的要塞和塞洛斯其他地方之剑的盾牌。鲜少有人胆敢进犯它久负盛名的要塞，克洛丰，而且从未有过可以触及它城墙的攻击。对塞洛斯的居民来说，阿喀洛斯人拥有着接近传说的地位：一个以为了战争而完善肉体精神为中心的文化里产生的令人畏惧的战士。他们的军队在扩张阿喀洛斯的边境，攫取新的土地和财富时鲜有败绩。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

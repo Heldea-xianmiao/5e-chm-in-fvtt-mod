@@ -36,7 +36,45 @@ html,body {
 
 <P><STRONG><EM>充能X~Y。</EM></STRONG>关键词“<STRONG>充能X~Y</STRONG>”指该特殊能力在使用一次后，将进入每个战斗轮随机恢复的充能阶段。该怪物在每个自己的回合开始时掷一次d6。如果所得的结果在充能关键词描述的数值范围内，则该怪物可以再次使用该特殊能力。该能力也可以在怪物完成一次长休或短休后恢复使用。<BR>具体来说，“<STRONG>充能5~6</STRONG>”指该能力使用一次后进入充能而无法使用。该怪物在其回合开始时，所掷d6的结果是5或6时，他将重获使用该能力的权利。</P>
 
-<P><STRONG><EM>短休或长休后充能。</EM></STRONG>该关键词指特殊能力使用一次后，该怪物必须完成一次短休或长休，才可以再次使用该特殊能力。</P></body>
+<P><STRONG><EM>短休或长休后充能。</EM></STRONG>该关键词指特殊能力使用一次后，该怪物必须完成一次短休或长休，才可以再次使用该特殊能力。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

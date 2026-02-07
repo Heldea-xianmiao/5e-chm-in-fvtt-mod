@@ -96,7 +96,45 @@ margin-bottom: 16px;
 
 Adventures</FONT></H3>
 
-<P>水象征流动，非如风之疾速或火之激越，而是如潮汐般平稳且坚定。它是生命的甘露，是哀伤的苦泪，也是同情与治愈的慰藉。经年累月，它能侵蚀世间的一切。<BR>然而，邪水教徒将水的力量扭曲为毁灭的象征。他们追求洪流与漩涡，渴望以大水吞噬生灵，将生命还原为最初的原始水源。在他们的眼中，淹没世界的血雨腥风，才是水之位面的最终真义。</P></body>
+<P>水象征流动，非如风之疾速或火之激越，而是如潮汐般平稳且坚定。它是生命的甘露，是哀伤的苦泪，也是同情与治愈的慰藉。经年累月，它能侵蚀世间的一切。<BR>然而，邪水教徒将水的力量扭曲为毁灭的象征。他们追求洪流与漩涡，渴望以大水吞噬生灵，将生命还原为最初的原始水源。在他们的眼中，淹没世界的血雨腥风，才是水之位面的最终真义。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

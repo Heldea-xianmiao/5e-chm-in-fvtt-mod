@@ -440,7 +440,45 @@ EE-rag-airn）曾是灰鹰设定中的一位冒险者，<STRONG>七人团</STRON
 
 Zargon</FONT></H3>
 
-<P>扎贡（音近ZAR-gawn）是<STRONG>上古邪物</STRONG>，一只从久远过去而来，食壑难填的不朽憎恶。扎贡形若一只带着触手，身披粘液，拥有一颗红色独眼和一根坚不可摧独角的恐怖巨怪。它会腐坏一切其无法吞下的生物，将其受害者转化为无定型的仆役。扎贡目前被囚禁在物质位面土地深处的监狱中。此监狱在《无尽阶梯任务集》冒险集中详述。</P></body>
+<P>扎贡（音近ZAR-gawn）是<STRONG>上古邪物</STRONG>，一只从久远过去而来，食壑难填的不朽憎恶。扎贡形若一只带着触手，身披粘液，拥有一颗红色独眼和一根坚不可摧独角的恐怖巨怪。它会腐坏一切其无法吞下的生物，将其受害者转化为无定型的仆役。扎贡目前被囚禁在物质位面土地深处的监狱中。此监狱在《无尽阶梯任务集》冒险集中详述。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

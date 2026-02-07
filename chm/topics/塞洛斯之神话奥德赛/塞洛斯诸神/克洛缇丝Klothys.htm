@@ -680,9 +680,47 @@ Strider</span></span></i></strong>的噩梦般的生物据说是克洛蒂<span c
 
  class=GramE>缇丝及时</span>的终结了这些亵渎者，并<span class=GramE>抹除了</span>几乎所有关于他们所使用的手段的知识。从那时起，这些被诅咒的凡人的阴影就以悲哀神行客的身份在冥界中游荡。这些<span
 
- class=GramE>怪物们永无休止</span>地寻找命运的丝线，希望可以用其填补他们自己早已丢弃的命运。</p></div></body>
+ class=GramE>怪物们永无休止</span>地寻找命运的丝线，希望可以用其填补他们自己早已丢弃的命运。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

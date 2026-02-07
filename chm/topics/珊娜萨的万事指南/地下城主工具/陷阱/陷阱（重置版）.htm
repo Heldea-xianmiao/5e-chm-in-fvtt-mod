@@ -32,7 +32,45 @@ html,body {
 
 <P>《城主指南》中的陷阱规则提供了在游戏桌上管理陷阱所需的基本信息。不过这里的材料采用了一种不同的、更精细的方法——从游戏机制的角度来描述陷阱，并指导如何使用这些新规则创建自己的陷阱。</P>
 
-<P>这些规则并没有将陷阱定性为机械陷阱或魔法陷阱，而是将陷阱分为另外两类：简单陷阱和复杂陷阱。</P></body>
+<P>这些规则并没有将陷阱定性为机械陷阱或魔法陷阱，而是将陷阱分为另外两类：简单陷阱和复杂陷阱。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

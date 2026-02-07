@@ -54,7 +54,45 @@ Madness。</STRONG>狂战士每回合开始时必须投掷一个D6。若骰值�
 
 Flail。</STRONG>近战武器攻击，命中+5，触及五尺，单一目标。造成7(1d8+3)点钝击伤害，且目标必须通过DC13的体质豁免，否则将陷入中毒状态直到狂战士的下个回合开始。<BR><STRONG>查达林</STRONG><STRONG>魔晶标枪Chardalyn 
 
-Javelin。</STRONG>近战或远程武器攻击，命中+5，触及5尺或射程30/120尺，单一目标。造成6(1d6+3)点穿刺伤害，且目标必须通过DC13的体质豁免，否则将陷入中毒状态直到狂战士的下个回合开始。</P></body>
+Javelin。</STRONG>近战或远程武器攻击，命中+5，触及5尺或射程30/120尺，单一目标。造成6(1d6+3)点穿刺伤害，且目标必须通过DC13的体质豁免，否则将陷入中毒状态直到狂战士的下个回合开始。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

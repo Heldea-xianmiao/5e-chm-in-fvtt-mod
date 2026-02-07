@@ -72,7 +72,45 @@ XP）<BR><STRONG>勇敢。</STRONG>罗西在对抗恐吓的豁免有优势。<BR
 
 钝击伤害。罗西的徒手打击是魔法攻击。<BR><STRONG><FONT color=#800000>反应</FONT></STRONG><BR><STRONG>拔挡飞弹。</STRONG>为了应对被远程武器攻击击中，罗西可以拔挡飞来的抛射物。她从远程攻击中受到的伤害降低 
 
-1d10 + 9。如果伤害降低到0，如果子弹的尺寸一只手便能握住，并且她空出一只手，她就可以接住抛射物。</P></body>
+1d10 + 9。如果伤害降低到0，如果子弹的尺寸一只手便能握住，并且她空出一只手，她就可以接住抛射物。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

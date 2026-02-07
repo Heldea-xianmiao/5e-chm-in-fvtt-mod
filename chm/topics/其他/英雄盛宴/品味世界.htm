@@ -74,7 +74,45 @@ Restaurant</FONT></STRONG><BR>艾伯伦世界，萨恩城，天城区，蔚蓝�
 
 <P><STRONG><FONT color=#800000>绿龙客栈 The Green Dragon 
 
-Inn</FONT></STRONG><BR>绿龙客栈位于自由都市灰鹰的河流区，有D&amp;D酒馆的一切标志性要素：昏暗、舒适，还很危险。现烤野味的浓香盖过了陈年麦酒暗藏的酸臭，酒桌上铺满了地图，桌边人的窃窃私语浮动在空气中。无论你要找的是麻烦还是法兰尼斯本地美食，都能在此如愿。店内菜单见此页。</P></body>
+Inn</FONT></STRONG><BR>绿龙客栈位于自由都市灰鹰的河流区，有D&amp;D酒馆的一切标志性要素：昏暗、舒适，还很危险。现烤野味的浓香盖过了陈年麦酒暗藏的酸臭，酒桌上铺满了地图，桌边人的窃窃私语浮动在空气中。无论你要找的是麻烦还是法兰尼斯本地美食，都能在此如愿。店内菜单见此页。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

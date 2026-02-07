@@ -48,7 +48,45 @@ Blend.</STRONG>当处于弱光和阴影之中，阴影獒犬可以使用一个�
 
 <P><STRONG>变体：阿尔法阴影獒犬<BR></STRONG>阿尔法阴影獒犬具有普通阴影獒犬的数据，并在其基础上有以下改变：<BR>阿尔法阴影獒犬的HP进化为均值42~54<BR>智力值调整为6（-2）<BR>阿尔法阴影獒犬具有恐惧嚎叫能力，描述如下：</P>
 
-<P><STRONG>恐惧嚎叫：</STRONG>阿尔法阴影獒犬具有恐惧嚎叫的能力，任何在阿尔法阴影獒犬周围300尺且能听到其嚎叫的野兽或类人生物，在听到恐惧嚎叫时必须成功通过DC11的感知豁免否则陷入恐慌1分钟。陷入恐慌的生物在其每回合结束时可以重复该豁免，直到其豁免成功并结束该效果影响。当该生物成功通过豁免或该效果结束时，则它在未来24小时内免疫任何阴影獒犬的恐惧嚎叫。</P></BLOCKQUOTE></body>
+<P><STRONG>恐惧嚎叫：</STRONG>阿尔法阴影獒犬具有恐惧嚎叫的能力，任何在阿尔法阴影獒犬周围300尺且能听到其嚎叫的野兽或类人生物，在听到恐惧嚎叫时必须成功通过DC11的感知豁免否则陷入恐慌1分钟。陷入恐慌的生物在其每回合结束时可以重复该豁免，直到其豁免成功并结束该效果影响。当该生物成功通过豁免或该效果结束时，则它在未来24小时内免疫任何阴影獒犬的恐惧嚎叫。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -44,7 +44,45 @@ of the
 
 Mountain（充能4~6）。</STRONG>温灵魔法性地化作隐形，包括它穿戴或携带的任何装备，持续1分钟或直到它发动攻击为止。<BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>骗术飞行Trickster's 
 
-Flight。</STRONG>当一个温灵可见的生物攻击温灵但未命中时，温灵可以立刻移动30尺。这种移动不会引起借机攻击。</P></body>
+Flight。</STRONG>当一个温灵可见的生物攻击温灵但未命中时，温灵可以立刻移动30尺。这种移动不会引起借机攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

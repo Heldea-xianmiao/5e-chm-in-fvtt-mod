@@ -36,5 +36,43 @@ Extra Attack</FONT>  </strong></span></span><br><EM>第</EM><EM>6级剑咏者特
 
 <P><span style="COLOR: brown" class="bbc_color"><span style="FONT-SIZE: 12pt" class="bbc_size"><strong><FONT color=#800000>守御之歌  
 
-Song of Defense</FONT>   </strong></span></span><br><EM>第</EM><EM>10级剑咏者特性</EM><br>剑歌激活期间，你能够引导自己的魔法为你吸收伤害。受到伤害时，你可以用自己的反应来消耗一个法术位，以使你受到的伤害减少等同于该法术位环阶五倍的数值。<br> <br><span style="COLOR: brown" class="bbc_color"><span style="FONT-SIZE: 12pt" class="bbc_size"><strong><FONT color=#800000>胜利之歌  Song of Victory</FONT>    </strong></span></span><br><EM>第</EM><EM>14级剑咏者特性</EM><br>剑歌激活期间，你可以将你的智力调整值（至少为+1）加到你的近战武器伤害上。</P></BODY></HTML>
+Song of Defense</FONT>   </strong></span></span><br><EM>第</EM><EM>10级剑咏者特性</EM><br>剑歌激活期间，你能够引导自己的魔法为你吸收伤害。受到伤害时，你可以用自己的反应来消耗一个法术位，以使你受到的伤害减少等同于该法术位环阶五倍的数值。<br> <br><span style="COLOR: brown" class="bbc_color"><span style="FONT-SIZE: 12pt" class="bbc_size"><strong><FONT color=#800000>胜利之歌  Song of Victory</FONT>    </strong></span></span><br><EM>第</EM><EM>14级剑咏者特性</EM><br>剑歌激活期间，你可以将你的智力调整值（至少为+1）加到你的近战武器伤害上。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

@@ -40,7 +40,45 @@ Shadow</FONT></STRONG><BR>当女王的力量逐渐增长时，许多精灵被她
 
 the 
 
-Nagpas</FONT></STRONG><BR>当这些法师们的仪式化作一场灾难时，它们与鸦后、影灵们一起被拖入了堕影冥界之中。它们的前女王在一团灰烬之中再生，她发出的尖叫与释放的乌黑尘埃浸透了法师们的灵魂与身躯，将它们的骨骼蚀黑，将它们的灵魂撕裂。法师们的惨叫与鸦后的尖叫混在一起，而当鸦后的尖叫消逝时，那些法师已经被扭曲、混生为了一种猥琐的、如秃鹫般的生物——纳加帕。这些卑劣的怪物现在游荡于诸界之中，它们永远承担着鸦后的诅咒，永不得见鸦后之面。</P></body>
+Nagpas</FONT></STRONG><BR>当这些法师们的仪式化作一场灾难时，它们与鸦后、影灵们一起被拖入了堕影冥界之中。它们的前女王在一团灰烬之中再生，她发出的尖叫与释放的乌黑尘埃浸透了法师们的灵魂与身躯，将它们的骨骼蚀黑，将它们的灵魂撕裂。法师们的惨叫与鸦后的尖叫混在一起，而当鸦后的尖叫消逝时，那些法师已经被扭曲、混生为了一种猥琐的、如秃鹫般的生物——纳加帕。这些卑劣的怪物现在游荡于诸界之中，它们永远承担着鸦后的诅咒，永不得见鸦后之面。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

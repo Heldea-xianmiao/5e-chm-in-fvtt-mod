@@ -694,7 +694,45 @@ Dead</EM></U>
 
 <H4 id="Zone_of_Truth">诚实之域｜Zone of Truth</H4>
 
-<P><EM>二环 惑控（吟游诗人、牧师、圣武士）</EM> <BR><STRONG>施法时间：</STRONG>动作<BR><STRONG>施法距离：</STRONG>60尺<BR><STRONG>法术成分：</STRONG>V、S<BR><STRONG>持续时间：</STRONG>10分钟<BR>你创造一个抵御谎言的魔法区域，该区域以施法距离内一点为中心，覆盖以该点为中心15尺半径的<U>球状</U>区域。在法术终止前，生物在一回合中首次进入该区域，或在该区域内开始其回合时，必须进行一次魅力豁免。豁免失败者在该区域内不能故意说谎。而你可以知晓每个生物进行的此豁免成功与否。<BR>受影响的生物可以意识到该效果的存在，因此它可以主动回避回答那些通常会以谎言答复的问题。该生物在回答问题时可以闪烁其词、避重就轻，但说的仍然需要是真话。</P></body>
+<P><EM>二环 惑控（吟游诗人、牧师、圣武士）</EM> <BR><STRONG>施法时间：</STRONG>动作<BR><STRONG>施法距离：</STRONG>60尺<BR><STRONG>法术成分：</STRONG>V、S<BR><STRONG>持续时间：</STRONG>10分钟<BR>你创造一个抵御谎言的魔法区域，该区域以施法距离内一点为中心，覆盖以该点为中心15尺半径的<U>球状</U>区域。在法术终止前，生物在一回合中首次进入该区域，或在该区域内开始其回合时，必须进行一次魅力豁免。豁免失败者在该区域内不能故意说谎。而你可以知晓每个生物进行的此豁免成功与否。<BR>受影响的生物可以意识到该效果的存在，因此它可以主动回避回答那些通常会以谎言答复的问题。该生物在回答问题时可以闪烁其词、避重就轻，但说的仍然需要是真话。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

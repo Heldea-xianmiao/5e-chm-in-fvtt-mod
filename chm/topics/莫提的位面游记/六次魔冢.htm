@@ -52,7 +52,45 @@ Resistance</STRONG>（4/日）：当六次魔冢没能通过一次豁免检定�
 
 Magic</STRONG></FONT>。六次冢尝试阻止一个它能看见的、正在施展法术的生物。如果目标法术为3环或更低，则施法失败且没有效果。若法术为4环或更高，则六次冢进行一次智力检定（DC10+法术环阶）。若成功，则施法失败且没有效果。<BR><FONT color=yellow><STRONG>闪电呵斥Lightning 
 
-Rebuke</STRONG></FONT>。当一个距离六次冢120尺内的生物对它造成了伤害，六次冢便会魔法地回击一道闪电弧。那个生物必须通过DC17敏捷豁免，否则就会受到11（2d10）点闪电伤害，豁免成功则伤害减半。</P></body>
+Rebuke</STRONG></FONT>。当一个距离六次冢120尺内的生物对它造成了伤害，六次冢便会魔法地回击一道闪电弧。那个生物必须通过DC17敏捷豁免，否则就会受到11（2d10）点闪电伤害，豁免成功则伤害减半。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

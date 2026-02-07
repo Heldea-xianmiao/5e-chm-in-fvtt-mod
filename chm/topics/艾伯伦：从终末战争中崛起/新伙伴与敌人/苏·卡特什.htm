@@ -82,7 +82,45 @@ Actions</FONT></STRONG><BR>苏·卡特什拥有3传奇动作，用来选择执�
 
 Magic（消耗2动作）。</STRONG>苏·卡特什以她120尺内一个正在专注一个法术的生物为目标。目标必须成功通过DC26的体质豁免否则专注被打断，并且被打断的法术每有一个环阶级，苏·卡特什获得5临时生命值。<BR><STRONG>疯狂诡秘Maddening 
 
-Secret（消耗3动作）。</STRONG>苏·卡特什向一个她60尺内能看见的生物低声说出一个魔法秘密。目标必须成功通过DC16的感知豁免否则消耗自身一个3环或更低的法术位对自己30尺内每个生物造成26（4d12）力场伤害。豁免失败却没有消耗法术位的生物会直到自身下个回合结束陷入震慑。</P></body>
+Secret（消耗3动作）。</STRONG>苏·卡特什向一个她60尺内能看见的生物低声说出一个魔法秘密。目标必须成功通过DC16的感知豁免否则消耗自身一个3环或更低的法术位对自己30尺内每个生物造成26（4d12）力场伤害。豁免失败却没有消耗法术位的生物会直到自身下个回合结束陷入震慑。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

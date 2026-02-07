@@ -56,7 +56,45 @@ dir=ltr>山丘巨人有时会进行一些无聊的游戏来自娱自乐，这通
 
   <P dir=ltr><BR><STRONG>边栏-格洛兰托：饥壑难填 Grolantor: Always Hungry, Never 
 
-  Full</STRONG><BR>最受山丘巨人尊敬的神是格洛兰托，他是安南六个子嗣中最末的一个，是家族的害家之马，被兄弟姐妹和父母鄙视。不过，格洛兰托的大多数问题都是他自己造成的。<BR>格洛兰托为自己的强大力量（他唯一的补偿性的品质）感到自豪，他拒绝认识到他那更年长、更聪明、更强壮的兄弟姐妹的优越性，并坚持认为自己应受到与他们平等的对待。他不断抱怨自己无休止的饥饿，但他没有自己去寻找，而是从兄弟姐妹和父母的盘子里抢食物。<BR>这种行为导致了格洛兰托和他的兄弟姐妹之间的许多争吵，其中大部分争斗格洛兰托都输了。关于格洛兰托的故事总是以他背上又留下了一道伤疤结束，因为他逃脱了又一个被格洛兰托的侮辱性的吹嘘和自私推太远的家庭成员的愤怒。</P></BLOCKQUOTE></body>
+  Full</STRONG><BR>最受山丘巨人尊敬的神是格洛兰托，他是安南六个子嗣中最末的一个，是家族的害家之马，被兄弟姐妹和父母鄙视。不过，格洛兰托的大多数问题都是他自己造成的。<BR>格洛兰托为自己的强大力量（他唯一的补偿性的品质）感到自豪，他拒绝认识到他那更年长、更聪明、更强壮的兄弟姐妹的优越性，并坚持认为自己应受到与他们平等的对待。他不断抱怨自己无休止的饥饿，但他没有自己去寻找，而是从兄弟姐妹和父母的盘子里抢食物。<BR>这种行为导致了格洛兰托和他的兄弟姐妹之间的许多争吵，其中大部分争斗格洛兰托都输了。关于格洛兰托的故事总是以他背上又留下了一道伤疤结束，因为他逃脱了又一个被格洛兰托的侮辱性的吹嘘和自私推太远的家庭成员的愤怒。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -40,7 +40,45 @@ Plains。虽然他们被切断了与毁灭者的直接影响，但没有方向�
 
 Araz）表亲作战，或与乌托本（Uthodurn）的狩猎队发生冲突。<BR>政府Government<BR>营地由一群年长的战士组成，他们证明了自己是最强大的，最致力于氏族的生存。如果这个圈子有空缺，志愿者们将在核心偶像库尔德面前的一系列比赛中证明自己的价值，最后举行一场符文铸造仪式，唤起库尔德对谁将成为一名年长战士的意愿。在这些年长的战士的领导下，所有其他人都是平等的，都受过训练，在定居点处于危险时拿起武器。<BR>犯罪Crime<BR>犯罪在博罗夫克拉赫并不常见。强烈的荣誉感常常阻止犯罪活动的冲动。家族中很少有人偷窃或从其他人手中夺走，除非双方同意挑战，看看谁配得上。那些偷窃的人被羞辱为不配，被逐出部族，独自在灰暗的荒原上游荡。<BR>地理位置Geography<BR>Boroftkrah的定居点是一个松散的帐篷和避难所的集合，周围是高高的木制长矛篱笆。如果当前的位置有严重的危险威胁，这个城镇是可移动的。社区是由被称为Lods的宅基地组成的大圈。巨大的野猪和平原上强大的虫子被训练成坐骑，并被分散地关在围栏里。<BR>博罗夫克拉赫的冒险Boroftkrah Adventures<BR>在波罗夫特克拉航行本身就是一场冒险。为了获得兽人的信任，角色必须在力量的较量中证明自己。<BR>风暴庆典(低等级)Boroftkrah Adventures(Low 
 
-Level)。当闪电划破天空时，Boroftkrah矿石以竞争游戏来纪念科尔德，直到风暴停止。那些赢得了矿石信任的角色可能会发现自己在这段时间里自愿成为参与者或评委。与此同时，格鲁姆什的矿石之眼带领着一群矿石和兽人战士，他们秘密地开始崇拜毁灭者。他们计划在比赛中展示他们的信仰，把比赛变成一场大屠杀，希望用光荣的流血承诺改变其他矿石，并杀死任何反抗的人。</P></body>
+Level)。当闪电划破天空时，Boroftkrah矿石以竞争游戏来纪念科尔德，直到风暴停止。那些赢得了矿石信任的角色可能会发现自己在这段时间里自愿成为参与者或评委。与此同时，格鲁姆什的矿石之眼带领着一群矿石和兽人战士，他们秘密地开始崇拜毁灭者。他们计划在比赛中展示他们的信仰，把比赛变成一场大屠杀，希望用光荣的流血承诺改变其他矿石，并杀死任何反抗的人。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

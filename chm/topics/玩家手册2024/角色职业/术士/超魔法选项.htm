@@ -116,7 +116,44 @@ Spell<BR></STRONG></FONT><i><STRONG>消耗：</STRONG>1术法点<BR></i>当你�
 
 Spell<BR></STRONG></FONT><i><STRONG>消耗：</STRONG>1术法点<BR></i>当你施展一道能因升环施法额外增加一名生物作为法术目标的法术，如<U><EM>魅惑类人Charm 
 
-Person</EM></U>时，你可以消耗1术法点来将该法术的有效环阶提升一环。</p></body>
+Person</EM></U>时，你可以消耗1术法点来将该法术的有效环阶提升一环。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
@@ -125,6 +162,7 @@ Person</EM></U>时，你可以消耗1术法点来将该法术的有效环阶提�
 
 
 </html>
+
 
 
 

@@ -40,7 +40,45 @@ html,body {
 
   <BR>3/4杯冷冻玉米粒<BR>1.5杯（8盎司）一口大小或切成丝的家常鸡或烤鸡块<BR>新鲜的黑胡椒粉</P></BLOCKQUOTE>
 
-<P>在一个小平底锅中，中火融化3汤匙黄油，加入迷迭香、大蒜和一小撮盐，边煮边搅到有香气，约1分钟。离火备用，让黄油浸透香料。<BR>在荷兰铸铁锅或大奶锅中，中高火融化剩余的3汤匙黄油。加入洋葱、胡萝卜、红辣椒、香叶、百里香和1茶匙盐，边煮边搅，直到蔬菜变软，约5分钟。转中小火，盖上盖子，继续煮，偶尔搅动，直到蔬菜开始出汁，约8分钟。加入鸡汤和土豆，转中高火煮沸。将火调至极低，盖上盖子，炖到土豆开始变软，约5分钟。加入豆角，转中高火，使液体微微沸腾。将火调至极低，盖上盖子，焖到绿豆开始变软，约3分钟。加入京葱、玉米、鸡肉、四分之三茶匙盐和少许胡椒粉，转中高火，使液体微微沸腾。将火调到极低，盖上盖子，炖到土豆完全变软、青豆变软、京葱变蔫、玉米和鸡肉热透，大约3分钟。丢去香叶。尝尝味道，按需加入盐和胡椒调味。<BR>将调味黄油放回中火融化。用细网过滤液体。将汤盛出，在每份汤的表面淋上一两茶匙调味黄油。</P></body>
+<P>在一个小平底锅中，中火融化3汤匙黄油，加入迷迭香、大蒜和一小撮盐，边煮边搅到有香气，约1分钟。离火备用，让黄油浸透香料。<BR>在荷兰铸铁锅或大奶锅中，中高火融化剩余的3汤匙黄油。加入洋葱、胡萝卜、红辣椒、香叶、百里香和1茶匙盐，边煮边搅，直到蔬菜变软，约5分钟。转中小火，盖上盖子，继续煮，偶尔搅动，直到蔬菜开始出汁，约8分钟。加入鸡汤和土豆，转中高火煮沸。将火调至极低，盖上盖子，炖到土豆开始变软，约5分钟。加入豆角，转中高火，使液体微微沸腾。将火调至极低，盖上盖子，焖到绿豆开始变软，约3分钟。加入京葱、玉米、鸡肉、四分之三茶匙盐和少许胡椒粉，转中高火，使液体微微沸腾。将火调到极低，盖上盖子，炖到土豆完全变软、青豆变软、京葱变蔫、玉米和鸡肉热透，大约3分钟。丢去香叶。尝尝味道，按需加入盐和胡椒调味。<BR>将调味黄油放回中火融化。用细网过滤液体。将汤盛出，在每份汤的表面淋上一两茶匙调味黄油。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

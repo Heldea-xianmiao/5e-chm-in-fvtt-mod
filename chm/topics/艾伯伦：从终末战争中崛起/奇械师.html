@@ -184,5 +184,43 @@ style="FONT-SIZE: 10pt; COLOR: black">　　战地匠师在卡尼斯家族制造
 
 <P class=MsoNormal style="MARGIN-BOTTOM: 12pt"><FONT face=宋体></FONT> </P>
 
-<P class=MsoNormal style="MARGIN-BOTTOM: 12pt"><FONT face=宋体>编注：奇械师的内容已在Errata与《塔莎的万事坩埚》中被完全重置，此处只保留其与塔莎不同的设定文本。如需奇械师的规则文本，请查阅《塔莎的万事坩埚》。</FONT></SPAN></P></DIV></BODY></HTML>
+<P class=MsoNormal style="MARGIN-BOTTOM: 12pt"><FONT face=宋体>编注：奇械师的内容已在Errata与《塔莎的万事坩埚》中被完全重置，此处只保留其与塔莎不同的设定文本。如需奇械师的规则文本，请查阅《塔莎的万事坩埚》。</FONT></SPAN></P></DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

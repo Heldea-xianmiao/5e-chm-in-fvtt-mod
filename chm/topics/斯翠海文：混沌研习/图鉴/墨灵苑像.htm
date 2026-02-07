@@ -56,7 +56,45 @@ XP）<BR>熟练加值：+2<BR>————————————————�
 
 尺，单一目标。命中：5（1d4+3）心灵伤害。<BR>墨汁喷射(1 次/日)。墨灵朝着一个距离它 15 尺内的生物喷射粘稠的墨汁。目标需通过 DC12 
 
-体质豁免否则将目盲持续到墨灵的下一个回合结束。<BR>————————————————————————<BR><STRONG><FONT color=#800000>附赠动作：<BR></FONT>阴影潜藏。</STRONG>当身处微光或黑暗中时，墨灵进行躲藏动作。</P></body>
+体质豁免否则将目盲持续到墨灵的下一个回合结束。<BR>————————————————————————<BR><STRONG><FONT color=#800000>附赠动作：<BR></FONT>阴影潜藏。</STRONG>当身处微光或黑暗中时，墨灵进行躲藏动作。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

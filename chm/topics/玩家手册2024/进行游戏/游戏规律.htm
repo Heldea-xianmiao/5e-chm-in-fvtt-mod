@@ -32,7 +32,45 @@ the Results of the Adventurer's Actions。</FONT></STRONG>有时，如果要完�
 
 Rules</STRONG><BR>游戏的每个部分都以通用规则运转。例如，战斗规则会告诉你近战攻击使用<STRONG>力量</STRONG>，远程攻击使用<STRONG>敏捷</STRONG>，而这就是一条通用规则。除非有特别说明的情况，不然游戏通常都按照通用规则运转。<BR>但游戏中也有某些元素，偶尔会出现与通常规则相矛盾的情况——例如职业特性、专长、武器词条、法术、魔法物品、怪物能力，诸如此类。当特例与一般规则不一致时，以特例为准。就比如，如果一个特性说你可以使用<STRONG>魅力</STRONG>进行近战攻击时，尽管和通用规则不同，但你仍能这么做。</P></div>
 
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
 </body>
 
 </html>
+
 

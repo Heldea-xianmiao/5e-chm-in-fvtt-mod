@@ -42,7 +42,45 @@ Currency</FONT></STRONG><BR>阿喀洛斯和迈勒提斯间的贸易长期且利�
 
 <P><STRONG><FONT color=#800000>娱乐 
 
-Recreation</FONT></STRONG><BR>城邦居民享受娱乐的日子，只要时间和金钱允许的话。<BR>体育场是流行的聚会场地，提供了竞技训练，哲学讨论和朋友社交的空间。城市的居民可能在一天看到体育场里的训练，下一天观看著名选手的摔跤比赛，而下一天又听到哲学家在伦理课上教授。<BR>另一个重要的娱乐活动地点是剧院。曾经和现在的知名剧作家的作品会由专业演员定期表演。有时，小型乐队配合的故事讲述者也会吸引人们前去剧院倾听伟大史诗，比如伊利亚特和卡莱斐纪。这种表演可能会持续两三天。</P></body>
+Recreation</FONT></STRONG><BR>城邦居民享受娱乐的日子，只要时间和金钱允许的话。<BR>体育场是流行的聚会场地，提供了竞技训练，哲学讨论和朋友社交的空间。城市的居民可能在一天看到体育场里的训练，下一天观看著名选手的摔跤比赛，而下一天又听到哲学家在伦理课上教授。<BR>另一个重要的娱乐活动地点是剧院。曾经和现在的知名剧作家的作品会由专业演员定期表演。有时，小型乐队配合的故事讲述者也会吸引人们前去剧院倾听伟大史诗，比如伊利亚特和卡莱斐纪。这种表演可能会持续两三天。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -108,7 +108,45 @@ Actions</FONT></STRONG><BR>巨人可进行3个传奇动作，从下列选项中�
 
 </STRONG><STRONG>。</STRONG>巨人朝位于600尺内它能看到的一个生物投出一道雷电。目标必须进行一个DC18的敏捷豁免，豁免失败受到22（4d10）雷鸣伤害，成功则受一半伤害。<BR><STRONG>风暴合一One with the 
 
-Storm</STRONG><STRONG>（消耗3动作）。</STRONG>巨人消失，自身散入其巢穴周围的风暴中。巨人可以在任何他的回合开始时结束这个效果，再次变成一名巨人并出现在它所选择的其巢穴的任何位置。在分散期间，除了巢穴动作外巨人不能进行任何动作，他不能成为攻击，法术，或者其他效果的目标。巨人不能在它的巢穴外使用该能力，如果别的生物使用了操控天气法术或者类似的法术来平息风暴，巨人也不能使用该能力。</P></body>
+Storm</STRONG><STRONG>（消耗3动作）。</STRONG>巨人消失，自身散入其巢穴周围的风暴中。巨人可以在任何他的回合开始时结束这个效果，再次变成一名巨人并出现在它所选择的其巢穴的任何位置。在分散期间，除了巢穴动作外巨人不能进行任何动作，他不能成为攻击，法术，或者其他效果的目标。巨人不能在它的巢穴外使用该能力，如果别的生物使用了操控天气法术或者类似的法术来平息风暴，巨人也不能使用该能力。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

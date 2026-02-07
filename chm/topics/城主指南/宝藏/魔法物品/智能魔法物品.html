@@ -2004,9 +2004,47 @@ xmlns="http://www.w3.org/TR/REC-html40">
 
  lang=EN-US>DC</span>为<span lang=EN-US>12</span>＋该物品的魅力调整值。如果检定失败，则持有者被魅惑<span
 
- lang=EN-US>1d12</span>小时。在被魅惑的时候，持用者必须尽其所能听从物品的命令。如果持用者受到伤害，则它可以再次进行豁免，成功则终止该魅惑效应。不论这次魅惑尝试是否成功，该物品直至第二天黎明前都无法再次尝试。</p></div></body>
+ lang=EN-US>1d12</span>小时。在被魅惑的时候，持用者必须尽其所能听从物品的命令。如果持用者受到伤害，则它可以再次进行豁免，成功则终止该魅惑效应。不论这次魅惑尝试是否成功，该物品直至第二天黎明前都无法再次尝试。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

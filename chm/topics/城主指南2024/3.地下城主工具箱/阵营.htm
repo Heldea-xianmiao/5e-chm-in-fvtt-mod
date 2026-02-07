@@ -62,7 +62,45 @@ Attitude<BR></STRONG>怪物的阵营可以帮助你确定怪物在遭遇中的�
 
 <P><FONT color=#800000 size=4><STRONG>组织精神Organization 
 
-Ethos<BR></STRONG></FONT>给一个组织（可以是派别、行会或是一个国家）设定一个阵营可能很有用处，这可以描述该组织的精神纲领，并帮助你决定组织之间会如何互动。<BR>一个组织的精神纲领并不会决定其所有成员的阵营，甚至其领导者的阵营也可能与组织的精神相违背。事实上，一个社群的精神风貌与其领袖的阵营之间的鲜明差异可以为冒险提供非常有趣的素材。例如，想象有这样一位中立善良的女王，她登上了守序邪恶帝国的王座，并试图努力改革其制度。</P></body>
+Ethos<BR></STRONG></FONT>给一个组织（可以是派别、行会或是一个国家）设定一个阵营可能很有用处，这可以描述该组织的精神纲领，并帮助你决定组织之间会如何互动。<BR>一个组织的精神纲领并不会决定其所有成员的阵营，甚至其领导者的阵营也可能与组织的精神相违背。事实上，一个社群的精神风貌与其领袖的阵营之间的鲜明差异可以为冒险提供非常有趣的素材。例如，想象有这样一位中立善良的女王，她登上了守序邪恶帝国的王座，并试图努力改革其制度。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

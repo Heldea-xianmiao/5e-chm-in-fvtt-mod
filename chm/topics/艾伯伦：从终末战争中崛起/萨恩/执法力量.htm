@@ -174,7 +174,45 @@ style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><FONT face=宋
 
 style="FONT-SIZE: 10pt; FONT-FAMILY: 'Segoe UI'; mso-spacerun: 'yes'"><BR></SPAN><SPAN 
 
-style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><FONT face=宋体>其他类型的刑罚包括烙印（通常是在一个显眼的位置，向他人警告你的犯罪行为）、流放、或一些魔法的手段：比如一个持续的诅咒效果，一段时间的魔法失明，等等。一个惯犯可能被宣布为亡命之徒，这种身份通常由一种烙印表示。亡命之徒被剥夺了法律的保护，任何人都可以对他们采取任何行动，而不用担心法律的惩罚。</FONT></SPAN></P></body>
+style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><FONT face=宋体>其他类型的刑罚包括烙印（通常是在一个显眼的位置，向他人警告你的犯罪行为）、流放、或一些魔法的手段：比如一个持续的诅咒效果，一段时间的魔法失明，等等。一个惯犯可能被宣布为亡命之徒，这种身份通常由一种烙印表示。亡命之徒被剥夺了法律的保护，任何人都可以对他们采取任何行动，而不用担心法律的惩罚。</FONT></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

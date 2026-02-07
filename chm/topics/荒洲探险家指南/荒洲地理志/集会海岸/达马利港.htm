@@ -168,7 +168,45 @@ Madness（高等级）</EM></STRONG>。在城市地下被释放的<STRONG>水巨
 
 Purchase（史诗级）</EM></STRONG>   
 
-。角色们的目标是合法或非法地从尊贵收藏拍卖行获得一件强大的物品。他们可能是为了自己而争夺这件物品，也可能被狂欢众、万象会或其他派系雇佣来获得它。在角色们试图夺取该物品的过程中，他们遇到了一个巴洛炎魔和一群恶魔，这些恶魔受命于一位恶魔领主，任务就是抢夺同一件物品。</P></body>
+。角色们的目标是合法或非法地从尊贵收藏拍卖行获得一件强大的物品。他们可能是为了自己而争夺这件物品，也可能被狂欢众、万象会或其他派系雇佣来获得它。在角色们试图夺取该物品的过程中，他们遇到了一个巴洛炎魔和一群恶魔，这些恶魔受命于一位恶魔领主，任务就是抢夺同一件物品。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

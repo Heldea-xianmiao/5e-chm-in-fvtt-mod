@@ -32,7 +32,45 @@ html,body {
 
 <P>当安南的孩子们第一次开始生活在物质位面里时，全父创造了极为庞巨的恐龙与其一同生活。塑造这些恐龙的原初魔法至今仍在其体内流淌，在它们高耸的躯体上展现出色彩斑斓的彩痕。这些古老的恐龙中的一部分仍存在于永恒的丛林、隐藏的飞地和未被文明涉足土地上。</P>
 
-<P><FONT color=#808080>（译者注：为什么不是野兽为什么不是野兽为什么不是野兽！）</FONT></P></body>
+<P><FONT color=#808080>（译者注：为什么不是野兽为什么不是野兽为什么不是野兽！）</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

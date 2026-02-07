@@ -58,7 +58,45 @@ Beam。</STRONG>猎魔蛛指定60尺内一个可以被看到的生物为目标�
 
 d10)力场伤害,成功则伤害减半。<BR><STRONG>麻痹光波Paralyzing Beam(充能5 - 
 
-6)。</STRONG>猎魔蛛指定60尺内一个可以被看到的生物为目标。目标必须通过18体质豁免检定，失败则麻痹一分钟。被麻痹的目标可以在每个其自己回合结束时再次进行该豁免以结束该效应。<BR>如果被麻痹的生物是中体型或更小,猎魔蛛可以以其移动的一部分将其捡起，并且保持全速移动或者攀爬。</P></body>
+6)。</STRONG>猎魔蛛指定60尺内一个可以被看到的生物为目标。目标必须通过18体质豁免检定，失败则麻痹一分钟。被麻痹的目标可以在每个其自己回合结束时再次进行该豁免以结束该效应。<BR>如果被麻痹的生物是中体型或更小,猎魔蛛可以以其移动的一部分将其捡起，并且保持全速移动或者攀爬。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

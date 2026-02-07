@@ -90,7 +90,45 @@ lang=EN-US
 
 style='FONT-SIZE: 10pt; FONT-FAMILY: "Segoe UI",sans-serif; COLOR: maroon'></SPAN></B><SPAN 
 
-style="FONT-SIZE: 10pt; COLOR: black"><FONT size=3>夺心魔不会进行传统意义上的繁殖。相反，他们产卵并孵化出一种像蝌蚪样的生物，这些生物用来通过一种叫做蜕变的仪式制造更多的夺心魔同类。首先，一个被俘获的类人生物会被灵能力量的震爆所驯服。新孵化的蝌蚪通常通过鼻孔或耳道被植入受害者的头盖骨。灵吸怪蝌蚪在吞食类人生物大脑的过程中成长，它会附在受害者的脑干上，变成新的大脑。在这长达一周的进程中，类人的身体会改变其形态，一只新的夺心魔诞生了。一只新生的夺心魔经常保留着它先前形态的一些模糊记忆，但这些模糊的记忆很少对它作为一只吃人大脑的怪物的新生活产生任何影响。</FONT></SPAN></P></body>
+style="FONT-SIZE: 10pt; COLOR: black"><FONT size=3>夺心魔不会进行传统意义上的繁殖。相反，他们产卵并孵化出一种像蝌蚪样的生物，这些生物用来通过一种叫做蜕变的仪式制造更多的夺心魔同类。首先，一个被俘获的类人生物会被灵能力量的震爆所驯服。新孵化的蝌蚪通常通过鼻孔或耳道被植入受害者的头盖骨。灵吸怪蝌蚪在吞食类人生物大脑的过程中成长，它会附在受害者的脑干上，变成新的大脑。在这长达一周的进程中，类人的身体会改变其形态，一只新的夺心魔诞生了。一只新生的夺心魔经常保留着它先前形态的一些模糊记忆，但这些模糊的记忆很少对它作为一只吃人大脑的怪物的新生活产生任何影响。</FONT></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

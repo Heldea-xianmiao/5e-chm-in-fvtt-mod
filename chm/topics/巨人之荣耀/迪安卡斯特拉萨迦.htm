@@ -52,7 +52,45 @@ html,body {
 
 <P style="MARGIN-RIGHT: 0px" dir=ltr><EM>“我裁定儿子们的行为时太过武断，<BR>只是忙着将们谴责，<BR>现在我也将再次观察们，看看们是否拥有，<BR>如你这样的智慧，<BR>看看是否有未显现的完美。”</EM></P>
 
-<P><EM>将混沌打造成了一顶冠冕，<BR>满怀感激地授予给她。<BR>神圣迪安卡斯特拉离开了的圣所，<BR>怀抱着受苦手足们的希望，<BR>全父已然预到。</EM></P></BLOCKQUOTE></body>
+<P><EM>将混沌打造成了一顶冠冕，<BR>满怀感激地授予给她。<BR>神圣迪安卡斯特拉离开了的圣所，<BR>怀抱着受苦手足们的希望，<BR>全父已然预到。</EM></P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

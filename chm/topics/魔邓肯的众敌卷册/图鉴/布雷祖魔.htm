@@ -60,7 +60,45 @@ html,body {
 
 13的体质豁免检定否则要承受1d6点暗蚀伤害并且30尺范围内每有一只布雷祖魔追加1点暗蚀伤害。<BR><STRONG>站着飞跃：</STRONG>布雷祖魔的跳远能力最高可达20尺，跳高最高可达10尺，不论其是否开始奔跑。<BR><STRONG>立地生根：</STRONG>布雷祖魔在对抗倒地影响上在力量和敏捷鉴定上具有优势。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>尾刺攻击：</STRONG>命中+4，触及5尺，单一生物。命中：8（1d12+2）的穿刺伤害。如果该目标为生物，那他必须通过DC 
 
-13的体质豁免鉴定来对抗感染疾病，否则将会处于中毒状态直至疾病效果结束。如果在中毒的状态下，目标生物将会持续溃烂，咳嗽出苍蝇，皮肤溃烂脱落，并且该生物必须每隔24小时内重复豁免鉴定一次，若果豁免成功，疾病效果结束。如果豁免失败，该生物的最大生命则会降低4（1d8）点，该生物会在生命降为0时死亡。</P></body>
+13的体质豁免鉴定来对抗感染疾病，否则将会处于中毒状态直至疾病效果结束。如果在中毒的状态下，目标生物将会持续溃烂，咳嗽出苍蝇，皮肤溃烂脱落，并且该生物必须每隔24小时内重复豁免鉴定一次，若果豁免成功，疾病效果结束。如果豁免失败，该生物的最大生命则会降低4（1d8）点，该生物会在生命降为0时死亡。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

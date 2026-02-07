@@ -272,7 +272,45 @@ style="FONT-FAMILY: 宋体; FONT-WEIGHT: normal; COLOR: windowtext; mso-bidi-fon
 
 style="FONT-FAMILY: 宋体; FONT-WEIGHT: normal; COLOR: windowtext; mso-bidi-font-weight: bold; mso-bidi-font-family: 宋体"><SPAN lang=EN-US><o:p><STRONG><FONT color=#800000>极效治疗Supreme 
 
-Healing</FONT></STRONG><BR>第17级起，当你需要用一个法术来掷一粒或多粒骰子计算你所恢复的生命值时，所有骰子将取其最高值。例如，法术为某一生物恢复2d6生命值，则其结果直接取12。<BR></o:p></SPAN></SPAN></P></body>
+Healing</FONT></STRONG><BR>第17级起，当你需要用一个法术来掷一粒或多粒骰子计算你所恢复的生命值时，所有骰子将取其最高值。例如，法术为某一生物恢复2d6生命值，则其结果直接取12。<BR></o:p></SPAN></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

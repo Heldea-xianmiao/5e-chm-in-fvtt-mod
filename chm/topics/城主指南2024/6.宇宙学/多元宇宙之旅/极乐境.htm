@@ -96,7 +96,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
 <H3><FONT color=#800000>极乐境冒险Elysium Adventures</FONT></H3>
 
-<P>极乐境的祥和与满足深植于每一位访客的身心，使他们渐渐失去离开的意愿。探访极乐境的旅途常常考验冒险者对于善良使命的忠诚——在诱人的安宁面前，他们是选择短暂的喘息，还是继续肩负重担？<BR>传说中。雾泽境封印着一位恐怖存在。有些故事说它是强大的泰坦（也许是泰拉斯奎），也有人认为它是九层地狱的被黜公爵、被放逐的元素亲王，甚至是垂死的神祇。邪恶生物徘徊于湿地，企图释放囚徒或窃取其力量。<BR>英灵境的英勇群岛常吸引探求古老智慧的冒险者。若千年之灾迫在眉睫，他们或许会寻求千年前拯救世界的英灵，重现那段光辉岁月，迎接宿命挑战。</P></body>
+<P>极乐境的祥和与满足深植于每一位访客的身心，使他们渐渐失去离开的意愿。探访极乐境的旅途常常考验冒险者对于善良使命的忠诚——在诱人的安宁面前，他们是选择短暂的喘息，还是继续肩负重担？<BR>传说中。雾泽境封印着一位恐怖存在。有些故事说它是强大的泰坦（也许是泰拉斯奎），也有人认为它是九层地狱的被黜公爵、被放逐的元素亲王，甚至是垂死的神祇。邪恶生物徘徊于湿地，企图释放囚徒或窃取其力量。<BR>英灵境的英勇群岛常吸引探求古老智慧的冒险者。若千年之灾迫在眉睫，他们或许会寻求千年前拯救世界的英灵，重现那段光辉岁月，迎接宿命挑战。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

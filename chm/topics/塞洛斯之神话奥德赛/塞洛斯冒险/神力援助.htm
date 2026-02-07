@@ -36,7 +36,45 @@ html,body {
 
 <P align=right>——《卡莱斐纪》</P>
 
-<P>诸神喜好干预凡人事务，而英雄有时呼唤他们的神祗在急需之刻施以援手。像占卜术和通灵术这样的法师会给角色们机柜去询问他们的神灵获取信息，而急切恳求他们的神祗援助的牧师有时会得到神迹作为答复。英雄们有机会向诸神寻求帮助，并在之后在经受神力试炼以证明自己的价值。<BR>在其他时候诸神会主动接触凡人英雄，给他们派发使命或干涉他们的冒险。梦境，预兆和密室是最常见的诸神可能使祂们的意愿被知晓的方法。<BR>在你的战役中的神力干涉应该遵循两条重要原则：<BR>不要抹消角色选择。诸神会告诉角色去做什么，神祗会威胁如果他们不去做的话将会被惩罚，但诸神无掌控凡人的行为。<BR>不要消除风险与危险。一位神祗的干涉应从不保证成功或胜利，神祗的介入也不应被视作到手的胜利。神可以改变一场遭遇的平衡或提供一条撤退之路，但他们希望他们自己的神选成为英雄并如其行事。</P></body>
+<P>诸神喜好干预凡人事务，而英雄有时呼唤他们的神祗在急需之刻施以援手。像占卜术和通灵术这样的法师会给角色们机柜去询问他们的神灵获取信息，而急切恳求他们的神祗援助的牧师有时会得到神迹作为答复。英雄们有机会向诸神寻求帮助，并在之后在经受神力试炼以证明自己的价值。<BR>在其他时候诸神会主动接触凡人英雄，给他们派发使命或干涉他们的冒险。梦境，预兆和密室是最常见的诸神可能使祂们的意愿被知晓的方法。<BR>在你的战役中的神力干涉应该遵循两条重要原则：<BR>不要抹消角色选择。诸神会告诉角色去做什么，神祗会威胁如果他们不去做的话将会被惩罚，但诸神无掌控凡人的行为。<BR>不要消除风险与危险。一位神祗的干涉应从不保证成功或胜利，神祗的介入也不应被视作到手的胜利。神可以改变一场遭遇的平衡或提供一条撤退之路，但他们希望他们自己的神选成为英雄并如其行事。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

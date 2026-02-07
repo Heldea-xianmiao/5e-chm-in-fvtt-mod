@@ -54,7 +54,45 @@ Busuk那难以攀登的崇山峻岭。</P>
 
 Loren 
 
-Soth毁灭即将到来，也给他提供了阻止这场灾难的机会，但索思爵士却没能完成任务。从那时起，这个省份就落下了骂名。人们改口叫它绝日领Nightlund，并认为经常在这里出现的风暴是过去的神明们所降下的怒火。<BR>索思爵士和他轻慢诸神的故事详述于本书第四章。</P></body>
+Soth毁灭即将到来，也给他提供了阻止这场灾难的机会，但索思爵士却没能完成任务。从那时起，这个省份就落下了骂名。人们改口叫它绝日领Nightlund，并认为经常在这里出现的风暴是过去的神明们所降下的怒火。<BR>索思爵士和他轻慢诸神的故事详述于本书第四章。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

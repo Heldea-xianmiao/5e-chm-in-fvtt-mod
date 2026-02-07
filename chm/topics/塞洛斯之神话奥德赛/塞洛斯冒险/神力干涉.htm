@@ -54,7 +54,45 @@ html,body {
 
 <DIV>他们都有令人瞩目的体型，至少比该种正常的体型大一级。</DIV></LI></UL>
 
-<P><STRONG><FONT color=#800000>神迹Miracles</FONT></STRONG><BR>作为最简单的神迹形式，一名神祗可以造成任一牧师法术或任一与神祗领域关联的法术效果，而这个法术会在凡域任何地点生效。不过神祗权能并不被法术列表限制，他们不可思议的干涉可以造成任何你想要的效果。然而，直接的神力干预倾向于精细和稀少，因为这会吸引到其他神明的注意并可能促使他们以自己的方式干涉。</P></body>
+<P><STRONG><FONT color=#800000>神迹Miracles</FONT></STRONG><BR>作为最简单的神迹形式，一名神祗可以造成任一牧师法术或任一与神祗领域关联的法术效果，而这个法术会在凡域任何地点生效。不过神祗权能并不被法术列表限制，他们不可思议的干涉可以造成任何你想要的效果。然而，直接的神力干预倾向于精细和稀少，因为这会吸引到其他神明的注意并可能促使他们以自己的方式干涉。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

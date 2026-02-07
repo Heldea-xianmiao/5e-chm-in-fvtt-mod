@@ -2914,9 +2914,47 @@ lang=EN-US>torment</span>时，该货币也将透露着一种特殊的风格。<
 
 lang=EN-US>toal</span>和银月城的月食币<span lang=EN-US>eclipsed moon</span>），则可以产生另一层面的细节。只要你让这些新创铸币的价值维持明晰（或者换个说法，不要将一枚铸币的价值定为<span
 
-lang=EN-US>1.62gp</span>），那么你就可以为你世界中的某个关键地点增加特色，同时又不会显得过于繁复。<span lang=EN-US><o:p></o:p></span></p></div></body>
+lang=EN-US>1.62gp</span>），那么你就可以为你世界中的某个关键地点增加特色，同时又不会显得过于繁复。<span lang=EN-US><o:p></o:p></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

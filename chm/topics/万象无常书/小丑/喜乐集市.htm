@@ -104,7 +104,45 @@ html,body {
 
 帕兹萝丁从不在一个地方待太久，她希望能够看遍妖精荒野和物质位面上的所有奇迹。好奇的妖精们请求加入她的商队，于是不久后，她便有一大群商人们结伴同行。帕兹萝丁开始将这些妖精商贩们看做她的孩子，他们热切的喜悦让龙能以新奇的角度来看待多元宇宙。</p><p><font size=3><strong>商贩和货币Vendors and Currency</strong></font><br>
 
-集市的商贩中混杂了地精、妖精以及启蒙动物与启蒙植物。这些商人不接受硬币或其他通常的货币。作为替代，他们希望能获得表演、谜语的答案、人情和其他难以捉摸的东西作为报酬。</p></body>
+集市的商贩中混杂了地精、妖精以及启蒙动物与启蒙植物。这些商人不接受硬币或其他通常的货币。作为替代，他们希望能获得表演、谜语的答案、人情和其他难以捉摸的东西作为报酬。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

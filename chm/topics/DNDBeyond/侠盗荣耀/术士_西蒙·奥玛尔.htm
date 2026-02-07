@@ -62,7 +62,45 @@ missile，蛛行术spider climb<BR>每项1/天：毕格比之手Bigby's Hand，�
 
 Image<BR>——————————————<BR><STRONG><FONT color=#800000>反应：<BR></FONT>庇护之盾Sheltering 
 
-Shield（3/天）：</STRONG>当西蒙或另一个他能看见的10尺以内的生物将受到一次伤害时，他召唤出一道以自己为中心的10尺半径闪亮魔法力场。位于力场以内的生物对触发该反应的伤害具有抗性。<BR></P></body>
+Shield（3/天）：</STRONG>当西蒙或另一个他能看见的10尺以内的生物将受到一次伤害时，他召唤出一道以自己为中心的10尺半径闪亮魔法力场。位于力场以内的生物对触发该反应的伤害具有抗性。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

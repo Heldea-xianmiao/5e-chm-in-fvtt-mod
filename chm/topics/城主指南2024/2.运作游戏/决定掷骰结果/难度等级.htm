@@ -168,7 +168,45 @@ DCs</STRONG> <BR>对于某些属性检定和大部分豁免检定来说，规则
 
 <P align=center><STRONG>DC</STRONG>=8+属性调整值+熟练加值</P>
 
-<P align=left>这个公式通常用于设定生物施法或使用特殊能力时的豁免检定DC，但这也可以应用于两个生物之间的属性检定的对抗。举例来说，如果一个生物正堵着门，使用它的力量调整值和熟练加值以设立开门的DC。当另一生物尝试强行打开门时，该生物进行一次力量（运动）检定以对抗此DC。<BR>另一种处理类似情况的方式是用一个生物的属性检定结果来设立另一生物的属性检定DC。这就是躲藏的运行方式，例如：用一个躲藏的生物的总敏捷（隐匿）检定结果设立为找到隐匿生物而进行的感知（察觉）检定的DC。</P></body>
+<P align=left>这个公式通常用于设定生物施法或使用特殊能力时的豁免检定DC，但这也可以应用于两个生物之间的属性检定的对抗。举例来说，如果一个生物正堵着门，使用它的力量调整值和熟练加值以设立开门的DC。当另一生物尝试强行打开门时，该生物进行一次力量（运动）检定以对抗此DC。<BR>另一种处理类似情况的方式是用一个生物的属性检定结果来设立另一生物的属性检定DC。这就是躲藏的运行方式，例如：用一个躲藏的生物的总敏捷（隐匿）检定结果设立为找到隐匿生物而进行的感知（察觉）检定的DC。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

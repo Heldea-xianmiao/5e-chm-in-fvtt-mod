@@ -86,7 +86,45 @@ Training</STRONG>。你具有长矛、三叉戟、轻弩和捕网熟练。<BR><S
 
 sea</STRONG>。你具有30尺游泳速度，你可以在空气和水中呼吸。<BR><STRONG>海之友Friend of the 
 
-sea</STRONG>。使用手势和声音，你可以与任何具有天生游泳速度的野兽交流简单的想法。<BR><STRONG>语言Languages</STRONG>。你能说读、和写水族语。</P></body>
+sea</STRONG>。使用手势和声音，你可以与任何具有天生游泳速度的野兽交流简单的想法。<BR><STRONG>语言Languages</STRONG>。你能说读、和写水族语。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

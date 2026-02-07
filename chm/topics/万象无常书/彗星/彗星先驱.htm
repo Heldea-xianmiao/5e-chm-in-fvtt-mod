@@ -84,7 +84,45 @@ Things。</STRONG>最初的万象无常牌中所蕴含的魔法乃是摧毁多�
 
 彗星先驱的领袖被称为教宗，意为“传递神启者”——因为正是它们为门徒揭示了吞噬万物之星的存在。<br>
 
-彗星先驱的至高法皇是<font color=maroon><strong>贝斯尔，众贤之贤Basil，the Sage of Sages</strong></font>，秘教的奠基人与其信仰体系的缔造者。在一处边缘小国中为一位被遗忘的王者服务时，贝斯尔狂热地痴迷上了最初的<font color=maroon><strong>万象无常牌</strong></font>。他说服国王，派一位英雄去寻找它，然后亲自结识并加入了英雄的冒险，并在最终背叛了她，得到了万象无常牌。他轻率地单抽，导致他的灵魂被囚禁于虚空中。对贝斯尔来说，这是一次启示性的经历。他不只是被困在虚空之中；他理解了虚空与世界结构间的真理。直至今天，他仍然痴迷于<font color=maroon><strong>万象无常牌</strong></font>，但如今，他的痴迷有着更远大的目地：释放出吞噬万物之星的伟力，令整个世界回归虚无。</p></body>
+彗星先驱的至高法皇是<font color=maroon><strong>贝斯尔，众贤之贤Basil，the Sage of Sages</strong></font>，秘教的奠基人与其信仰体系的缔造者。在一处边缘小国中为一位被遗忘的王者服务时，贝斯尔狂热地痴迷上了最初的<font color=maroon><strong>万象无常牌</strong></font>。他说服国王，派一位英雄去寻找它，然后亲自结识并加入了英雄的冒险，并在最终背叛了她，得到了万象无常牌。他轻率地单抽，导致他的灵魂被囚禁于虚空中。对贝斯尔来说，这是一次启示性的经历。他不只是被困在虚空之中；他理解了虚空与世界结构间的真理。直至今天，他仍然痴迷于<font color=maroon><strong>万象无常牌</strong></font>，但如今，他的痴迷有着更远大的目地：释放出吞噬万物之星的伟力，令整个世界回归虚无。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

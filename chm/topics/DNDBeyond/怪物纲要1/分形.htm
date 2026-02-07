@@ -76,7 +76,45 @@ Damage。</STRONG> 为响应距分形 120 尺内其能够看到的生物对它�
 
 的体质豁免。如果豁免失败，该生物会受到 24 (8d6) 点力场伤害。豁免成功时该生物受到该伤害的一半。<BR>分裂 Split。 当剩余至少10 
 
-点生命值的大型分形受到任何来源的钝击、穿刺、挥砍或闪电伤害时，它便会分裂为两个中型分形。新分形占据了原分形占据的空间，每个新分形的生命值等同于原来的一半，向下取整。如果原分形拥有一个被困在其半位面内的生物，则该生物会在分形分裂时重新出现在尽可能靠近新分形的一个未占据空间中。</P></body>
+点生命值的大型分形受到任何来源的钝击、穿刺、挥砍或闪电伤害时，它便会分裂为两个中型分形。新分形占据了原分形占据的空间，每个新分形的生命值等同于原来的一半，向下取整。如果原分形拥有一个被困在其半位面内的生物，则该生物会在分形分裂时重新出现在尽可能靠近新分形的一个未占据空间中。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

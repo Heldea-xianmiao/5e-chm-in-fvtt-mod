@@ -90,7 +90,45 @@ style="DISPLAY: inline !important" >吉斯泽莱人与其携带或着装的装�
 
 style="DISPLAY: inline !important" >花朵和藤蔓在吉斯泽莱人周身生长而出，并其下一回合开始时消失；在此期间，吉斯泽莱人周围15尺内的地面对其他生物而言视为困难地形。</SPAN><BR><FONT color=orange><STRONG>5-6：复仇辉光Retaliating Light。</STRONG></FONT><SPAN 
 
-style="DISPLAY: inline !important" >多彩的辉光环绕着吉斯泽莱人，直至其下一回合开始。在此期间，每当一个位于吉斯泽莱人5尺内的生物以一次近战武器攻击命中吉斯泽莱人时，该生物都会因反击而来的魔法波动受到3（1d6）力场伤害</SPAN></P></body>
+style="DISPLAY: inline !important" >多彩的辉光环绕着吉斯泽莱人，直至其下一回合开始。在此期间，每当一个位于吉斯泽莱人5尺内的生物以一次近战武器攻击命中吉斯泽莱人时，该生物都会因反击而来的魔法波动受到3（1d6）力场伤害</SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

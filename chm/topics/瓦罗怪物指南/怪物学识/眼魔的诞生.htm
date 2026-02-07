@@ -138,4 +138,41 @@ style
 
   FONT-WEIGHT: bold;   "> spectator</span></b><span> <font>（详见</font></span><i><span style="   FONT-STYLE: italic;  "><font>《怪物图鉴》</font></span></i><span><font>）是从另一存在位面召唤来的一种低阶眼魔。其通常用于看守某物，比如某个宝库的宝藏。</font></span><b><span style="  FONT-WEIGHT: bold;   "><font>高斯眼魔</font></span></b><b><span style="
 
-  FONT-WEIGHT: bold;   "> gauth</span></b><span> <font>诞生自与观察者眼魔相同的位面，它们还可以在有人召唤观察者眼魔失败时通过位面的重叠部分出现。尽管在观察者眼魔所在的位面也有真正的眼魔，但这种生物真正的原生地依然未知（可能是其他位面，一个群星之上的世界，又或者是某些奇异的地方），而观察者眼魔和高斯眼魔被认为并非产自其他眼魔的梦境。</font></span></p></div></body></html>
+  FONT-WEIGHT: bold;   "> gauth</span></b><span> <font>诞生自与观察者眼魔相同的位面，它们还可以在有人召唤观察者眼魔失败时通过位面的重叠部分出现。尽管在观察者眼魔所在的位面也有真正的眼魔，但这种生物真正的原生地依然未知（可能是其他位面，一个群星之上的世界，又或者是某些奇异的地方），而观察者眼魔和高斯眼魔被认为并非产自其他眼魔的梦境。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

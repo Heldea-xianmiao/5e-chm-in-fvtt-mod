@@ -178,4 +178,41 @@ align
 
 
 
- 5pt 0pt;    "><span><font>几乎所有这些耶诺古信徒都是被疯狂所感化的野蛮家伙，他们也就比跟随战团的鬣狗高那么一个阶层。他们不是鬣狗人，因此也并不能从耶诺古那里获得预示。但万事皆有意外，如果一个有智慧和能力的人愿意听从耶诺古的差遣，鬣狗人之王可能会把他提升到自己的某个战团领袖的地位。这样的眷顾者是极罕见的，并且一支由这样具有能力的邪教徒所领导的战团将会远强于一群鬣狗人，做出将鬣狗人的野蛮和类人生物的智慧谋略结合的成就。</font></span></p></div></body></html>
+ 5pt 0pt;    "><span><font>几乎所有这些耶诺古信徒都是被疯狂所感化的野蛮家伙，他们也就比跟随战团的鬣狗高那么一个阶层。他们不是鬣狗人，因此也并不能从耶诺古那里获得预示。但万事皆有意外，如果一个有智慧和能力的人愿意听从耶诺古的差遣，鬣狗人之王可能会把他提升到自己的某个战团领袖的地位。这样的眷顾者是极罕见的，并且一支由这样具有能力的邪教徒所领导的战团将会远强于一群鬣狗人，做出将鬣狗人的野蛮和类人生物的智慧谋略结合的成就。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

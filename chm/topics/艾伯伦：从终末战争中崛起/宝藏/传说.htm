@@ -40,7 +40,45 @@ person</FONT></EM>（2发充能），<FONT color=#800080><EM>衰弱射线ray of
 
 enfeeblement</EM></FONT>（2发充能），<FONT color=#800080><EM>睡眠术sleep</EM></FONT>（1发充能），<FONT color=#800080><EM>缓慢术slow</EM></FONT>（3发充能），<EM><FONT color=#800080>心灵遥控telekinesis</FONT></EM>（5发充能）。<BR>王冠每日清晨将会回复1d6+3发已经消耗的充能。<BR><STRONG><FONT color=#800080>共生体Symbiotic 
 
-Nature。</FONT></STRONG>完成同调后，王冠无法被脱下，你也不能主动终止与王冠的同调。如果你成为一个能结束诅咒的法术的目标，那么你与王冠的同调自动结束，它将会与你分离。<BR>这些王冠是由异变魔贝拉希拉制作的，当它与王冠位于同一个位面时，贝拉希拉可以通过这些眼梗来进行观察。</P></body>
+Nature。</FONT></STRONG>完成同调后，王冠无法被脱下，你也不能主动终止与王冠的同调。如果你成为一个能结束诅咒的法术的目标，那么你与王冠的同调自动结束，它将会与你分离。<BR>这些王冠是由异变魔贝拉希拉制作的，当它与王冠位于同一个位面时，贝拉希拉可以通过这些眼梗来进行观察。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

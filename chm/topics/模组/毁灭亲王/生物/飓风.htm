@@ -58,7 +58,45 @@ Strike。</STRONG>近战武器攻击：+5命中，触及5尺，一个目标。�
 
 Missiles。</STRONG>当飓风受到远程武器攻击时，它会减少1d10 + 
 
-9的伤害。当被拨挡攻击的伤害减少至0，且实施伤害的飞弹可以被你单手抓住时，你可以用此时空闲的手去抓取该飞弹。</P></body>
+9的伤害。当被拨挡攻击的伤害减少至0，且实施伤害的飞弹可以被你单手抓住时，你可以用此时空闲的手去抓取该飞弹。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -54,7 +54,45 @@ Mercury</FONT></STRONG><BR>从11级起，你已通过精神适性和模式识别
 
 <P><STRONG><FONT color=#800000>衰弱连击 Debilitating 
 
-Barrage</FONT></STRONG><BR>17级起，你获得了操作生物的气来削弱其肉体韧性的知识。当你以一次徒手打击命中一个生物时，你能消耗3点气来让该生物获得由你选择的一种伤害类型的易伤。易伤将持续1分钟，如果其受到了所选类型的伤害，则这一易伤也会在那一回合结束时提前结束。<BR>如果该生物对所选的伤害类型具有抗性，则该生物不会获得上述的易伤，改为所选伤害类型的抗性被压制一分钟。免疫所选类型伤害的生物不受这一效果影响，且一个受到过该效果影响的生物在接下来的24小时内无法再度受其影响。</P></body>
+Barrage</FONT></STRONG><BR>17级起，你获得了操作生物的气来削弱其肉体韧性的知识。当你以一次徒手打击命中一个生物时，你能消耗3点气来让该生物获得由你选择的一种伤害类型的易伤。易伤将持续1分钟，如果其受到了所选类型的伤害，则这一易伤也会在那一回合结束时提前结束。<BR>如果该生物对所选的伤害类型具有抗性，则该生物不会获得上述的易伤，改为所选伤害类型的抗性被压制一分钟。免疫所选类型伤害的生物不受这一效果影响，且一个受到过该效果影响的生物在接下来的24小时内无法再度受其影响。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

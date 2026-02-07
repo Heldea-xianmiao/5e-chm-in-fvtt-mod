@@ -64,7 +64,45 @@ Gp的奖金。如果角色想要参与其中，他们必须尽可能地猎杀最
 
 Uthodurn，使用紫色蠕虫钻入地下城市。在突破了大圆盘的外墙后，克灵的入侵者冲进了大城堡，并在两位君主被压制且无法与俘虏一起逃跑后将他们扣为人质。 
 
-Glassblades 求助于冒险者来帮助释放君主并将入侵者绳之以法。<BR></P></body>
+Glassblades 求助于冒险者来帮助释放君主并将入侵者绳之以法。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

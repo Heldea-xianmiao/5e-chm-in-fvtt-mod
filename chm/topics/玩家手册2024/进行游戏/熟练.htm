@@ -128,7 +128,45 @@ Abilities</STRONG>
 
 <p><b>武器Weapons。</b>任何人都能够持用武器，但熟练意味着你会用得更得心应手。如果你熟练于某种武器，你使用该武器进行的攻击检定会加上你的<STRONG>熟练加值</STRONG>。<BR><b>工具Tools。</b>如果你熟练于某种工具，你使用该工具进行的任何属性检定都能加上你的<STRONG>熟练加值</STRONG>。若你同时也熟练该检定所使用的技能，则你在该检定上具有优势。也就是说你在进行一次属性检定时，可以同时从技能熟练和工具熟练中获得增益。</p>
 
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
 </body>
 
 </html>
+
 

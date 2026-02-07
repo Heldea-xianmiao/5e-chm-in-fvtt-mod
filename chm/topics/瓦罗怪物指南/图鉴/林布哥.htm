@@ -80,7 +80,45 @@ Fortune.</STRONG>当另一个生物对林布哥造成伤害时，林布哥将本
 
   circle或防护善恶protection from evil and 
 
-  good之类的咒语终结了，精魂就会寻找另一个地精来拥有它。精魂可以随时离开它的寄主，但除非它知道附近有另一个潜在的宿主，否则它是不会愿意离开的。一个被剥夺了林布哥精魂的地精恢复到正常的数据，并失去了它在拥有时获得的特性。</P></BLOCKQUOTE></body>
+  good之类的咒语终结了，精魂就会寻找另一个地精来拥有它。精魂可以随时离开它的寄主，但除非它知道附近有另一个潜在的宿主，否则它是不会愿意离开的。一个被剥夺了林布哥精魂的地精恢复到正常的数据，并失去了它在拥有时获得的特性。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

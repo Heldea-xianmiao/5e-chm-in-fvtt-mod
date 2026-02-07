@@ -54,7 +54,45 @@ html,body {
 
 <strong>研究预言Prophetic Research。</strong>角色们在一处被遗忘的遗迹中发现了一道古老的铭文——预言着一场即将到来的恐怖灾难。当它们寻求有关这一预言的信息时，角色们被引荐到一位当地的启示录著作专家面前——一位彗星先驱的教宗。这位教宗分享了对相关预言的研究，但并未表现出与教团的联系。教宗可能会赞助角色们探索更多废墟，以了解这场迫在眉睫的灾难。<br>
 
-<strong>大单子Useful Pawns。</strong>一位教宗雇佣角色们为彗星先驱获取魔法。没有明显迹象表明该组织会将这些魔法用于破坏或邪恶目的——而且委托的报酬极为丰厚。只有在教宗发现原初<font color=purple><strong>万象无常牌Deck of Many Things</strong></font>之位置的线索时，邪教的邪恶本性才会清晰地表露出来。</p></body>
+<strong>大单子Useful Pawns。</strong>一位教宗雇佣角色们为彗星先驱获取魔法。没有明显迹象表明该组织会将这些魔法用于破坏或邪恶目的——而且委托的报酬极为丰厚。只有在教宗发现原初<font color=purple><strong>万象无常牌Deck of Many Things</strong></font>之位置的线索时，邪教的邪恶本性才会清晰地表露出来。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -166,7 +166,45 @@ cellSpacing=0 cellPadding=2 width="99%" bgColor=#fffbf0 border=1>
 
 <H3><FONT color=#800000>结束这次团 Ending A Session</FONT></H3>
 
-<P>请尽可能不要在遭遇还在进行时结束本次团。两次团之间的间断会打断参与者们对很多东西的记忆——例如先攻轮次还有其他一轮一轮的细节的东西。不过这种情况有一个特例：留悬念，即在故事出现重大事件或巨大变化时暂停，结束这次团。悬念可以吊住玩家的热情与兴奋，直到下一次团开始。<BR>如果一名玩家缺席了一次团，并且你让这位玩家的角色暂时离开了队伍，那就需要确保当这名玩家回归时，他的角色也有方式回来。有些时候悬念就是为了达此这个目标的：角色冲锋陷阵，拯救同伴于水火之中。<BR>在一次团结束时，请给大家留几分钟，用来讨论本次团的事件。询问你的玩家们他们喜欢本次团的哪一部分，以及是否愿意见到更多此类情节。另外，请在每次团结束时记录此时发生了什么，以及当时的情况，这些笔记可以成为你备下一次团时的参考资料。</P></body>
+<P>请尽可能不要在遭遇还在进行时结束本次团。两次团之间的间断会打断参与者们对很多东西的记忆——例如先攻轮次还有其他一轮一轮的细节的东西。不过这种情况有一个特例：留悬念，即在故事出现重大事件或巨大变化时暂停，结束这次团。悬念可以吊住玩家的热情与兴奋，直到下一次团开始。<BR>如果一名玩家缺席了一次团，并且你让这位玩家的角色暂时离开了队伍，那就需要确保当这名玩家回归时，他的角色也有方式回来。有些时候悬念就是为了达此这个目标的：角色冲锋陷阵，拯救同伴于水火之中。<BR>在一次团结束时，请给大家留几分钟，用来讨论本次团的事件。询问你的玩家们他们喜欢本次团的哪一部分，以及是否愿意见到更多此类情节。另外，请在每次团结束时记录此时发生了什么，以及当时的情况，这些笔记可以成为你备下一次团时的参考资料。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

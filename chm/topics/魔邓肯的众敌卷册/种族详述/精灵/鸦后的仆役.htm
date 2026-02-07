@@ -40,7 +40,45 @@ Ravens。</STRONG>当鸦后看到一个她中意的灵魂或信息时，她会�
 
 of 
 
-Memory。</STRONG>在冥河之底，带有魔力的泥沙中充满了失落灵魂的记忆与自我，影灵对这些东西很感兴趣。那些前往九狱，从冥河中取得记忆沉淀的冒险者们很可能会吸引到影灵的注意，影灵们会尝试偷走这份沉淀或与冒险者们交易。冒险者们也可能会带着这么一份沉淀物作为献给鸦后的礼物。他们并不清楚鸦后会用什么作为回礼，但她的恩惠总是奇妙无比——一团失落灵魂的复生，一段迷失记忆的启封，一次对古老知识的一瞥。</P></body>
+Memory。</STRONG>在冥河之底，带有魔力的泥沙中充满了失落灵魂的记忆与自我，影灵对这些东西很感兴趣。那些前往九狱，从冥河中取得记忆沉淀的冒险者们很可能会吸引到影灵的注意，影灵们会尝试偷走这份沉淀或与冒险者们交易。冒险者们也可能会带着这么一份沉淀物作为献给鸦后的礼物。他们并不清楚鸦后会用什么作为回礼，但她的恩惠总是奇妙无比——一团失落灵魂的复生，一段迷失记忆的启封，一次对古老知识的一瞥。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

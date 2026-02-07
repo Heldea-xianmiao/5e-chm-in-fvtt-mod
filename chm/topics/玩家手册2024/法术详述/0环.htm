@@ -250,7 +250,45 @@ Sound。</STRONG>
 
 <H4 id="Word_of_Radiance">光耀祷词｜Word of Radiance</H4>
 
-<P><EM>塑能 戏法（牧师）</EM> <BR><STRONG>施法时间：</STRONG>动作<BR><STRONG>施法距离：</STRONG>自身<BR><STRONG>法术成分：</STRONG>V、M（一枚艳阳标志）<BR><STRONG>持续时间：</STRONG>立即<BR>灼热的光辉喷薄而出，覆盖你周身5尺<U>光环</U>区域。每个区域中你可见且受你选择的生物必须通过一次体质豁免，否则受到1d6点光耀伤害。<BR><STRONG>戏法强化。</STRONG>到达特定等级后，此戏法的伤害将增加1d6：5级（2d6）、11级（3d6）、17级（4d6）。</P></body>
+<P><EM>塑能 戏法（牧师）</EM> <BR><STRONG>施法时间：</STRONG>动作<BR><STRONG>施法距离：</STRONG>自身<BR><STRONG>法术成分：</STRONG>V、M（一枚艳阳标志）<BR><STRONG>持续时间：</STRONG>立即<BR>灼热的光辉喷薄而出，覆盖你周身5尺<U>光环</U>区域。每个区域中你可见且受你选择的生物必须通过一次体质豁免，否则受到1d6点光耀伤害。<BR><STRONG>戏法强化。</STRONG>到达特定等级后，此戏法的伤害将增加1d6：5级（2d6）、11级（3d6）、17级（4d6）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -116,7 +116,45 @@ Minexes，守序善良，兽人，粹丽学院展现教授）是一名新雇佣�
 
 <P align=left><STRONG><FONT color=#800000>至炫走道</FONT></STRONG><BR>一条穿越中央校区建筑的蜿蜒走道，有数百个粹丽元素创造物沿着这条道路陈列。有些更著名的魔法艺品已沿着至炫走道陈列了几世纪，而其他转瞬即逝的创意作品只持续了几秒钟。</P>
 
-<P><STRONG><FONT color=#800000>怒风区</FONT></STRONG><BR>粹丽校区内一处恶名昭彰的区域，由过去数千名法师艺术家所舍弃的创造物已在此汇集数年。被守护与警告标语隔开，怒风区那不停变幻的魔法能量笼罩了好几个方形街区，充满了狂啸的冰、风、火，以及失控的元素。这个地方本身相当危险，但它也是狂野创意灵感的来源，而且仅管危险，它依然是那些想要决斗却不想被上级打扰的学生的热门地点。</P></body>
+<P><STRONG><FONT color=#800000>怒风区</FONT></STRONG><BR>粹丽校区内一处恶名昭彰的区域，由过去数千名法师艺术家所舍弃的创造物已在此汇集数年。被守护与警告标语隔开，怒风区那不停变幻的魔法能量笼罩了好几个方形街区，充满了狂啸的冰、风、火，以及失控的元素。这个地方本身相当危险，但它也是狂野创意灵感的来源，而且仅管危险，它依然是那些想要决斗却不想被上级打扰的学生的热门地点。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

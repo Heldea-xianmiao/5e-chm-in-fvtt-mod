@@ -38,7 +38,45 @@ Spell</STRONG> 。作为一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>
 
 <H6>假肢 Prosthetic Limb</H6>
 
-<P><EM>奇物，普通</EM><BR>这件魔法物品能替代一处缺失的肢体——一只手，一条手臂，一条腿，或是类似的身体部位。在假肢已完成安装期间，它能像被代替的肢体一样正常工作。<BR>你可以用一个<U>魔法</U>动作将其装好或者卸除，且只要你活着，它就不能在你非自愿的情况下被移除。</P></body>
+<P><EM>奇物，普通</EM><BR>这件魔法物品能替代一处缺失的肢体——一只手，一条手臂，一条腿，或是类似的身体部位。在假肢已完成安装期间，它能像被代替的肢体一样正常工作。<BR>你可以用一个<U>魔法</U>动作将其装好或者卸除，且只要你活着，它就不能在你非自愿的情况下被移除。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

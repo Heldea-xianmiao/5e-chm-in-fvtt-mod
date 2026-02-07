@@ -382,7 +382,45 @@ cellPadding=2 width=600 border=0>
 
 <TD>巨人王驾崩了，这正是冒险者们帮助一个对小族裔持和平态度的巨人上台的大好时机。</TD></TR><TR><TD bgColor=#ffffc8 width=30>5</TD><TD bgColor=#ffffc8       >调查一处魔法灾难的角色们发现它吞没了某处巨人定居点，巨人们需要人帮助处理其影响。</TD> 
 
-  </TR><TR><TD width=30>6</TD><TD>冒险者去巨人的定居点交付赎金，以确保一个俘虏的自由，但巨人决定将冒险者变成更有价值的俘虏。</TD></TR></TABLE></P></body>
+  </TR><TR><TD width=30>6</TD><TD>冒险者去巨人的定居点交付赎金，以确保一个俘虏的自由，但巨人决定将冒险者变成更有价值的俘虏。</TD></TR></TABLE></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

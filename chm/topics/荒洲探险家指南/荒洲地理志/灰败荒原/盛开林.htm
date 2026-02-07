@@ -36,7 +36,45 @@ Mother和至高之心Arch
 
 Heart宣告，他们建造了这个神圣的地方作为新生的殡葬林，旨在让堕落者的身体回归自然，埋藏在沼泽池塘和生机勃勃的树叶中的每一根血统都孕育着一朵完全独特的花朵，使该地区获得了骨果园Bone 
 
-Orchard的可怕绰号。<BR>然而，时间并不是静止的。森林的诅咒已经侵蚀了树林的神圣边界。深色的藤蔓和荆棘在栅栏和墓碑上一层一层地生长起来，把曾经广阔的小树林变成了寺庙底部一小块目中无人的绿色。只有一个看守人留下来照看他们的果园，现在这个名叫卡杜修斯Caduceus的牧师离开了，他希望能找到一个方法，以梅洛拉Melora的名义收回果园和它所保护的祖先。</P></body>
+Orchard的可怕绰号。<BR>然而，时间并不是静止的。森林的诅咒已经侵蚀了树林的神圣边界。深色的藤蔓和荆棘在栅栏和墓碑上一层一层地生长起来，把曾经广阔的小树林变成了寺庙底部一小块目中无人的绿色。只有一个看守人留下来照看他们的果园，现在这个名叫卡杜修斯Caduceus的牧师离开了，他希望能找到一个方法，以梅洛拉Melora的名义收回果园和它所保护的祖先。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

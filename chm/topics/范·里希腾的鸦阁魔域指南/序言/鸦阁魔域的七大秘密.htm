@@ -136,7 +136,45 @@ style="FONT-WEIGHT:  bold; COLOR: rgb(0,0,0);"  >7.唯一确定的只有恐惧�
 
 style="COLOR:  rgb(0,0,0);"  >恐惧诸领域设定非常具有可塑性，能容下任何种类的恐怖冒险。正因为领域们是与一般现实脱节的，所以任何事情都可能在里面发生。普通人令人惊恐地变形，整个村庄悄无声息地消失，迷雾封锁了所有逃离威胁的方法。你渴望的所有离奇探险，亦是黑暗力量的愿望，它们保证最让人害怕的可能性一定会降临。这导致《玩家手册》《城主手册》和《怪物图鉴》中哪怕是最常见的种族、魔法物品和怪物，虽然存在于鸦阁魔域，但都被扭曲得更加疯狂怪诞，神秘莫测。</SPAN><SPAN 
 
-style="COLOR:  rgb(0,0,0);"  ><o:p></o:p></SPAN></P></body>
+style="COLOR:  rgb(0,0,0);"  ><o:p></o:p></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

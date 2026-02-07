@@ -46,7 +46,45 @@ Blade</STRONG></FONT><BR><EM>小型或中型类人，任意阵营</EM><BR>护甲
 
 Blade。</STRONG>近战武器攻击：命中+7，触及5尺，单一目标。命中：9（1d10+4）点挥砍伤害，外加7（2d6）暗蚀伤害。一个生物在被此伤害杀死后，其尸体以及任何其携带或着装的物件（除了魔法物品）都会崩解为灰尘。不论是否命中：衰亡之刃都可以让剑刃释放出熵能魔法形成爆炸。以武器为中心，半径10尺范围内的每个生物（除衰亡之刃外）都必须通过一次DC13的体质豁免，豁免失败将受到6（1d12）点暗蚀伤害。熵能之刃每回合只能以此释放一次熵能魔法。<BR><STRONG>熵能标枪Entropic 
 
-Javalin。</STRONG>近战或远程武器攻击：命中+7，触及5尺或射程30/120尺，单一目标。命中：7（1d6+4）点穿刺伤害，外加13（2d12）点暗蚀伤害。一个生物在被此伤害杀死后，其尸体以及任何其携带或着装的物件（除了魔法物品）都会崩解为灰尘。</P></body>
+Javalin。</STRONG>近战或远程武器攻击：命中+7，触及5尺或射程30/120尺，单一目标。命中：7（1d6+4）点穿刺伤害，外加13（2d12）点暗蚀伤害。一个生物在被此伤害杀死后，其尸体以及任何其携带或着装的物件（除了魔法物品）都会崩解为灰尘。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

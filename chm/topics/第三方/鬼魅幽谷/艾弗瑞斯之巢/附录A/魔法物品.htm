@@ -60,7 +60,45 @@ bull</U></STRONG>的躯壳打造，在阳光之下闪耀着璀璨金光。穿着
 
 <H6>沉默魔杖 Wand of Silence   </H6>
 
-<P><EM>魔杖，非普通（需施法者同调）</EM><BR>这根魔杖具有7发充能。持握这根魔杖期间，你可以用动作并消耗1发充能以施展法术<U><EM>沉默术Silence</EM></U>（豁免DC15）。每日黎明时分，魔杖恢复1d6+1发已消耗的充能。若你消耗了魔杖的最后一发充能，骰一次d20。如果骰值为1，魔杖将化为灰烬而毁灭。</P></body>
+<P><EM>魔杖，非普通（需施法者同调）</EM><BR>这根魔杖具有7发充能。持握这根魔杖期间，你可以用动作并消耗1发充能以施展法术<U><EM>沉默术Silence</EM></U>（豁免DC15）。每日黎明时分，魔杖恢复1d6+1发已消耗的充能。若你消耗了魔杖的最后一发充能，骰一次d20。如果骰值为1，魔杖将化为灰烬而毁灭。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

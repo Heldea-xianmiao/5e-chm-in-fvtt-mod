@@ -468,7 +468,45 @@ Absorption（传说）。</STRONG>
 
 <P><STRONG>力量Strength（极珍稀）。</STRONG>该浅蓝色菱形艾恩石环绕你期间，你的力量属性提升2，但无法超过20。</P>
 
-<P><STRONG>维生Sustenance（珍稀）。</STRONG>该透明的纺锤形艾恩石环绕你期间，你无需饮食也能生存。</P></BLOCKQUOTE></body>
+<P><STRONG>维生Sustenance（珍稀）。</STRONG>该透明的纺锤形艾恩石环绕你期间，你无需饮食也能生存。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -72,7 +72,45 @@ Aside</FONT></STRONG><BR>使用该选项时，生物可以使用一种《玩家�
 
 <p class=MsoNormal> </p>
 
-<p class=MsoNormal><STRONG><FONT color=#800000>翻滚Tumble</FONT></STRONG><BR>生物可以尝试翻滚穿过一名敌对生物所占空间位置，左闪右避的到达另一边。作为一个动作项或一个附赠动作项，翻滚者必须进行一次敏捷（特技）检定，以对抗敌对生物的敏捷（特技）检定。若翻滚者赢得对抗，则它可以在本回合内移动穿过该敌对生物所占空间一次。</p></body>
+<p class=MsoNormal><STRONG><FONT color=#800000>翻滚Tumble</FONT></STRONG><BR>生物可以尝试翻滚穿过一名敌对生物所占空间位置，左闪右避的到达另一边。作为一个动作项或一个附赠动作项，翻滚者必须进行一次敏捷（特技）检定，以对抗敌对生物的敏捷（特技）检定。若翻滚者赢得对抗，则它可以在本回合内移动穿过该敌对生物所占空间一次。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

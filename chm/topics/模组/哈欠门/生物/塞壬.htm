@@ -60,7 +60,45 @@ Shortsword。</STRONG>近战武器攻击：命中+6，触及 5 尺，单一目�
 
 Stupefying Touch。</STRONG>塞壬触碰 5 尺范围内一个她能看见的生物。该生物必须通过一次 DC 13 的智力豁免，豁免失败则受到 
 
-13（3d6+3）的心灵伤害并陷入震慑，其效应持续至塞壬的下一个回合开始。</P></body>
+13（3d6+3）的心灵伤害并陷入震慑，其效应持续至塞壬的下一个回合开始。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

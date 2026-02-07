@@ -162,7 +162,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
 <H3><FONT color=#800000>外域冒险Outlands Adventures</FONT></H3>
 
-<P>外域是外层位面中最接近物质位面中世界的存在。冒险者可以轻松地从一个门镇到达下一个门镇，这使得在外域展开各种各样的位面主题冒险成为可能。<BR>外域的冒险通常涉及对立的位面力量之间的冲突。在自动镇，史拉蟾能轻松地肆意破坏，而在机械境中，即便是成群的史拉蟾也难以取得任何成果。天族间谍和邪魔刺客在外域上展开精密的阴谋与致命的破坏活动。<BR>尽管充满了这些冲突，外域依然是一个平衡的位面。在位面的中央，远离门镇的地方，延展开的是与物质位面世界上的各种环境相似的广袤土地。保护自然的平衡，防止其在强大极端的拉扯下偏向任意一方，也常常是这里冒险的主题之一。<BR>《异度风景：多元宇宙的冒险》详细介绍了外域的相关信息。</P></body>
+<P>外域是外层位面中最接近物质位面中世界的存在。冒险者可以轻松地从一个门镇到达下一个门镇，这使得在外域展开各种各样的位面主题冒险成为可能。<BR>外域的冒险通常涉及对立的位面力量之间的冲突。在自动镇，史拉蟾能轻松地肆意破坏，而在机械境中，即便是成群的史拉蟾也难以取得任何成果。天族间谍和邪魔刺客在外域上展开精密的阴谋与致命的破坏活动。<BR>尽管充满了这些冲突，外域依然是一个平衡的位面。在位面的中央，远离门镇的地方，延展开的是与物质位面世界上的各种环境相似的广袤土地。保护自然的平衡，防止其在强大极端的拉扯下偏向任意一方，也常常是这里冒险的主题之一。<BR>《异度风景：多元宇宙的冒险》详细介绍了外域的相关信息。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

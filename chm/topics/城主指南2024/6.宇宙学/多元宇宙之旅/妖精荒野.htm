@@ -184,7 +184,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
 Adventures</FONT></H3>
 
-<P>妖精荒野是强烈情感的物质化表述，这一位面同样精于隐喻。在这片领域中，角色可能会失去一段珍贵的记忆，或一个深藏的遗憾，而失落的记忆可能会以小雕像或挂坠的形式具现。一个调皮的小仙灵或许会趁某位角色放声大笑时，悄悄夺走他们的笑声，从此令角色再也无法发笑，直至找到小妖精并取回那笑声——也许它已化作一束芬芳馥郁的花束。</P></body>
+<P>妖精荒野是强烈情感的物质化表述，这一位面同样精于隐喻。在这片领域中，角色可能会失去一段珍贵的记忆，或一个深藏的遗憾，而失落的记忆可能会以小雕像或挂坠的形式具现。一个调皮的小仙灵或许会趁某位角色放声大笑时，悄悄夺走他们的笑声，从此令角色再也无法发笑，直至找到小妖精并取回那笑声——也许它已化作一束芬芳馥郁的花束。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

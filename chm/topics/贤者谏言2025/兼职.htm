@@ -28,9 +28,47 @@
 
 术士Sorcerer（狂野术法Wild Magic Sorcery），若该法师从法术书上施展一个术士列表里也有的法术，会触发 狂野魔法浪涌Wild Magic 
 
-Surge 吗？还是说只有我术士职业获得的法术才能触发这个能力？</FONT></STRONG><BR>兼职规则中是这么写的：“你准备的每一个法术都与一个职业相关联”。这说明只有作为你术士职业特性而被准备的那些法术才能触发狂野魔法浪涌。</P></body>
+Surge 吗？还是说只有我术士职业获得的法术才能触发这个能力？</FONT></STRONG><BR>兼职规则中是这么写的：“你准备的每一个法术都与一个职业相关联”。这说明只有作为你术士职业特性而被准备的那些法术才能触发狂野魔法浪涌。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

@@ -158,7 +158,45 @@ Render</FONT></STRONG><BR><EM>大型怪兽，普遍混乱中立</EM><BR>护甲�
 
 <P><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>灰袋兽进行一次啃咬，两次爪击。<BR><STRONG>啃咬Bite。</STRONG>近战武器攻击：命中+8，触及5尺，单一目标。命中：17（2d12+4）点穿刺伤害，若目标为中型或更小的生物，则目标必须成功通过DC16的力量豁免，否则应击倒地。<BR><STRONG>爪击Claw。</STRONG>近战武器攻击：命中+8，触及10尺，单一目标。命中：13（2d8+4）挥砍伤害，若目标陷入倒地，则外加10（3d6）钝击伤害。<BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>血腥暴动Bloody 
 
-Rampage。</STRONG>当灰袋兽受到伤害时，它对其触及范围内一个除自己主人外的随机生物发动一次爪击。</P></body>
+Rampage。</STRONG>当灰袋兽受到伤害时，它对其触及范围内一个除自己主人外的随机生物发动一次爪击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

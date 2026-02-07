@@ -64,7 +64,45 @@ Stone。</STRONG>变化师带着一种魔法石，可以使持有者获得以下
 
 环的变化系法术时，可以改变该石头提供的具体增益。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>长棍Quarterstaff。</STRONG>近战武器攻击：命中+2，触及5 
 
-尺，单一目标。命中：2（1d6-1）钝击伤害，双手发动近战攻击时3（1d8-1）的钝击伤害。</P></body>
+尺，单一目标。命中：2（1d6-1）钝击伤害，双手发动近战攻击时3（1d8-1）的钝击伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

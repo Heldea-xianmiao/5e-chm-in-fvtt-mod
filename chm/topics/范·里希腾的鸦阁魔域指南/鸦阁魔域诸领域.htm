@@ -26,7 +26,45 @@ style="TEXT-ALIGN: left; MARGIN: 0pt 0pt 5.8pt; mso-pagination: widow-orphan"><S
 
 style=" FONT-FAMILY: Helvetica; font-family: 宋体">本章节为地下城主探索恐惧诸领域迷雾重重的真相提供了信息，也为骇人的领域、可怕的黑暗领主和身陷黑暗力量魔掌的勇敢漫游者们列出了范例。</SPAN><SPAN 
 
-style=" FONT-FAMILY: Helvetica; font-family: 宋体"><o:p></o:p></SPAN></P></body>
+style=" FONT-FAMILY: Helvetica; font-family: 宋体"><o:p></o:p></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

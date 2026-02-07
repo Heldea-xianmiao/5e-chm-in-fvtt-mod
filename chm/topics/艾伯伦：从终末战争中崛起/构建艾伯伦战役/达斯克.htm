@@ -140,7 +140,45 @@ Mockery
 
 <P>新闻：可怕的欺骗 
 
-  <STRONG>萨恩好奇志</STRONG><BR>可怕的欺骗<BR>怪物正在渗入我们的城市!虽然萨恩守望者的行为好像觉得达斯克只是马利翁之门区的问题，而不是对守法公民的威胁，但这个犯罪集团的行动显然很狡猾。他们最近的攻击目标是整个下层区，所有的财产都属于某个半身人家族，就好像达斯克试图暴力接管萨恩的地下世界一样。一旦这些怪物控制了城市的犯罪，他们下一步会做什么?</P></BLOCKQUOTE></body>
+  <STRONG>萨恩好奇志</STRONG><BR>可怕的欺骗<BR>怪物正在渗入我们的城市!虽然萨恩守望者的行为好像觉得达斯克只是马利翁之门区的问题，而不是对守法公民的威胁，但这个犯罪集团的行动显然很狡猾。他们最近的攻击目标是整个下层区，所有的财产都属于某个半身人家族，就好像达斯克试图暴力接管萨恩的地下世界一样。一旦这些怪物控制了城市的犯罪，他们下一步会做什么?</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

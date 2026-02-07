@@ -54,7 +54,45 @@ Stone.</STRONG> 远程法术攻击：命中+5，射程60尺，单一目标。命
 
 13的敏捷豁免，否则受到13 (3d8) 
 
-点钝击伤害，并泥浆化为石头时陷入束缚状态。受到束缚的生物必须于其回合结束时重复进行豁免，豁免成功时该生物停止束缚状态，豁免失败则该生物陷入石化状态持续24小时。<BR><STRONG>施法Spellcasting.</STRONG> 山妖能够施展以下任一法术，其施法关键属性为智力：<BR>每项1/日：<EM>造水术/枯水术、侦测魔法、行动无踪</EM></P></body>
+点钝击伤害，并泥浆化为石头时陷入束缚状态。受到束缚的生物必须于其回合结束时重复进行豁免，豁免成功时该生物停止束缚状态，豁免失败则该生物陷入石化状态持续24小时。<BR><STRONG>施法Spellcasting.</STRONG> 山妖能够施展以下任一法术，其施法关键属性为智力：<BR>每项1/日：<EM>造水术/枯水术、侦测魔法、行动无踪</EM></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

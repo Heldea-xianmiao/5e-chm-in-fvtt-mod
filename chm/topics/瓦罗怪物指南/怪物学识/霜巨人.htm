@@ -66,7 +66,45 @@ dir=ltr>霜巨人支配着野生动物，既作为它们力量的证明，也用
 
 <P dir=ltr><BR><STRONG><FONT color=#000000>边栏-索列姆的寒冷之力 Thrym's Frigid 
 
-Might</FONT></STRONG><BR>索列姆长期以来一直与他的孪生兄弟苏尔特争夺安南的宠爱和骄傲。霜巨人为索列姆战胜苏尔特和其他传奇威胁而自豪，这时他被证明有更强的力量或更坚定的决心。然而，安南更喜欢的是苏尔特精心制作的礼物，而不是索列姆放到他脚下的战利品的头颅。出于这个原因，霜巨人比其他巨人更加敌视安南。<BR>不像他的兄弟，索列姆很少被单独描绘。他身边通常都跟随着十个护卫兄弟和十个护卫姐妹，他们是在巨人与龙的战争中赢得了巨大荣耀的霜巨人英雄，索列姆赐予了他们永远在他身边战斗的荣誉。</P></body>
+Might</FONT></STRONG><BR>索列姆长期以来一直与他的孪生兄弟苏尔特争夺安南的宠爱和骄傲。霜巨人为索列姆战胜苏尔特和其他传奇威胁而自豪，这时他被证明有更强的力量或更坚定的决心。然而，安南更喜欢的是苏尔特精心制作的礼物，而不是索列姆放到他脚下的战利品的头颅。出于这个原因，霜巨人比其他巨人更加敌视安南。<BR>不像他的兄弟，索列姆很少被单独描绘。他身边通常都跟随着十个护卫兄弟和十个护卫姐妹，他们是在巨人与龙的战争中赢得了巨大荣耀的霜巨人英雄，索列姆赐予了他们永远在他身边战斗的荣誉。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

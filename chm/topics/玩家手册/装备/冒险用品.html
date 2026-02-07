@@ -7678,9 +7678,47 @@ cellSpacing=0 cellPadding=0 width="100%" border=0>
 
 style="MARGIN: 0cm 0cm 0cm 5.5pt; TEXT-INDENT: -5.5pt; mso-char-indent-count: -.5"><span 
 
-style='FONT-SIZE: 11pt; FONT-FAMILY: "STHeiti light"; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri; mso-font-kerning: 1.0pt; mso-bidi-font-family: Calibri'>＊你还可以将物品系在背包外面，例如<span class=GramE>一</SPAN>卷铺盖或是一卷绳索。</SPAN></P></div></SPAN></body>
+style='FONT-SIZE: 11pt; FONT-FAMILY: "STHeiti light"; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri; mso-font-kerning: 1.0pt; mso-bidi-font-family: Calibri'>＊你还可以将物品系在背包外面，例如<span class=GramE>一</SPAN>卷铺盖或是一卷绳索。</SPAN></P></div></SPAN><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

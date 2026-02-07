@@ -84,7 +84,45 @@ Cantrip。</STRONG>骸骨之主施放一个戏法。<BR><STRONG>移动
 
 Move。</STRONG>骸骨之主移动至多等于其自身速度的距离，且不会因此引发借机攻击。<BR><STRONG>召唤亡灵 Summon 
 
-Undead（消耗3动作）。</STRONG>至多五只骷髅或丧尸出现在骸骨之主身边30尺内范围内，并持续存在直至被摧毁。以此种方式召唤的亡灵进行先攻检定并在下一个回合开始行动。骸骨之主以该特性控制的亡灵在同一时间内不能超过五只。</P></body>
+Undead（消耗3动作）。</STRONG>至多五只骷髅或丧尸出现在骸骨之主身边30尺内范围内，并持续存在直至被摧毁。以此种方式召唤的亡灵进行先攻检定并在下一个回合开始行动。骸骨之主以该特性控制的亡灵在同一时间内不能超过五只。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

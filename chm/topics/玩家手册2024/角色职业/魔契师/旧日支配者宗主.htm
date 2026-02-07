@@ -88,7 +88,44 @@ Thrall</FONT></STRONG><BR>当你施展<U><EM>异怪召唤术Summon
 
 Aberration</EM></U>时，你可以修改此法术使其无需<U>专注</U>。以此法施展时，此法术的持续时间将变为1分钟，且召唤来的异怪拥有等于你魔契师等级+你的魅力调整值的<U>临时生命值</U>。<BR>此外，该异怪在每个回合中第一次命中一个被你的<U><EM>脆弱诅咒Hex</EM></U>影响的生物时，该异怪会对目标额外造成等于此法术附加伤害的心灵伤害。</p>
 
-<DIV></DIV></body>
+<DIV></DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
@@ -97,6 +134,7 @@ Aberration</EM></U>时，你可以修改此法术使其无需<U>专注</U>。以
 
 
 </html>
+
 
 
 

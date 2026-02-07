@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5> 钱币Coin</FONT></STRONG></P>
 
-<P>最经典的宝藏类型便是金钱了，它们包括铜币（CP）、银币（SP）、金银币（EP）、金币（GP）以及铂金币（PP）。见《玩家手册》以了解它们的相对价值，每五十枚任意类型的钱币合一磅重。</P></body>
+<P>最经典的宝藏类型便是金钱了，它们包括铜币（CP）、银币（SP）、金银币（EP）、金币（GP）以及铂金币（PP）。见《玩家手册》以了解它们的相对价值，每五十枚任意类型的钱币合一磅重。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

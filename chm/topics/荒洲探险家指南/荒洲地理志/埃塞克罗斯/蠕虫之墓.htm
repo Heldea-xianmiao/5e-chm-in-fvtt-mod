@@ -36,7 +36,45 @@ html,body {
 
 Thieves (Low 
 
-Level)。当角色探索捷利尔时，他们遇到了由贾里敏Jarinmine（混乱善良，女性，轻足半身人侦查兵）带领的四个野人平民。半身人乞求他们带着300磅重的肉去海上，然后将其倒进冰水中。她警告角色不要吃肉，如果他们同意任务，她会把她的象牙项链（价值100金币）给他们。如果被追问，她会说肉被污染了，会使人们成为加尔加诺斯的奴隶。贾里敏从虫民那里偷走了肉，因为她认为吃肉会毒害他们的心灵。在加尔加诺斯意识到自己所做的一切之前，她需要回到蠕虫之墓。<BR>在角色到达大海之前，六个虫民追上了他们。他们的头领是雷德乔Redjaw（混乱中性，女性，人类邪教狂信者），其他人是邪教徒，均使用了虫民模板。雷德乔要求角色归还被盗的食物，如果角色拒绝，他们就会战斗。如果角色归还了肉，雷德乔会邀请他们回到蠕虫之墓。如果角色去村了聚集地里，他们会发现贾里敏和她的朋友已经被虫民抓住，并即将因犯罪而被处决。</P></body>
+Level)。当角色探索捷利尔时，他们遇到了由贾里敏Jarinmine（混乱善良，女性，轻足半身人侦查兵）带领的四个野人平民。半身人乞求他们带着300磅重的肉去海上，然后将其倒进冰水中。她警告角色不要吃肉，如果他们同意任务，她会把她的象牙项链（价值100金币）给他们。如果被追问，她会说肉被污染了，会使人们成为加尔加诺斯的奴隶。贾里敏从虫民那里偷走了肉，因为她认为吃肉会毒害他们的心灵。在加尔加诺斯意识到自己所做的一切之前，她需要回到蠕虫之墓。<BR>在角色到达大海之前，六个虫民追上了他们。他们的头领是雷德乔Redjaw（混乱中性，女性，人类邪教狂信者），其他人是邪教徒，均使用了虫民模板。雷德乔要求角色归还被盗的食物，如果角色拒绝，他们就会战斗。如果角色归还了肉，雷德乔会邀请他们回到蠕虫之墓。如果角色去村了聚集地里，他们会发现贾里敏和她的朋友已经被虫民抓住，并即将因犯罪而被处决。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

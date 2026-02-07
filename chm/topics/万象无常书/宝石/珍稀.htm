@@ -228,7 +228,45 @@ Glow。</em></strong>以一个附赠动作，你可以使法杖发出日光。�
 
 敲击术knock</em></font>。<br><em ><strong>转化钥匙Transforming the 
 
-Key。</strong> </em>持握钥匙期间，你可以用一个附赠动作将其转变为一把魔法长剑。你熟练于这把剑，并且你用它进行的攻击检定和伤害掷骰获得+1加值。命中目标时，剑会造成1d10点力场伤害。该物品的剑形态持续到你不再持握它或者你用一个附赠动作将其恢复到钥匙形态为止。如果你在该物品处于剑形态时结束对该物品的同调，它会自动恢复到钥匙形态。</P></body>
+Key。</strong> </em>持握钥匙期间，你可以用一个附赠动作将其转变为一把魔法长剑。你熟练于这把剑，并且你用它进行的攻击检定和伤害掷骰获得+1加值。命中目标时，剑会造成1d10点力场伤害。该物品的剑形态持续到你不再持握它或者你用一个附赠动作将其恢复到钥匙形态为止。如果你在该物品处于剑形态时结束对该物品的同调，它会自动恢复到钥匙形态。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

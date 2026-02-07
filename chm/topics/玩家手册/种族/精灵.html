@@ -1952,9 +1952,47 @@ fire</span></em><span style="FONT-SIZE:
 
  FONT-FAMILY: "STHeiti light"; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri; mso-bidi-font-family: Calibri'>卓尔们在成长时期被教导成认为地表种族都是劣等种，且除了成为奴隶外毫无价值。根深蒂固的教育以及常年受对方憎恨的事实，使得那些良心发现或者觉得需要与其他种族合作的个别卓尔很难排除这种偏见产生的影响。</span><span
 
- lang=EN-US style="FONT-SIZE: 16pt"></span></p></div></body>
+ lang=EN-US style="FONT-SIZE: 16pt"></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

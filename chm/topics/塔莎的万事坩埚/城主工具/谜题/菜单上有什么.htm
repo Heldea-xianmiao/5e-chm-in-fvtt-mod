@@ -96,7 +96,45 @@ DC 15
 
 感知（察觉）检定的角色可能会注意到另一位顾客戴着形似奇美拉的斗篷胸针，或者发现墙上挂着一面用于隐藏一扇密门的印有奇美拉的盾牌。只有在与顾客交谈或看到密门另一面东西后，角色才会获得真正的密码，密码可以是你想要的任何东西。<BR>你可以通过更换菜单项目，选择替换项目内的不同字母，并相应调整价格，轻松地将“奇美拉”换成其他事物。</P>
 
-<P><STRONG><FONT color=#800000>降低难度</FONT></STRONG><BR>其他酒馆顾客可以提供额外提示，在人物可以偷听到的地方互相交谈。一个顾客可能会说：“这家酒馆越来越贵了。有了这些花哨的新饭菜，他们竟然不按每个字母收一枚铜币！”<BR>一个太乐于助人的酒吧女佣可能会可怜这些挣扎的角色，并带他们按顺序去看各种菜单项目来跳过字谜（啤酒配奶酪点心、腌火腿配胡萝卜、玉米扁豆汤、龙炎蜜酒、烤鱼配胡萝卜、炖兔肉和煎野猪肉配土豆）。她甚至可能会建议角色“啤酒配奶酪点心，然后继续往下。”</P></body>
+<P><STRONG><FONT color=#800000>降低难度</FONT></STRONG><BR>其他酒馆顾客可以提供额外提示，在人物可以偷听到的地方互相交谈。一个顾客可能会说：“这家酒馆越来越贵了。有了这些花哨的新饭菜，他们竟然不按每个字母收一枚铜币！”<BR>一个太乐于助人的酒吧女佣可能会可怜这些挣扎的角色，并带他们按顺序去看各种菜单项目来跳过字谜（啤酒配奶酪点心、腌火腿配胡萝卜、玉米扁豆汤、龙炎蜜酒、烤鱼配胡萝卜、炖兔肉和煎野猪肉配土豆）。她甚至可能会建议角色“啤酒配奶酪点心，然后继续往下。”</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

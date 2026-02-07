@@ -196,7 +196,45 @@ style="FONT-SIZE: 10.5pt; FONT-FAMILY: 宋体"><o:p></O:P></SPAN></P>
 
 style="FONT-SIZE: 10.5pt; FONT-FAMILY: Calibri; WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; FONT-WEIGHT: 400; FONT-STYLE: normal; TEXT-ALIGN: justify; ORPHANS: 2; WIDOWS: 2; MARGIN: 0pt; LETTER-SPACING: normal; TEXT-INDENT: 21pt; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial"><SPAN 
 
-style="FONT-SIZE: 10.5pt; FONT-FAMILY: 宋体"><FONT face=宋体>闪光之眼</FONT><FONT face=Calibri>flashing Eyes</FONT><FONT face=宋体>。（充能</FONT><FONT face=Calibri>6</FONT><FONT face=宋体>）鲸驮骊能发出一阵明亮的光，影响一处</FONT><FONT face=Calibri>120</FONT><FONT face=宋体>尺锥形范围的区域。锥形范围内的每个生物都必须通过一次</FONT><FONT face=Calibri>DC14</FONT><FONT face=宋体>的感知豁免，否则陷入目盲</FONT><FONT face=Calibri>1</FONT><FONT face=宋体>分钟。生物可以在其每回合结束时重复该豁免，成功则结束该效果对自身的影响。</FONT></SPAN></P></body>
+style="FONT-SIZE: 10.5pt; FONT-FAMILY: 宋体"><FONT face=宋体>闪光之眼</FONT><FONT face=Calibri>flashing Eyes</FONT><FONT face=宋体>。（充能</FONT><FONT face=Calibri>6</FONT><FONT face=宋体>）鲸驮骊能发出一阵明亮的光，影响一处</FONT><FONT face=Calibri>120</FONT><FONT face=宋体>尺锥形范围的区域。锥形范围内的每个生物都必须通过一次</FONT><FONT face=Calibri>DC14</FONT><FONT face=宋体>的感知豁免，否则陷入目盲</FONT><FONT face=Calibri>1</FONT><FONT face=宋体>分钟。生物可以在其每回合结束时重复该豁免，成功则结束该效果对自身的影响。</FONT></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

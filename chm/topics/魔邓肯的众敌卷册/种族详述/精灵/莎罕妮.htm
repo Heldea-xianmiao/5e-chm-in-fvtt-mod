@@ -34,7 +34,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=4>月之信仰 Lunar 
 
-Worship</FONT></STRONG><BR>莎罕妮·月弓的庙宇通常与天空连成一线，使祭司们能够追踪月亮的运动和盈亏。祭司们睡觉的地方是这样布置的:当它们睡觉的时候，满月的一束光能照射在它们的身上，而这来自莎罕妮的银色光辉可以浸入它们的梦并传递信息。<BR>献给莎罕妮的祭品大多是银制的，其形状常常让人想起满月。杯、碗、斗篷胸针与银制的盘子最为常见，这些祭品也用于奉献给全体席尔德林诸神。她的追随者所使用的武器和装备，如银色箭头、刀锋和木质盾牌上经常装饰着一对放射光芒的莎罕妮之眼的图案，——这是一个警告，警告精灵的敌人，莎罕妮正盯着他们。</P></body>
+Worship</FONT></STRONG><BR>莎罕妮·月弓的庙宇通常与天空连成一线，使祭司们能够追踪月亮的运动和盈亏。祭司们睡觉的地方是这样布置的:当它们睡觉的时候，满月的一束光能照射在它们的身上，而这来自莎罕妮的银色光辉可以浸入它们的梦并传递信息。<BR>献给莎罕妮的祭品大多是银制的，其形状常常让人想起满月。杯、碗、斗篷胸针与银制的盘子最为常见，这些祭品也用于奉献给全体席尔德林诸神。她的追随者所使用的武器和装备，如银色箭头、刀锋和木质盾牌上经常装饰着一对放射光芒的莎罕妮之眼的图案，——这是一个警告，警告精灵的敌人，莎罕妮正盯着他们。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -88,7 +88,45 @@ Resistance。</STRONG> 引渡罗斯魔在对法术和其他魔法效果的豁免
 
 以一个附赠动作，引渡罗斯魔可以通过魔法进行传送，携带装备传送到60内一个能看到且未占据空间。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>引渡罗斯魔可以进行一次恐惧凝视，以及一次船桨攻击。<BR>船桨 Oar。近战武器攻击，+5命中，触及5英尺，单个目标。命中造成8(2d4+3)挥砍伤害。<BR><STRONG>恐惧凝视 Fear Gaze。</STRONG> 
 
-引渡罗斯魔选择一个距离60英尺以内的生物。目标必须在一次DC13感知豁免中成功，否则他将对引渡罗斯魔恐惧1分钟。受到恐惧的目标可以在每个自己回合结束时重复豁免，成功后结束该效果。</P></body>
+引渡罗斯魔选择一个距离60英尺以内的生物。目标必须在一次DC13感知豁免中成功，否则他将对引渡罗斯魔恐惧1分钟。受到恐惧的目标可以在每个自己回合结束时重复豁免，成功后结束该效果。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -84,7 +84,45 @@ Focus<br></FONT></STRONG><em>武器（战锤），极珍稀（需同调）</em><
 
 <p><STRONG><FONT color=#800000>涌潮者三叉戟 Tidecaller Trident<br></FONT></STRONG><em>武器（三叉戟），极珍稀（需同调）</em><br>你用这把魔法三叉戟发动的攻击检定与其伤害掷骰具有+2加值。此外，若你身处于水下，你用这把武器发动的攻击检定将具有优势。<br>这把三叉戟具有3发充能，你可以消耗1发充能用其施展 <font color=purple><em>操控水体Control 
 
-Water</em></font>（豁免DC15）或是消耗3发充能用其施展 <font color=purple><em>海啸术Tsunami</em></font>（豁免DC15）。这把三叉戟每日黎明时分恢复1d3发已消耗的充能数。</p></body>
+Water</em></font>（豁免DC15）或是消耗3发充能用其施展 <font color=purple><em>海啸术Tsunami</em></font>（豁免DC15）。这把三叉戟每日黎明时分恢复1d3发已消耗的充能数。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

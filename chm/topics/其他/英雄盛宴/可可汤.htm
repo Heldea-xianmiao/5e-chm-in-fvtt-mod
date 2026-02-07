@@ -44,7 +44,45 @@ Venya）。传说这种饮料是一名半身人法师用祈愿术寻找完美的
 
   茶匙纯正香草精<BR>1又1/2 杯意式浓缩咖啡或非常浓的黑咖啡</P></BLOCKQUOTE>
 
-<P>平底锅中加入可可粉、黄糖、肉桂粉、小豆蔻粉、盐、水，中火加热，搅拌直至柔滑。加热至即将煮沸，煮2分钟，不断搅拌。注意保证锅的边缘也得到充分搅拌。加入牛奶炖煮10分钟，频繁搅拌，保持即将煮沸的状态但不要沸腾。加入香草精和浓缩咖啡。尝一下味道，如有需要可多加黄糖。倒进四个马克杯中上桌。</P></body>
+<P>平底锅中加入可可粉、黄糖、肉桂粉、小豆蔻粉、盐、水，中火加热，搅拌直至柔滑。加热至即将煮沸，煮2分钟，不断搅拌。注意保证锅的边缘也得到充分搅拌。加入牛奶炖煮10分钟，频繁搅拌，保持即将煮沸的状态但不要沸腾。加入香草精和浓缩咖啡。尝一下味道，如有需要可多加黄糖。倒进四个马克杯中上桌。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

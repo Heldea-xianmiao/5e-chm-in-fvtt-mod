@@ -62,7 +62,45 @@ Breath（充能5~6）。</STRONG>希尔顿呼出一阵魔法性的微风，其�
 
 Dash（2/每日）。</STRONG> 
 
-希尔顿召唤出一阵强风驱使自己飞行。他可以飞行至多等同于他的速度的距离，且此移动不会引发借机攻击。在飞行结束后，强风会在希尔顿周围爆散开来，迫使希尔顿周围5尺范围内的生物必须通过一次DC15的力量豁免，否则将会被击倒在地（倒地Prone）。</P></body>
+希尔顿召唤出一阵强风驱使自己飞行。他可以飞行至多等同于他的速度的距离，且此移动不会引发借机攻击。在飞行结束后，强风会在希尔顿周围爆散开来，迫使希尔顿周围5尺范围内的生物必须通过一次DC15的力量豁免，否则将会被击倒在地（倒地Prone）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

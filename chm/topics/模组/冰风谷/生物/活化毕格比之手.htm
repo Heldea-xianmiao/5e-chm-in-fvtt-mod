@@ -50,7 +50,45 @@ Fist.</STRONG>近战法术攻击：命中+10，触及5尺，单一目标。命�
 
 Hand.</STRONG>活体法术试图抓住它5英尺以内的大型或更小的生物。目标必须成功于DC15敏捷豁免，否则被擒抱（逃脱DC15）。擒抱结束前，目标在每回合开始时都会受到15（2d6 
 
-+ 8）钝击伤害。活体法术一次只能擒抱一个生物，并且在擒抱结束之前不能使用力场拳。</P></body>
++ 8）钝击伤害。活体法术一次只能擒抱一个生物，并且在擒抱结束之前不能使用力场拳。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

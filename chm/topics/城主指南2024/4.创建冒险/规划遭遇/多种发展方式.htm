@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>多种发展方式 Multiple Ways To Progress</FONT></STRONG></P>
 
-<P>确保角色们在冒险的任一节点都拥有多种能够推动冒险发展的途径，这样即使他们错过了某条途径，他们也仍有其他选择。为冒险设计一些在角色们的行动失败时仍能够推动其向前发展的契机。相对的，只有单一成功路线的挑战应作为角色们获取额外奖励的机会。</P></body>
+<P>确保角色们在冒险的任一节点都拥有多种能够推动冒险发展的途径，这样即使他们错过了某条途径，他们也仍有其他选择。为冒险设计一些在角色们的行动失败时仍能够推动其向前发展的契机。相对的，只有单一成功路线的挑战应作为角色们获取额外奖励的机会。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

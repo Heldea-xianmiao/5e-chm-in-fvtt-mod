@@ -46,7 +46,45 @@ Escape。</STRONG>地精可在自己的回合，以一个附赠动作来执行�
 
 can！</STRONG>蠢蠢地精会选择在战斗前逃跑和躲藏起来！ 必须通过一次DC 
 
-15的敏捷检定才能攻击它们。<BR><STRONG>弯刀Scimitar。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命中：5（1d6+2）点挥砍伤害。<BR><STRONG>短弓Shortbow。</STRONG>远程武器攻击：命中+4，射程80/320尺，单一目标。命中：5（1d6+2）点穿刺伤害。</P></body>
+15的敏捷检定才能攻击它们。<BR><STRONG>弯刀Scimitar。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命中：5（1d6+2）点挥砍伤害。<BR><STRONG>短弓Shortbow。</STRONG>远程武器攻击：命中+4，射程80/320尺，单一目标。命中：5（1d6+2）点穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

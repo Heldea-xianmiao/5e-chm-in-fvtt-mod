@@ -34,7 +34,45 @@
 
 。棕榈花岛的鲨鱼捕猎传统让当地人民激怒了生活在附近海底海沟鲨羽深渊的鲨华鱼人氏族。鲨华鱼人和平地照料他们的鲨鱼群，并将鲨鱼猎人视为残忍的偷猎者。其中一位鲨华鱼人与利维坦乌克托阿签订了契约，并发誓要向棕榈花岛的居民复仇。这个冒险契机在第 
 
-5 章中扩展为一个完整的入门冒险。</P></body>
+5 章中扩展为一个完整的入门冒险。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

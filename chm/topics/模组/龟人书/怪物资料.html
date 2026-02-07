@@ -602,9 +602,47 @@ lang=EN-US>1d8+2</span>）点钝击伤害。</p>
 
 <p class=MsoNormal><b>龟壳防御。</b>龟人缩进到它的壳里。它的<span lang=EN-US> AC+4</span>，力量和体质豁免具优势，直到它再次露头。当它缩进壳中时，龟人视为倒地状态，速度归<span
 
-lang=EN-US> 0</span>且无法被提高，敏捷豁免具劣势，无法采取反应，唯一可以采取的动作是以一个附赠动作再次露头。</p></div></body>
+lang=EN-US> 0</span>且无法被提高，敏捷豁免具劣势，无法采取反应，唯一可以采取的动作是以一个附赠动作再次露头。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

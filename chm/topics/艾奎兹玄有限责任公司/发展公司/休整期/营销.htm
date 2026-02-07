@@ -96,7 +96,45 @@ DM 决定。<BR>2 营销材料在发行前就丢失了，迫使特许经营在�
 
 这可能会产生额外的基础成本， 或者影响特许经营成本的降低，这是由 DM 决定的。<BR>3 在营销计划向公众发布的时候，角色们意识到一个竞争小组在十天前发布了一个惊人的相似计划。顾客们现在认为特许经营只是在模仿它的竞争对手。<BR>4 市场营销的信息疏远或冒犯了一个关键的群体。 抗议活动不断涌现，受影响的团体要求赔偿。<BR>5 地官员或贵族开始调查与营销计划有关的欺骗性广告策略或可疑招聘行为的指控。<BR>6 市场营销计划创造了巨大的利益，但不幸的是，反而把客户引向竞争对手提供的类似产品或服务。<BR>7 营销活动的口号或主题曲是一个意外的成功，每个人都在不断地重复它! 
 
-直到他们厌倦了，并开始将精神创伤归咎于特许经营。<BR>8 市场营销计划因产品或服务出现问题的谣言而受到破坏，导致使用该产品或服务的任何人都面临危险。<BR>可能涉及竞争对手</P></body>
+直到他们厌倦了，并开始将精神创伤归咎于特许经营。<BR>8 市场营销计划因产品或服务出现问题的谣言而受到破坏，导致使用该产品或服务的任何人都面临危险。<BR>可能涉及竞争对手</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

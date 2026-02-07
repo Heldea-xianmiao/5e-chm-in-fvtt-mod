@@ -78,7 +78,45 @@ stop</EM><BR><EM>*大法师在进入战斗前对自身施展这些带标记的�
 
   familiar</EM>后都能以此得到一只魔宠。魔宠可以是该法术描述里其中一种生物（见《玩家手册》），也可以是某微型体型怪物，比如<STRONG>蠕行之爪crawling 
 
-  claw</STRONG>、<STRONG>小魔鬼imp</STRONG>、<STRONG>伪龙pseudodragon</STRONG>或<STRONG>小恶魔quasit</STRONG>。</P></BLOCKQUOTE></body>
+  claw</STRONG>、<STRONG>小魔鬼imp</STRONG>、<STRONG>伪龙pseudodragon</STRONG>或<STRONG>小恶魔quasit</STRONG>。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

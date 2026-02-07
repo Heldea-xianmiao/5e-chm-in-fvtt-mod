@@ -62,7 +62,45 @@ Stunning  Roar
 
 （充能5~6)。</STRONG>钢铁掠夺者在一个60英尺的圆锥体中发出轰鸣声。该区域内的每个生物都必须成功于一个DC19体质豁免。若豁免失败则该生物受到27 
 
-（5d10）雷鸣伤害，掉落它所持有的所有物品，并陷入震慑1分钟。在一次成功的豁免中，一个生物会受到一半的伤害。被震慑的生物可以在每次自身回合结束时重复豁免，以结束对自己的影响。</P></body>
+（5d10）雷鸣伤害，掉落它所持有的所有物品，并陷入震慑1分钟。在一次成功的豁免中，一个生物会受到一半的伤害。被震慑的生物可以在每次自身回合结束时重复豁免，以结束对自己的影响。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

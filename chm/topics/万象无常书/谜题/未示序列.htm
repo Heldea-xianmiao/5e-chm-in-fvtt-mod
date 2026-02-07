@@ -100,7 +100,45 @@ html,body {
 
  · 增加难度Increasing the Difficulty。你可以增加鬼魂手中的卡牌数量或是增加可选牌的数量，以此增加谜题的难度。每个变量的增加都会导致游戏变得更为困难，你可以考虑在增加难度的同时增加角色可以进行的猜测次数。</p><p align=center><IMG src="https://z1.ax1x.com/2023/11/09/pi3ZXGj.png" height=600><br>
 
-   图4.4：未示序列谜题之解（示例）</p></body>
+   图4.4：未示序列谜题之解（示例）</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

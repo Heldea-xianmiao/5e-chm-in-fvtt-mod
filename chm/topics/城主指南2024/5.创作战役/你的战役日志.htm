@@ -48,7 +48,45 @@ session”来指代一次跑团，这两个词是意思的相同的）。<BR>下
 
 <P><FONT color=#800000><STRONG>冒险储备Adventure 
 
-Stockpile</STRONG></FONT><BR>当你记录日志时，除了跟进每次团的内容，最好还要记下你想到的冒险点子，将其整理成一份清单。如此一来，即使你没有用上清单里的所有冒险点子，拥有充足的冒险储备也能让你随时准备好接下玩家抛出的奇怪想法。你甚至可以从其他内容中借用各种点子，融入接下来的冒险中。此外，不是每个冒险都必须靠早期情节的铺垫才能在战役使用；在连载战役中偷偷藏一段优秀的独立冒险，对参与者来说也许是个不错的节奏调剂。</P></body>
+Stockpile</STRONG></FONT><BR>当你记录日志时，除了跟进每次团的内容，最好还要记下你想到的冒险点子，将其整理成一份清单。如此一来，即使你没有用上清单里的所有冒险点子，拥有充足的冒险储备也能让你随时准备好接下玩家抛出的奇怪想法。你甚至可以从其他内容中借用各种点子，融入接下来的冒险中。此外，不是每个冒险都必须靠早期情节的铺垫才能在战役使用；在连载战役中偷偷藏一段优秀的独立冒险，对参与者来说也许是个不错的节奏调剂。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

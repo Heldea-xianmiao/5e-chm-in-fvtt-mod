@@ -44,7 +44,45 @@ style="FONT-SIZE: 11pt; FONT-FAMILY: 'Arial Unicode MS'; mso-spacerun: 'yes'"
 
 dir=ltr>
 
-<FONT size=3 face="Arial Unicode MS">为了达到最佳效果，请使用脆而酸的苹果，如蜜脆苹果或澳洲青苹果。 <FONT color=#808080>（译注：用过红富士，效果不错）</FONT><BR>超市里的苹果通常打过蜡，所以一定要洗干净，并彻底晾干。</FONT></SPAN></P></div></body>
+<FONT size=3 face="Arial Unicode MS">为了达到最佳效果，请使用脆而酸的苹果，如蜜脆苹果或澳洲青苹果。 <FONT color=#808080>（译注：用过红富士，效果不错）</FONT><BR>超市里的苹果通常打过蜡，所以一定要洗干净，并彻底晾干。</FONT></SPAN></P></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -56,7 +56,45 @@ Tail。</STRONG>近战武器攻击：命中+7，触及10尺，单一生物。命
 
 Ray（充能5~6）。</STRONG>卡托布莱帕斯选择其视野范围内30尺一个可视的目标生物。该生物必须进行一次DC 
 
-16的体质豁免，豁免失败则该生物承受38（8d8）点暗蚀伤害，如果成功豁免则伤害减半。如果此次豁免检定值比DC低出了5点或是更多，则伤害改为固定64点。不论豁免是否成功，目标生命值被凝视攻击的降至0时，目标将立刻死亡。</P></body>
+16的体质豁免，豁免失败则该生物承受38（8d8）点暗蚀伤害，如果成功豁免则伤害减半。如果此次豁免检定值比DC低出了5点或是更多，则伤害改为固定64点。不论豁免是否成功，目标生命值被凝视攻击的降至0时，目标将立刻死亡。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -1024,7 +1024,45 @@ Plane</STRONG>    ，因此可以阻断进入以太位面穿过墙壁旅行。</
 
 <H4 id="Yolande's_Regal_Presence">悠兰德王者威仪｜Yolande's Regal Presence</H4>
 
-<P><EM>五环 惑控（吟游诗人、法师）</EM> <BR><STRONG>施法时间：</STRONG>动作<BR><STRONG>施法距离：</STRONG>自身<BR><STRONG>法术成分：</STRONG>V、S、M（一顶微型皇冠）<BR><STRONG>持续时间：</STRONG>专注，至多1分钟<BR>你在自身周围散发出覆盖10尺<U>光环</U>区域的可怖威严，无论何时，当<U>光环</U>进入一名你可见的生物的占据空间，或是一名你可见的生物进入<U>光环</U>或是在<U>光环</U>之中结束自己的回合时，你都可以迫使这名生物进行一次感知豁免。豁免失败的生物将受到4d6点心灵伤害并陷入<U>倒地</U>状态，且你可以将其推离10尺。豁免成功的生物只受一半伤害。一名生物一回合只进行一次此豁免。</P></body>
+<P><EM>五环 惑控（吟游诗人、法师）</EM> <BR><STRONG>施法时间：</STRONG>动作<BR><STRONG>施法距离：</STRONG>自身<BR><STRONG>法术成分：</STRONG>V、S、M（一顶微型皇冠）<BR><STRONG>持续时间：</STRONG>专注，至多1分钟<BR>你在自身周围散发出覆盖10尺<U>光环</U>区域的可怖威严，无论何时，当<U>光环</U>进入一名你可见的生物的占据空间，或是一名你可见的生物进入<U>光环</U>或是在<U>光环</U>之中结束自己的回合时，你都可以迫使这名生物进行一次感知豁免。豁免失败的生物将受到4d6点心灵伤害并陷入<U>倒地</U>状态，且你可以将其推离10尺。豁免成功的生物只受一半伤害。一名生物一回合只进行一次此豁免。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

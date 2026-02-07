@@ -214,7 +214,45 @@ Huge 或更大体型的生物将自动于此豁免检定中成功，而一个 �
 
 尺为止。水球束缚的所有生物也会随之移动。你可以用水球撞击生物来迫使其进行豁免检定。<BR>当此法术终结时，水球会掉落在地，并熄灭其周围 30 
 
-尺范围内的所有非魔法火焰。任何被水球束缚的生物会在水球的落地点周围以倒地的状态出现。随后，这些水会消失。</P></body>
+尺范围内的所有非魔法火焰。任何被水球束缚的生物会在水球的落地点周围以倒地的状态出现。随后，这些水会消失。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -44,7 +44,45 @@ Starter</STRONG></FONT><BR><EM>小型或中型类人，任意阵营</EM><BR>护�
 
 Hammer。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：7（1d8+3）钝击伤害外加9（2d8）火焰伤害。若目标为一个生物，则其会被魔法烈焰附着，令其在每个自己的回合开始时受到3（1d6）火焰伤害。当目标在自己的回合受到此伤害后，它可以立即进行一次DC13的敏捷豁免，豁免成功则结束此效应。<BR><STRONG>暴乱燃烧瓶Havoc 
 
-Flask。</STRONG>远程武器攻击：命中+4，射程30/90尺，单一目标。命中：13（2d12）火焰伤害。若目标为一个生物，则其会被魔法烈焰附着，令其在每个自己的回合开始时受到3（1d6）火焰伤害。当目标在自己的回合受到此伤害后，它可以立即进行一次DC13的敏捷豁免，豁免成功则结束此效应。在纵火狂徒投掷燃烧瓶之后，扔一颗d6；若骰值在3或更低，则代表纵火狂徒不再有更多可供投掷的燃烧瓶。</P></body>
+Flask。</STRONG>远程武器攻击：命中+4，射程30/90尺，单一目标。命中：13（2d12）火焰伤害。若目标为一个生物，则其会被魔法烈焰附着，令其在每个自己的回合开始时受到3（1d6）火焰伤害。当目标在自己的回合受到此伤害后，它可以立即进行一次DC13的敏捷豁免，豁免成功则结束此效应。在纵火狂徒投掷燃烧瓶之后，扔一颗d6；若骰值在3或更低，则代表纵火狂徒不再有更多可供投掷的燃烧瓶。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

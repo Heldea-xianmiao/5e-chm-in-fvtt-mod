@@ -58,7 +58,45 @@ Setessa</FONT></STRONG><BR>塞特萨的孩子被城邦集体抚养，被最为�
 
 <P><STRONG><FONT color=#800000>瑟特萨的非人类 Nonhumans in 
 
-Setessa</FONT></STRONG><BR>瑟特萨通常不欢迎外人，除了被带到城邦里生活的孤儿和被遗弃的孩子。但是城邦对非人类的外来者比来自其他城邦的人类(尤其是男性人类)更友好。少数拉苟那族半人马，狮族和半羊人取得了在瑟特萨生活的权利。来自奈西安森林的树精和水灵很少进入城邦，但他们经常与巡逻森林的巴萨剌士兵保持友好关系。</P></body>
+Setessa</FONT></STRONG><BR>瑟特萨通常不欢迎外人，除了被带到城邦里生活的孤儿和被遗弃的孩子。但是城邦对非人类的外来者比来自其他城邦的人类(尤其是男性人类)更友好。少数拉苟那族半人马，狮族和半羊人取得了在瑟特萨生活的权利。来自奈西安森林的树精和水灵很少进入城邦，但他们经常与巡逻森林的巴萨剌士兵保持友好关系。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

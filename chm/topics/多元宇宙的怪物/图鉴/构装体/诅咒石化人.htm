@@ -68,7 +68,45 @@ html,body {
 
 <font color=#800000><strong>动作Actions</strong></font><br>
 
-<strong>石化爪击Petrifying Claws。</strong>近战武器攻击：命中+5，触及5尺，单一目标。命中：12（2d8+3）点挥砍伤害。若目标为生物，其还需要通过一次DC12的体质豁免，若豁免失败该生物将开始逐渐转变为石头并陷入 <strong>束缚Restrained</strong> 状态，持续直至它的下一回合结束......此时，其必须重复这一豁免。豁免成功则终止此效应对它的影响；豁免失败则陷入 <strong>石化Petrified</strong> 状态，持续24小时。</p></body>
+<strong>石化爪击Petrifying Claws。</strong>近战武器攻击：命中+5，触及5尺，单一目标。命中：12（2d8+3）点挥砍伤害。若目标为生物，其还需要通过一次DC12的体质豁免，若豁免失败该生物将开始逐渐转变为石头并陷入 <strong>束缚Restrained</strong> 状态，持续直至它的下一回合结束......此时，其必须重复这一豁免。豁免成功则终止此效应对它的影响；豁免失败则陷入 <strong>石化Petrified</strong> 状态，持续24小时。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

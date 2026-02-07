@@ -454,4 +454,41 @@
 
      ><font>只丧尸</font></span><span style=" FONT-FAMILY: Arial;  mso-ansi-font-weight: normal; mso-fareast- " 
 
-     ></span></p></td></tr></table><p class=18  style="mso-pagination: widow-orphan"><span style=" FONT-FAMILY: Arial;  mso-fareast- ">*<font>这些木乃伊是恶咒蛇人或纯血蛇人的不死遗骸。每个单位都有一个正常的木乃伊的数据。</font></span></p><p class=18  style="mso-pagination: widow-orphan"><span style="  COLOR: rgb(128,128,128);  "><font>（译注：瓦罗在页边的各种锐评没翻译）</font></span></p></div></body></html>
+     ></span></p></td></tr></table><p class=18  style="mso-pagination: widow-orphan"><span style=" FONT-FAMILY: Arial;  mso-fareast- ">*<font>这些木乃伊是恶咒蛇人或纯血蛇人的不死遗骸。每个单位都有一个正常的木乃伊的数据。</font></span></p><p class=18  style="mso-pagination: widow-orphan"><span style="  COLOR: rgb(128,128,128);  "><font>（译注：瓦罗在页边的各种锐评没翻译）</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

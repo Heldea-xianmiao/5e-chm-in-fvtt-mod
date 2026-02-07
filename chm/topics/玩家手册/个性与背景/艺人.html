@@ -1730,4 +1730,41 @@ mso-hansi-font-family:Cambria;mso-bidi-font-family:Arial;font-size:10.5000pt;
 
 mso-font-kerning:0.0000pt;" ><font face="宋体" >角斗士其实与巡游艺人或马戏师非常相似，他们学习以战斗场景娱乐大众的艺术。这种华而不实的战斗正是你的演艺方向，而你也可以同时掌握表演者或杂耍人的相关技术。你可以利用</font><font face="宋体" >“人见人爱”特性在任何适合以战斗取乐的地点表演——可以是某个斗剑场，或是黑拳俱乐部。你可以将装备选择中的乐器替换为不昂贵且不常见的武器，比如三叉戟或捕网。</font></span><span style="mso-spacerun:'yes';font-family:宋体;mso-bidi-font-family:Arial;
 
-font-size:10.5000pt;mso-font-kerning:0.0000pt;" ></span></p></div></body></html>
+font-size:10.5000pt;mso-font-kerning:0.0000pt;" ></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

@@ -78,7 +78,45 @@ Nature。</FONT></STRONG>当你与凯尔金的泥怪同调时，泥怪不能从�
 
 Armor</FONT></STRONG><BR><EM>护甲(任意)，极珍稀（需同调）</EM><BR>这件可怖的护甲外层是黑色的几丁质，下面是红得发亮的肌腱和搏动着的血管。要与该共生体同调，你必须在同调期间一直穿着这件护甲，让它的触手扎入你的体内。<BR>当你穿着这件护甲时，你在防御等级（AC）上额外+1，且你对以下伤害具有抗性：暗蚀、毒素以及心灵。<BR><STRONG><FONT color=#800080>共生体Symbiotic 
 
-Nature。</FONT></STRONG>当你与活体护甲同调时，护甲不能从你身上脱下，你也不能主动结束对它的同调。如果你成为一个能结束诅咒的法术的目标，那么你与护甲的同调自动结束，它将会与你的身体分离。<BR>这件护甲需要用新鲜的血液喂养。每当你完成一次长休之后，你都必须立即将你剩余生命骰（HD）的一半（向上取整）喂给护甲，否则就要承受1级力竭。</P></body>
+Nature。</FONT></STRONG>当你与活体护甲同调时，护甲不能从你身上脱下，你也不能主动结束对它的同调。如果你成为一个能结束诅咒的法术的目标，那么你与护甲的同调自动结束，它将会与你的身体分离。<BR>这件护甲需要用新鲜的血液喂养。每当你完成一次长休之后，你都必须立即将你剩余生命骰（HD）的一半（向上取整）喂给护甲，否则就要承受1级力竭。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

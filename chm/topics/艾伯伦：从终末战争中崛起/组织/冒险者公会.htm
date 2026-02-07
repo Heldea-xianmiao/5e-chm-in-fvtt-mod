@@ -190,7 +190,45 @@ gp。)<BR><STRONG>讯息.</STRONG> 冒险者公会总部是一个学习与冒险
 
   虽然这些怀疑经常被认为是简单的偏见，认为任何在萨恩的半身人都一定与犯罪集团有关，但布鲁兰之声与巅峰崖行会的热心市民合作，发现了令人震惊的证据，证实了这种联系。   
 
-  巅峰崖行会否认这些指控是匕首警卫驻军和城市中各个雇佣英雄团体之间长期紧张关系的最新冲突的体现。</P></BLOCKQUOTE></body>
+  巅峰崖行会否认这些指控是匕首警卫驻军和城市中各个雇佣英雄团体之间长期紧张关系的最新冲突的体现。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

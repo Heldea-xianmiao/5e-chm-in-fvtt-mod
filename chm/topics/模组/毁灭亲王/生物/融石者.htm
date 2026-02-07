@@ -66,7 +66,45 @@ Action</FONT></STRONG><BR><STRONG>黑土杖 Black Earth
 
 Rod。</STRONG>近战武器攻击：+6命中，触及5尺，一个目标。命中：5（1d6+2） 
 
-钝击伤害。融石者可以使用一个法术位来造成额外伤害，1环法术位造成额外2d8钝击伤害，超过1环，每一环增加1d8伤害。</P></body>
+钝击伤害。融石者可以使用一个法术位来造成额外伤害，1环法术位造成额外2d8钝击伤害，超过1环，每一环增加1d8伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

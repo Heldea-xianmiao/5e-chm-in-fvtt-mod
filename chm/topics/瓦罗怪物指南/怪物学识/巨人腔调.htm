@@ -64,4 +64,41 @@ style
 
      > </span>Runes and Tale Carvings</span></b><span style="  " 
 
-     ></span></p></td></tr></table><p   style=" MARGIN: 5pt 0pt 12pt;   mso-pagination: widow-orphan"><span><font>巨人进行书面交流时使用得最多的是一种改良过的符文字体，而矮人们都自认这些文字属于他们一族。这些字母在当今应用广泛，其使用者还包括许多矮人的传统敌人，比如兽人</font> orc<font>、巨人和类地精</font>  goblinoid<font>。由于巨人是首先出现于世界，因此显然这种文字的发明者理应是巨人，尽管矮人们对此表示强烈反对。</font><br><br><font>很多巨人本身是文盲或者半文盲</font><font>——</font><font>特别是山丘巨人、霜巨人和火巨人这些觉得学问毫无价值的种族。他们不用文字书写故事</font> <font>，而是在木头、冰块、石头甚至土壤中刻画图案来记载自己的故事</font> <font>。这些</font><font>“</font><font>故事刻绘</font><font>”</font><font>用高度篡改的方式和壁画的形式叙述了一些传说，还有一些重要事件或会面的相关故事。他们通常会使用巨人神系故事的某部分做指代。例如，曼诺的脸或头飘在另一个巨人的肩膀上，表示这个巨人是一个骗子或欺诈者；描写伊兰尼斯</font> Iallanis <font>从背后被刺中的场景，则表示爱情的背叛。巨人都可以顺利的理解这些象征和寓言画，但不了解巨人神话的观众则可能无法理解其中的含义。很多非巨人看到这些雕刻画时就好像巨人看到精灵语的诗篇一样感觉莫名其妙。</font></span></p></div></body></html>
+     ></span></p></td></tr></table><p   style=" MARGIN: 5pt 0pt 12pt;   mso-pagination: widow-orphan"><span><font>巨人进行书面交流时使用得最多的是一种改良过的符文字体，而矮人们都自认这些文字属于他们一族。这些字母在当今应用广泛，其使用者还包括许多矮人的传统敌人，比如兽人</font> orc<font>、巨人和类地精</font>  goblinoid<font>。由于巨人是首先出现于世界，因此显然这种文字的发明者理应是巨人，尽管矮人们对此表示强烈反对。</font><br><br><font>很多巨人本身是文盲或者半文盲</font><font>——</font><font>特别是山丘巨人、霜巨人和火巨人这些觉得学问毫无价值的种族。他们不用文字书写故事</font> <font>，而是在木头、冰块、石头甚至土壤中刻画图案来记载自己的故事</font> <font>。这些</font><font>“</font><font>故事刻绘</font><font>”</font><font>用高度篡改的方式和壁画的形式叙述了一些传说，还有一些重要事件或会面的相关故事。他们通常会使用巨人神系故事的某部分做指代。例如，曼诺的脸或头飘在另一个巨人的肩膀上，表示这个巨人是一个骗子或欺诈者；描写伊兰尼斯</font> Iallanis <font>从背后被刺中的场景，则表示爱情的背叛。巨人都可以顺利的理解这些象征和寓言画，但不了解巨人神话的观众则可能无法理解其中的含义。很多非巨人看到这些雕刻画时就好像巨人看到精灵语的诗篇一样感觉莫名其妙。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

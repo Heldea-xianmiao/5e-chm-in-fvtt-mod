@@ -796,7 +796,45 @@ style="  FONT-WEIGHT: bold; ; ;  ">（消耗3动作）。</SPAN></B><SPAN
 
 style="mso-ascii- mso-hansi- mso-bidi-font-weight: bold">使者释放出一道精神冲击。在使者30尺范围内的每一个生物都必须成功进行一次DC 23感知豁免，豁免失败则受到32（5d12）心灵伤害。此外，会解除该地区使者选择的生物和物体上的每一个法术。</SPAN><SPAN 
 
-style=" mso-bidi-font-weight: bold"><o:p></o:p></SPAN></P></body>
+style=" mso-bidi-font-weight: bold"><o:p></o:p></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

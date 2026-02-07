@@ -52,7 +52,45 @@ Dwarves</FONT><BR></STRONG>被索巴丁闭门不纳的矮人们在地表上度�
 
 “奈达尔”自称，更希望忽略他们与山地矮人之间的亲缘关系。<BR>有些丘陵矮人以行商为生，有些在安塞隆的其他种族中间安家生活，还有一些作为隐居的幸存者，在废墟或恶劣的环境中勉强度日。</P>
 
-<P>作为一个丘陵矮人，你有可能来自山地矮人伟大的国家或者其附近的地域，还可能来自与矮人聚居地大不相同的遥远小镇。或者你是四海为家，抚养你的社群走遍了大半个安赛隆，你在旅行中长大。</P></body>
+<P>作为一个丘陵矮人，你有可能来自山地矮人伟大的国家或者其附近的地域，还可能来自与矮人聚居地大不相同的遥远小镇。或者你是四海为家，抚养你的社群走遍了大半个安赛隆，你在旅行中长大。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

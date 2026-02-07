@@ -128,7 +128,45 @@ Will. </SPAN></B><SPAN
 
 style="">当你在进行攻击检定，属性检定或豁免检定的d20上骰出1时，你的影子会施展自己的意志，它可能会帮助或阻碍你或你周围的人。在下一次当你或你能看到的30英尺范围内的生物进行攻击检定、属性检定或豁免检定时，掷一个d4。如果数值是奇数，则掷骰总数减少该骰值。如果数字是偶数，则将掷骰总数增加该骰值。一旦这种效应发生，它不会再被启用，直到你完成一次短休或长休。</SPAN><SPAN 
 
-style="mso-bidi-font-family: 'Times New Roman'"><o:p></o:p></SPAN></P></body>
+style="mso-bidi-font-family: 'Times New Roman'"><o:p></o:p></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -122,7 +122,45 @@ kill</FONT></EM><BR><STRONG><FONT color=#800000>传奇动作Legendary
 
 Actions</FONT></STRONG><BR>奥喀斯拥有3传奇动作，用来选择执行下列动作项。祂每次只可选择执行一个传奇动作项，且必须在另一生物回合结束时执行。奥喀斯在其回合开始时恢复所有消耗的传奇动作数<BR><STRONG>攻击Attack。</STRONG>奥喀斯发动一次尾击或暗蚀箭攻击。<BR><STRONG>死亡逼近Creeping 
 
-Death（消耗2动作）。</STRONG>奥喀斯选择100尺内地面上可见的一点，直到奥喀斯的下个回合结束在该点生成一个半径10尺高60尺的旋转的柱状暗蚀能量，该区域的生物获得暗蚀易伤。</P></body>
+Death（消耗2动作）。</STRONG>奥喀斯选择100尺内地面上可见的一点，直到奥喀斯的下个回合结束在该点生成一个半径10尺高60尺的旋转的柱状暗蚀能量，该区域的生物获得暗蚀易伤。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

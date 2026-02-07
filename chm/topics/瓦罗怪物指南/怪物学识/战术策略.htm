@@ -162,4 +162,41 @@ mso-border-top-alt:none;border-bottom:none;mso-border-bottom-alt:none;" ><p><b><
 
 font-weight:bold;font-size:14.0000pt;" ><font>利用陷阱和手下</font></span></b><b><span style="color:rgb(128,0,0);
 
-font-weight:bold;font-size:14.0000pt;" ><span> </span>Use Traps and Minions</span></b><span></span></p></td></tr></table><p><span><font>眼魔可以动用巢穴中的许多资源，因此其甚至可以不必直面入侵者而击退他们。巢穴四处隐藏着许多潜伏的陷阱，有些地方甚至直接显露出来以作威胁，而这一切都有着不俗的杀伤力。另外，眼魔会在某些合适的地点安置一些手下作准备突袭，还会派出一大帮仆从碾压一队被陷阱和其他危害物削弱的敌人。眼魔的手下储备充足，而且可以随时招募，因此巢穴的主人可以毫不犹豫的将他们送往前线。</font></span></p></div></body></html>
+font-weight:bold;font-size:14.0000pt;" ><span> </span>Use Traps and Minions</span></b><span></span></p></td></tr></table><p><span><font>眼魔可以动用巢穴中的许多资源，因此其甚至可以不必直面入侵者而击退他们。巢穴四处隐藏着许多潜伏的陷阱，有些地方甚至直接显露出来以作威胁，而这一切都有着不俗的杀伤力。另外，眼魔会在某些合适的地点安置一些手下作准备突袭，还会派出一大帮仆从碾压一队被陷阱和其他危害物削弱的敌人。眼魔的手下储备充足，而且可以随时招募，因此巢穴的主人可以毫不犹豫的将他们送往前线。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

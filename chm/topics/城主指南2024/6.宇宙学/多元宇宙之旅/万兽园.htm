@@ -104,7 +104,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
 Adventures</FONT></H3>
 
-<P>万兽乡象征着原始、蓬勃的自然，以及在自然中绽放的纯粹生命力量。踏足此地的旅行者会感到精神焕发，思维敏捷，反应迅速，步伐轻快。他们对饥饿的感受更加敏锐，但在这里，食物与饮品的滋味也前所未有地美妙；睡眠深沉而安稳，醒来时精神抖擞。<BR>在万兽乡的冒险或许会触及善良的哲学与自然生命的冲突——尽管这些哲学宣扬珍爱生命，却往往将生命的物质本质置于抽象的法则与伦理之下。冒险者也可能与那些鄙视动物、认为其低等且无关紧要者产生冲突。</P></body>
+<P>万兽乡象征着原始、蓬勃的自然，以及在自然中绽放的纯粹生命力量。踏足此地的旅行者会感到精神焕发，思维敏捷，反应迅速，步伐轻快。他们对饥饿的感受更加敏锐，但在这里，食物与饮品的滋味也前所未有地美妙；睡眠深沉而安稳，醒来时精神抖擞。<BR>在万兽乡的冒险或许会触及善良的哲学与自然生命的冲突——尽管这些哲学宣扬珍爱生命，却往往将生命的物质本质置于抽象的法则与伦理之下。冒险者也可能与那些鄙视动物、认为其低等且无关紧要者产生冲突。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

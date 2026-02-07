@@ -62,7 +62,45 @@ Hulgaz</STRONG></FONT></font>
 
 霍加兹提供最后一次交易。她为每个角色都制作了一些代表她的炼狱祝福的小饰品。霍加兹把这些礼物赠给角色们以示尊重。为了强调她对角色们的敬意，每个饰品都是量身定制的，符合角色的志向与目标。<br>
 
-与往常一样，这些祝福既带来恩赐也带来了诅咒。但这一次，霍加兹不会接受角色们的拒绝。如果角色拒绝接受炼狱祝福，霍加兹会遗憾地摇头，并说道，如果她无法说服角色们接受九狱的邀请，她就不得不亲手把角色们送进地狱。随后，霍加兹不顾一切地疯狂进攻。</p></body>
+与往常一样，这些祝福既带来恩赐也带来了诅咒。但这一次，霍加兹不会接受角色们的拒绝。如果角色拒绝接受炼狱祝福，霍加兹会遗憾地摇头，并说道，如果她无法说服角色们接受九狱的邀请，她就不得不亲手把角色们送进地狱。随后，霍加兹不顾一切地疯狂进攻。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

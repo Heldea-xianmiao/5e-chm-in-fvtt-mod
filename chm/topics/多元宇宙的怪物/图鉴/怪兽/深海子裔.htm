@@ -46,7 +46,45 @@ Scion</FONT></STRONG><BR><EM>中型怪兽，普遍混乱邪恶</EM><BR>护甲等
 
 Screech（仅限人-鱼混合形态；短休或长休后充能）。</STRONG>深海子裔释放一阵300尺内都能听见的可怕尖嚎。其周围30尺内每个生物必须通过一次DC13的感知豁免，否则将在深海子裔下一回合结束前陷入震慑。此外，在水中时，只要深海子裔与其主人身处同一水体，心灵尖嚎也可以心灵感应之形式向主人传送其过去24小时的记忆，无论间距为何。<BR><STRONG><FONT color=#800000>附赠动作Actions</FONT></STRONG><BR><STRONG>变形Change 
 
-Shape。</STRONG>深海子裔变形为人-鱼混合形态，或变回其真实形态（人形）。除速度外，其各项数据均不改变。任何深海子裔着装或携带的装备均不会变形。深海子裔将在死亡时恢复其真实形态。</P></body>
+Shape。</STRONG>深海子裔变形为人-鱼混合形态，或变回其真实形态（人形）。除速度外，其各项数据均不改变。任何深海子裔着装或携带的装备均不会变形。深海子裔将在死亡时恢复其真实形态。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

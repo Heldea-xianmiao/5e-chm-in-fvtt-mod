@@ -60,7 +60,45 @@ Multiattack。</STRONG>扫帚进行两次近战攻击<BR><STRONG>帚柄猛击
 
 Broomstick。</STRONG>近战武器攻击：命中+5，触及 5 尺，单一目标。命中：5（1d4+3）钝击伤害<BR><STRONG><FONT color=#800000>反应</FONT></STRONG><BR><STRONG>活化战斗 Animated 
 
-Attack。</STRONG>如果活化战斗扫帚处于无意识状态且有一个生物握住了它，扫帚需要做一个敏捷检定，对抗该生物的力量检定。如果扫帚对抗成功，它会挣脱该生物的抓取并对其进行一次在攻击掷骰上具有优势的近战攻击。</P></body>
+Attack。</STRONG>如果活化战斗扫帚处于无意识状态且有一个生物握住了它，扫帚需要做一个敏捷检定，对抗该生物的力量检定。如果扫帚对抗成功，它会挣脱该生物的抓取并对其进行一次在攻击掷骰上具有优势的近战攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

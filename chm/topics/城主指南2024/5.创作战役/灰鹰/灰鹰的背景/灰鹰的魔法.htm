@@ -36,7 +36,45 @@ html,body {
 
 <P>普通人对魔法的了解取决于他们住在何处，以及是否认识能够施展魔法之人。除了居住在附近森林里的老隐士的古怪力量，一个与世隔绝的小村庄里的居民可能几代人都没有见过真正的魔法。他们对魔法持怀疑态度，只会低声提及其存在。</P>
 
-<P>相较之下，魔法在自由城市灰鹰之中非常普遍，魔法公会传授魔法并售卖施法者服务。许多法律规范了魔法的使用和滥用行为。法律将以魔法胁迫视为重大犯罪，并惩罚在可能伤害人身和财产安全的情况下公开使用魔法的行为。</P></body>
+<P>相较之下，魔法在自由城市灰鹰之中非常普遍，魔法公会传授魔法并售卖施法者服务。许多法律规范了魔法的使用和滥用行为。法律将以魔法胁迫视为重大犯罪，并惩罚在可能伤害人身和财产安全的情况下公开使用魔法的行为。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

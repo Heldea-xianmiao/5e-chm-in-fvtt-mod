@@ -86,7 +86,45 @@ html,body {
 
   event</STRONG>。事件可能在特定时间发生。例如，在说出密语后，门可能会保持一分钟的开启状态，或者增援部队可能会在警报响起后的2d4分钟时到达。</DIV></LI></UL>
 
-<P>如果角色们花时间解谜或与NPC交谈，你可以通过记录现实时间来估算花费的时间。<BR>大多数战斗遭遇持续不到1分钟（10回合），但考虑到角色们在战斗后需要几秒钟的时间来振作，大多数情况下将战斗四舍五入到1分钟也很合理。<BR>使用类似的原则来追踪小时的流逝，例如当角色们使用持续8小时的“伪装术”法术来伪装自己，从而渗透进要塞中时。在这种情况下，只有做了相当多的小型目标——或短休之类的事——才会花费一整个小时。</P></body>
+<P>如果角色们花时间解谜或与NPC交谈，你可以通过记录现实时间来估算花费的时间。<BR>大多数战斗遭遇持续不到1分钟（10回合），但考虑到角色们在战斗后需要几秒钟的时间来振作，大多数情况下将战斗四舍五入到1分钟也很合理。<BR>使用类似的原则来追踪小时的流逝，例如当角色们使用持续8小时的“伪装术”法术来伪装自己，从而渗透进要塞中时。在这种情况下，只有做了相当多的小型目标——或短休之类的事——才会花费一整个小时。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

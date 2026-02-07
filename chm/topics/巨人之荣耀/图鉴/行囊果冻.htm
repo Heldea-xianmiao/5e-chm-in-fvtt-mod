@@ -58,7 +58,45 @@ style="BORDER-TOP: black 1px solid; FONT-FAMILY: 华文仿宋; BORDER-RIGHT: bla
 
 <STRONG 
 
-style="FONT-WEIGHT: bold"><FONT color=#800000>动作Actions</FONT></STRONG><br><STRONG >多重攻击Multiattack。</STRONG>行囊果冻发起两次伪足攻击。<br><STRONG >伪足Pseudopod。</STRONG>近战武器攻击：命中+3，触及5尺，单一目标。命中：8（2d6+1）点强酸伤害。如果目标的体型在中型或以下，则它将陷入<STRONG >擒抱Grappled </STRONG>状态（逃脱DC11），受擒抱者为尝试挣脱这一擒抱所做的属性检定具有劣势。<br></P></body>
+style="FONT-WEIGHT: bold"><FONT color=#800000>动作Actions</FONT></STRONG><br><STRONG >多重攻击Multiattack。</STRONG>行囊果冻发起两次伪足攻击。<br><STRONG >伪足Pseudopod。</STRONG>近战武器攻击：命中+3，触及5尺，单一目标。命中：8（2d6+1）点强酸伤害。如果目标的体型在中型或以下，则它将陷入<STRONG >擒抱Grappled </STRONG>状态（逃脱DC11），受擒抱者为尝试挣脱这一擒抱所做的属性检定具有劣势。<br></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

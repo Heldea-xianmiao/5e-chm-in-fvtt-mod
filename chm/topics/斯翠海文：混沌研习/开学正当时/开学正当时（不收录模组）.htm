@@ -34,7 +34,45 @@ html,body {
 
 个角色，所有的冒险都发生于斯翠海文校园内外。在这些冒险中，玩家将扮演正在斯翠海文读大学的学生，并凭借自己的能力在情节波澜起伏的故事中探索战斗、成长为一位英雄。</P>
 
-<P>第一章“斯翠海文的生活”和第二章和“角色选项”章节内，涵盖了玩家扮演斯翠海文学生所需要的全部信息。而每一次冒险都对应了角色们在学校中的度过的一年，比如《校园骚乱记》发生在学生们的第一学年，而《猎杀斗法塔》发生在第二个学年，以此类推。这些冒险故事都可以被单独使用，也可以作为一个长篇战役来连续游玩。</P></body>
+<P>第一章“斯翠海文的生活”和第二章和“角色选项”章节内，涵盖了玩家扮演斯翠海文学生所需要的全部信息。而每一次冒险都对应了角色们在学校中的度过的一年，比如《校园骚乱记》发生在学生们的第一学年，而《猎杀斗法塔》发生在第二个学年，以此类推。这些冒险故事都可以被单独使用，也可以作为一个长篇战役来连续游玩。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

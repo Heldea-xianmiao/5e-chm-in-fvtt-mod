@@ -106,7 +106,45 @@ Feat</FONT></STRONG><BR>在四级时，你可以从上面的一级专长中或�
 
 <DIV><STRONG>战地施法者War Caster</STRONG>  （见《玩家手册》）</DIV></LI></UL>
 
-<P>无论你选择了哪个背景，包括索兰尼亚骑士和高等术法会大法师，你都会在四级时获得如上文所列出的额外专长。如果你选择的专长有任何先决条件，你必须满足所有的先决条件。</P></body>
+<P>无论你选择了哪个背景，包括索兰尼亚骑士和高等术法会大法师，你都会在四级时获得如上文所列出的额外专长。如果你选择的专长有任何先决条件，你必须满足所有的先决条件。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

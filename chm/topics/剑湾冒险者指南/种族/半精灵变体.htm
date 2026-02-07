@@ -36,7 +36,45 @@ html,body {
 
 <P>拥有<STRONG>木精灵血统</STRONG>的半精灵可以选择木精灵武器训练，轻捷步伐，或者是野性面具特性。<BR>拥有<STRONG>月精灵血统</STRONG>或者<STRONG>日精灵血统</STRONG>的半精灵可以选择高等精灵武器训练或者戏法特性。<BR>拥有<STRONG>卓尔精灵血统</STRONG>的半精灵可以选择卓尔魔法特性。<BR>拥有<STRONG>水生精灵血统</STRONG>的半精灵可以选择30尺的游泳速度。</P>
 
-<P><STRONG>注：</STRONG>在剑湾冒险者指南中，日精灵和月精灵使用玩家手册中的高等精灵的数据。</P></body>
+<P><STRONG>注：</STRONG>在剑湾冒险者指南中，日精灵和月精灵使用玩家手册中的高等精灵的数据。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

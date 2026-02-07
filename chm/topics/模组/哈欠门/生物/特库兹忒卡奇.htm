@@ -58,7 +58,45 @@ Pseudopod。</STRONG>近战武器攻击：命中+5，触及 10 尺，单一目�
 
 Spit Acid（充能 5-6）。</STRONG>特库兹忒卡奇喷涂酸液并覆盖一片长 30 尺宽 5 尺的线状区域。在此区域<BR>的所有生物必须通过一次 
 
-DC 13 的敏捷豁免，豁免失败则受到 18（4d8）的强酸伤害，成功则伤害减半。</P></body>
+DC 13 的敏捷豁免，豁免失败则受到 18（4d8）的强酸伤害，成功则伤害减半。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

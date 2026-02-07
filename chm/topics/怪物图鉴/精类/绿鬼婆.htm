@@ -664,9 +664,47 @@ style="mso-bidi-font-style: normal"><SPAN
 
 style="FONT-SIZE: 8pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'; mso-bidi-font-style: normal; mso-bidi-font-weight: normal; mso-ansi-font-weight: bold; mso-ansi-font-style: italic"><FONT face=宋体>。</FONT></SPAN></I></B><SPAN 
 
-style="FONT-SIZE: 8pt; FONT-FAMILY: Calibri; mso-spacerun: 'yes'; mso-fareast-font-family: 'STHeiti light';"><FONT face="STHeiti light">鬼婆以魔法变为隐形，直到它发动攻击，施展法术或终止专注（如同专注法术）。隐形时，它不会留下任何存在的物理线索，因此不会被任何非魔法的手段侦查到。它随身携带的所有装备也一并进入隐形状态。</FONT></SPAN><!--EndFragment--></P></BODY>
+style="FONT-SIZE: 8pt; FONT-FAMILY: Calibri; mso-spacerun: 'yes'; mso-fareast-font-family: 'STHeiti light';"><FONT face="STHeiti light">鬼婆以魔法变为隐形，直到它发动攻击，施展法术或终止专注（如同专注法术）。隐形时，它不会留下任何存在的物理线索，因此不会被任何非魔法的手段侦查到。它随身携带的所有装备也一并进入隐形状态。</FONT></SPAN><!--EndFragment--></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

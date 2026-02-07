@@ -1012,7 +1012,45 @@ style="FONT-WEIGHT:  bold; mso-bidi-font-family: 黑体"   >（1/日）。</SPAN
 
 style="mso-bidi-font-family:  黑体"   >瘟疫传播者以自己为中心释放出一团30尺半径的有毒气体。每个在毒气内开始自己回合的生物必须进行一次DC12的体质豁免，豁免失败则受到14（4d6）点毒素伤害，成功则伤害减半。一个被此伤害将生命值降至0的生物会在一分钟复活为一个丧尸。这个丧尸使用瘟疫传播者的先攻，并在其行动结束后立即行动。</SPAN><SPAN 
 
-style="mso-bidi-font-family:  黑体"   ><o:p></O:P></SPAN></P></body>
+style="mso-bidi-font-family:  黑体"   ><o:p></O:P></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

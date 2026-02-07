@@ -36,7 +36,45 @@ html,body {
 
 Emotions</em></font>（豁免DC15）。这套护甲在每日黎明时分恢复1d3发已消耗的充能数。</p>
 
-<p><font color=#800000><strong>攫之鞭 Grasping Whip</strong></font><br><em>武器（鞭），珍稀</em><br>你用这把魔法鞭子发动的攻击检定与其伤害掷骰具有+1加值。当你用这把武器命中生物或是物件时，若目标的体型不超过大型，你就能作为攻击伤害的代替，将那个生物或物件向你拉近5尺。</p></body>
+<p><font color=#800000><strong>攫之鞭 Grasping Whip</strong></font><br><em>武器（鞭），珍稀</em><br>你用这把魔法鞭子发动的攻击检定与其伤害掷骰具有+1加值。当你用这把武器命中生物或是物件时，若目标的体型不超过大型，你就能作为攻击伤害的代替，将那个生物或物件向你拉近5尺。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

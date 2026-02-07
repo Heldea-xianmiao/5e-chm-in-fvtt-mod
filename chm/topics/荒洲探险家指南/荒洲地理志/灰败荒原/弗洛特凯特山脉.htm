@@ -34,7 +34,45 @@ Alps的山脉是一片壮丽的、被雪覆盖的土地，散落着松树和陡�
 
 <P>弗洛特凯特山脉的冒险Flotket Alps Adventures<BR>冰封的塔尖和积雪的小路蜿蜒穿过这些山脉，带领那些在阿尔卑斯山生存下来的旅行者们迎接新的挑战和奖励。<BR>值得一试（高级）A Deserving Dare (High 
 
-Level)。隐藏在浅浅的冰缝里的是冬星扬迪斯的巢穴，它是一头有着纯白皮毛的人面狮身人面兽。它守护着一群英勇的勇士的坟墓他们在灾难的最后战斗中牺牲了自己。那些想要得到这些传奇人物的武器和工具的人必须通过无数的挑战向扬迪斯证明他们的价值，而斯芬克斯对那些失败的人毫不留情。</P></body>
+Level)。隐藏在浅浅的冰缝里的是冬星扬迪斯的巢穴，它是一头有着纯白皮毛的人面狮身人面兽。它守护着一群英勇的勇士的坟墓他们在灾难的最后战斗中牺牲了自己。那些想要得到这些传奇人物的武器和工具的人必须通过无数的挑战向扬迪斯证明他们的价值，而斯芬克斯对那些失败的人毫不留情。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

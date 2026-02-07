@@ -76,7 +76,45 @@ html,body {
 
 闪电，雷鸣<BR>感官 真实视觉60尺，被动察觉20<BR>语言 
 
-通用语，巨人语<BR>挑战等级 16（15000XP）<BR><BR><STRONG>两栖。</STRONG>巨人可以在空气和水中呼吸。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>巨人进行两次闪电之剑攻击或者使用两次风之投枪。<BR><STRONG>闪电之剑。</STRONG>近战武器攻击：命中+14，触及15尺，单一目标。命中：40（9d6+9）闪电伤害。<BR><STRONG>风之投枪。</STRONG>巨人将风汇聚成标枪般的形态，并将其投向位于600尺内它能看到的一个生物。标枪被视作魔法武器，并对目标造成19（3d6+9）穿刺伤害，必定命中。标枪在它命中后消失。<BR><STRONG><FONT color=#800000>传奇动作</FONT></STRONG><BR>巨人可进行3个传奇动作，从下列选项中选择。一次只能使用一个传奇动作选项，并且只能在另一个生物的回合结束时使用，巨人在其回合开始时恢复其消耗的传奇动作。<BR><STRONG>烈风骤起。</STRONG>巨人瞄准位于60尺内它能看到的一个生物，并在它身边创造一道魔法阵风。目标必须成功通过一个DC18的力量豁免否则朝巨人选择的任何水平方向上被推开20尺。<BR><STRONG>狂雷突降（2个动作）。</STRONG>巨人朝位于600尺内它能看到的一个生物投出一道雷电。目标必须进行一个DC18的敏捷豁免，豁免失败受到22（4d10）雷鸣伤害，成功则受一半伤害。<BR><STRONG>风暴合一（3个动作）。</STRONG>巨人消失，自身散入其巢穴周围的风暴中。巨人可以在任何它的回合开始时结束这个效果，再次成为一名巨人并出现在它所选择的其巢穴的任何位置。在分散期间，除了巢穴动作外巨人不能进行任何动作，它不能成为攻击，法术，或者其他效果的目标。巨人不能在它的巢穴外使用该能力，如果别的生物使用了操控天气法术或者类似的法术来平息风暴，巨人也不能使用该能力。</P></body>
+通用语，巨人语<BR>挑战等级 16（15000XP）<BR><BR><STRONG>两栖。</STRONG>巨人可以在空气和水中呼吸。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>巨人进行两次闪电之剑攻击或者使用两次风之投枪。<BR><STRONG>闪电之剑。</STRONG>近战武器攻击：命中+14，触及15尺，单一目标。命中：40（9d6+9）闪电伤害。<BR><STRONG>风之投枪。</STRONG>巨人将风汇聚成标枪般的形态，并将其投向位于600尺内它能看到的一个生物。标枪被视作魔法武器，并对目标造成19（3d6+9）穿刺伤害，必定命中。标枪在它命中后消失。<BR><STRONG><FONT color=#800000>传奇动作</FONT></STRONG><BR>巨人可进行3个传奇动作，从下列选项中选择。一次只能使用一个传奇动作选项，并且只能在另一个生物的回合结束时使用，巨人在其回合开始时恢复其消耗的传奇动作。<BR><STRONG>烈风骤起。</STRONG>巨人瞄准位于60尺内它能看到的一个生物，并在它身边创造一道魔法阵风。目标必须成功通过一个DC18的力量豁免否则朝巨人选择的任何水平方向上被推开20尺。<BR><STRONG>狂雷突降（2个动作）。</STRONG>巨人朝位于600尺内它能看到的一个生物投出一道雷电。目标必须进行一个DC18的敏捷豁免，豁免失败受到22（4d10）雷鸣伤害，成功则受一半伤害。<BR><STRONG>风暴合一（3个动作）。</STRONG>巨人消失，自身散入其巢穴周围的风暴中。巨人可以在任何它的回合开始时结束这个效果，再次成为一名巨人并出现在它所选择的其巢穴的任何位置。在分散期间，除了巢穴动作外巨人不能进行任何动作，它不能成为攻击，法术，或者其他效果的目标。巨人不能在它的巢穴外使用该能力，如果别的生物使用了操控天气法术或者类似的法术来平息风暴，巨人也不能使用该能力。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

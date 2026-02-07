@@ -56,7 +56,45 @@ html,body {
 
   <STRONG>机敏（充能6）：</STRONG>维伦那动物能以附赠动作执行回避动作。<BR>8    
 
-  <STRONG>无踪步：</STRONG>除非使用魔法手段，否则维伦那动物是无法被追踪的，它不会留下任何足迹或其他踪迹。</P></BLOCKQUOTE></body>
+  <STRONG>无踪步：</STRONG>除非使用魔法手段，否则维伦那动物是无法被追踪的，它不会留下任何足迹或其他踪迹。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

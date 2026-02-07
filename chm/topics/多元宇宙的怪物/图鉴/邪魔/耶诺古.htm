@@ -126,7 +126,45 @@ Actions</FONT></STRONG><BR><STRONG>横行Rampage。</STRONG>耶诺古以近战�
 
 Actions</FONT></STRONG><BR>耶诺古拥有3传奇动作，用来选择执行下列动作项。祂每次只可选择执行一个传奇动作项，且必须在另一生物回合结束时执行。耶诺古在其回合开始时恢复所有消耗的传奇动作数<BR><STRONG>冲锋Charge。</STRONG>耶诺古移动至多相当于其速度的距离。<BR><STRONG>拍走Swat 
 
-Away。</STRONG>耶诺古发动一次链枷攻击，如果这次攻击命中，目标必须通过DC24的力量豁免否则被直线推离耶诺古15尺。如果豁免失败且骰值比DC相差5或更多，目标同时陷入倒地。<BR><STRONG>野蛮Savage（消耗2动作）。</STRONG>耶诺古对10尺内每个生物分别发动一次啃咬攻击。</P></body>
+Away。</STRONG>耶诺古发动一次链枷攻击，如果这次攻击命中，目标必须通过DC24的力量豁免否则被直线推离耶诺古15尺。如果豁免失败且骰值比DC相差5或更多，目标同时陷入倒地。<BR><STRONG>野蛮Savage（消耗2动作）。</STRONG>耶诺古对10尺内每个生物分别发动一次啃咬攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

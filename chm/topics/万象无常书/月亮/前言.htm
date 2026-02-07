@@ -12,7 +12,45 @@
 
 <body><h1><IMG alt="" src="../pic/moon.jpg" align=right height=600 >第十一章：月亮 Moon 
 
-</h1><p>这一章详细描述了月之潜猎者，一个由邪恶兽化人组成的盗贼公会，地下城主可以将其用于任何D&amp;D场景，作为罪犯，敌对的宝藏猎人，或赞助者。从万象无常牌里抽出月亮牌的角色们可能会与月之潜猎者相遇，因为这张牌能实现月之潜猎者想实现的愿望。</p></body>
+</h1><p>这一章详细描述了月之潜猎者，一个由邪恶兽化人组成的盗贼公会，地下城主可以将其用于任何D&amp;D场景，作为罪犯，敌对的宝藏猎人，或赞助者。从万象无常牌里抽出月亮牌的角色们可能会与月之潜猎者相遇，因为这张牌能实现月之潜猎者想实现的愿望。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

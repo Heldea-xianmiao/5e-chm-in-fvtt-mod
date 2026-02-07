@@ -68,7 +68,45 @@ Gloom（充能6）。</STRONG>废陋巨人短暂咒唤出一阵缠向敌人的�
 
 ）。</STRONG>当废陋巨人被一个位于其60尺内的它可见的生物伤害时，废陋巨人强迫该生物进行一次DC16的体质豁免，豁免失败者陷入中毒状态，直到其下一回合结束。</P>
 
-<P><FONT color=#808080>（注：这个巨人同属于废陋巨人和使用魔法的巨人两个分类，因此在CHM中出现两次。）</FONT></P></body>
+<P><FONT color=#808080>（注：这个巨人同属于废陋巨人和使用魔法的巨人两个分类，因此在CHM中出现两次。）</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

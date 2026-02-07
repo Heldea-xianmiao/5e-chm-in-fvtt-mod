@@ -44,7 +44,45 @@ Vortex（充能5~6）。</strong>玛拉希克斯在位于其90尺他可见的一
 
 Actions</strong></font><br>玛拉希克斯拥有3传奇动作，用来选择执行下列动作项。他每次只可选择执行一个传奇动作项，且必须在另一生物回合结束时执行。玛拉希克斯在其回合开始时恢复所有消耗的传奇动作数。<br><strong>魔驱电掣Fiendish 
 
-Stride。</strong>玛拉希克斯移动至多等于其速度的距离且不会触发借机攻击。当玛拉希克斯移动经过了一个生物5尺内时，该生物受到5（1d10）闪电伤害。一个生物在一回合内只会受到一次该伤害。<br><strong>攻击Attack（消耗2动作）。</strong>玛拉希克斯发动一次锻锤或鞭攻击。<br></p></body>
+Stride。</strong>玛拉希克斯移动至多等于其速度的距离且不会触发借机攻击。当玛拉希克斯移动经过了一个生物5尺内时，该生物受到5（1d10）闪电伤害。一个生物在一回合内只会受到一次该伤害。<br><strong>攻击Attack（消耗2动作）。</strong>玛拉希克斯发动一次锻锤或鞭攻击。<br></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

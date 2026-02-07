@@ -74,7 +74,45 @@ Kiss</FONT></STRONG><br><EM>大型异怪（眼魔），普遍中立邪恶</EM>
 
 <strong>触须Tentacle。</strong>近战武器攻击：命中+8，触及20尺，单一目标 。命中：11（2d6+4）穿刺伤害，若目标为巨型或更小的生物，则其还会被<font color=maroon><strong>擒抱</strong></font>（逃脱DC14）并陷入<font color=maroon><strong>束缚</strong></font>状态直至擒抱结束， 此时死吻眼魔无法使用同一根触须擒抱另一个生物。死吻眼魔共拥有十根触须。<br>
 
-<strong>吸血Blood Drain。</strong>一个正受死吻眼魔触须擒抱的生物必须进行一次DC16的体质豁免。豁免失败则受22（4d10）的闪电伤害，同时死吻眼魔恢复该伤害值一半的HP。</p></body>
+<strong>吸血Blood Drain。</strong>一个正受死吻眼魔触须擒抱的生物必须进行一次DC16的体质豁免。豁免失败则受22（4d10）的闪电伤害，同时死吻眼魔恢复该伤害值一半的HP。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -1064,7 +1064,45 @@ Void。</STRONG>这张黑色的卡片将带来灾难。你的灵魂从躯体抽�
 
 <P><STRONG>边栏：关于树敌 A Question of Enmity</STRONG>   <BR>万象无常牌 
 
-中有两张卡牌可能会使某个存在对抽卡的角色产生敌意。“火焰”卡牌导致的敌意是显而易见的，角色会因此多次遭遇魔鬼的恶毒算计。但找到这名魔鬼却并不容易。在最终对抗魔鬼之前，角色可能会多次与它的盟友和手下发生冲突。<BR>“浪人”卡牌导致的敌意来源于抽卡的角色以为是朋友或盟友的角色，因此不易察觉。作为DM，你应该等待最有戏剧效果的时刻展示这种敌意，让玩家们不断猜测背叛者是谁。</P></body>
+中有两张卡牌可能会使某个存在对抽卡的角色产生敌意。“火焰”卡牌导致的敌意是显而易见的，角色会因此多次遭遇魔鬼的恶毒算计。但找到这名魔鬼却并不容易。在最终对抗魔鬼之前，角色可能会多次与它的盟友和手下发生冲突。<BR>“浪人”卡牌导致的敌意来源于抽卡的角色以为是朋友或盟友的角色，因此不易察觉。作为DM，你应该等待最有戏剧效果的时刻展示这种敌意，让玩家们不断猜测背叛者是谁。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

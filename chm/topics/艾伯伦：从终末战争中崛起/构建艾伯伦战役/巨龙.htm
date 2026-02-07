@@ -58,7 +58,45 @@ NPCs<BR>d6 NPC</STRONG><BR>1 一个密阁的法师代理人企图消除所有过
 
 <P>另一个可能的情形是冒险者与密阁公开合作以收集有关预言的信息并共同对抗砂主。在这种情况下，密阁可以被视为一个组织；详见第一章的“不朽者”部分<BR>密阁任务密阁任务表列出几种可能的冒险者被要求（知情或不知情地）推进密阁的计划的方式，而密阁冒险表则提供了一些密阁的行动如何触发冒险的更多情形。</P>
 
-<P>密阁任务表<BR>d6 任务<BR>1 收集崭新的龙晶来扩建或修复观测台。<BR>2 寻找一群必须被消灭的人来实现预言中的一节。<BR>3 追寻是谁杀死了角色的巨龙上头的另一个下属。<BR>4 保护密阁安全屋免受敌对巨龙的攻击。<BR>5 盗取地方学者的研究成果以防他们发现密阁的行踪。<BR>6 重建一个能让一段预言重见天日的古老仪式。<BR></P></body>
+<P>密阁任务表<BR>d6 任务<BR>1 收集崭新的龙晶来扩建或修复观测台。<BR>2 寻找一群必须被消灭的人来实现预言中的一节。<BR>3 追寻是谁杀死了角色的巨龙上头的另一个下属。<BR>4 保护密阁安全屋免受敌对巨龙的攻击。<BR>5 盗取地方学者的研究成果以防他们发现密阁的行踪。<BR>6 重建一个能让一段预言重见天日的古老仪式。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

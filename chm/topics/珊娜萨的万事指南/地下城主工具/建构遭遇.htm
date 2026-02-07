@@ -96,7 +96,45 @@ html,body {
 
 <P><BR><STRONG><FONT color=#800000>快速配对</FONT></STRONG><BR>上述的原则假设你很注重战斗遭遇的平衡以及你有足够的时间来处理它们。假设你没有足够的时间，或者是你想要更简单但不太精确的指引，下方提供的『快速配对』表格能给你另一个选择。</P>
 
-<P>这张表格给你一个方式配对特定等级的角色与指定数量个怪兽的方式。表格中列出了在一只、两只、四只怪物配合不同等级的单位角色所对应的挑战难度。此外，查看等级3的横行，你可以发现一只CR1/2、两只CR1/4与四只CR1/8的怪物对应于一位等级3的角色。</P></body>
+<P>这张表格给你一个方式配对特定等级的角色与指定数量个怪兽的方式。表格中列出了在一只、两只、四只怪物配合不同等级的单位角色所对应的挑战难度。此外，查看等级3的横行，你可以发现一只CR1/2、两只CR1/4与四只CR1/8的怪物对应于一位等级3的角色。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -124,5 +124,43 @@ plunge</FONT></STRONG>  <BR><EM>第14级深海意志</EM><EM>宗主</EM><EM>
 
 特性<BR></EM>你可以魔法性地打开一个前往水域目的地的临时通道。以一个动作，你可以传送自己和最多五个30尺范围内的可见自愿生物。在一团触须的漩涡中，你们全部消失，然后在至多1英里以内的你曾见过的水域（至少要有池塘的大小）或者那片水域周围的30尺范围内。你们当中的每一个人都出现在距离其他人30尺以内的一个未占据空间内。<BR>一旦你使用了这一特性，直到你完成一次短休或长休为止你都不能再次使用它。</P>
 
-<P> </P></BODY></HTML>
+<P> </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

@@ -54,7 +54,45 @@ Fortitude。</STRONG>当丧尸因受到非光耀且非重击伤害使生命值�
 
 <BR><STRONG>多重攻击 Multiattack。</STRONG>丧尸进行两次近战攻击。<BR><STRONG>强力猛击 Empowered 
 
-Slam。</STRONG>近战武器攻击：命中+7，触及 5 尺，单一目标。命中：7（1d6+4）的钝击<BR>伤害和 7（2d6）的暗蚀伤害。</P></body>
+Slam。</STRONG>近战武器攻击：命中+7，触及 5 尺，单一目标。命中：7（1d6+4）的钝击<BR>伤害和 7（2d6）的暗蚀伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

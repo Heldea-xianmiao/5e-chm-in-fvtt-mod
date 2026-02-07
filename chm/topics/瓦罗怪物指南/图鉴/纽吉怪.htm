@@ -160,7 +160,45 @@ Climb.</STRONG>纽吉怪可以攀爬在难以攀爬的表面上，包括倒吊�
 
 3)  
 
-挥砍伤害<BR><STRONG>奴役Enslave（长休或短休后充能）。</STRONG>纽吉怪指定一个30尺内它能看见的生物。该生物必须成功通过DC14的感知豁免，或者被纽吉怪魔法性地魅惑一天。被魅惑对象不能违抗纽吉怪的命令，也不能作出反应，纽吉怪和奴役对象能够最远在一英里内心灵交流。无论何时被魅惑对象受到伤害，其可以再次进行豁免检定，成功则自动结束该效应。</P></body>
+挥砍伤害<BR><STRONG>奴役Enslave（长休或短休后充能）。</STRONG>纽吉怪指定一个30尺内它能看见的生物。该生物必须成功通过DC14的感知豁免，或者被纽吉怪魔法性地魅惑一天。被魅惑对象不能违抗纽吉怪的命令，也不能作出反应，纽吉怪和奴役对象能够最远在一英里内心灵交流。无论何时被魅惑对象受到伤害，其可以再次进行豁免检定，成功则自动结束该效应。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -82,6 +82,43 @@ Woll<BR>
 
 描绘了两名君主的肃正容貌以及他们之间的拉克桑信标。克灵王朝的光辉女王莱拉斯·克灵和敦达里安帝国的国王伯特兰·敦达尔从未见过面，但他们的冲突将影响战火不绝的荒洲大陆上所有生命的命运和未来。</P>
 
-<P><EM>免责声明：<BR>荒洲大陆和其中的所有民族都是虚构的，其主要是为了通过史诗般的战斗和胜利来使您和您的朋友得以进入一个充斥着探索，想象和深刻感情的世界。我们建议您既要拥抱成功也能承受失败，既要拥抱愉悦也能承受悲伤，并且在照顾在您的冒险中获得的宠物或动物时要保持警惕之心。海岸巫师会和关键角色对由于动物伙伴或驯养的小动物遭受到持续性危险和致命挑战而产生的精神创伤不承担任何责任，同样我们也对被动感知低下所可能导致无法注意到动物们的突然逃脱的任何事件也不承担任何责任。<BR></P></EM></body>
+<P><EM>免责声明：<BR>荒洲大陆和其中的所有民族都是虚构的，其主要是为了通过史诗般的战斗和胜利来使您和您的朋友得以进入一个充斥着探索，想象和深刻感情的世界。我们建议您既要拥抱成功也能承受失败，既要拥抱愉悦也能承受悲伤，并且在照顾在您的冒险中获得的宠物或动物时要保持警惕之心。海岸巫师会和关键角色对由于动物伙伴或驯养的小动物遭受到持续性危险和致命挑战而产生的精神创伤不承担任何责任，同样我们也对被动感知低下所可能导致无法注意到动物们的突然逃脱的任何事件也不承担任何责任。<BR></P></EM><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>

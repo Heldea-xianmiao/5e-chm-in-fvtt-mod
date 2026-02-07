@@ -26,7 +26,45 @@
 
 <P>类地精的大军在宗教方面没有任何的灵活性可言，他们会消除任何进行任何抵抗的精神领袖或献身神庙的人。被判断为无害的神的神职人员，如收获之神，可以免遭这种命运。当军队遇到战斗或征服神的牧师时，他们会给出一个简单的选择：转向马格鲁比耶崇拜，或证明你的神在战斗方面的优越性。那些对其他神保持忠诚的牧师很少能坚持很久，因为牧师将面对一连串的敌人——其数量足以让牧师死去，而其他人则会看到抵抗是毫无意义的。马格鲁比耶最终只提供了两种选择：投降或死亡。</P>
 
-<P>如果这个定居点有专门供奉被征服的神的圣地，这些神所就会被改造成至大者的神殿。所有被打败的神的象征物都会被推翻、毁灭或破坏。马赛克与彩色玻璃窗被砸作齑粉，旗帜与纹饰浸透了鲜血，雕像被锁链封禁了起来。原本神圣的祭坛化作了断头台，马格鲁比耶那血迹斑斑的战斧将在其上砍下一切拒绝投降的人的头颅。</P></body>
+<P>如果这个定居点有专门供奉被征服的神的圣地，这些神所就会被改造成至大者的神殿。所有被打败的神的象征物都会被推翻、毁灭或破坏。马赛克与彩色玻璃窗被砸作齑粉，旗帜与纹饰浸透了鲜血，雕像被锁链封禁了起来。原本神圣的祭坛化作了断头台，马格鲁比耶那血迹斑斑的战斧将在其上砍下一切拒绝投降的人的头颅。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

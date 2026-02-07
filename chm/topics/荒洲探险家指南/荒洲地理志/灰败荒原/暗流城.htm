@@ -68,7 +68,45 @@ Durlon（守序中立，非女性，人类间谍）作为帝国间谍居住在 S
 
 Schrieber（参见第 2 章中的“Dwendalian 帝国”）。角色们从雇佣他们寻找间谍的派系中得知了 Nelia 
 
-的工作。根据阵营的不同，角色必须要么护送内拉安全离开定居点，以便向奥利弗报告，要么要求杀死内拉以泄露定居点的秘密。无论哪种方式，找到内拉都不是一件容易的事。间谍精通他们的手艺，并与逃跑的罪犯和恶棍混在一起。</P></body>
+的工作。根据阵营的不同，角色必须要么护送内拉安全离开定居点，以便向奥利弗报告，要么要求杀死内拉以泄露定居点的秘密。无论哪种方式，找到内拉都不是一件容易的事。间谍精通他们的手艺，并与逃跑的罪犯和恶棍混在一起。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

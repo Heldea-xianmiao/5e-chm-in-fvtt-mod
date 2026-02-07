@@ -40,7 +40,45 @@ Peristyle</FONT></STRONG><BR>斯科福斯的牛头人承认所有的众神，不
 
 <P><STRONG><FONT color=#800000>墨癸司的圣杯 Mogis's 
 
-Chalice</FONT></STRONG><BR>斯科福斯有许多供奉墨癸司的宏伟寺庙，与通常供奉愤怒之神的简陋圣坛形成了鲜明对比。在城邦中心，有一座比其他庙宇更大、更华丽的神殿，那是圣地和牛头人政府的所在地，被称为墨癸司的圣杯。<BR>在寺庙入口两侧的两个巨大铜碗里火焰一直在燃烧。神庙的屋顶上环绕着装有有铁尖的垛口，许多都用头骨做装饰。入口和祭坛的红色黏土通常被新鲜血液涂抹。在内部，黑色大理石圣坛上悬挂着一尊巨大的牛头人头像。<BR>传说任何人、牛头人或别的什么人，在这座墨癸司的神殿主厅杀死了一名憎恶的对手或敌人，他们将会的得到愤怒之神的祝福。即使是斯科福斯的牛头人也不会干涉这样的战斗，胜利者总是被允许离开而不会有更多的流血。</P></body>
+Chalice</FONT></STRONG><BR>斯科福斯有许多供奉墨癸司的宏伟寺庙，与通常供奉愤怒之神的简陋圣坛形成了鲜明对比。在城邦中心，有一座比其他庙宇更大、更华丽的神殿，那是圣地和牛头人政府的所在地，被称为墨癸司的圣杯。<BR>在寺庙入口两侧的两个巨大铜碗里火焰一直在燃烧。神庙的屋顶上环绕着装有有铁尖的垛口，许多都用头骨做装饰。入口和祭坛的红色黏土通常被新鲜血液涂抹。在内部，黑色大理石圣坛上悬挂着一尊巨大的牛头人头像。<BR>传说任何人、牛头人或别的什么人，在这座墨癸司的神殿主厅杀死了一名憎恶的对手或敌人，他们将会的得到愤怒之神的祝福。即使是斯科福斯的牛头人也不会干涉这样的战斗，胜利者总是被允许离开而不会有更多的流血。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

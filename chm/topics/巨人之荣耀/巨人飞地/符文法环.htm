@@ -96,7 +96,45 @@ Flayer</STRONG>
 
 giant</STRONG> 
 
-造船师正和她来自“火巨人遭遇表”（见第三章）的学徒一起研究着古代火巨人文明所建造的飞行船之秘。她会索要魔法金属宝藏作为进入法环的通行费。她还接受一个据说是符文巨像的惰性核心（见第六章）。</P></body>
+造船师正和她来自“火巨人遭遇表”（见第三章）的学徒一起研究着古代火巨人文明所建造的飞行船之秘。她会索要魔法金属宝藏作为进入法环的通行费。她还接受一个据说是符文巨像的惰性核心（见第六章）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

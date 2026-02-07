@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>夺心魔Mind Flayers</FONT></STRONG></P>
 
-<P>在《怪物图鉴》中有描述的，是通过造具来创造的，造具的过程始于将灵吸蝌蚪植入人形宿主的大脑。在新家住了大约7天后，蝌蚪就把它的主人变成了灵吸怪。这种新的创造通常不会保留生物生前的记忆。</P></body>
+<P>在《怪物图鉴》中有描述的，是通过造具来创造的，造具的过程始于将灵吸蝌蚪植入人形宿主的大脑。在新家住了大约7天后，蝌蚪就把它的主人变成了灵吸怪。这种新的创造通常不会保留生物生前的记忆。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

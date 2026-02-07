@@ -58,7 +58,45 @@ html,body {
 
 <P><FONT size=2><STRONG><EM>阵营Alignment。</EM></STRONG>兽人是恶毒的掠夺者，他们相信这个世界应该属于他们的。他们崇敬力量致上，并相信强者必须欺负弱者，以确保弱者不会像疾病一样传播。他们普遍是混乱邪恶。</FONT></P>
 
-<P><FONT size=2><STRONG><EM>阵营Alignment。</EM></STRONG>纯血蛇人缺乏感情，把别人看作工具来操作。他们很少关心守序或混乱，通常是中立邪恶。</FONT></P></BLOCKQUOTE></body>
+<P><FONT size=2><STRONG><EM>阵营Alignment。</EM></STRONG>纯血蛇人缺乏感情，把别人看作工具来操作。他们很少关心守序或混乱，通常是中立邪恶。</FONT></P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -46,7 +46,45 @@ Spy（低等级）</EM></STRONG>。角色们受雇于耕地的一个农民家庭
 
 Cultists</STRONG>的秘密集会，他们正准备将一名女子献祭给他们的邪恶女神，冒险者必须阻止仪式并释放俘虏，她会在战斗中协助他们。她介绍自己叫卡丽安娜Calianna，一个拥有龙类血统的半精灵术士，她的一半身体覆盖着黑色的鳞片。她气喘吁吁地描述了这个被称为刻薄之心Caustic 
 
-Heart的恐怖邪教组织(见第二章)，并请求角色们的帮助来彻底消灭它。 </P></body>
+Heart的恐怖邪教组织(见第二章)，并请求角色们的帮助来彻底消灭它。 </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

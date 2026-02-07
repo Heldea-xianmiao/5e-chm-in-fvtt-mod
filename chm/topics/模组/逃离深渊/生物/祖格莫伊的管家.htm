@@ -48,7 +48,45 @@ Spore）。</STRONG>管家造成伤害时将释放一片孢子云。此时处于
 
 Spores）（1/日）。</STRONG>管家释放一片孢子云，并填满以自身为中心的10尺半径的球形范围，孢子云持续1分钟。任何血肉生物在孢子云范围内，或者穿过孢子云时，必须进行一个DC12的体质豁免检定。豁免成功时，该生物将在接下来的24小时内不再受该孢子的感染。豁免失败时，该生物感染一种叫祖格莫伊孢子的疾病，并获得随机形式的疯狂症状（投骰并参考附录D祖格莫伊的疯狂列表决定疯狂症状的内容），这些症状持续到该生物的疾病被治愈或者死亡。以该形式受感染的生物不能被重复感染，并且必须在24小时结束后再次进行这项豁免检定，当豁免成功时结束感染的效果。而豁免失败时，感染生物的身体将慢慢的长出真菌。在三次豁免失败后，该生物将死亡。如果该生物的种类允许，他的身体将成为一个孢子奴仆（见怪物图鉴 
 
-的“蕈人”条目）。</P></body>
+的“蕈人”条目）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

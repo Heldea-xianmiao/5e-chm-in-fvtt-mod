@@ -318,7 +318,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
 <P><STRONG><FONT color=#800000>黄霉菌Yellow 
 
-Mold<BR></FONT><EM><FONT color=#808080>致命危害（等级1-4）或妨碍危害（等级5-10）</FONT></EM></STRONG><BR>黄霉菌生在阴暗处，每片黄霉菌覆盖5尺方形区域。如果被触碰，黄霉菌会喷射出一片覆盖10尺立方区域的孢子云。任何处于此区域内的生物必须成功通过一次DC15的体质豁免，否则将受到11（2d10）点毒素伤害，并在接下来的一分钟内陷入中毒状态。以此法中毒的生物在其每个回合开始时受到5（1d10）点毒素伤害。生物在每个自己的回合结束时重新豁免，豁免成功则效应终止。<BR>阳光直射或任何火焰伤害都会立刻摧毁一片黄霉菌。</P></body>
+Mold<BR></FONT><EM><FONT color=#808080>致命危害（等级1-4）或妨碍危害（等级5-10）</FONT></EM></STRONG><BR>黄霉菌生在阴暗处，每片黄霉菌覆盖5尺方形区域。如果被触碰，黄霉菌会喷射出一片覆盖10尺立方区域的孢子云。任何处于此区域内的生物必须成功通过一次DC15的体质豁免，否则将受到11（2d10）点毒素伤害，并在接下来的一分钟内陷入中毒状态。以此法中毒的生物在其每个回合开始时受到5（1d10）点毒素伤害。生物在每个自己的回合结束时重新豁免，豁免成功则效应终止。<BR>阳光直射或任何火焰伤害都会立刻摧毁一片黄霉菌。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

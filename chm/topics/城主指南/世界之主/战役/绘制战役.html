@@ -248,9 +248,47 @@ lang=EN-US>3</span>六角格（<span lang=EN-US>180</span>里）的城市在王�
 
 lang=EN-US>30</span>个六角格的区域，甚至会因此覆盖整张细节地图的两端。王国尺度下<span lang=EN-US>1</span>六角格等于省区尺度下<span
 
-lang=EN-US>6</span>格，因此你可以将你的省区尺度地图置于王国尺度地图的中心，并在其周围创作一些有趣的区域。<span lang=EN-US><![if !supportLineBreakNewLine]><![endif]></span></p></div></body>
+lang=EN-US>6</span>格，因此你可以将你的省区尺度地图置于王国尺度地图的中心，并在其周围创作一些有趣的区域。<span lang=EN-US><![if !supportLineBreakNewLine]><![endif]></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

@@ -3332,4 +3332,41 @@ div.Section0{page:Section0;}</style></head><body style="tab-interval: 21pt"><div
 
  11.5pt; FONT-FAMILY: 黑体; mso-hansi-font-family: 宋体; mso-spacerun: 'yes';"><font face="黑体" >风标使它的持用者变得反复无常和捉摸不定。当你与这把武器调谐，你得到以下缺点：</font><font face="黑体" >“我违背我的誓言和计划。责任和荣誉对我来说毫无意义。”</font></span><span style="FONT-SIZE:
 
- 12pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><o:p></o:p></span></p></div></body></html>
+ 12pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><o:p></o:p></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

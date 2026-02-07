@@ -78,7 +78,45 @@ Resistance。</STRONG>鬼婆在对抗法术及其他魔法效应时进行的豁�
 
 Touch。</STRONG>近战法术攻击，触及5尺，单一目标。命中：18（4d6+4）心灵伤害。如果目标陷入昏迷，则其额外受到10（3d6）心灵伤害并被诅咒，直到鬼婆死亡或诅咒被解除。被诅咒生物的生命值上限在每次长休结束之后减少5（1d10）。<BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>食梦Dream 
 
-Eater。</STRONG>当一个鬼婆能看到，在其30尺内的昏迷生物重新获得意识时，鬼婆能强迫其进行一次DC15的感知豁免检定。除非检定成功，该生物会受到11（2d10）心灵伤害，然后鬼婆恢复等同于受到伤害数值的生命值。</P></body>
+Eater。</STRONG>当一个鬼婆能看到，在其30尺内的昏迷生物重新获得意识时，鬼婆能强迫其进行一次DC15的感知豁免检定。除非检定成功，该生物会受到11（2d10）心灵伤害，然后鬼婆恢复等同于受到伤害数值的生命值。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

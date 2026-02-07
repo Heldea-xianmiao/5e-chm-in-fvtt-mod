@@ -46,7 +46,45 @@ Effects</STRONG></FONT></FONT><br>叙勒戈是一处极为闷热的国度，具�
 
 Water。</STRONG>叙勒戈中的水体永远处于沸腾之中，甚至暴露在空气中的瓶装液体也会迅速冒烟。浸入水体之中不再会提供对火焰伤害的抗性，而在水中开始回合的生物会受到7（2d6）火焰伤害。此外，喝下液体（比如一瓶<font color=maroon><strong>药水Potion</STRONG></FONT>）的生物还会受到3（1d6）火焰伤害。<br><strong>高速蜕变Fast 
 
-Metamorphosis。</STRONG>叙勒戈中的<strong>蛋Egg</STRONG>，<strong>幼虫魔Larva</STRONG>和<strong>蛹Pupae</STRONG>都会以比通常快10倍的速率发育或蜕变（不会被营养或生长条件限制）。<br>如果奥诺茨死去，这些效应将会在 1d10日内消失。</P></body>
+Metamorphosis。</STRONG>叙勒戈中的<strong>蛋Egg</STRONG>，<strong>幼虫魔Larva</STRONG>和<strong>蛹Pupae</STRONG>都会以比通常快10倍的速率发育或蜕变（不会被营养或生长条件限制）。<br>如果奥诺茨死去，这些效应将会在 1d10日内消失。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

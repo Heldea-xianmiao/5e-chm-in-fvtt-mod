@@ -50,7 +50,45 @@ Corby</FONT></STRONG><BR><EM>中型类人（恶鸦人），中立邪恶</EM><BR>
 
 Cacophony。</STRONG>除了恶鸦人以外的任何生物，在距离恶鸦人60尺内开始其回合并能听到声音时，必须进行DC11的感知豁免。否则该生物直到下一个回合开始不能使用疾跑动作，不能攀爬，也不能施放除戏法以外的法术。<BR><STRONG>敏锐听觉Keen 
 
-Hearing。</STRONG>恶鸦人在依靠听觉的感知（察觉）检定上有优势。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>恶鸦人进行两次爪击攻击。<BR><STRONG>爪击Claw。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命中：6（1d8+2）挥砍伤害。</P></body>
+Hearing。</STRONG>恶鸦人在依靠听觉的感知（察觉）检定上有优势。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>恶鸦人进行两次爪击攻击。<BR><STRONG>爪击Claw。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命中：6（1d8+2）挥砍伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

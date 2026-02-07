@@ -892,9 +892,47 @@ style="FONT-SIZE: 11pt; FONT-FAMILY: Cambria; mso-spacerun: 'yes'">1</SPAN><SPAN
 
 style="FONT-SIZE: 11pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><FONT face=宋体>尺的移动力，且其攻击检定与敏捷豁免具有劣势。如果对正跻身进入狭小空间的生物发动攻击，则该攻击检定具有优势。</FONT></SPAN><SPAN 
 
-style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; mso-spacerun: 'yes'; mso-font-kerning: 1.0000pt; mso-bidi-font-family: 'Times New Roman'; mso-fareast-font-family: 宋体"></SPAN></P></body>
+style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; mso-spacerun: 'yes'; mso-font-kerning: 1.0000pt; mso-bidi-font-family: 'Times New Roman'; mso-fareast-font-family: 宋体"></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

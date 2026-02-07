@@ -86,7 +86,45 @@ DM 和玩家合作开发细节时达到最佳状态(第一章中的赞助集团�
 
 是如何救你的命的? 玩家 2 ，你和 Smitty 都在战俘营;你是怎麽逃出来的? 
 
-这些问题的答案提供了在战役中使用的细节，并给予玩家个人投入，这使得当翡翠利爪将 Smitty 作为暗杀目标时变得更有意义!</P></body>
+这些问题的答案提供了在战役中使用的细节，并给予玩家个人投入，这使得当翡翠利爪将 Smitty 作为暗杀目标时变得更有意义!</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

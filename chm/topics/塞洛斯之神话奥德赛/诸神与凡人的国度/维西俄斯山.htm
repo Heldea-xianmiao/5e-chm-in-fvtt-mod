@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>维西俄斯山 Mount Vesios</FONT></STRONG></P>
 
-<P>维西俄斯山作为威勒斯山的小妹妹，是一座小一点的火山，不过经常与威勒斯山一起爆发。在它的西坡有一座修道院，居住着研究火山的学者和施法者，他们相信通过维西俄斯山他们能够控制威勒斯山的爆发。许多山灵和阿喀洛斯焰语者会在维西俄斯山顶提供预言。</P></body>
+<P>维西俄斯山作为威勒斯山的小妹妹，是一座小一点的火山，不过经常与威勒斯山一起爆发。在它的西坡有一座修道院，居住着研究火山的学者和施法者，他们相信通过维西俄斯山他们能够控制威勒斯山的爆发。许多山灵和阿喀洛斯焰语者会在维西俄斯山顶提供预言。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

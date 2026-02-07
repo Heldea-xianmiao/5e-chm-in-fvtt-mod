@@ -20,7 +20,45 @@ Skull</STRONG></font></font>
 
 这一章讲述了死惧刑徒——这群亡灵在多元宇宙中寻找着各种形式的万象无常牌，并摧毁他们，徒劳地希望借此结束自己的存在。但随着万象无常牌在多元宇宙中成倍增加，死惧刑徒的目标变得愈发难以实现。然而，这些危险的亡灵仍在多元宇宙中搜寻每一个版本的万象无常牌，并摧毁任何阻挡他们的人或事物。死惧刑徒由各种力量不一的亡灵组成，从幽影和腐肉鸟到暴力与绝望的大君——死惧刑徒可以作为各个等级的战役中的反派，无论其中是否出现了一副万象无常牌。<br>
 
-这一章为地下城主准备，其中描述了死惧刑徒的动机和理念，以及作为这些生物家园的可怖半位面。在本章末尾，还有几个死惧刑徒成员的资料卡。</p></body>
+这一章为地下城主准备，其中描述了死惧刑徒的动机和理念，以及作为这些生物家园的可怖半位面。在本章末尾，还有几个死惧刑徒成员的资料卡。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

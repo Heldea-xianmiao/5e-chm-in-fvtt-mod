@@ -26,4 +26,41 @@ H3{MARGIN-BOTTOM:-18px;}</style></head>
 
 <BR><B>第2部分</B>详细描述了游戏的规则。包括判定成功与失败的各种掷骰，以及游戏中的三大类活动：探索、社交与战斗。
 
-<BR><B>第3部分</B>与魔法相关。包括D&amp;D世界中魔法的本质，施展法术的规则以及魔法使用者（和怪物）所能使用的各种法术。</P></body></html>
+<BR><B>第3部分</B>与魔法相关。包括D&amp;D世界中魔法的本质，施展法术的规则以及魔法使用者（和怪物）所能使用的各种法术。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

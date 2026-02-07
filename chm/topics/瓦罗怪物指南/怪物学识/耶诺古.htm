@@ -64,4 +64,41 @@
 
 
 
-  FONT-WEIGHT: bold; COLOR: rgb(128,0,0);   "> Non-gnoll Cultists </span></b><span> </span></p><p   style=" mso-pagination: widow-orphan"><span><font>除了鬣狗人，很少有生物崇拜耶诺古和那些在行为和信仰中模仿鬣狗人的家伙。耶诺古的信徒大多是失去全部希望和堕落到虚无主义的人们。一个遭遇了巨大的个人损失的人，一个被驱逐出自己的家的人，或者是一个可怕背叛的牺牲品。不管是什么缘由引发的，耶诺古的潜在信徒都是被孤立和遗弃的，这使其易受到耶诺古的引诱。</font></span></p><p   style=" mso-pagination: widow-orphan"><span><br><font>这个生物的思维和梦境将被耶诺古的幻象所困扰。被野蛮行为所煽动，对于无限力量的承诺，将诱惑和折磨着它。大多数人会把这些感觉归因于一阵短暂的沮丧和疯狂，他们能够抵抗暴力的召唤，但有些人不能。对于这些少见的个体，耶诺古的承诺的真正诱惑不在于它提供的力量，而是在于它所创造的深深的归属感。</font></span></p><p   style=" mso-pagination: widow-orphan"><span><br><font>那些被耶诺古的诱惑所动摇的生物将在行动和思维上把自己当做鬣狗人，并且很快开始在耶诺古的名义下犯下他们的第一次暴行。大多数这些信徒几乎都被卫兵或者其他机构击杀。其中的一些逃入荒野，继续自己的暴行，最终，他们可能加入一个鬣狗人战团。</font></span></p><p   style="TEXT-ALIGN: left;  mso-pagination: widow-orphan"><span><o:p> </o:p></span></p></div></body></html>
+  FONT-WEIGHT: bold; COLOR: rgb(128,0,0);   "> Non-gnoll Cultists </span></b><span> </span></p><p   style=" mso-pagination: widow-orphan"><span><font>除了鬣狗人，很少有生物崇拜耶诺古和那些在行为和信仰中模仿鬣狗人的家伙。耶诺古的信徒大多是失去全部希望和堕落到虚无主义的人们。一个遭遇了巨大的个人损失的人，一个被驱逐出自己的家的人，或者是一个可怕背叛的牺牲品。不管是什么缘由引发的，耶诺古的潜在信徒都是被孤立和遗弃的，这使其易受到耶诺古的引诱。</font></span></p><p   style=" mso-pagination: widow-orphan"><span><br><font>这个生物的思维和梦境将被耶诺古的幻象所困扰。被野蛮行为所煽动，对于无限力量的承诺，将诱惑和折磨着它。大多数人会把这些感觉归因于一阵短暂的沮丧和疯狂，他们能够抵抗暴力的召唤，但有些人不能。对于这些少见的个体，耶诺古的承诺的真正诱惑不在于它提供的力量，而是在于它所创造的深深的归属感。</font></span></p><p   style=" mso-pagination: widow-orphan"><span><br><font>那些被耶诺古的诱惑所动摇的生物将在行动和思维上把自己当做鬣狗人，并且很快开始在耶诺古的名义下犯下他们的第一次暴行。大多数这些信徒几乎都被卫兵或者其他机构击杀。其中的一些逃入荒野，继续自己的暴行，最终，他们可能加入一个鬣狗人战团。</font></span></p><p   style="TEXT-ALIGN: left;  mso-pagination: widow-orphan"><span><o:p> </o:p></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

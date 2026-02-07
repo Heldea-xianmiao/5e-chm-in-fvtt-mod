@@ -42,7 +42,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>老兵发动两次长剑攻击。如果其短剑已出鞘，则可再发动一次短剑攻击。<BR><STRONG>长剑Longsword。</STRONG>近战武器攻击：命中+5，触及5尺单一目标。命中：7（1d8+3）点挥砍伤害，或使用双手攻击时8（1d10+3）点挥砍伤害。<BR><STRONG>短剑Shortsword。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：6（1d6+3）点穿刺伤害。<BR><STRONG>重弩Heavy 
 
-Crossbow。</STRONG>远程武器攻击：命中+3，射程100/400尺，单一目标，命中：6（1d10+1）点穿刺伤害。</P></body>
+Crossbow。</STRONG>远程武器攻击：命中+3，射程100/400尺，单一目标，命中：6（1d10+1）点穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

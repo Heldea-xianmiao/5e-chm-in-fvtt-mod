@@ -66,7 +66,45 @@ Seasons。</STRONG>这四支箭都与一个季节紧密相关，并且只能通�
 
 <P><STRONG>摧毁神弓Destroying the 
 
-Bow。</STRONG>在摧毁所有箭矢之前，短弓无法被毁灭。冬之箭必须在冬至日喂给一只狱犬。春之箭必须在春分日被种在一棵安福陵的黑橡树下。夏之箭必须被一个海巨人在夏至日折断。秋之箭必须在秋分日被射入一只多头蛇的尸骸。当所有的箭都被摧毁后，弓和箭袋会分解成尘埃。</P></body>
+Bow。</STRONG>在摧毁所有箭矢之前，短弓无法被毁灭。冬之箭必须在冬至日喂给一只狱犬。春之箭必须在春分日被种在一棵安福陵的黑橡树下。夏之箭必须被一个海巨人在夏至日折断。秋之箭必须在秋分日被射入一只多头蛇的尸骸。当所有的箭都被摧毁后，弓和箭袋会分解成尘埃。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

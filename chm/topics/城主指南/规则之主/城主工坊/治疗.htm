@@ -62,7 +62,45 @@ Surges</FONT></STRONG><BR>该选用规则允许角色们在繁重的战斗中对
 
 <P><STRONG><FONT color=#800000>缓慢自愈Slow Natural 
 
-Healing</FONT></STRONG><BR>角色们在完成长休后将不再自动恢复生命值，而是跟完成短休一样，必须花费自己的生命骰来进行恢复<BR>该选用规则可以令角色们在魔法治疗的增益外，延长从伤病中恢复所需的时间，以此来贴合那些更真实，角色更坚毅的战役内容。<BR></P></body>
+Healing</FONT></STRONG><BR>角色们在完成长休后将不再自动恢复生命值，而是跟完成短休一样，必须花费自己的生命骰来进行恢复<BR>该选用规则可以令角色们在魔法治疗的增益外，延长从伤病中恢复所需的时间，以此来贴合那些更真实，角色更坚毅的战役内容。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

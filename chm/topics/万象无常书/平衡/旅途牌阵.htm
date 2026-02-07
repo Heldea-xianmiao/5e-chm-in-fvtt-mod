@@ -128,7 +128,45 @@ Disguise，或其他用于整蛊或欺骗的类似物品。逆位的愚者卡牌
 
 挑战：城堡（正位）。</strong>这张卡牌意为事实上或象征意义上的监禁。也许角色们偶然遇到一个古怪的动物园，园中的怪兽般的动物们正受到残忍的囚禁。角色们可能会决定完全无视这个地方。或者，他们也可以救出这些怪物——最好是避开那些饿坏了的——并直面被激怒的动物园园长。<br><strong>第三天 
 
-大功告成或功亏一篑：宝石。</strong>如果角色们解决了动物园里的挑战，他们能在这里发现一些值钱的宝藏。如果没有，他们将不得不面对一个额外的陷阱，或装成宝藏的外表守株待兔的怪物，例如拟身怪Mimic。</p></body>
+大功告成或功亏一篑：宝石。</strong>如果角色们解决了动物园里的挑战，他们能在这里发现一些值钱的宝藏。如果没有，他们将不得不面对一个额外的陷阱，或装成宝藏的外表守株待兔的怪物，例如拟身怪Mimic。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

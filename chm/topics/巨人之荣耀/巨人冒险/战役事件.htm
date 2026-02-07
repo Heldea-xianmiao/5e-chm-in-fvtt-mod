@@ -108,7 +108,45 @@ html,body {
 
 类人生物被动员起来推翻他们的巨人压迫者，但类人生物在战斗中被绝望地击败了。</TD></TR>
 
-<TR><TD width=30>8</TD><TD   > 极少的巨人相信，冒险者们的出现可能印证着古老预言的实现，这意味着他们将带来安南的回归以及巨人的没落或复兴。而现在，越来越多的巨人也一同相信了这一预言。</TD></TR></TABLE> </P></BLOCKQUOTE></body>
+<TR><TD width=30>8</TD><TD   > 极少的巨人相信，冒险者们的出现可能印证着古老预言的实现，这意味着他们将带来安南的回归以及巨人的没落或复兴。而现在，越来越多的巨人也一同相信了这一预言。</TD></TR></TABLE> </P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

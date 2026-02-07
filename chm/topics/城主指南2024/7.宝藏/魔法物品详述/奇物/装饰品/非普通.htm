@@ -70,7 +70,45 @@ Location</H6>
 
 <H6>愈合护符 Periapt of Wound Closure</H6>
 
-<P></STRONG><EM>奇物，非普通（需同调）</EM><BR>佩戴此吊坠期间，你获得以下增益：<BR><STRONG>维持生命</STRONG>。每当你进行死亡豁免时，你都可以将掷骰中9及以下的骰值改为10，以此让失败的豁免改为成功。<BR><STRONG>加速自愈</STRONG>。每当你投掷一颗生命骰来恢复你的生命值时，你生命值恢复量翻倍。</P></body>
+<P></STRONG><EM>奇物，非普通（需同调）</EM><BR>佩戴此吊坠期间，你获得以下增益：<BR><STRONG>维持生命</STRONG>。每当你进行死亡豁免时，你都可以将掷骰中9及以下的骰值改为10，以此让失败的豁免改为成功。<BR><STRONG>加速自愈</STRONG>。每当你投掷一颗生命骰来恢复你的生命值时，你生命值恢复量翻倍。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -32,4 +32,41 @@ font-weight:bold;" ><font>恐惧之雄牛</font></span></b><b><span style="
 
 font-weight:bold;" >The  Sacred  Bull</span></b><b><span style="
 
-font-weight:bold;" ><font>。</font></span></b><span><font>巴格杵的兽人们有时会骑着原牛闯入战场，这些大型动物与家牛或者野牛相似，但更加凶猛（数据见附录</font>B<font>）。通过这样做，他们像尊敬他们自己的神灵一样尊敬这些生物，因为传说讲道巴格杵也骑着一只巨大的公牛闯入战场。没有兽人会吃掉或者伤害这些带着巴格杵精神的可怖野兽。</font></span></p></div></body></html>
+font-weight:bold;" ><font>。</font></span></b><span><font>巴格杵的兽人们有时会骑着原牛闯入战场，这些大型动物与家牛或者野牛相似，但更加凶猛（数据见附录</font>B<font>）。通过这样做，他们像尊敬他们自己的神灵一样尊敬这些生物，因为传说讲道巴格杵也骑着一只巨大的公牛闯入战场。没有兽人会吃掉或者伤害这些带着巴格杵精神的可怖野兽。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

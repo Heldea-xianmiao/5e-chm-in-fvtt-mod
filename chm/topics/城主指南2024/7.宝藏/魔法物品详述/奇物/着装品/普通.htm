@@ -44,7 +44,45 @@ Focus</STRONG>。你可以将其作为你施展法师法术的施法法器。<BR
 
 Spell</STRONG>。你可以用一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作尝试施展一道你并未已知的戏法。所选戏法必须位于法师法表中，并且其施法时间必须为动作。你进行一次DC 
 
-10的智力（奥秘）检定。检定成功，则你施展那道法术。检定失败，则你施法失败，用于施法的动作被浪费。无论检定成功与否，此词条一经使用，直到你完成一次长休之前不能再次使用。</P></body>
+10的智力（奥秘）检定。检定成功，则你施展那道法术。检定失败，则你施法失败，用于施法的动作被浪费。无论检定成功与否，此词条一经使用，直到你完成一次长休之前不能再次使用。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

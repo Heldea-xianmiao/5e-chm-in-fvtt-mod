@@ -2028,9 +2028,47 @@ campaign themes</span></b><b><span style="FONT-FAMILY:
 
  style="mso-list: Ignore"><span style='FONT: 7pt "Times New Roman"'> </span></span></span><![endif]>一群怪物，其调整后的<span
 
- lang=EN-US>XP</span>值对<span class=GramE>该队伍</span>构成简单、中等或困难难度的遭遇，如同本章前文构建遭遇的指引所述。</p></div></body>
+ lang=EN-US>XP</span>值对<span class=GramE>该队伍</span>构成简单、中等或困难难度的遭遇，如同本章前文构建遭遇的指引所述。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

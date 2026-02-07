@@ -1254,9 +1254,47 @@ Realm内被落在太阳下的鹅卵石）。<BR><STRONG>持续时间：</STRONG>
 
 <BR>你切断了目标之间的友谊和感情。你选择施法距离内两个可以看到你并听到你的生物。每个目标必须进行一次魅力豁免。豁免失败的目标必须使用其移动力和动作向该法术的另一个目标移动并攻击。如果一个未受该法术影响的目标移动到施法距离之外，另一个目标必须尽一切努力找到并攻击它。在目标每个回合结束时，若一个目标看不到另一个目标，则可以重复本豁免，豁免成功则解除控制。<BR><STRONG>升环施法。</STRONG>若你以九环法术位施展该法术，你可以额外再选择两名生物。每个目标均可在自身的回合中决定当下要攻击其余目标中的哪一个，或通过其他方式对其采取敌对行动。</P>
 
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
 </body>
 
 </HTML>
+
 
 
 

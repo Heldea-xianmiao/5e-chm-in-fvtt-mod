@@ -54,7 +54,45 @@ Lancer</FONT></STRONG><BR><EM>大型天族，普遍绝对中立</EM><BR>AC：15 
 
 星枪鲨和一名骑乘它的生物（由星枪鲨选择）魔法地变为隐形状态。该效应持续到星枪鲨或骑乘它的生物进行攻击或施法，或是星枪鲨的专注结束时（如同专注于法术）。 
 
-隐形生物所穿戴或携带的任何装备在隐身斗篷的持续时间内也是隐形的。</P></body>
+隐形生物所穿戴或携带的任何装备在隐身斗篷的持续时间内也是隐形的。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

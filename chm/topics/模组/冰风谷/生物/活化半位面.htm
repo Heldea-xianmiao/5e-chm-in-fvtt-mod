@@ -54,7 +54,45 @@ Destruction.</STRONG>
 
 当活体法术或其外次元空间的5平方英尺区域的生命值减少到0点，或当活体法术没有附着表面时，该活体法术就被摧毁。当活体法术被摧毁时，它的外空间腔内的内容物会被排出，并尽可能地出现在活体法术之前的位置。每一个被驱逐的生物都会出现在一个随机确定的未占据空间中，以及它所携带的任何物品。<BR><STRONG>非凡本质Unusual 
 
-Nature.</STRONG>活体半位面不需要空气、饮食和睡眠。</P></body>
+Nature.</STRONG>活体半位面不需要空气、饮食和睡眠。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

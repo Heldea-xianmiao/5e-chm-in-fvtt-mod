@@ -244,7 +244,45 @@ style="TEXT-ALIGN: left; MARGIN: 0pt 0pt 5.8pt; mso-pagination: widow-orphan"><S
 
 style="  COLOR: rgb(51,51,51); ; mso-bidi-font-family: Helvetica">身处恐惧诸领域时，从神明或者异界宗主那里获得法术的角色们照常获得法术。同其他位面的存在接触的法术正常生效，但是有一个附加条件，即该领域的黑暗领主能够感受到有人在他的领域施放了这样的法术，他可以将自己变为这个法术的目标，成为该法术接触的对象。</SPAN><SPAN 
 
-style="  COLOR: rgb(51,51,51); ; mso-bidi-font-family: Helvetica"><o:p></o:p></SPAN></P></body>
+style="  COLOR: rgb(51,51,51); ; mso-bidi-font-family: Helvetica"><o:p></o:p></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

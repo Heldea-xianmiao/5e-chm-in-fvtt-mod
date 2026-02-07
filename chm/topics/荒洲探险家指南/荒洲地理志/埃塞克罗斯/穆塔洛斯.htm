@@ -42,7 +42,45 @@ html,body {
 
 Level)。法汉·约斯特（守序邪恶，女性，人类大法师）是最初探索埃塞克罗斯的三头犬密会队伍的一部分。现在她回到大陆，告诉角色她在该地区是海洋地形时遗失了自己的威力法杖，希望这能诱使他们探索该地区以找回她的旧法杖。在角色搜索过程中，她会使用探知法术来保持对他们的关注。如果角色发现了她的法杖或任何其他有趣的宝藏，则法汉会与她的盾卫一起传送到他们的位置，并为发现的物品提供微薄的报酬。如果角色拒绝，她会发起攻击。 
 
-法汉打算无论如何都要拿回她的法杖，并希望得到角色发现的宣称所有权。</P></body>
+法汉打算无论如何都要拿回她的法杖，并希望得到角色发现的宣称所有权。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

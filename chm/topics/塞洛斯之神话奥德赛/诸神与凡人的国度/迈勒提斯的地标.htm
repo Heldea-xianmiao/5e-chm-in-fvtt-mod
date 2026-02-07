@@ -42,7 +42,45 @@ Dekatia</FONT></STRONG><BR>迈勒提斯拥有许多学习中心，但最杰出�
 
 <P><STRONG><FONT color=#800000>天文台 The 
 
-Observatory</FONT></STRONG><BR>天文台是一座很高的观测台，天窗提供了极佳的天空视野，以研究天界——众神的家园——而闻名。由奇术师塑造并受到先知的祝福的特殊水晶，增强了观测者的视野，使他们更容易看到在群星和星座之间的诸神的工作。祭司、法师和哲学家把他们在天文台的所见解释为来自神的征兆和预兆。</P></body>
+Observatory</FONT></STRONG><BR>天文台是一座很高的观测台，天窗提供了极佳的天空视野，以研究天界——众神的家园——而闻名。由奇术师塑造并受到先知的祝福的特殊水晶，增强了观测者的视野，使他们更容易看到在群星和星座之间的诸神的工作。祭司、法师和哲学家把他们在天文台的所见解释为来自神的征兆和预兆。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

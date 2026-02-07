@@ -46,7 +46,45 @@ Highmaster坎萨尔迪·火眼Kansaldi
 
 Fire-Eyes来领导，让她带头发起一次对索兰尼亚的凶猛进攻，以此来检验她的能力。与此同时，猛敏那的部队跟随龙后的低语进入了阿班尼西亚的南部地区。<BR>野心勃勃的龙骑将奇蒂拉·钨斯·马塔Kitiara Uth 
 
-Matar领导着蓝龙军团。在龙后的军队中，蓝龙军团的实力位居第二，正准备也加入红龙军团策划的对索兰尼亚多管齐下的入侵。绿龙军团目前由萨拉可汗Salah-Khan指挥，他是克尔的领袖，将整个国家的游牧民都团结到了巨龙大军的统治下。塔卡Takar的半食人魔卢西恩Lucien指挥着黑龙军团，集中力量支援其他军团，并在他们征服土地之后维持占领。诺德玛和古德兰就处于黑龙军团的控制下。最后一个军团是规模较小的白龙军团，由龙骑将费尔萨斯Feal-Thas领导，他是一个出身于西瓦那斯提的精灵，也是高等术法会的黑袍法师。</P></body>
+Matar领导着蓝龙军团。在龙后的军队中，蓝龙军团的实力位居第二，正准备也加入红龙军团策划的对索兰尼亚多管齐下的入侵。绿龙军团目前由萨拉可汗Salah-Khan指挥，他是克尔的领袖，将整个国家的游牧民都团结到了巨龙大军的统治下。塔卡Takar的半食人魔卢西恩Lucien指挥着黑龙军团，集中力量支援其他军团，并在他们征服土地之后维持占领。诺德玛和古德兰就处于黑龙军团的控制下。最后一个军团是规模较小的白龙军团，由龙骑将费尔萨斯Feal-Thas领导，他是一个出身于西瓦那斯提的精灵，也是高等术法会的黑袍法师。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -44,7 +44,45 @@ Quadrapod</FONT></STRONG><BR>大型异怪，混乱邪恶<BR>AC：14 (天生护�
 
 Resistance.</STRONG>混沌四足怪在对抗法术及其他魔法效应时进行的豁免检定具有优势。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Multiattack.</STRONG>混沌四足怪进行两次触须攻击。<BR><STRONG>触须Tentacle.</STRONG>近战武器攻击：命中+6，触及15尺，单一目标。<BR>命中：11（2d6+4）钝击伤害，若目标为一个生物，则其被擒抱（逃脱DC14）。直到擒抱结束，目标陷入束缚。混沌四足怪无法同时擒抱两个以上的生物。<BR><STRONG>混沌云簇Chaos 
 
-Cloud（短休或长休后充能）.</STRONG>混沌四足怪喷出一团翻滚的以太光芒，在距离其60尺内一点爆发。以点为源点，半径20尺内生物必须成功通过DC14魅力豁免，否则直到其下个回合结束陷入震慑。<BR></P></body>
+Cloud（短休或长休后充能）.</STRONG>混沌四足怪喷出一团翻滚的以太光芒，在距离其60尺内一点爆发。以点为源点，半径20尺内生物必须成功通过DC14魅力豁免，否则直到其下个回合结束陷入震慑。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

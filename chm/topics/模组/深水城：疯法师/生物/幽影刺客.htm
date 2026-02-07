@@ -56,7 +56,45 @@ html,body {
 
 尺，单一目标。命中：7（1d6+4）挥砍伤害外加 10（3d6）暗蚀伤害。除非目标免疫暗蚀伤害，否则被攻击者的力量降低1d4点，这种力量减损的效应可以叠加。一个力量因此被降低至0的目标会死亡。力量降低至 0 会导致目标死亡。减值持续至目标完成一次短休或长休。 
 
-<BR>如果一个非邪恶阵营的生物因此能力而死，则1d4小时后会从尸体上诞生一只幽影（见怪物图鉴）。</P></body>
+<BR>如果一个非邪恶阵营的生物因此能力而死，则1d4小时后会从尸体上诞生一只幽影（见怪物图鉴）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

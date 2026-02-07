@@ -168,7 +168,45 @@ Perfection</FONT></STRONG><BR>中型或小型类人（术士），任意阵营<B
 
 该教授可以使用动作施展以下任一法术，无需材料构成且施法属性为魅力（法术豁免DC15）：<BR>随意：次级幻象<BR>2次/日：控水术，造水术/枯水术，法师护甲，塑石术<BR>1次/日：冰墙<BR><STRONG><FONT color=#800000>附赠动作</FONT></STRONG><BR><STRONG>冲天浪.</STRONG> 
 
-教授卷起强力漩涡包裹自身，并进行至多30尺的移动。当教授在进行此附赠动作期间移动到任一生物的5尺范围内时，该生物将会被巨浪裹挟并须进行一次DC15的力量豁免否则将被击倒，且在自身的下一回合开始前无法做出反应。一个生物一回合内只能遭受一次此效果。</P></body>
+教授卷起强力漩涡包裹自身，并进行至多30尺的移动。当教授在进行此附赠动作期间移动到任一生物的5尺范围内时，该生物将会被巨浪裹挟并须进行一次DC15的力量豁免否则将被击倒，且在自身的下一回合开始前无法做出反应。一个生物一回合内只能遭受一次此效果。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

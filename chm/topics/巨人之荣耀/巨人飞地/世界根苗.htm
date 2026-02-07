@@ -104,7 +104,45 @@ Giant</STRONG>
 
 Warden试图将苍森水晶Forest Crystal和颂往晶丘Singing 
 
-Sands（见本章）都连接到昔日横跨世界的魔法网络之中。费尔伯格人们相信自己可以利用远古巨人文明创造的网络，将树苗的生命能量引导到世界上各个遭受破坏的区域，使之重新焕发活力。他们需要把树苗的插穗送到两个地点。在此过程中，角色们必须在颂往晶丘面对邪魔入侵遭遇表格的生物，在苍森水晶面对来自风暴巨人遭遇表格的暴虐巨人（都见第三章）。</P></body>
+Sands（见本章）都连接到昔日横跨世界的魔法网络之中。费尔伯格人们相信自己可以利用远古巨人文明创造的网络，将树苗的生命能量引导到世界上各个遭受破坏的区域，使之重新焕发活力。他们需要把树苗的插穗送到两个地点。在此过程中，角色们必须在颂往晶丘面对邪魔入侵遭遇表格的生物，在苍森水晶面对来自风暴巨人遭遇表格的暴虐巨人（都见第三章）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

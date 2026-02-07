@@ -34,7 +34,45 @@ html,body {
 
 <BR><STRONG>构装本质 Constructed Nature。</STRONG>活化物件不需要空气、食物、饮水以及睡眠。 当一个活化物件 
 
-HP（生命值）降至 0 点时，活化它的魔法将会失效。同时在其因为生命值归零而失去活化时，该物品会受到严重损坏以至于失去所有价值并无法被再度使用。</P></body>
+HP（生命值）降至 0 点时，活化它的魔法将会失效。同时在其因为生命值归零而失去活化时，该物品会受到严重损坏以至于失去所有价值并无法被再度使用。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

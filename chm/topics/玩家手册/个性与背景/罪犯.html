@@ -2058,4 +2058,41 @@ style
 
  10.5pt; FONT-FAMILY: 宋体; mso-ascii-font-family: Cambria; mso-hansi-font-family: Cambria; mso-spacerun: 'yes'; mso-bidi-font-family: Arial; mso-font-kerning: 0.0000pt"><font face="宋体" >虽然你的能力水平与那些盗窃犯或走私犯区别不大，但你却层以一种不同寻常的方式接受教育与训练：即作为一名从事谍报活动的探子。你可能曾是一名官方认可的皇家间谍，也可能是价高者得的情报贩卖者。</font></span><span style="FONT-SIZE:
 
- 10.5pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'; mso-bidi-font-family: Arial; mso-font-kerning: 0.0000pt"></span></p></div></body></html>
+ 10.5pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'; mso-bidi-font-family: Arial; mso-font-kerning: 0.0000pt"></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

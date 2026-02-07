@@ -28,7 +28,45 @@
 
 Plane</STRONG><STRONG>。</STRONG>这无尽的银白广袤空间连接着物质位面和外层位面。在这闪耀的浩瀚中，曾有整个文明崛起；而其他的文明则在魔法船载具中航行在这魔法的宇宙中。<BR><b>以太位面Ethereal 
 
-Plane。</b>这幽灵般的领域连接着物质位面和内层位面。以太位面与其他位面交叠的区域被称作<b>边界以太Border Ethereal</b>，在那里生物可以一瞥外在的诸位面。</p></body>
+Plane。</b>这幽灵般的领域连接着物质位面和内层位面。以太位面与其他位面交叠的区域被称作<b>边界以太Border Ethereal</b>，在那里生物可以一瞥外在的诸位面。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

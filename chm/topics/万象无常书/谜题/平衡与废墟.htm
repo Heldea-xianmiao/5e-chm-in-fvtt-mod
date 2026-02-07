@@ -44,7 +44,45 @@ html,body {
 
 当平衡独木桥上重量不平衡，导致触发隐藏的压力板时，这两堵墙金属墙体就将磁化，并释放出一片磁场。任何穿着金属护甲或持握金属物品的生物若不处于独木桥上，将被向其最近的那面墙吸去，撞上墙面受到11（2d10）点钝击伤害并被墙体吸附。被吸附在墙上的生物会陷入 束缚Restrained 状态，直到磁场终止为止。让压力板不再被触发（例如放置更多重物来让独木桥向终点那一端倾斜）可以终止这一磁场。如果队伍中有飞行的能力，你可以修改这一房间来使得这一陷阱具有适当的挑战性：去掉压力板，每隔一分钟或当有生物在自己回合中越过支点的回合时，开启或关闭磁场。墙体被磁化期间，任何穿着金属护甲或持握金属物品的生物，若尝试依靠飞行穿过房间，也会被金属墙吸过去并吸附在上面。</p><p><font color=#800000><strong>齿轮坑 Gear Pit</strong></font><br>
 
-掉入坑中时，或是在坑中结束自己的回合时，该生物都必须通过一次DC17的敏捷豁免，豁免失败将受到55（10d10）点钝击伤害并陷入 <strong>倒地Prone</strong> 状态，一个倒在无数齿轮之中的生物无法用其移动力起立。生物可以在倒地后，以一个动作，丢下一个微型物件来卡住自己身下的齿轮来干扰身下齿轮的运转，这么做之后生物才能用移动力起立。被干扰的齿轮会在生物回合结束时立刻恢复运转，而那个微型物件将滚落下去，坠入齿轮与齿轮的缝隙之中，你再也见不到它了。</p></body>
+掉入坑中时，或是在坑中结束自己的回合时，该生物都必须通过一次DC17的敏捷豁免，豁免失败将受到55（10d10）点钝击伤害并陷入 <strong>倒地Prone</strong> 状态，一个倒在无数齿轮之中的生物无法用其移动力起立。生物可以在倒地后，以一个动作，丢下一个微型物件来卡住自己身下的齿轮来干扰身下齿轮的运转，这么做之后生物才能用移动力起立。被干扰的齿轮会在生物回合结束时立刻恢复运转，而那个微型物件将滚落下去，坠入齿轮与齿轮的缝隙之中，你再也见不到它了。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

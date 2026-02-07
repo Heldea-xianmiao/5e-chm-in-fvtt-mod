@@ -196,7 +196,45 @@ Maze。</FONT></STRONG>
 
 <H3><FONT color=#800000>无底深渊冒险Abyss Adventures</FONT></H3>
 
-<P>深渊体现了混乱与邪恶那可憎的腐化。深入深渊即是一场深入敌意与未知的艰险旅程。这也是角色直面内心邪恶，抵制背刺求生的机会。英雄角色可能会绝望地与无尽的恶魔大军奋战，或试图隐藏行踪，寻找某位曾敢于冒险进入此地的英雄遗留下的圣遗物。<BR>深渊的本质是污染它所触及的其他位面。从任何其他位面打开通往深渊的传送门，都有可能让深渊的邪恶扩散至此，逐渐腐蚀成深渊的一部分。因此，冒险者在物质位面探索一座亵渎神庙或恶臭腐沼时，可能会突然发现自己身边的环境充斥着恶魔，变得与深渊极为相似，而他们甚至不曾离开自己的家园位面。</P></body>
+<P>深渊体现了混乱与邪恶那可憎的腐化。深入深渊即是一场深入敌意与未知的艰险旅程。这也是角色直面内心邪恶，抵制背刺求生的机会。英雄角色可能会绝望地与无尽的恶魔大军奋战，或试图隐藏行踪，寻找某位曾敢于冒险进入此地的英雄遗留下的圣遗物。<BR>深渊的本质是污染它所触及的其他位面。从任何其他位面打开通往深渊的传送门，都有可能让深渊的邪恶扩散至此，逐渐腐蚀成深渊的一部分。因此，冒险者在物质位面探索一座亵渎神庙或恶臭腐沼时，可能会突然发现自己身边的环境充斥着恶魔，变得与深渊极为相似，而他们甚至不曾离开自己的家园位面。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

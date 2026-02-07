@@ -82,7 +82,45 @@ Actions</FONT></STRONG><br>
 
 <strong>黏油 Sticky Oil。</strong>捣蛋鬼在力量（运动）检定上获得优势，以及在保持对另一个生物、表面或物体的抓握属性检定中获得优势。捣蛋鬼还可以攀爬困难表面，包括倒立在天花板上，而无需进行属性检定。</p><p>
 
-<strong>裂痕 Dimensional Rift。</strong>捣蛋鬼在它能看到的5尺范围内创建一道不可见的、不可移动的裂缝，只是任何一侧的空间不能大于10尺。裂隙连接了该空间与一点，该点必须位于30尺内，且捣蛋鬼可以通过距离和方向看到或指定（如“30尺垂直向上”）。通过这个裂口，捣蛋鬼可以看到另外一端，也被认为是在目的地的附近，任何由捣蛋鬼所携带而穿过裂口的东西（包括它身体的一部分）都会在目的地出现。只有捣蛋鬼可以使用裂口，它将持续到捣蛋鬼的下一个回合结束。</p></BLOCKQUOTE></body>
+<strong>裂痕 Dimensional Rift。</strong>捣蛋鬼在它能看到的5尺范围内创建一道不可见的、不可移动的裂缝，只是任何一侧的空间不能大于10尺。裂隙连接了该空间与一点，该点必须位于30尺内，且捣蛋鬼可以通过距离和方向看到或指定（如“30尺垂直向上”）。通过这个裂口，捣蛋鬼可以看到另外一端，也被认为是在目的地的附近，任何由捣蛋鬼所携带而穿过裂口的东西（包括它身体的一部分）都会在目的地出现。只有捣蛋鬼可以使用裂口，它将持续到捣蛋鬼的下一个回合结束。</p></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

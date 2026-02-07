@@ -60,7 +60,45 @@ Arrow（仅精灵与半人形态）。</STRONG>远程武器攻击：命中+5，�
 
 Actions</FONT></STRONG><BR><STRONG>变形ChangeShape。</STRONG>狐人变形为精灵和狐狸混合的半人形态，狐狸形态或变回精灵形态。它除了速度之外的游戏数据在每个形态均不变。它所穿戴和携带的装备不会变形。当它死亡时，会变回精灵形态。<BR><STRONG>狐之敏捷Vulpine 
 
-Nimbleness（仅狐狸与半人形态）。</STRONG>狐人使用疾走或撤离动作。</P></body>
+Nimbleness（仅狐狸与半人形态）。</STRONG>狐人使用疾走或撤离动作。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

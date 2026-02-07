@@ -38,7 +38,45 @@ html,body {
 
 <P>阿洛瓦克的冒险Allowak's Sanctuary Adventures<BR>这些角色可能会偶然穿过阿洛瓦克，或打倒外围警卫队以发现村庄。<BR>信任事件（中级）A Matter Of Trust (Mid 
 
-Level)。在角色旅行到福伦时，他们找到了黎念，这是一个雌性阿瓦洛克雪怪（见“阿洛瓦克圣所雪怪的数据”），她那着破烂的网倒在雪地里，浑身都是其他同类造成的爪伤，生命值仅剩1点。黎念的周围还有另外3具雪怪尸体，倒在附近被血染红的雪中，那是她的同伴。黎念乞求角色护送她与尸体一起回到阿洛瓦克圣所。她的小组未能捕获到六只野生雪怪，但这些雪怪在附近，如果角色们帮助了黎念，野生雪怪就会跟踪这些角色。<BR>如果角色与黎念一起前往阿洛瓦克圣所，明心会视他们为英雄并欢迎他们，以一块可以停留的地方来感谢他们，条件是他们要发誓保守阿洛瓦克圣所的秘密——巨恶雪怪可能会命令角色为她抓住一群野生雪怪或猛犸象来证明他们的忠诚。</P></body>
+Level)。在角色旅行到福伦时，他们找到了黎念，这是一个雌性阿瓦洛克雪怪（见“阿洛瓦克圣所雪怪的数据”），她那着破烂的网倒在雪地里，浑身都是其他同类造成的爪伤，生命值仅剩1点。黎念的周围还有另外3具雪怪尸体，倒在附近被血染红的雪中，那是她的同伴。黎念乞求角色护送她与尸体一起回到阿洛瓦克圣所。她的小组未能捕获到六只野生雪怪，但这些雪怪在附近，如果角色们帮助了黎念，野生雪怪就会跟踪这些角色。<BR>如果角色与黎念一起前往阿洛瓦克圣所，明心会视他们为英雄并欢迎他们，以一块可以停留的地方来感谢他们，条件是他们要发誓保守阿洛瓦克圣所的秘密——巨恶雪怪可能会命令角色为她抓住一群野生雪怪或猛犸象来证明他们的忠诚。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

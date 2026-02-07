@@ -102,7 +102,45 @@ style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'">    </SPAN><SP
 
 style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><FONT face=宋体>主顾可以是一位寻找年轻英雄应对不断升级危机的退休冒险者，或者是一位深知小镇守卫无法处理巨龙索要贡品的市长。一名治安官作为主顾悬赏威胁本地乡下地区的狗头人劫掠者，而一名贵族则作为主顾悬红清除一处废弃庄园中的怪物。</FONT></SPAN><SPAN 
 
-style="FONT-SIZE: 10.5pt; FONT-FAMILY: Calibri; mso-bidi-font-family: 'Times New Roman'; mso-fareast-font-family: 宋体; mso-font-kerning: 1.0000pt; mso-spacerun: 'yes'"><o:p></o:p></SPAN></P></body>
+style="FONT-SIZE: 10.5pt; FONT-FAMILY: Calibri; mso-bidi-font-family: 'Times New Roman'; mso-fareast-font-family: 宋体; mso-font-kerning: 1.0000pt; mso-spacerun: 'yes'"><o:p></o:p></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

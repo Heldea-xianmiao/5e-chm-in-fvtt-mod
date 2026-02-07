@@ -82,7 +82,45 @@
 
 。塔拉敏·拉南（混乱中立，女性，高等精灵<STRONG>匪帮队长 bandit 
 
-captain</STRONG>）曾经作为一名刺客为暗流部族工作。这名精灵在五年前失踪了，但间谍报告说她现在化名瓦勒米斯·蒂德拉居住在格瓦丹。暗流部族之一，或者某个希望看到塔拉敏为自己的罪行付出代价的派系雇佣了角色们来抓捕她。当角色们找到塔拉敏时，他们得知到她一心只想抛弃过去的暴力生活，与她的新家庭——包括她的两个年幼的孩子——一起安度余生。</P></body>
+captain</STRONG>）曾经作为一名刺客为暗流部族工作。这名精灵在五年前失踪了，但间谍报告说她现在化名瓦勒米斯·蒂德拉居住在格瓦丹。暗流部族之一，或者某个希望看到塔拉敏为自己的罪行付出代价的派系雇佣了角色们来抓捕她。当角色们找到塔拉敏时，他们得知到她一心只想抛弃过去的暴力生活，与她的新家庭——包括她的两个年幼的孩子——一起安度余生。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

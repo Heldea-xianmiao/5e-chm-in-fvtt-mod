@@ -42,7 +42,45 @@ html,body {
 
 魅力9（-1）<BR>感官：被动察觉10<BR>语言：任意一门语言（通常是通用语）<BR>挑战等级：2（450 XP）</P>
 
-<P><STRONG>鲁莽Reckless。</STRONG>狂战士可以在自己回合开始时进入鲁莽状态，其发动的所有近战武器攻击的攻击检定均具有优势，所有对其发动的攻击检定也同样具有优势，持续直至他的下一回合开始。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>巨斧Greataxe。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：9（1d12+3）点挥砍伤害。</P></body>
+<P><STRONG>鲁莽Reckless。</STRONG>狂战士可以在自己回合开始时进入鲁莽状态，其发动的所有近战武器攻击的攻击检定均具有优势，所有对其发动的攻击检定也同样具有优势，持续直至他的下一回合开始。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>巨斧Greataxe。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：9（1d12+3）点挥砍伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -56,7 +56,45 @@ Althemone</FONT></STRONG><BR><EM>武器（投石索弹丸），极珍稀</EM><BR
 
   <STRONG>追迹Tracking。</STRONG>受到这枚弹丸伤害的生物，其被弹丸击中的位置会被标记上一枚发光的符文。这一标记持续24小时。生物被标记期间，你永远知道它身处何方。</P>
 
-  <P><FONT color=#808080>（注：放逐弹丸未提及持续时间，因此很可能是永久放逐。）</FONT></P></BLOCKQUOTE></body>
+  <P><FONT color=#808080>（注：放逐弹丸未提及持续时间，因此很可能是永久放逐。）</FONT></P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

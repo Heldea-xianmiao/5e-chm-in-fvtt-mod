@@ -82,9 +82,47 @@ xmlns="http://www.w3.org/TR/REC-html40">
 
 <P class=MsoNormal style="MARGIN: 0pt"><B><SPAN style="FONT-WEIGHT: bold"  >灾变吐息Cataclysmic</SPAN></B><B><SPAN style="FONT-WEIGHT: bold"  > </SPAN></B><B><SPAN style="FONT-WEIGHT: bold"  >Breath（充能5</SPAN></B><B><SPAN style="FONT-WEIGHT: bold"  >-6</SPAN></B><B><SPAN style="FONT-WEIGHT: bold"  >）。</SPAN></B><SPAN >次等亡骸龙呼出一道30尺锥形的幽魂般的紫色火炎之潮。区域内的所有生物必须进行一次DC16的敏捷豁免，豁免失败受到36（8d8）暗蚀伤害，豁免成功伤害减半。一个被该伤害降至0生命值的生物会</SPAN><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000" >死亡</SPAN></B><SPAN >。此外，任何被该伤害杀死的中型或更小的类人生物，以及在吐息区域内的此类生物的尸体都将变为受次等亡骸龙控制的</SPAN><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000" >丧尸</SPAN></B><B><SPAN style="FONT-WEIGHT: bold; COLOR: #800000" >Zombie</SPAN></B><SPAN >。丧尸的先攻算作和次等亡骸龙相同,在次等亡骸龙的回合结束后立即行动。除非另有命令，否则丧尸会尝试杀死它们遇到的任何非亡灵。<o:p></o:p></SPAN></P>
 
-<P></P></body>
+<P></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

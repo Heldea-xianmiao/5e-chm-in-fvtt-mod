@@ -68,7 +68,45 @@ margin-bottom: -18px;
 
   Worlds。</STRONG>某些节点类似于魔法传送门，同时存在于多个世界，它们可能坐落在诸世根系之上或其周围——诸世根系即是第一世界的巨树之种扎根并延展的地方。</DIV></LI></UL>
 
-<P>这些节点可能是地理景观，如参天巨树、巍峨山峰、深渊洞穴，抑或是陨石坑中的天外陨石。它们也可能是人工建造的奇观，如孤立高塔、熙攘酒馆，甚至繁华城市。通常，造访者离开这些地方时会返回原来的世界，但有时也可通过节点穿梭于不同世界。切换世界可能需要魔法、一件来自目标世界的物品作为钥匙，甚至仅凭意志的力量便可实现。<BR>某些节点同时存在于多个世界，但并非同时出现在所有地方。它们如流萤般穿梭于不同世界，按某种规律消失于一界，又显现于另一界。这样的节点可能在一个世界停留数年，也可能只逗留一小时，带着其中的一切去往新世界。</P></body>
+<P>这些节点可能是地理景观，如参天巨树、巍峨山峰、深渊洞穴，抑或是陨石坑中的天外陨石。它们也可能是人工建造的奇观，如孤立高塔、熙攘酒馆，甚至繁华城市。通常，造访者离开这些地方时会返回原来的世界，但有时也可通过节点穿梭于不同世界。切换世界可能需要魔法、一件来自目标世界的物品作为钥匙，甚至仅凭意志的力量便可实现。<BR>某些节点同时存在于多个世界，但并非同时出现在所有地方。它们如流萤般穿梭于不同世界，按某种规律消失于一界，又显现于另一界。这样的节点可能在一个世界停留数年，也可能只逗留一小时，带着其中的一切去往新世界。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

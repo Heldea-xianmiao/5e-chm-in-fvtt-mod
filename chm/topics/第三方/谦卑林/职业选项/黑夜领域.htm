@@ -154,7 +154,45 @@ html,body {
 
 身处黑暗之中的敌人不仅会陷入恐慌，还会陷入 <strong>目盲Blinded</strong> 状态，持续直至它们离开黑暗的范围为止。<br>
 
-<font color=#777777 size=2>（注：深邃与幽暗的原文是heavily obscuring与lightly obscuring，不是术语 重度遮蔽heavily obscure与 轻度遮蔽lightly obscure ，为防止混淆，这里采用了意译）</font></p></body>
+<font color=#777777 size=2>（注：深邃与幽暗的原文是heavily obscuring与lightly obscuring，不是术语 重度遮蔽heavily obscure与 轻度遮蔽lightly obscure ，为防止混淆，这里采用了意译）</font></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

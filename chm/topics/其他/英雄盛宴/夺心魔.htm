@@ -38,7 +38,45 @@ html,body {
 
   (可选)</P></BLOCKQUOTE>
 
-<P>在搅拌机中，将生姜、糖和青柠汁混合，直到固体物成为非常、非常细的泥状物并且混合物均匀地呈糖浆状，这一过程大约需要1分钟。在量杯或盆上放一个细网过滤网，过滤混合物，搅拌并按压固体以提取尽可能多的糖浆（应该提取到大约杯）。丢掉固体物，并将糖浆倒回搅拌器中。<BR>加入浓缩葡萄汁、伏特加和冰块，搅拌至冰块被细细碾碎，同时混合物均匀且在搅拌器中不挂壁（时间取决于你的搅拌器的功率）。将混合物分装在两个宽敞的高球杯或柯林斯杯中，用葡萄（如果有的话）装饰，然后立刻上桌，最好用吸管喝。</P></body>
+<P>在搅拌机中，将生姜、糖和青柠汁混合，直到固体物成为非常、非常细的泥状物并且混合物均匀地呈糖浆状，这一过程大约需要1分钟。在量杯或盆上放一个细网过滤网，过滤混合物，搅拌并按压固体以提取尽可能多的糖浆（应该提取到大约杯）。丢掉固体物，并将糖浆倒回搅拌器中。<BR>加入浓缩葡萄汁、伏特加和冰块，搅拌至冰块被细细碾碎，同时混合物均匀且在搅拌器中不挂壁（时间取决于你的搅拌器的功率）。将混合物分装在两个宽敞的高球杯或柯林斯杯中，用葡萄（如果有的话）装饰，然后立刻上桌，最好用吸管喝。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -54,7 +54,45 @@ style="BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid; WIDTH: 400px;
 
 style="FONT-SIZE: 11pt; FONT-FAMILY: 'Arial Unicode MS'; mso-spacerun: 'yes'" 
 
-dir=ltr><FONT size=3 face="Arial Unicode MS">一定要选用足够大的煎锅，保证有充足的面积供食材铺开。如果全堆在一起，上层的食材会被蒸熟，难以达到煎至金黄的效果。<BR>这道菜也可以用虾来代替鸡肉。如果这么做的话记得选取大虾（21只25个一磅），并且不要把虾炒得太老。在最开始的步骤先炒上两分多钟，等到最后收尾过半，过去1分钟后再把虾加入锅中与面条和蔬菜一起炒上1分钟左右，这样炒出的虾刚好熟透而不至于太老。</FONT></SPAN></P></div></body>
+dir=ltr><FONT size=3 face="Arial Unicode MS">一定要选用足够大的煎锅，保证有充足的面积供食材铺开。如果全堆在一起，上层的食材会被蒸熟，难以达到煎至金黄的效果。<BR>这道菜也可以用虾来代替鸡肉。如果这么做的话记得选取大虾（21只25个一磅），并且不要把虾炒得太老。在最开始的步骤先炒上两分多钟，等到最后收尾过半，过去1分钟后再把虾加入锅中与面条和蔬菜一起炒上1分钟左右，这样炒出的虾刚好熟透而不至于太老。</FONT></SPAN></P></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

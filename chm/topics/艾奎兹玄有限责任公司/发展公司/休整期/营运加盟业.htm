@@ -114,7 +114,45 @@ DM 可以选择并发症，也可以在 特许经营并发症表 上骰。</P>
 
 特许经营重组(franchise restructuring) 活动，要么参与 团队建设(team building) 活动。<BR>3 一个坚称自己不是总部的人建议，特许经营机构应该开展 可疑商业行为(shady business 
 
-practice) 活动。 这更像是一种要求，而不是建议。<BR>4 顾客正逐渐放弃特许经营。在角色能够确定原因之前，每次后续的特许经营活动检查受到 -5 减值。<BR>5 一名工作人员发现破坏影响特许经营业务的迹象。<BR>6 工作人员开始要求更高的工资，并威胁要罢工。<BR>可能涉及竞争对手<BR></P></body>
+practice) 活动。 这更像是一种要求，而不是建议。<BR>4 顾客正逐渐放弃特许经营。在角色能够确定原因之前，每次后续的特许经营活动检查受到 -5 减值。<BR>5 一名工作人员发现破坏影响特许经营业务的迹象。<BR>6 工作人员开始要求更高的工资，并威胁要罢工。<BR>可能涉及竞争对手<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

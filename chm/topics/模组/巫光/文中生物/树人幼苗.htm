@@ -54,7 +54,45 @@ Trees（1/每日）。</STRONG>树人可以用魔法活化其周边 60 尺范围
 
 awakened tree 的资料卡。活化树木作为树人的盟友行动。这活化树木将在以下情况解除活化：被活化后经过 1 日或死亡；树人死亡或者离开活化树木超过 
 
-120尺；树人用一个附赠动作让将其恢复成一棵树。解除活化后，树木会尽可能的尝试重新定植。</P></body>
+120尺；树人用一个附赠动作让将其恢复成一棵树。解除活化后，树木会尽可能的尝试重新定植。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -52,7 +52,45 @@ Seedpods
 
 food and drink<BR>2/天：纠缠术 entangle，神莓术goodberry<BR>1/天：植物交谈speak with plants<BR><STRONG><FONT color=#800000>反应Reaction：</FONT></STRONG><BR><STRONG>骄傲之咆哮Roar of 
 
-Pride。</STRONG>当一个蒲公英狮60尺内的生物用一次攻击掷骰命中了它，蒲公英狮可以释放出一阵愤怒的咆哮。触发这次反应的生物必须通过DC15感知豁免，否则就会陷入恐慌状态，直到蒲公英狮的下个回合结束。</P></body>
+Pride。</STRONG>当一个蒲公英狮60尺内的生物用一次攻击掷骰命中了它，蒲公英狮可以释放出一阵愤怒的咆哮。触发这次反应的生物必须通过DC15感知豁免，否则就会陷入恐慌状态，直到蒲公英狮的下个回合结束。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

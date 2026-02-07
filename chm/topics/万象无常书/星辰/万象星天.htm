@@ -34,7 +34,45 @@ html,body {
 
 of Many Things的十二宫。也正是命运女神伊斯图斯创作最初的万象无常牌Deck of Many Things 时所参考的星座.</P>
 
-<P>万千星辰，万千世界<BR>在D&amp;D设定中，大部分在夜空中的星星是恒星，行星，与其他距离遥远的物体。它们都存在于一片被称作荒宇的空间中。一组相关的星体被称作一个荒宇系统。荒宇系统则存在于星光位面——一片无尽的，包裹着所有物质位面的虚空。</P></body>
+<P>万千星辰，万千世界<BR>在D&amp;D设定中，大部分在夜空中的星星是恒星，行星，与其他距离遥远的物体。它们都存在于一片被称作荒宇的空间中。一组相关的星体被称作一个荒宇系统。荒宇系统则存在于星光位面——一片无尽的，包裹着所有物质位面的虚空。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

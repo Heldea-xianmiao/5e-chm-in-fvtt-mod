@@ -22,7 +22,45 @@
 
 <P>自魔法在远古年代首次被引入凡世以来，无数人尝试将魔法的恩赐化为力量的工具。大师级工匠与优秀的工匠长期与才华横溢的奥术师及神的侍僧合作，打造精美的防护神器或锻造战争武器。在奥法纪，最杰出的大魔法师们曾附魔并组合了大量强大的神器，其中绝大多数都在灾祸之战的冲突中散落与遗失。</P>
 
-<P>冒险者、考古学家以及一些不择手段的探险者深入地下城、废墟和被遗忘的传说之地，希望找回这些强大的物品，而施法者和研究者则致力于亲手重现古老的附魔技艺。这一章收录了在荒洲发现的新魔法物品和神器，但它们也可用于任何战役设定中。</P></body>
+<P>冒险者、考古学家以及一些不择手段的探险者深入地下城、废墟和被遗忘的传说之地，希望找回这些强大的物品，而施法者和研究者则致力于亲手重现古老的附魔技艺。这一章收录了在荒洲发现的新魔法物品和神器，但它们也可用于任何战役设定中。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -202,7 +202,45 @@ Adventures</FONT></H3>
 
 <P>
 
-埃科勃、图斯米特和泽夫之间的政治和商业阴谋为西法兰尼斯的角色提供了丰富的冒险机会。围绕阴谋或神话（见本章“奇幻风格”）的战役在这个地方尤其适合。<BR>当然，西法兰尼斯也有相当多的怪物、地城和废墟。干涸之原上的巴克鲁尼什帝国废墟，以及尘沙之海中苏帝国的废墟都引来了许多冒险者和恶徒，他们希望能够获得关于灭亡这些帝国的可怕灾难的魔法知识。和他们的东方邻居一样，凯特和乌尔也同样遭到来自屏障峰和亚提尔山脉的怪物的袭击。</P></body>
+埃科勃、图斯米特和泽夫之间的政治和商业阴谋为西法兰尼斯的角色提供了丰富的冒险机会。围绕阴谋或神话（见本章“奇幻风格”）的战役在这个地方尤其适合。<BR>当然，西法兰尼斯也有相当多的怪物、地城和废墟。干涸之原上的巴克鲁尼什帝国废墟，以及尘沙之海中苏帝国的废墟都引来了许多冒险者和恶徒，他们希望能够获得关于灭亡这些帝国的可怕灾难的魔法知识。和他们的东方邻居一样，凯特和乌尔也同样遭到来自屏障峰和亚提尔山脉的怪物的袭击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

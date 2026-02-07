@@ -80,7 +80,45 @@ Blue。</FONT> </STRONG>豁免失败者受到35（10d6）暗蚀伤害并陷入�
 
 style="FONT-WEIGHT: bold"><FONT color=#00ff00>5-6：削弱之绿Sapping 
 
-Green。</FONT> </STRONG>豁免失败者受到35（10d6）力场伤害且陷入失能直到巨人的下一回合结束。豁免成功者伤害减半且不会失能。</P></body>
+Green。</FONT> </STRONG>豁免失败者受到35（10d6）力场伤害且陷入失能直到巨人的下一回合结束。豁免成功者伤害减半且不会失能。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

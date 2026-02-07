@@ -82,7 +82,45 @@ Froghemoth</strong></font></font></p><p>
 
 <strong>触须Tentacle。</strong>近战武器攻击：命中+10，触及20尺，单一目标。命中：19（3d8+6）点钝击伤害,如果目标是巨型或更小的生物则被<font color=maroon><strong>擒抱</strong></font>（逃脱DC 16）。直到擒抱结束，沼喉怪不能对另一个目标使用这条触手。沼喉怪有四条触手。<br>
 
-<strong>舌卷Tongue。</strong>沼喉怪选择一个20尺内它能看见的中型或更小的生物。目标必须成功通过一次DC18的力量豁免。豁免失败则目标被拉至沼喉怪5尺内一处未占据空间。</p></body>
+<strong>舌卷Tongue。</strong>沼喉怪选择一个20尺内它能看见的中型或更小的生物。目标必须成功通过一次DC18的力量豁免。豁免失败则目标被拉至沼喉怪5尺内一处未占据空间。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

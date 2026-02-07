@@ -54,7 +54,45 @@ h4 {
 
      
 
-所作的豁免检定具有优势。<BR>法术效应期间，若你被选为一道法术或一次攻击的目标，你可以用你的反应传送到至多60尺外的一处未占据空间内。如果此行动使你脱离了该法术或该攻击的范围，你便不会受其影响。传送结束后，本法术会立刻结束。<BR></P></body>
+所作的豁免检定具有优势。<BR>法术效应期间，若你被选为一道法术或一次攻击的目标，你可以用你的反应传送到至多60尺外的一处未占据空间内。如果此行动使你脱离了该法术或该攻击的范围，你便不会受其影响。传送结束后，本法术会立刻结束。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

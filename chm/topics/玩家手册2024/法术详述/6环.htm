@@ -466,7 +466,45 @@ Healing</U></EM>）的词条。用一个附赠动作，你或一名盟友可以�
 
 <H4 id="Word_of_Recall">回返真言｜Word of Recall</H4>
 
-<P><EM>六环 咒法（牧师）</EM> <BR><STRONG>施法时间：</STRONG>动作<BR><STRONG>施法距离：</STRONG>5尺<BR><STRONG>法术成分：</STRONG>V<BR><STRONG>持续时间：</STRONG>立即<BR>  你和你身边5尺内的至多五个自愿生物一起瞬间传送到一个你事先设置好的圣殿。你和与你一起传送的生物将出现在你准备圣殿时指定的地点（见下）旁边最近的未被占据位置。如果你在施展法术前没有事先准备好圣殿，则该法术将不产生任何效应。<BR>你必须指定一处地方（例如一座寺庙），在那里施展法术以将其设为圣殿。</P></body>
+<P><EM>六环 咒法（牧师）</EM> <BR><STRONG>施法时间：</STRONG>动作<BR><STRONG>施法距离：</STRONG>5尺<BR><STRONG>法术成分：</STRONG>V<BR><STRONG>持续时间：</STRONG>立即<BR>  你和你身边5尺内的至多五个自愿生物一起瞬间传送到一个你事先设置好的圣殿。你和与你一起传送的生物将出现在你准备圣殿时指定的地点（见下）旁边最近的未被占据位置。如果你在施展法术前没有事先准备好圣殿，则该法术将不产生任何效应。<BR>你必须指定一处地方（例如一座寺庙），在那里施展法术以将其设为圣殿。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

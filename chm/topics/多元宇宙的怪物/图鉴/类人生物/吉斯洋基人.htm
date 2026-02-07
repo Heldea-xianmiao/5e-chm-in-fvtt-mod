@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>吉斯洋基人 Githyanki</FONT></STRONG></P>
 
-<P>吉斯洋基人是一个古老种族的后裔，他们同时也和吉斯泽莱人有着共同的起源（也在此书中）。这些高挑且瘦削的人们拥有强大的灵能，而且大部分时间都住在星界中。其中最著名的吉斯洋基人便是巫妖女王维拉基斯的好战追随者。他们威胁着星界，袭击诸多位面，掠夺多元宇宙的魔法和财富。</P></body>
+<P>吉斯洋基人是一个古老种族的后裔，他们同时也和吉斯泽莱人有着共同的起源（也在此书中）。这些高挑且瘦削的人们拥有强大的灵能，而且大部分时间都住在星界中。其中最著名的吉斯洋基人便是巫妖女王维拉基斯的好战追随者。他们威胁着星界，袭击诸多位面，掠夺多元宇宙的魔法和财富。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

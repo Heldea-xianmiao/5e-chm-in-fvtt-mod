@@ -60,7 +60,45 @@ Night）则是深水城的另一个著名节日，日期是马佩诺斯之月的
 
 Welcoming）曾是龙枪世界克莱恩中的伊斯塔帝国的一个节日。这是冬季的第一个节日并作为准备迎接新年的象征在伊斯塔富有盛名。相传在大灾变前曾有三位牧师，他们分别是治愈之神米莎凯（Mishakal）、工匠之神李奥克斯 
 
-（Reorx）和财富与商业之神西那瑞（Shinare）的神使。三人在大陆各地旅行，所到之处病人得以治愈，食物也充满粮仓，到处都是喜庆的气氛，同时他们会在一年的最后一天里把礼物送给需要帮助的人。虽然大灾变让他们都回到了各自属神的身边不再降临克莱恩，但在兰斯战争之后，新的牧师重新恢复了这一传统。</P></body>
+（Reorx）和财富与商业之神西那瑞（Shinare）的神使。三人在大陆各地旅行，所到之处病人得以治愈，食物也充满粮仓，到处都是喜庆的气氛，同时他们会在一年的最后一天里把礼物送给需要帮助的人。虽然大灾变让他们都回到了各自属神的身边不再降临克莱恩，但在兰斯战争之后，新的牧师重新恢复了这一传统。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

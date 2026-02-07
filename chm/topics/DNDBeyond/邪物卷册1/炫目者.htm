@@ -50,7 +50,45 @@ Slaves。</STRONG>一些幽暗地域的生物，特别是卓尔和寇涛，会�
 
 Eyes。</STRONG>当炫目者眼睛睁开的时候，会投射出60尺锥形的明亮照明范围，以及再向外延伸60尺的昏暗照明范围。它可以在自己的每个回合结束时设定这个锥形的方向。当处在明亮区域且距离炫目者15尺内时，所有能看见炫目者的生物在攻击检定上都有劣势。具有日照敏感特性且能看到炫目者的生物，不论位于明亮区域的任何地方都具有劣势。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>啃咬Bite。</STRONG>近战武器攻击：命中+4，触及5尺，单一生物。命中：5（1d6+2）穿刺伤害。<BR><STRONG>光耀爆裂Radiant 
 
-Blast。</STRONG>光耀能量以15尺的锥形从炫目者的眼睛中喷射而出。该区域内的每个生物必须通过一次DC12体质豁免检定，否则承受7点（2d6）光耀伤害，并在炫目者的下一回合结束前陷入目盲。具有日照敏感特性的生物在这次豁免中处于劣势。</P></body>
+Blast。</STRONG>光耀能量以15尺的锥形从炫目者的眼睛中喷射而出。该区域内的每个生物必须通过一次DC12体质豁免检定，否则承受7点（2d6）光耀伤害，并在炫目者的下一回合结束前陷入目盲。具有日照敏感特性的生物在这次豁免中处于劣势。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

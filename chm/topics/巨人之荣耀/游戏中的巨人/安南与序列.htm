@@ -126,7 +126,45 @@ Rites。</STRONG>所有巨人都认同安南不在的当下，斯绰茂兹就是
 
 <P><STRONG><FONT color=#800000 size=5>索列姆Thrym</FONT></STRONG><BR>索列姆是苏尔特的孪生弟弟，在神话中被描述为苏尔特的对手和同谋。他被描述成两者中更强壮与更勇敢的一个，祂经常用这些品质打败哥哥的聪明，在比赛和冲突中获得胜利。索列姆经常被描述为一个恶霸，因为安南似乎对苏尔特有所偏爱而沮丧；他会通过骚扰弟弟司寇雷乌斯来发泄这沮丧。索列姆在神话中被认为是序位诸神中最伟大的勇士。祂会带领一群凡人巨人进行突袭和小规模战斗，为巨人一族带来荣耀，为安南子嗣的敌人带来恐惧。</P>
 
-<P><STRONG>祭司与仪式Priests and Rites。</STRONG>巨人有时会在狩猎或者参战前向索列姆祈求祝福，他们会用猎物的鲜血来感谢索列姆所赐的成功。索列姆的祭司也是战团的领袖，同时也为巨人社区的领袖提供军事建议。</P></body>
+<P><STRONG>祭司与仪式Priests and Rites。</STRONG>巨人有时会在狩猎或者参战前向索列姆祈求祝福，他们会用猎物的鲜血来感谢索列姆所赐的成功。索列姆的祭司也是战团的领袖，同时也为巨人社区的领袖提供军事建议。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

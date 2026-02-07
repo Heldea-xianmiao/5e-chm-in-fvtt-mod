@@ -50,7 +50,45 @@ Social Interaction</STRONG>
 
 <BR>你可以决定属性检定会有多大程度上影响交涉的结果。一次简单的交涉可能只涉及简短的对话和一次魅力检定，而一次更复杂的遭遇可能需要多次属性检定来帮助引导对话的走向。</P><P ><STRONG >使用协助动作Using the Help 
 
-Action</STRONG><BR>当一个角色使用协助动作来协助另一个角色影响一个NPC或怪物时，鼓励进行协助角色的玩家参与对话，或至少描述一下他们的角色为了协助另一个角色取得成功正在做什么或说什么。</P></body>
+Action</STRONG><BR>当一个角色使用协助动作来协助另一个角色影响一个NPC或怪物时，鼓励进行协助角色的玩家参与对话，或至少描述一下他们的角色为了协助另一个角色取得成功正在做什么或说什么。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -76,7 +76,45 @@ Yeenoghu，见《怪物图鉴》）的鬣狗状恶魔。苏苏瓦魔会在崇信
 
 Stinger。</STRONG>近战武器攻击：命中+7，触及15尺，单一生物。命中：13（2d8+4）点穿刺伤害，且目标必须成功通过一个DC14的体质豁免，否则便中毒。当因此而中毒时，目标同时被麻痹。目标在其每个回合结束时可以重复进行此豁免，豁免成功则终止其所承受的此效应。<BR><STRONG><FONT color=#800000>附赠动作Bonus 
 
-Actions</FONT></STRONG><BR><STRONG>横行Rampage。</STRONG>当在自己的回合中以一次近战攻击将一个生物的生命值降至0时，苏苏瓦魔可以移动至多其速度一半的距离，并进行一次啃咬攻击。</P></body>
+Actions</FONT></STRONG><BR><STRONG>横行Rampage。</STRONG>当在自己的回合中以一次近战攻击将一个生物的生命值降至0时，苏苏瓦魔可以移动至多其速度一半的距离，并进行一次啃咬攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

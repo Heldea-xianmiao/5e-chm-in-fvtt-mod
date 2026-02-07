@@ -36,7 +36,45 @@ html,body {
 
 Godsend</EM></P>
 
-<P style="MARGIN-RIGHT: 0px" dir=ltr>塞洛斯的住民所了解的世界包括三大领域：凡界、天界、以及冥界。它们是藏在各自的多元宇宙空间里三个不同的实体世界，因神祇的力量而与宇宙的其他部分隔绝。这一章节将依次描述每一个领域，不过重点放被诸神密谋交织着的、众生所在的凡界。</P></body>
+<P style="MARGIN-RIGHT: 0px" dir=ltr>塞洛斯的住民所了解的世界包括三大领域：凡界、天界、以及冥界。它们是藏在各自的多元宇宙空间里三个不同的实体世界，因神祇的力量而与宇宙的其他部分隔绝。这一章节将依次描述每一个领域，不过重点放被诸神密谋交织着的、众生所在的凡界。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

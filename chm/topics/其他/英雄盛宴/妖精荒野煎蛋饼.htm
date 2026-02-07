@@ -42,7 +42,45 @@ html,body {
 
 <P>轻轻地用柔性刮刀把煎饼的边缘弄松，放在盘子上。冷却约15分钟，切成三角形，在温热或常温下食用。</P><div 
 
-style="BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid; WIDTH: 400px; BORDER-BOTTOM: black 1px solid; PADDING-BOTTOM: 20px; PADDING-TOP: 20px; PADDING-LEFT: 30px; MARGIN-LEFT: 40px; BORDER-LEFT: black 1px solid; PADDING-RIGHT: 20px; BACKGROUND-COLOR: #f7dea8"><P align=center><FONT size=4><STRONG>厨师笔记</STRONG></FONT></P><P>妖精荒野煎蛋饼可以很融洽地添加进各种食材，包括辣椒酱、片蘑菇、芦笋、西葫芦或大葱等蔬菜，以及碎培根、切成片或块状的熟香肠或咸牛排等肉类。但无论加入哪种配料，都不要超过2杯，并确保在加入鸡蛋液之前，它们已经烹饪好并在平底锅中调了味。<BR>确保你的平底锅可以安全地放入400°F的烤箱里。</P></div></body>
+style="BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid; WIDTH: 400px; BORDER-BOTTOM: black 1px solid; PADDING-BOTTOM: 20px; PADDING-TOP: 20px; PADDING-LEFT: 30px; MARGIN-LEFT: 40px; BORDER-LEFT: black 1px solid; PADDING-RIGHT: 20px; BACKGROUND-COLOR: #f7dea8"><P align=center><FONT size=4><STRONG>厨师笔记</STRONG></FONT></P><P>妖精荒野煎蛋饼可以很融洽地添加进各种食材，包括辣椒酱、片蘑菇、芦笋、西葫芦或大葱等蔬菜，以及碎培根、切成片或块状的熟香肠或咸牛排等肉类。但无论加入哪种配料，都不要超过2杯，并确保在加入鸡蛋液之前，它们已经烹饪好并在平底锅中调了味。<BR>确保你的平底锅可以安全地放入400°F的烤箱里。</P></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

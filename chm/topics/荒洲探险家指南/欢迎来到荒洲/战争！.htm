@@ -88,7 +88,45 @@ Campaign</FONT></H3>
 
 <P>例如，在占领废弃的堡垒后，角色们得知一支士兵驻军已抵达，以帮助守住堡垒，而角色们在战场上还有其他任务需要完成。你可以给他们一个紧急的目标，比如敌方的军阀，或者提供多个选项，比如三支不同的友军营正在遭受攻击。</P>
 
-<P>   如果你需要在同一个遭遇中描绘大量友方和敌方NPC与玩家战斗，可以通过完全忽略骰子掷点，凭直觉决定生物何时死亡来简化遭遇。这种做法偶尔可以使用，但尽量避免总是这样，因为仅凭你的决定而不使用骰子会损害游戏世界的可信度。 <BR></P></body>
+<P>   如果你需要在同一个遭遇中描绘大量友方和敌方NPC与玩家战斗，可以通过完全忽略骰子掷点，凭直觉决定生物何时死亡来简化遭遇。这种做法偶尔可以使用，但尽量避免总是这样，因为仅凭你的决定而不使用骰子会损害游戏世界的可信度。 <BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

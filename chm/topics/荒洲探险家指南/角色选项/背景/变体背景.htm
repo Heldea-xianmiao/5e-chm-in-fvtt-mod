@@ -58,6 +58,43 @@ Backgrounds</FONT></H2>
 
 <P>大多数从眼见为实叛逃的人逃往寒噬北境，那里处于帝国的控制范围之外。克洛维斯联邦会立即引渡叛徒，以维护与帝国的外交关系，而在目前的政治气候下，逃往乔哈斯无异于自杀。</P>
 
-<P>如果你是眼见为实的成员并参与冒险，你要么是一个背叛者，设法对帝国最顶尖的间谍隐瞒真实身份，要么仍在执行任务。在后一种情况下，你可以与DM合作，确定你为什么要与外面的冒险者一起旅行。</P></body>
+<P>如果你是眼见为实的成员并参与冒险，你要么是一个背叛者，设法对帝国最顶尖的间谍隐瞒真实身份，要么仍在执行任务。在后一种情况下，你可以与DM合作，确定你为什么要与外面的冒险者一起旅行。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>

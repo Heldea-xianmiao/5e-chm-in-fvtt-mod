@@ -138,7 +138,45 @@ Hands</EM></U>），你也可以在这种情况下照常达成这些强化效应
 
 <BR><b><FONT face=仿宋>契约魔法</FONT><EM><FONT face="Times New Roman">Pact Magic</FONT></EM>。</b>如果你同时具有<STRONG>魔契师</STRONG>职业的<STRONG>契约魔法</STRONG>特性和<STRONG>施法</STRONG>特性，你能够使用来自<STRONG>契约魔法</STRONG>特性的法术位来施展你通过具有<STRONG>施法</STRONG>特性的职业所准备的法术，并且你也可以使用来自<STRONG>施法</STRONG>特性的法术位施展你准备的<STRONG>魔契师</STRONG>法术。</p>
 
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
 </body>
 
 </html>
+
 

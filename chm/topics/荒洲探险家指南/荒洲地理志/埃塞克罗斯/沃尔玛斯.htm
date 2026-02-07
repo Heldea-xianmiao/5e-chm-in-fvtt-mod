@@ -42,7 +42,45 @@ Radiance），“烛火”（Candlefire）和“魂帆”（Soulsailor）。在�
 
 Level)。克灵密探报告说，来自敦达里安帝国的侦察舰“大胆冒险者”正计划前往沃尔玛斯附近的捷利尔岛。哈尔瓦斯·丹那洛船长和诺卡·亮牙不希望大胆冒险者的船员看到沃尔玛斯或抵达捷利尔，以此确保克灵在埃塞克罗斯的行动和虫民的定居仍然个秘密。两人提供了500金币给角色来阻止大胆冒险者的进攻。大胆冒险者是一艘龙骨船（见《城主指南》第五章中的“空运及水运载具”表），可搭乘六个侦察兵。大胆冒险者的船长萨莉·布里兹伯姆拥有一块短讯石，用于与敦达里安军舰“光明女王的厄运”的船长进行交流。如果她的船遭到攻击，萨莉会用短讯石向战舰发出警告，这可能会在未来变成沃尔玛斯的威胁。<BR>救救我们的船（中级）Save Our Ships (Mid 
 
-Level)。当角色在沃尔玛斯的一艘船上时，三个野人德鲁伊（每人都骑在虎鲸背上）会攻击船。德鲁伊很生气，因为野人成群结队地离开埃塞克罗斯去了乔哈斯。他们认为，克灵正在对这些野人使用附魔魔法，诱使他们离开自己的朋友和家人。德鲁伊会使用一击脱离战术，在逃跑之前尽可能地造成伤害。哈尔瓦斯·丹那洛船长要求角色去处理攻击者。德鲁伊可能开放商谈，也可能会为了自己的信仰而战斗至死。</P></body>
+Level)。当角色在沃尔玛斯的一艘船上时，三个野人德鲁伊（每人都骑在虎鲸背上）会攻击船。德鲁伊很生气，因为野人成群结队地离开埃塞克罗斯去了乔哈斯。他们认为，克灵正在对这些野人使用附魔魔法，诱使他们离开自己的朋友和家人。德鲁伊会使用一击脱离战术，在逃跑之前尽可能地造成伤害。哈尔瓦斯·丹那洛船长要求角色去处理攻击者。德鲁伊可能开放商谈，也可能会为了自己的信仰而战斗至死。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

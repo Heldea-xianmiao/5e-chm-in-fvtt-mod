@@ -122,7 +122,45 @@ set </STRONG>
 
 <P><EM>“</EM><EM>见怀恨在心者。同仇敌忾，将交汇汝等之途。</EM><EM>”</EM></P></div>
 
-<P>这名盟友与角色们有着共同的敌人。一只可怕的怪物或一名恶役夺走了这名盟友的某个亲友或是某物——而那怪物或是恶役也正好是角色们也敌对的家伙（或者很快就会敌对的家伙）。现在，这名盟友希望杀死那个家伙或将其绳之以法，并与角色们同行至这一目的完成为止。<BR>占卜师也许还能占卜出你们同仇之人是谁——即使角色们可能压根还没见过或是听过这名宿敌。</P></body>
+<P>这名盟友与角色们有着共同的敌人。一只可怕的怪物或一名恶役夺走了这名盟友的某个亲友或是某物——而那怪物或是恶役也正好是角色们也敌对的家伙（或者很快就会敌对的家伙）。现在，这名盟友希望杀死那个家伙或将其绳之以法，并与角色们同行至这一目的完成为止。<BR>占卜师也许还能占卜出你们同仇之人是谁——即使角色们可能压根还没见过或是听过这名宿敌。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

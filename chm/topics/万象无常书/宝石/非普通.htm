@@ -48,7 +48,45 @@ Fashion。</em></strong>以一个附赠动作，你可以魔法性地改变你�
 
 <strong><font color=#800000>谜题急智戒指 Ring of Puzzler's Wit</font></strong><br >  
 
-<em>戒指，非普通</em><br>这枚镶有萤石的金戒指可以使佩戴者的思维更加敏锐。戒指有3发充能，每日黎明时恢复1d4-1发已消耗充能。当你进行一次智力检定时，你可以消耗1发充能使你在这次检定中获得优势。</p></body>
+<em>戒指，非普通</em><br>这枚镶有萤石的金戒指可以使佩戴者的思维更加敏锐。戒指有3发充能，每日黎明时恢复1d4-1发已消耗充能。当你进行一次智力检定时，你可以消耗1发充能使你在这次检定中获得优势。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

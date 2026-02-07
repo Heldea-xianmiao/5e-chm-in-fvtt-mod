@@ -202,7 +202,44 @@ Flurry</FONT></STRONG><BR>你的恐惧打击造成的心灵伤害变为2d8。另
 
 Dodge<BR></FONT></STRONG>当一个生物对你发动了一次攻击检定时，你能用反应对这次检定施加劣势。不管那次攻击命中或失手，你都能在那之后传送至你30尺范围内的一处未被占据的、你可见的空间。</p>
 
-<DIV></DIV></body>
+<DIV></DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
@@ -211,6 +248,7 @@ Dodge<BR></FONT></STRONG>当一个生物对你发动了一次攻击检定时，�
 
 
 </html>
+
 
 
 

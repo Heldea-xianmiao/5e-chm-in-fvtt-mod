@@ -50,7 +50,45 @@ Multiattack。</STRONG>电鳗发动两次啃咬攻击。<BR><STRONG>啃咬 Bite�
 
 5-6）。</STRONG>电鳗触碰 5 尺范围内一个不在水中的生物，或是 15 尺范围内身处水中的所有生物，这些生物需进行一次 DC 12 
 
-的体质豁免。豁免失败则目标受到 13（3d8）的闪电伤害。受到该伤害的目标将被震慑，直到电鳗的下一回合结束。若豁免成功则伤害减半，且不会被震慑。</P></body>
+的体质豁免。豁免失败则目标受到 13（3d8）的闪电伤害。受到该伤害的目标将被震慑，直到电鳗的下一回合结束。若豁免成功则伤害减半，且不会被震慑。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

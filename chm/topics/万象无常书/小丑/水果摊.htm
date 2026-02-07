@@ -154,7 +154,45 @@ Stalls</STRONG></FONT></FONT><br>喜乐市场中到处都是水果小摊，上�
 
       <TD   >该生物长出蜻蜓般的翅膀，获得30尺飞行速度，持续1小时。</TD></TR></TABLE></p></BLOCKQUOTE>
 
-<p><strong>价钱Price</STRONG><br>角色必须给出一缕头发来购买妖精水果。地精商贩们并不会具体说明他们需要头发做什么，但他们会把头发交给经营古旧玩偶店的鬼婆鹅指奶奶，来换取珠宝。</P></body>
+<p><strong>价钱Price</STRONG><br>角色必须给出一缕头发来购买妖精水果。地精商贩们并不会具体说明他们需要头发做什么，但他们会把头发交给经营古旧玩偶店的鬼婆鹅指奶奶，来换取珠宝。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -624,7 +624,45 @@ style="FONT-SIZE: 10.5pt; FONT-FAMILY: 宋体"><o:p></O:P></SPAN></P>
 
 style="FONT-SIZE: 10.5pt; FONT-FAMILY: Calibri; WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; FONT-WEIGHT: 400; FONT-STYLE: normal; TEXT-ALIGN: justify; ORPHANS: 2; WIDOWS: 2; MARGIN: 0pt; LETTER-SPACING: normal; TEXT-INDENT: 21pt; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial"><SPAN 
 
-style="FONT-SIZE: 10.5pt; FONT-FAMILY: 宋体"><FONT face=宋体>变色甲壳</FONT><FONT face=Calibri>Chameleon Carapace</FONT><FONT face=宋体>。螳螂人改变甲壳的颜色以适应周围的环境和质地，其在相应环境中进行躲藏的敏捷（隐匿）检定获得优势。</FONT></SPAN></P></body>
+style="FONT-SIZE: 10.5pt; FONT-FAMILY: 宋体"><FONT face=宋体>变色甲壳</FONT><FONT face=Calibri>Chameleon Carapace</FONT><FONT face=宋体>。螳螂人改变甲壳的颜色以适应周围的环境和质地，其在相应环境中进行躲藏的敏捷（隐匿）检定获得优势。</FONT></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

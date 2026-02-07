@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>巨魔 Trolls</FONT></STRONG></P>
 
-<P>几乎被消灭时仍然可以存活并再生的巨魔，单纯从肉体碎片可以显现他们奇异的突变。在魔法的辐射，平面能量，疾病，大规模死亡或因元素能量造成的伤害，这些因素的影响下，再生的畸形巨魔特别容易发生突变。<BR>这些突变也可能是一些邪恶施法者用仪式魔法所造成的。</P></body>
+<P>几乎被消灭时仍然可以存活并再生的巨魔，单纯从肉体碎片可以显现他们奇异的突变。在魔法的辐射，平面能量，疾病，大规模死亡或因元素能量造成的伤害，这些因素的影响下，再生的畸形巨魔特别容易发生突变。<BR>这些突变也可能是一些邪恶施法者用仪式魔法所造成的。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

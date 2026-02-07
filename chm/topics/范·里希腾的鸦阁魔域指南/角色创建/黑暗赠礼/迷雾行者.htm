@@ -130,7 +130,45 @@ Roots.</SPAN></B><SPAN
 
 >当你完成一次长休，你附近半径10尺的世界将会如同虹吸管一般，最终会吸干你的生命力。你可以安全地在一片区域停留与你体质调整值相同数值的周数（最少一周）。之后，每次你在那片区域完成一次长休时，你必须成功通过一次DC15的体质豁免检定，否则获得一级当你在那片区域内，不可被移除的力竭。</SPAN><SPAN 
 
-style="mso-bidi-font-family: 'Times New Roman'"><o:p></O:P></SPAN></P></body>
+style="mso-bidi-font-family: 'Times New Roman'"><o:p></O:P></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

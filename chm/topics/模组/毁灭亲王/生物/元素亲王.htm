@@ -44,7 +44,45 @@ html,body {
 
 <P><STRONG>元素节点。</STRONG>邪恶元素亲王试图通过在世界各地播撒元素节点之种的方式来扩散它们的力量。元素节点是指物质位面中某个充满了元素位面能量的地点。举个例子，一个处于地表之下的岩浆洞穴或者是一个不断渗透出可燃气体的沼泽也许能成为火元素节点。元素节点对于元素亲王而言类似于桥头堡，以节点开始他们可以用自己的口味重塑世界同时破坏附近的任何东西。当一名元素亲王成功建立了节点，它可以输送它的力量和元素爪牙到达那个地点，从而像是癌症一般在这个世界的苍穹之下散布邪恶元素。</P>
 
-<P><STRONG>邪教崇拜。</STRONG>邪恶元素亲王并不关心他们的凡间追随者。它们不是神也并不渴望尊崇，不过邪恶的凡人发现邪恶元素是一个现成的魔法能量来源，并且能施展于破坏性用途。邪教徒经常聚集于元素节点附近同时举行危险的仪式，从而利用邪恶元素的力量，或者是引起某一位元素亲王的注意。这些下界存在不会听到祈祷或者是授予法术，不过它们可以作为力量的源头供凡人学习，从而利用他们的力量。通常情况下，元素亲王会毁灭那些胆敢召唤它的凡人。除非有一个聪明（或者是疯狂）的信徒证明，他可以用借到的元素力量对这个世界造成巨大的创伤。</P></body>
+<P><STRONG>邪教崇拜。</STRONG>邪恶元素亲王并不关心他们的凡间追随者。它们不是神也并不渴望尊崇，不过邪恶的凡人发现邪恶元素是一个现成的魔法能量来源，并且能施展于破坏性用途。邪教徒经常聚集于元素节点附近同时举行危险的仪式，从而利用邪恶元素的力量，或者是引起某一位元素亲王的注意。这些下界存在不会听到祈祷或者是授予法术，不过它们可以作为力量的源头供凡人学习，从而利用他们的力量。通常情况下，元素亲王会毁灭那些胆敢召唤它的凡人。除非有一个聪明（或者是疯狂）的信徒证明，他可以用借到的元素力量对这个世界造成巨大的创伤。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

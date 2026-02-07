@@ -152,7 +152,45 @@ Summons</FONT></STRONG>
 
 时，你可以立即获得一次以9环法术位施展的 动物咒唤术（召唤动物）Conjure Animals 
 
-法术的好处。这次法术将召唤出四只由你选择的、挑战等级至高为2的野兽。被召唤的野兽出现在你周围20尺内。如果你没有或不能为其下达命令，它们将尽可能的保护你免受伤害并攻击你的敌人。此法术持续1小时，无需专注。你也可以主动解消它来提前结束它（无需动作）。<BR>一旦你使用了此特性，直到你完成了一次长休为止你都无法再次使用它。</P></body>
+法术的好处。这次法术将召唤出四只由你选择的、挑战等级至高为2的野兽。被召唤的野兽出现在你周围20尺内。如果你没有或不能为其下达命令，它们将尽可能的保护你免受伤害并攻击你的敌人。此法术持续1小时，无需专注。你也可以主动解消它来提前结束它（无需动作）。<BR>一旦你使用了此特性，直到你完成了一次长休为止你都无法再次使用它。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

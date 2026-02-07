@@ -66,7 +66,45 @@ Symbols<BR></P>
 
 </STRONG><BR>任何栖身于冒险地点中的怪物都不会仅是碰巧在附近生活的随机生物集群。真菌、自然动物、食腐动物和掠食者可以在一个复杂的生态环境中共存，而智慧生物也可以通过协商和地位统治的方式来共享生存空间。<BR>《怪物图鉴》中列出的每种生物的条目都标明了该生物最常出现的地形类型，图鉴中还有表格列举出了各种地形中较为常见的生物。利用这些信息，你可以决定在某个特定环境中的冒险地点内栖息着何种生物。你可以选择一系列生物，从一般的害虫到智慧生物和可怕的掠食者，然后决定它们是如何共同生活的。<BR><STRONG>派系Factions</STRONG>。尤其是在较大的地区内，生物种群之间会互相争夺资源。当这些族群由具有智能的生物组成时，来到该区域的冒险者们就会获得很多机会。角色们也许会想和某一个族群结盟，或者与其他族群对抗来减弱来自更加强大的怪物的威胁。举例来说，在一个由夺心魔和受其统治的幽邃盲族为主要居住者的地下城中，冒险者们可能会试图煽动幽邃盲族来起义反抗那些夺心魔。<BR>你可以参考第三章中的“非玩家角色”一节，让各种派系团体中的领袖Npc跃然于桌上，充实他们的性格和目标。然后利用这些要素来决定这些领导者会如何对冒险者的行为作出反馈。</P>
 
-<P><STRONG></STRONG>&nbsp;</P></body>
+<P><STRONG></STRONG>&nbsp;</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

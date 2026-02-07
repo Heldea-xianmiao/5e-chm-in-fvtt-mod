@@ -626,7 +626,45 @@ Entanglement</FONT></STRONG>
 
 。<BR>你可以用附赠动作说出另一条命令语以释放被束缚的生物。被束缚者也可以用一个动作进行一次DC15的力量检定或敏捷检定（由被束缚者选择），若检定成功，生物将挣脱绳索的束缚。<BR>绳索拥有AC 
 
-20和20点生命值。只要绳索还剩至少1点生命值，其就会每5分钟恢复1点生命值。绳索的生命值降至0时将被摧毁。</P></body>
+20和20点生命值。只要绳索还剩至少1点生命值，其就会每5分钟恢复1点生命值。绳索的生命值降至0时将被摧毁。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

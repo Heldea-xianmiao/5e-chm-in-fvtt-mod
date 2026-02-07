@@ -46,7 +46,45 @@ XP） 熟练加值+2</P>
 
 Bond。</STRONG>只要观察者与其创造者之间的距离不超过1里，他就可以魔法性的将它所看到的东西传达给它的创造者，且两者之间可以以心灵感应的方式进行交流。<BR><STRONG>非凡本质Unusual 
 
-Nature。</STRONG>观察者不需要吃、喝、睡眠、以及呼吸。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>尖叫Shriek。</STRONG>观察者发出机械性的尖叫声，直到其下一回合开始或生命值降至0位置。这声尖叫声可以在300尺范围内听到。</P></body>
+Nature。</STRONG>观察者不需要吃、喝、睡眠、以及呼吸。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>尖叫Shriek。</STRONG>观察者发出机械性的尖叫声，直到其下一回合开始或生命值降至0位置。这声尖叫声可以在300尺范围内听到。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

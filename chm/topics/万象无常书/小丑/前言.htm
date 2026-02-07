@@ -14,7 +14,45 @@
 
 </h1><p>
 
-这一章中介绍了喜乐集市，一处DM能够加入到自己战役中的旅行集市。喜乐集市可以出现在任何有自然特征的地方，从林间空地到崎岖的峡谷。在这儿，角色们能接触到奇妙的妖精们，并通过不同寻常的形式购买到魔法物品。集市中的常驻算命师，林布哥欧德乐温能够向低级冒险者们介绍万象无常牌。</p></body>
+这一章中介绍了喜乐集市，一处DM能够加入到自己战役中的旅行集市。喜乐集市可以出现在任何有自然特征的地方，从林间空地到崎岖的峡谷。在这儿，角色们能接触到奇妙的妖精们，并通过不同寻常的形式购买到魔法物品。集市中的常驻算命师，林布哥欧德乐温能够向低级冒险者们介绍万象无常牌。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

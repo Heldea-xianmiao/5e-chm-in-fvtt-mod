@@ -58,7 +58,45 @@ Burst。</STRONG>
 
 of Frost（充能5~6）。</STRONG>寒霜巨怪移动最多为自身速度的距离，它能够穿过任何中型及更小的生物占据的空间，且不会触发借机攻击。每当寒霜巨怪移动进入一个生物的空间时，该生物必须经常一次DC15的体质豁免。失败的情况下，该生物受到22（4d10）寒冷伤害并且直到下个寒霜巨怪的回合开始，速度降低10尺。成功的情况下，生物只受到一半伤害。</P>
 
-<P></P></body>
+<P></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

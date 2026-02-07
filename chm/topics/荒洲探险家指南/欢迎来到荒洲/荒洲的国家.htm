@@ -64,7 +64,45 @@ North的战役常常涉及道德模糊的角色，与同样不道德的组织在
 
 Role，揭示这个秘密可能会成为战役的转折点。</P>
 
-<P>设定在乔哈斯的战役无疑会涉及克灵王朝与敦达里安帝国之间的战争，但也可以包括传统的地城探险、王朝宫廷内的政治阴谋，甚至是探索荒野，揭开自叛神陨落后的失落秘密。</P></body>
+<P>设定在乔哈斯的战役无疑会涉及克灵王朝与敦达里安帝国之间的战争，但也可以包括传统的地城探险、王朝宫廷内的政治阴谋，甚至是探索荒野，揭开自叛神陨落后的失落秘密。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

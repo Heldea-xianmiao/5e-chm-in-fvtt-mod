@@ -66,7 +66,45 @@ pirate captain of the Revelry</P>
 
 <P>即兴创作是你的朋友！如果一个角色问了一个你不知道答案的问题，那么就想想如果顺着角色让故事自然发展的话，会发生什么有趣的事情。通常这是个很棒的选择。但如果你不喜欢即兴创作一个全新的情节，你可以在这一节结束（或是中途休息）时询问你的玩家想让他们的角色做什么。这有助于你了解你的玩家在战役中真正想要获得什么乐趣，并给你一些时间去编写一个新的冒险（或是在网上求助）。</P>
 
-<P>如果你的即兴创作导致故事走向脱离了原本的冒险框架，那么尝试把其他冒险的内容拿过来，替换掉其中的NPC并加入你自己的想法。换言之，利用这些冒险的部分内容进行重组变成新的冒险是完全可行的。你的玩家不会发现其中的区别！<BR></P></body>
+<P>如果你的即兴创作导致故事走向脱离了原本的冒险框架，那么尝试把其他冒险的内容拿过来，替换掉其中的NPC并加入你自己的想法。换言之，利用这些冒险的部分内容进行重组变成新的冒险是完全可行的。你的玩家不会发现其中的区别！<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

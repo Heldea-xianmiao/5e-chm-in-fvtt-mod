@@ -44,7 +44,45 @@ Memories。</STRONG>当一次沿海的劫掠或一次银器的盗窃结束后，
 
 Folk</FONT></STRONG><BR><EM>大型巨人，绝对中立</EM><BR>护甲等级：16（天生护甲）<BR>生命值：68（8d10+24）<BR>速度：40尺，游泳40尺<BR>力量19（+4）敏捷10（+0）体质17（+3）<BR>智力7（-2）感知9（-1）魅力9（-1）<BR>感官：黑暗视觉30尺，被动察觉9<BR>语言：通用语，巨人语<BR>挑战等级：3（700xp）熟练加值：+2</P>
 
-<P><STRONG>有限两栖LimitedAmphibiousness.。</STRONG>蟹人可以呼吸空气和水，但为了避免窒息，他们需要每24小时潜入水中一次。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>蟹人进行两次爪击攻击。<BR><STRONG>爪击Claw。</STRONG>近战武器攻击：命中+6，触及10尺，单一目标。命中：7（1d6+4）钝击伤害，目标被擒抱（逃脱DC14）。在此擒抱结束之前，蟹人可以用他的爪子自动命中目标，但不能用他的爪子攻击其他目标。螃蟹人有两只爪子，每只爪子只能擒抱单一目标。</P></body>
+<P><STRONG>有限两栖LimitedAmphibiousness.。</STRONG>蟹人可以呼吸空气和水，但为了避免窒息，他们需要每24小时潜入水中一次。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>蟹人进行两次爪击攻击。<BR><STRONG>爪击Claw。</STRONG>近战武器攻击：命中+6，触及10尺，单一目标。命中：7（1d6+4）钝击伤害，目标被擒抱（逃脱DC14）。在此擒抱结束之前，蟹人可以用他的爪子自动命中目标，但不能用他的爪子攻击其他目标。螃蟹人有两只爪子，每只爪子只能擒抱单一目标。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

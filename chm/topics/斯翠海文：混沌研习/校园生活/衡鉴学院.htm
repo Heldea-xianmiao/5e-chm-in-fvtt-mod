@@ -98,7 +98,45 @@ chaos)自豪地承认自己为了能够尽量偷懒而愿意非常努力地工�
 
 肖像列衡鉴的主要校区。它的通道两旁排列着知名历史人物的纪念碑，包括过往的教授与杰出的修习法师，以及战争英雄和远古的国家元首。</P>
 
-<P><STRONG><FONT color=#800000>科玛学堂</FONT></STRONG><BR>一座壮丽的多层画廊，衡鉴法师聚集于此参与大型讲座与示范活动。法师们在阳台展开长达千呎的卷轴研习远古文句。位于科玛学堂中央的是被修复的科玛宏伟雕像，这位睿智的修行僧是斯翠海文初创时的第一批衡鉴教授之一。第五章包括科玛学堂的部分地图。</P></body>
+<P><STRONG><FONT color=#800000>科玛学堂</FONT></STRONG><BR>一座壮丽的多层画廊，衡鉴法师聚集于此参与大型讲座与示范活动。法师们在阳台展开长达千呎的卷轴研习远古文句。位于科玛学堂中央的是被修复的科玛宏伟雕像，这位睿智的修行僧是斯翠海文初创时的第一批衡鉴教授之一。第五章包括科玛学堂的部分地图。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

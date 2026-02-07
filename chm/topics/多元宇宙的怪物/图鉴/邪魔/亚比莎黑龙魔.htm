@@ -46,7 +46,45 @@ Resistance。</STRONG>亚比莎龙魔对抗法术和其他魔法效应时的豁�
 
 Darkness（充能6）。</STRONG>亚比莎龙魔对其120尺内一点施放<EM><FONT color=#800080>黑暗术darkness</FONT></EM>，无需任何法术成分，也不需要专注。感知是此法术的施法属性。当此法术存在时，该亚比莎龙魔可以以一个附赠动作移动此黑暗区域至多60尺。<BR><STRONG><FONT color=#800000>附赠动作Bonus Actions</FONT></STRONG><BR><STRONG>阴影躲藏Shadow 
 
-Stealth。</STRONG>若身处微光或黑暗中，此亚比莎龙魔执行 躲藏Hide 动作。</P></body>
+Stealth。</STRONG>若身处微光或黑暗中，此亚比莎龙魔执行 躲藏Hide 动作。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

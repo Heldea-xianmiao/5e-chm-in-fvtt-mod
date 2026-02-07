@@ -32,7 +32,45 @@ html,body {
 
 Level)：角色们被新哈克桑的三头犬密会智者们雇佣，收集一种稀有的魔法成分：暗影精华，可以从死去的阴影追踪者Gloomstalkers身上获得（见第七章）。阴影追踪者像秃鹫一样，在古尔-韦莱斯上空盘旋，智者们告诉角色，杀死一个阴影追踪者后，用烧瓶收集暗影精华，智者们警告冒险者们不要在古尔-韦莱斯附近逗留，以免成为潜伏在闹鬼堡垒中的可怕生物的猎物。<BR>金库与复仇（高级）Of Vaults And Vengeance (High 
 
-Level)：角色中的一个或者多个被神之永谕（混乱邪恶，雄性远古黑龙巫妖）的手下绑架，并被带到古尔-韦莱斯的地下进行洗脑与死灵法术实验。在密斯卡斯深坑中地核族裔先知的帮助之下，龙巫妖与他的手下正用武器装备他们的凡人敌人，达到了非常可怕的效果。由于一半的人在囚牢中挣扎，剩下的角色们必须策划他们困难的营救行动。</P></body>
+Level)：角色中的一个或者多个被神之永谕（混乱邪恶，雄性远古黑龙巫妖）的手下绑架，并被带到古尔-韦莱斯的地下进行洗脑与死灵法术实验。在密斯卡斯深坑中地核族裔先知的帮助之下，龙巫妖与他的手下正用武器装备他们的凡人敌人，达到了非常可怕的效果。由于一半的人在囚牢中挣扎，剩下的角色们必须策划他们困难的营救行动。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

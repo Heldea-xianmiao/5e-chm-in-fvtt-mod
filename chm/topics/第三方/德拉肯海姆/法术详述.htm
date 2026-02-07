@@ -262,7 +262,45 @@ Power</EM></U>法术。</P>
 
 （详见《德拉肯海姆之墟》第三章中记述的 <STRONG>天火信众Followers of the Falling Fire</STRONG> 
 
-资料）。<BR>当你完成法术的施展后，每个受术者周围都会出现一只敌对的<STRONG><U>幽影Shadow</U></STRONG>并攻击对应的受术生物——而它们便是每个角色内心深处黑暗的显化。DM也许可以让那些心中承载着强烈愤怒、恐惧、或仇恨的角色周围出现一只<STRONG><U>邪灵Wraith</U></STRONG>用以代替这样的幽影显化。<BR></P></body>
+资料）。<BR>当你完成法术的施展后，每个受术者周围都会出现一只敌对的<STRONG><U>幽影Shadow</U></STRONG>并攻击对应的受术生物——而它们便是每个角色内心深处黑暗的显化。DM也许可以让那些心中承载着强烈愤怒、恐惧、或仇恨的角色周围出现一只<STRONG><U>邪灵Wraith</U></STRONG>用以代替这样的幽影显化。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -48,7 +48,45 @@ Cunning。</STRONG>贾姆娜为抵抗魔法而进行的智力、感知和魅力�
 
 Illusion，魔法伎俩prestidigitation，冷冻射线ray of frost<BR>1环（3法术位）：魅惑类人charm 
 
-person，七彩喷射color spray，易容术disguise self，大步奔行longstrider<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>贾姆娜发动两次短剑攻击。<BR><STRONG>短剑Shortsword。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：6（1d6+3）的穿刺伤害，或当目标为中型或更大体型时9（1d6+3外加1d6）的穿刺伤害。</P></body>
+person，七彩喷射color spray，易容术disguise self，大步奔行longstrider<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>贾姆娜发动两次短剑攻击。<BR><STRONG>短剑Shortsword。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：6（1d6+3）的穿刺伤害，或当目标为中型或更大体型时9（1d6+3外加1d6）的穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

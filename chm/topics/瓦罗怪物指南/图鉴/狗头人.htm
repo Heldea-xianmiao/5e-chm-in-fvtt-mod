@@ -130,7 +130,45 @@ Sorcerer）</FONT></STRONG>
 
   ><STRONG>精妙法术：</STRONG>当狗头人施展一个法术时，它可以消耗1点术法点，以忽略法术的任何言语成分或者姿势成分。</DIV></LI></UL>
 
-<P><STRONG>集群战术。</STRONG>如果狗头人有至少一个盟友在目标生物5尺范围内且非乏力，则狗头人在对该生物的攻击检定上有优势。<BR><STRONG>日照敏感。</STRONG>在阳光下，狗头人在攻击检定和依靠视力的感知（观察）检定上承受劣势。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>匕首。</STRONG>近战或远程武器攻击：命中+4，触及5尺，或者射程20/60尺，单一目标。命中：4（1d4+2）穿刺伤害。</P></body>
+<P><STRONG>集群战术。</STRONG>如果狗头人有至少一个盟友在目标生物5尺范围内且非乏力，则狗头人在对该生物的攻击检定上有优势。<BR><STRONG>日照敏感。</STRONG>在阳光下，狗头人在攻击检定和依靠视力的感知（观察）检定上承受劣势。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>匕首。</STRONG>近战或远程武器攻击：命中+4，触及5尺，或者射程20/60尺，单一目标。命中：4（1d4+2）穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

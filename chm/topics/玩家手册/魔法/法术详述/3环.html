@@ -648,7 +648,45 @@ DM
 
 3d8 
 
-点钝击伤害，豁免成功则伤害减半。<BR>烈风可以阻隔浓雾、烟尘和其他气体。体型为小型或更小的飞行生物或物件无法飞过风墙。重量轻的物质带进风墙中时将被向上吹飞。对墙后目标射出的箭、矢和其他普通飞行物会被朝上吹走而直接判为未命中（巨人或攻城器械投出的巨石和类似的飞行物不受影响）。处于气化形态的生物无法穿过风墙。</P></body>
+点钝击伤害，豁免成功则伤害减半。<BR>烈风可以阻隔浓雾、烟尘和其他气体。体型为小型或更小的飞行生物或物件无法飞过风墙。重量轻的物质带进风墙中时将被向上吹飞。对墙后目标射出的箭、矢和其他普通飞行物会被朝上吹走而直接判为未命中（巨人或攻城器械投出的巨石和类似的飞行物不受影响）。处于气化形态的生物无法穿过风墙。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

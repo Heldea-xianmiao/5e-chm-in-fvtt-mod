@@ -144,7 +144,45 @@ Drink（低级）</STRONG></EM>
 
 。贝尔本的人们沉迷于沼泽泔水，这是一种新型威士忌，能让人们醉得更快更久。有些人声称喝了沼泽泔水会产生美妙的梦境，许多人已经沉迷于这种酒，甚至会为了一口酒而诉诸暴力。如果角色们进行调查，他们会发现一支蜥蜴人部族正在酿制这种酒，并将其交给贝尔本的一位商人出售。蜥蜴人的计划在足够多的人对沼泽泔水产生依赖后接管贝尔本，但他们这样做的原因并非是为了统治，而是因为巨魔威胁着蜥蜴人们的领土。 
 
-</P></body>
+</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

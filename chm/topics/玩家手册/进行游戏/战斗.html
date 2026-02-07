@@ -72,9 +72,47 @@ xmlns="http://www.w3.org/TR/REC-html40">
 
  char; MARGIN: 2pt 0cm"><span style="FONT-SIZE:
 
- 11pt; mso-ascii-font-family: Cambria; mso-hansi-font-family: Cambria"><FONT face=Cambria>本章介绍了你的角色与怪物进行战斗的规则，其可以是短暂的游击，也可以是地下城中的持久战乃至更广阔的战场。本章所述的“你”指代玩家的同时也可以指代地下城主。地下城主控制所有参战的怪物和非玩家角色，而其他玩家则各控制一名冒险者。“你”也指代处于你控制中的角色或怪物。</FONT><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]></span></p></div></body>
+ 11pt; mso-ascii-font-family: Cambria; mso-hansi-font-family: Cambria"><FONT face=Cambria>本章介绍了你的角色与怪物进行战斗的规则，其可以是短暂的游击，也可以是地下城中的持久战乃至更广阔的战场。本章所述的“你”指代玩家的同时也可以指代地下城主。地下城主控制所有参战的怪物和非玩家角色，而其他玩家则各控制一名冒险者。“你”也指代处于你控制中的角色或怪物。</FONT><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]><![if !supportLineBreakNewLine]><![endif]></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

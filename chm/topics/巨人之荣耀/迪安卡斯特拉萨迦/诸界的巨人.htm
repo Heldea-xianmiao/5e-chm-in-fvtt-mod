@@ -46,7 +46,45 @@ Realm</FONT></STRONG><BR>托瑞尔星球上的巨人起源需要追溯到很久�
 
 <P><STRONG>边栏：巨人符文和矮人文字Giant Runes and Dwarvish 
 
-  Script</STRONG><BR>当安南创造巨人的时候，也传授给了他们语言，赐予他们威能符文。这些符号是种象形文字：每个符号都代表一个完整的单词或概念，而非单个字母或发声。每个符文都有着潜在的魔法力量，就像是用在防护法阵，传送法阵和守卫刻文上涂画的刻文Glyph一样。因此，最早的巨人们把这些符文当作是种神圣的秘密，很少将之书写下来。<BR>直到巨人文明的第一次繁盛之后，矮人文字的引入每个字型只表示一个单音的字母符号系统使得抄录巨人语言成为一件相对容易的事情。所以如今大部分巨人语的书面形式都用的矮人文字（如《玩家手册》所述），除了那些研究魔法文字的人以外，关于巨人符文的知识非常稀少。</P></BLOCKQUOTE></body>
+  Script</STRONG><BR>当安南创造巨人的时候，也传授给了他们语言，赐予他们威能符文。这些符号是种象形文字：每个符号都代表一个完整的单词或概念，而非单个字母或发声。每个符文都有着潜在的魔法力量，就像是用在防护法阵，传送法阵和守卫刻文上涂画的刻文Glyph一样。因此，最早的巨人们把这些符文当作是种神圣的秘密，很少将之书写下来。<BR>直到巨人文明的第一次繁盛之后，矮人文字的引入每个字型只表示一个单音的字母符号系统使得抄录巨人语言成为一件相对容易的事情。所以如今大部分巨人语的书面形式都用的矮人文字（如《玩家手册》所述），除了那些研究魔法文字的人以外，关于巨人符文的知识非常稀少。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

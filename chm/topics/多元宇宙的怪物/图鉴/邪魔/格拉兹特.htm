@@ -136,7 +136,45 @@ DC 等于 10+目标法术的环阶。检定成功则该法术失败且不产生�
 
  格拉兹特使用施法或传送。<BR><STRONG>攻击Attack。</STRONG> 格拉兹特发动一次哀伤之潮攻击<BR><STRONG>舞动吧，我的人偶！Dance，My Puppet!</STRONG>  
 
-一个格拉兹特可见的被格拉兹特魅惑的生物必须用其反应按格拉兹特的指示移动至多相当于其速度的距离。</P></body>
+一个格拉兹特可见的被格拉兹特魅惑的生物必须用其反应按格拉兹特的指示移动至多相当于其速度的距离。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

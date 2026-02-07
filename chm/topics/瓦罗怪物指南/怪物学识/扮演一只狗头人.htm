@@ -34,4 +34,41 @@ font-weight:bold;font-size:14.0000pt;" >Winged Koblods</span></b><span></span></
 
 text-indent:24.0000pt;mso-char-indent-count:2.0000;layout-grid-mode:char;
 
-" ><span><font>带翼狗头人，或称为鹗德，同样是在狗头人的蛋中孵化而来。哪怕部族里并没有成年的鹗德也会孵化出这类个体。尽管可以飞行是一项美妙的天赋，而且狗头人们完全可以将翅膀解释为提亚马特的恩赐，但普通的狗头人却会怨恨鹗德并会因此而孤立它们。狗头人的传说片段里有说到克奥耶克</font>Kuraulyek <font>，</font><font>一个伺候库尔图马克的小神曾经以某种方式背叛其主人。因此狗头人们视鹗德为克奥耶克的爱戴者，并将对这名叛徒的怨恨投射到它们的带翼近亲身上。</font></span></p></td></tr></table><p><span><o:p> </o:p></span></p></div></body></html>
+" ><span><font>带翼狗头人，或称为鹗德，同样是在狗头人的蛋中孵化而来。哪怕部族里并没有成年的鹗德也会孵化出这类个体。尽管可以飞行是一项美妙的天赋，而且狗头人们完全可以将翅膀解释为提亚马特的恩赐，但普通的狗头人却会怨恨鹗德并会因此而孤立它们。狗头人的传说片段里有说到克奥耶克</font>Kuraulyek <font>，</font><font>一个伺候库尔图马克的小神曾经以某种方式背叛其主人。因此狗头人们视鹗德为克奥耶克的爱戴者，并将对这名叛徒的怨恨投射到它们的带翼近亲身上。</font></span></p></td></tr></table><p><span><o:p> </o:p></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

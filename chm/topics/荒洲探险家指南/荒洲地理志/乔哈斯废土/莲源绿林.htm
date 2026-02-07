@@ -36,7 +36,45 @@ html,body {
 
 <P>莲源绿林的冒险<BR>角色们可能会进入森林找回迷路的人，或者逃脱克灵势力的追捕。洛特斯登荒林中的任何植物都可能是守株待兔的食肉怪物。</P>
 
-<P>母乳（中级）：某些人或者某些东西绑架了来自查瑞斯的婴儿与幼儿，一个可怕的邪恶潜伏于事件的中心：一个不洁的鬼婆巢穴，有一个强大而有影响力的夜鬼婆领导。鬼婆掌管着荒林的黑暗一隅，她们栖息在巨树的树根之间。在这里夜鬼婆与她的手下们逐步制造了荒林的厄运，他们使用一件被称作阴暗车床的邪恶神器吸收查瑞斯孩子们的生命力量。</P></body>
+<P>母乳（中级）：某些人或者某些东西绑架了来自查瑞斯的婴儿与幼儿，一个可怕的邪恶潜伏于事件的中心：一个不洁的鬼婆巢穴，有一个强大而有影响力的夜鬼婆领导。鬼婆掌管着荒林的黑暗一隅，她们栖息在巨树的树根之间。在这里夜鬼婆与她的手下们逐步制造了荒林的厄运，他们使用一件被称作阴暗车床的邪恶神器吸收查瑞斯孩子们的生命力量。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

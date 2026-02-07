@@ -90,7 +90,45 @@ html,body {
 
 <P><STRONG>天生施法。</STRONG>败契者天生的施法能力基于魅力（法术豁免DC13）。它天生能施放以下法术，且不需要材料成分。<BR>任意：侦测魔法，易容术，法师护甲<BR>每项 
 
-1/日：恐惧术，定身类人，迷踪步<BR><STRONG>日照敏感。</STRONG>在阳光下，尸妖在攻击骰和依靠视力的感知（观察）检定上承受劣势。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>尸妖用墓穴射线攻击两次。<BR><STRONG>墓穴射线。</STRONG>远程法术攻击：命中+5，射程120尺，单一目标。命中：7（1d8+3）暗蚀伤害。<BR><STRONG>生命吸取。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命中：9（2d6+2）暗蚀伤害。目标必须通过DC13的体质豁免检定，否则生命值上限减少等于所造成伤害的数值。这种减少持续到直至目标完成一次长休。如果此效果将生命值上限减少为0，目标死亡。<BR>被这种攻击杀死的类人生物将在24小时后变为由尸妖控制的丧尸，除非该类人生物复生或者身体被摧毁。尸妖不能同时控制超过十二只丧尸。</P></body>
+1/日：恐惧术，定身类人，迷踪步<BR><STRONG>日照敏感。</STRONG>在阳光下，尸妖在攻击骰和依靠视力的感知（观察）检定上承受劣势。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>尸妖用墓穴射线攻击两次。<BR><STRONG>墓穴射线。</STRONG>远程法术攻击：命中+5，射程120尺，单一目标。命中：7（1d8+3）暗蚀伤害。<BR><STRONG>生命吸取。</STRONG>近战武器攻击：命中+4，触及5尺，单一目标。命中：9（2d6+2）暗蚀伤害。目标必须通过DC13的体质豁免检定，否则生命值上限减少等于所造成伤害的数值。这种减少持续到直至目标完成一次长休。如果此效果将生命值上限减少为0，目标死亡。<BR>被这种攻击杀死的类人生物将在24小时后变为由尸妖控制的丧尸，除非该类人生物复生或者身体被摧毁。尸妖不能同时控制超过十二只丧尸。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

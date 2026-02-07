@@ -34,7 +34,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=4>知识之海Sea of Knowledge 
 
-.</FONT></STRONG><BR>随着时光流逝，世界的许多部分都已沉入大洋之底，后世者认为它们已永远失落。塞悉拉则会在波涛之下收集点点滴滴已经被海所淹没的地表之物:每一次海难，每一次献祭，每一个被巨浪吞没的海滨城市的财富和知识，都加入到塞悉拉不断扩展的知识库中。塞悉拉的祭司们可能依然掌握着它们在与神祇共鸣期间得到的，地表已然失传的知识。未能抵达目的地的信使，装满古图书馆卷轴的船只，在海上失事的学者，这些都增加了塞悉拉的知识储备。<BR>在远离公海的地方，许多泻湖、礁石和石窟都有专门供奉深海·塞悉拉的神龛。许多人虔诚地来到水里沐浴，以希望得到这尊神祇的预兆，因为众所周知，深海·塞悉拉喜欢与那些真正的求知者分享知识。学者、僧侣和神职人员会来参观这些装饰华丽的海边寺庙，沉浸在圣水中并寻找启迪。因为塞悉拉也会通过梦境与失落记忆的复苏来传播知识，所以也有许多艺术家和诗人崇拜深海·塞悉拉。他们花时间在海上随波逐流以寻求祂的创造灵感，然后回到岸边，写下或勾勒出塞悉拉馈赠给他们的礼物。</P></body>
+.</FONT></STRONG><BR>随着时光流逝，世界的许多部分都已沉入大洋之底，后世者认为它们已永远失落。塞悉拉则会在波涛之下收集点点滴滴已经被海所淹没的地表之物:每一次海难，每一次献祭，每一个被巨浪吞没的海滨城市的财富和知识，都加入到塞悉拉不断扩展的知识库中。塞悉拉的祭司们可能依然掌握着它们在与神祇共鸣期间得到的，地表已然失传的知识。未能抵达目的地的信使，装满古图书馆卷轴的船只，在海上失事的学者，这些都增加了塞悉拉的知识储备。<BR>在远离公海的地方，许多泻湖、礁石和石窟都有专门供奉深海·塞悉拉的神龛。许多人虔诚地来到水里沐浴，以希望得到这尊神祇的预兆，因为众所周知，深海·塞悉拉喜欢与那些真正的求知者分享知识。学者、僧侣和神职人员会来参观这些装饰华丽的海边寺庙，沉浸在圣水中并寻找启迪。因为塞悉拉也会通过梦境与失落记忆的复苏来传播知识，所以也有许多艺术家和诗人崇拜深海·塞悉拉。他们花时间在海上随波逐流以寻求祂的创造灵感，然后回到岸边，写下或勾勒出塞悉拉馈赠给他们的礼物。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -88,7 +88,45 @@ cellSpacing=0 cellPadding=3 width="99%" border=0>
 
 Adventures</FONT></H3>
 
-<P>奔放之野充满着生命的张力，这里既有狂暴的情绪，也有深切的挚爱；既有冷冽的钢铁意志，也有激情如炽焰般燃烧，直至耗尽的瞬间辉煌。这片土地的居民性情纯良，致力于与邪恶抗争，但他们无所顾忌的情感有时也会脱缰，带来毁灭性的后果。在奔放之野，愤怒与喜悦同样常见，也同样备受推崇。<BR>踏上奔放之野的冒险，或许能让角色剥去伪装，直面内心深处最真实的情感。这片平原上的生灵早已习惯了这种情感的赤诚。多年的挚友可能在共饮美酒、分享美食时放声大笑；也可能因为争夺情人的宠爱而拔剑相向；又或许在同一个夜晚，谱写歌谣赞颂彼此的勇气与品格。对于那些不习惯这种坦荡的人来说，这种情感的直接可能带来伤害，甚至滋生难以抹去的芥蒂。<BR>那些曾经造访过奔放之野的生灵，往往会在离开后心生难以抑制的渴望，竭力想要回到这片土地。这种念想有时会强烈到扰乱日常生活。<BR>而在银沙野深埋的砂砾中，又藏匿着什么秘密？一场探险或许会将旅人引向那些曾栖息于银色荒漠的神祇或天族，亦或是他们所遗留的智慧与传承。</P></body>
+<P>奔放之野充满着生命的张力，这里既有狂暴的情绪，也有深切的挚爱；既有冷冽的钢铁意志，也有激情如炽焰般燃烧，直至耗尽的瞬间辉煌。这片土地的居民性情纯良，致力于与邪恶抗争，但他们无所顾忌的情感有时也会脱缰，带来毁灭性的后果。在奔放之野，愤怒与喜悦同样常见，也同样备受推崇。<BR>踏上奔放之野的冒险，或许能让角色剥去伪装，直面内心深处最真实的情感。这片平原上的生灵早已习惯了这种情感的赤诚。多年的挚友可能在共饮美酒、分享美食时放声大笑；也可能因为争夺情人的宠爱而拔剑相向；又或许在同一个夜晚，谱写歌谣赞颂彼此的勇气与品格。对于那些不习惯这种坦荡的人来说，这种情感的直接可能带来伤害，甚至滋生难以抹去的芥蒂。<BR>那些曾经造访过奔放之野的生灵，往往会在离开后心生难以抑制的渴望，竭力想要回到这片土地。这种念想有时会强烈到扰乱日常生活。<BR>而在银沙野深埋的砂砾中，又藏匿着什么秘密？一场探险或许会将旅人引向那些曾栖息于银色荒漠的神祇或天族，亦或是他们所遗留的智慧与传承。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

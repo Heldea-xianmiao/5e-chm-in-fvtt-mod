@@ -120,7 +120,45 @@ person。如果目标成功通过了最初的豁免，艾丝美拉达目盲直�
 
 Deck。</STRONG>艾丝美拉达在她的马车里放着一副塔罗卡牌组（见第 11 章，区域 
 
-VI）。虽然这些卡牌并非魔法物品，但艾丝美拉达还是可以用它为角色们进行一次卡牌占卜（见第 1 章），就如同伊娃夫人可以做的那样。</P></body>
+VI）。虽然这些卡牌并非魔法物品，但艾丝美拉达还是可以用它为角色们进行一次卡牌占卜（见第 1 章），就如同伊娃夫人可以做的那样。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

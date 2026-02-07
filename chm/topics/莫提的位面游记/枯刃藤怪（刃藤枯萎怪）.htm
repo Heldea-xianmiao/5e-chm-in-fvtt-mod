@@ -72,7 +72,45 @@ Appearance。</STRONG>只要枯萎怪保持静止不动，它进行的先攻检�
 
 Climb。</STRONG>枯萎怪可以攀爬在难以攀爬的表面上，包括倒吊在天花板上，且不需要进行属性检定。<BR><FONT color=#800000><STRONG>动作Actions</STRONG></FONT><BR><STRONG>多重攻击Multiattack。</STRONG>枯萎怪发动两次爪击。<BR><STRONG>爪击Claw。</STRONG>近战武器攻击：命中+4（若生物已损失任意数量生命值，则具有优势），触及10尺，单一目标。命中：5（1d6+2）点挥砍伤害。<BR><STRONG>饮命之藤Life-Draining 
 
-Vines（充能6）。</STRONG>如蛇形的藤蔓从枯萎怪的体中突出。每个处于枯萎怪周围10尺范围内的生物都必须通过一次DC12的敏捷豁免，豁免失败时将受到9（2d8）点挥砍伤害。豁免成功则伤害减半。如果至少一个生物豁免失败于此豁免检定，并且该生物不是构装或亡灵，则枯萎怪还将恢复9点生命值。</P></body>
+Vines（充能6）。</STRONG>如蛇形的藤蔓从枯萎怪的体中突出。每个处于枯萎怪周围10尺范围内的生物都必须通过一次DC12的敏捷豁免，豁免失败时将受到9（2d8）点挥砍伤害。豁免成功则伤害减半。如果至少一个生物豁免失败于此豁免检定，并且该生物不是构装或亡灵，则枯萎怪还将恢复9点生命值。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -52,7 +52,45 @@ evil and good<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><S
 
 + 5）钝击伤害附加额外 14（4d6）光耀伤害。<BR><STRONG>迷失未来Disorienting 
 
-Futures。</STRONG>仙神试图使一个在它60尺可见范围内的生物充满对未来的憧憬。目标必须成功完成于DC19豁免，否则受到27（5d10）点心灵伤害，并在仙神的下回合开始前在其攻击骰上具有劣势。</P></body>
+Futures。</STRONG>仙神试图使一个在它60尺可见范围内的生物充满对未来的憧憬。目标必须成功完成于DC19豁免，否则受到27（5d10）点心灵伤害，并在仙神的下回合开始前在其攻击骰上具有劣势。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

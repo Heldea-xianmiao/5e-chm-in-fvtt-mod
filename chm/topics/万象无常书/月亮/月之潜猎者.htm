@@ -66,7 +66,45 @@ Moonstalkers
 
 
 
-<p><font size=3><strong><font color=maroon>当前目标</font><font color=maroon>Current Goals</font></strong></font><br>金钱驱使着月之潜猎者去干别人不愿干的道德沦丧的活计。德洛尔急切地想扩展到保护伞、赌博集团、敲诈勒索、绑架、纵火和雇凶杀人等领域。奥古斯都对此并不反对，但他一心扑在私事上。<br>这两名首领都赞同月之潜猎者需要用更强大的兽化人壮大他们的队伍，以防再次被发现和袭击，这样他们就可以向袭击他们旧会馆的官员复仇。</p></body>
+<p><font size=3><strong><font color=maroon>当前目标</font><font color=maroon>Current Goals</font></strong></font><br>金钱驱使着月之潜猎者去干别人不愿干的道德沦丧的活计。德洛尔急切地想扩展到保护伞、赌博集团、敲诈勒索、绑架、纵火和雇凶杀人等领域。奥古斯都对此并不反对，但他一心扑在私事上。<br>这两名首领都赞同月之潜猎者需要用更强大的兽化人壮大他们的队伍，以防再次被发现和袭击，这样他们就可以向袭击他们旧会馆的官员复仇。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

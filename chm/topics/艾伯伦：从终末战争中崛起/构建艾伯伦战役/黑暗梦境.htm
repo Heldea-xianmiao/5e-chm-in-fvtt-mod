@@ -108,7 +108,45 @@ Adventure
 
 Hooks</FONT></STRONG><BR>黑暗梦境冒险引子列表提供了一些关于怪异遭遇和恶梦似的事件的点子，这些事件可以触发涉及黑暗梦境的故事。</P>
 
-<P><STRONG>黑暗梦境冒险引子列表<BR>d4 冒险引子</STRONG><BR>1 神殿的高阶祭司陷入沉睡，没有什么能唤醒他们。<BR>2 角色在打败几个敌人后会注意到一个模式：每个敌人在语言或手势上都表现出一种特定的怪癖。他们现在意识到盟友或导师也有出现这种怪癖。<BR>3 一个发疯的法师在他们自己的梦境里把解决方法编排成破坏性的法术。角色必须进入梦境并复原这个解决方法。<BR>4 一名在终末战争中被监禁的战犯主动联系，声称有证据证明他们是无辜的，并警告说一种破坏性的势力正在影响着政府。</P></body>
+<P><STRONG>黑暗梦境冒险引子列表<BR>d4 冒险引子</STRONG><BR>1 神殿的高阶祭司陷入沉睡，没有什么能唤醒他们。<BR>2 角色在打败几个敌人后会注意到一个模式：每个敌人在语言或手势上都表现出一种特定的怪癖。他们现在意识到盟友或导师也有出现这种怪癖。<BR>3 一个发疯的法师在他们自己的梦境里把解决方法编排成破坏性的法术。角色必须进入梦境并复原这个解决方法。<BR>4 一名在终末战争中被监禁的战犯主动联系，声称有证据证明他们是无辜的，并警告说一种破坏性的势力正在影响着政府。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

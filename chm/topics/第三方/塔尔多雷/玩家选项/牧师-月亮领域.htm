@@ -124,7 +124,45 @@ Omen</FONT></STRONG><BR>17级起，你可以将血月茹蒂斯唤至你头顶的
 
 双月同心Mind of Two Moons 
 
-特性而言，也被视为一个正专注的月亮领域法术。<BR>另外，每回合一次，当你对这个微光光照范围内的任何生物造成光耀伤害时，你可以诅咒其中一个被伤害的生物（不需要动作）。诅咒将一直持续到月蚀结束为止，期间。被这种方法诅咒的生物移动速度减半，且无法回复生命值。<BR>一旦你使用了这个特性，直到你完成一次长休前你都无法再次使用它。</P></body>
+特性而言，也被视为一个正专注的月亮领域法术。<BR>另外，每回合一次，当你对这个微光光照范围内的任何生物造成光耀伤害时，你可以诅咒其中一个被伤害的生物（不需要动作）。诅咒将一直持续到月蚀结束为止，期间。被这种方法诅咒的生物移动速度减半，且无法回复生命值。<BR>一旦你使用了这个特性，直到你完成一次长休前你都无法再次使用它。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -56,7 +56,45 @@ html,body {
 
 <strong>弯刀Scimitar。</strong>近战武器攻击：命中+3，触及5尺，单一目标。命中：4（1d6+1）点挥砍伤害。<br>
 
-<strong>烈焰迸发Spit Fire（短休或长休后充能）。</strong>熔螈向它周围10尺范围内的一个生物吐出一团烈焰，迫使该生物进行一次DC11的敏捷豁免，豁免失败将受到9（2d8）点火焰伤害，成功则只受半数伤害。</p></body>
+<strong>烈焰迸发Spit Fire（短休或长休后充能）。</strong>熔螈向它周围10尺范围内的一个生物吐出一团烈焰，迫使该生物进行一次DC11的敏捷豁免，豁免失败将受到9（2d8）点火焰伤害，成功则只受半数伤害。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

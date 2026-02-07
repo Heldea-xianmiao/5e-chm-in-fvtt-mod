@@ -60,7 +60,45 @@ Swarml（1/日）。</STRONG>阴沟鼠王发出吱吱的叫声，召唤出一个
 
 rats</STRONG>来帮助自己。鼠群出现在阴沟鼠王30尺内它能看见的一个未占据空间中。鼠群作为阴沟鼠王的盟友行动，听从阴沟鼠王的命令，会在阴沟鼠王的回合结束之后同一先攻立即进行自己的回合。鼠群会持续存在直到自身死亡、阴沟鼠王死亡或阴沟鼠王以一个动作将其解散。<BR><STRONG><FONT color=#800000>附赠动作Bonus 
 
-Actions</FONT></STRONG><BR><STRONG>鼠窜Skitter。</STRONG>阴沟鼠王移动最多等于自身速度的距离，并且不会触发借机攻击。</P></body>
+Actions</FONT></STRONG><BR><STRONG>鼠窜Skitter。</STRONG>阴沟鼠王移动最多等于自身速度的距离，并且不会触发借机攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

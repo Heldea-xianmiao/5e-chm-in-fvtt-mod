@@ -218,9 +218,47 @@ lang=EN-US><br>
 
 <span style='mso-spacerun:yes'>    </span></span>腐眼症可以用一种生长在沼泽中的稀有花卉——明目花<span
 
-lang=EN-US>Eyebright</span>治愈。拥有草药工具熟练项的角色可以花费一小时用明目花制成一剂药膏。在长休前将药膏敷在眼部可以阻止腐眼症恶化。使用三剂药膏后，腐眼症将被治愈。</p></div></body>
+lang=EN-US>Eyebright</span>治愈。拥有草药工具熟练项的角色可以花费一小时用明目花制成一剂药膏。在长休前将药膏敷在眼部可以阻止腐眼症恶化。使用三剂药膏后，腐眼症将被治愈。</p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

@@ -44,4 +44,41 @@ font-weight:bold;" ><font>约卓斯之择</font></span></b><b><span style="
 
 font-weight:bold;" >Chosen of Yurtrus</span></b><b><span style="
 
-font-weight:bold;" ><font>。</font></span></b><span><font>患有可怕疾病的兽人会被带到约卓斯的围栏中，并像珍贵的牲口一样喂养。这些兽人被称为育疫者，他们被认为是因为他们为将他的疫病传播给敌人们的特别目的所选中。在夜晚，或者在浓重的雾气之中，这些被感染的兽人冲向他们敌人的营地，通常是穿过一阵箭雨，以便在敌人中传播他们的苦难。</font></span></p></div></body></html>
+font-weight:bold;" ><font>。</font></span></b><span><font>患有可怕疾病的兽人会被带到约卓斯的围栏中，并像珍贵的牲口一样喂养。这些兽人被称为育疫者，他们被认为是因为他们为将他的疫病传播给敌人们的特别目的所选中。在夜晚，或者在浓重的雾气之中，这些被感染的兽人冲向他们敌人的营地，通常是穿过一阵箭雨，以便在敌人中传播他们的苦难。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

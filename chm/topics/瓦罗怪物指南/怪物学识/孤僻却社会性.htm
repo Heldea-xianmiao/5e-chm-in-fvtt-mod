@@ -36,4 +36,41 @@ text-indent:24.0000pt;
 
 mso-char-indent-count:2.0000;layout-grid-mode:char;
 
-" ><span><font>人们普遍知道世界上（以及世界之外）存在着五种鬼婆。但一些鬼婆能在有生之年从一种转变为另一种却不那么广为人知。</font><br><br><span>        </span><font>一个寿命足够长或拥有必要资源的鬼婆可以改变她的基本种类，抛弃她的旧生理机能，转变为适合她现在居住环境的鬼婆。随着时间的推移，她可能会通过意志的力量来完成这一转变，或者在仪式的帮助下更快地完成。做出这种改变的理由和鬼婆的性格和目标一样多变。</font></span></p></td></tr></table><p><span> </span></p></div></body></html>
+" ><span><font>人们普遍知道世界上（以及世界之外）存在着五种鬼婆。但一些鬼婆能在有生之年从一种转变为另一种却不那么广为人知。</font><br><br><span>        </span><font>一个寿命足够长或拥有必要资源的鬼婆可以改变她的基本种类，抛弃她的旧生理机能，转变为适合她现在居住环境的鬼婆。随着时间的推移，她可能会通过意志的力量来完成这一转变，或者在仪式的帮助下更快地完成。做出这种改变的理由和鬼婆的性格和目标一样多变。</font></span></p></td></tr></table><p><span> </span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

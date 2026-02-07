@@ -70,7 +70,45 @@ style="FONT-WEIGHT: bold"><FONT color=#800000>附赠动作Bonus Actions</FONT></
 
 10（3d6）点强酸伤害。<br>巨像的胸腔内最多同时容纳两名生物，且胸腔内还有它的核心——一个AC16、免疫闪电、毒素、心灵伤害的大型物件。核心具有140点生命值，且散发出10尺半径的微光光照。若核心被摧毁，巨像将吐出所有被其吞咽的生物，并使其以 <STRONG >倒地Prone</STRONG> 的状态出现在巨像周围10尺范围内。如果该巨像死亡，则被吞下的生物将不再受束缚，且可以消耗20尺移动力，以 <STRONG >倒地Prone</STRONG> 的状态逃出尸体。<br></P>
 
-<P></P></body>
+<P></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

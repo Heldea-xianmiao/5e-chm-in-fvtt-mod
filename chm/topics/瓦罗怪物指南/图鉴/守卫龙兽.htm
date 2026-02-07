@@ -48,7 +48,45 @@ html,body {
 
 察觉+2<BR>感官 黑暗视觉60尺，被动察觉12<BR>语言 懂龙语但是不会说<BR>挑战等级 
 
-2（450XP）<BR>=======================<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>守卫龙兽进行两次攻击：一次啮咬和一次尾击。<BR><STRONG>啮咬。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：7（1d8+3）穿刺伤害。<BR><STRONG>尾击。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：6（1d6+3）钝击伤害。</P></body>
+2（450XP）<BR>=======================<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击。</STRONG>守卫龙兽进行两次攻击：一次啮咬和一次尾击。<BR><STRONG>啮咬。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：7（1d8+3）穿刺伤害。<BR><STRONG>尾击。</STRONG>近战武器攻击：命中+5，触及5尺，单一目标。命中：6（1d6+3）钝击伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

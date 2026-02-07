@@ -40,7 +40,45 @@ of Annihilation</U></EM>及类似魔法效应的起源。任何接触虚湮石�
 
 Adventures</FONT></H3>
 
-<P>在负位面展开的冒险，便是与湮灭正面对抗，而这样的旅程往往难以善终。即使施法者能凭借强大魔法暂时在此地生存，负位面的本质也会逐步抽离他们的活力、能量与喜悦，将身体与灵魂同时浸没在无尽的沉寂与凋零中。负位面的荒芜，融合了哈迪斯的冷漠与绝望，以及堕影冥界的阴翳，并将其无限浓缩，化为一片无尽的虚无与毁灭之境。</P></body>
+<P>在负位面展开的冒险，便是与湮灭正面对抗，而这样的旅程往往难以善终。即使施法者能凭借强大魔法暂时在此地生存，负位面的本质也会逐步抽离他们的活力、能量与喜悦，将身体与灵魂同时浸没在无尽的沉寂与凋零中。负位面的荒芜，融合了哈迪斯的冷漠与绝望，以及堕影冥界的阴翳，并将其无限浓缩，化为一片无尽的虚无与毁灭之境。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

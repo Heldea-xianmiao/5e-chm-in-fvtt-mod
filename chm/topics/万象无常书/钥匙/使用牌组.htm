@@ -94,7 +94,45 @@ html,body {
 
 <strong>不朽Immortality。</strong>将卡片添加到万事万象无常牌的角色停止老化，并且在他们的卡片或其所属的万事万象无常牌被摧毁之前不会因衰老而死；但如果这种情况真的发生了，他们在停止老化期间度过的时间会立即使他们开始迅速老化（很可能会将其立即杀死）。<br>
 
-<strong>穿行世界World Walking。</strong>向卡组中添加卡片允许其创作者前往任何其卡片作为万事万象无常牌的一部分出现在其中的世界。</p></body>
+<strong>穿行世界World Walking。</strong>向卡组中添加卡片允许其创作者前往任何其卡片作为万事万象无常牌的一部分出现在其中的世界。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

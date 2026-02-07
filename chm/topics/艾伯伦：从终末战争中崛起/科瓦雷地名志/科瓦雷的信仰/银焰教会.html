@@ -330,9 +330,47 @@ Daran</span><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; COLOR: black">）�
 
  lang=EN-US style='FONT-SIZE: 9pt; FONT-FAMILY: "Verdana",sans-serif; COLOR: black'>Tagor</span><span
 
- style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; COLOR: black">）之死的幕后黑手正是克罗岑，这让人不禁联想到他扶植儿童成为银焰守护者实际上是为了巩固自己的影响力。克洛岑会是银焰教会帷幕之后真正的掌权者吗？</span></p></div></body>
+ style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; COLOR: black">）之死的幕后黑手正是克罗岑，这让人不禁联想到他扶植儿童成为银焰守护者实际上是为了巩固自己的影响力。克洛岑会是银焰教会帷幕之后真正的掌权者吗？</span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

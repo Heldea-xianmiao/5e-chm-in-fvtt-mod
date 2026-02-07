@@ -166,7 +166,45 @@ An Elemental Evil Arc</STRONG> 。两个已出版的冒险中讲述了邪恶元�
 
 <DIV 
 
-  >17-20级。最后，角色们发现，埃乌兹的袭击只是为了转移南方王国对他真正目标的注意力，他将从泽塘湖的一处古老要塞中夺得维克那的法眼与魔掌。角色们在湖畔和埃乌兹对峙，他们也许将会面临一个可怕的选择：他们是会利用维克那的力量来阻止埃乌兹，还是冒埃乌兹驱使这种可怕力量对抗他们的风险？</DIV></LI></UL></body>
+  >17-20级。最后，角色们发现，埃乌兹的袭击只是为了转移南方王国对他真正目标的注意力，他将从泽塘湖的一处古老要塞中夺得维克那的法眼与魔掌。角色们在湖畔和埃乌兹对峙，他们也许将会面临一个可怕的选择：他们是会利用维克那的力量来阻止埃乌兹，还是冒埃乌兹驱使这种可怕力量对抗他们的风险？</DIV></LI></UL><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

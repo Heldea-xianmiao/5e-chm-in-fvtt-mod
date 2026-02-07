@@ -96,7 +96,45 @@ Howl</FONT><BR></font></span></b><span
 
 style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><font face=宋体>这些刺骨的暴风雪驱使着一堵风雪砌成的高墙，如同活着的冰川。这种暴风雪散发着严寒（见城主指南）。因为咆哮着的疾风和密密麻麻的蓝白色冰粒，暴风雪内的区域有重度遮蔽，而其中进行的感知（察觉）和远程攻击检定有劣势。任何回合开始时暴露在暴风雪下的生物将受到</font><font face=宋体>2d6寒冷伤害，且只有在温暖环境下停留至少1小时候才能恢复生命。在暴风雪中死去的生物将被完全地冻结。免疫寒冷伤害的生物将免疫风暴的效果，并在里面有正常视觉。索列姆的咆哮通常持续2d10小时。</font></span><span 
 
-style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><o:p></o:p></span></p></body>
+style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"><o:p></o:p></span></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

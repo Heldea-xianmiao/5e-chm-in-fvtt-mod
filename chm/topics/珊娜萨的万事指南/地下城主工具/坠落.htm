@@ -50,7 +50,45 @@ Falling</FONT></STRONG><BR>飞行中的生物将会在陷入<STRONG>倒地Prone<
 
 <P>如果你使用了上一节中的坠落速度规则，那么一个飞行生物同样会在发生坠落的回合下降500尺，就像其他生物一样。但如果该生物在其后的回合中仍在坠落并处于倒地状态，那么它可以通过花费一半的飞行速度解除倒地状态并终止坠落（规则上来说，相当于在半空中“起身”）。</P>
 
-<P> </P></body>
+<P> </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

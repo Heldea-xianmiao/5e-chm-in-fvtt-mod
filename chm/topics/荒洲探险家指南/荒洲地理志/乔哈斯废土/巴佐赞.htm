@@ -66,7 +66,45 @@ html,body {
 
 <P>巴佐赞的冒险<BR>忠于克林王朝的冒险者会在巴佐赞受到欢迎，而且大多数会被要求帮助地狱深渊势力，或者为法师们寻找封印裂隙的材料。</P>
 
-<P>不寻常的继承者（中级）：一位当年发现巴佐赞下面深渊之门的地城探险者，同时也是一个在最后一段生命中过的富足的疯子，刚刚去世。他庄园的继承者给调查员们提出了微薄的报仇，来找到这个疯子住所中传说的真正的深渊遗物。但是所谓的继承者到底是谁？这些遗物又会给乔哈斯带来怎样的危险呢？</P></body>
+<P>不寻常的继承者（中级）：一位当年发现巴佐赞下面深渊之门的地城探险者，同时也是一个在最后一段生命中过的富足的疯子，刚刚去世。他庄园的继承者给调查员们提出了微薄的报仇，来找到这个疯子住所中传说的真正的深渊遗物。但是所谓的继承者到底是谁？这些遗物又会给乔哈斯带来怎样的危险呢？</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

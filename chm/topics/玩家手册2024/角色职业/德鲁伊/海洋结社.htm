@@ -180,7 +180,44 @@ Affinity<BR></FONT></STRONG>你的瀚海之怒创造的光环范围提升至10�
 
 Gift</STRONG></FONT><BR>当你使用瀚海之怒时，你可以让60尺内一个自愿生物而非你自己身上显现出光环。该生物获得光环的所有增益，并在特性中使用你的法术豁免DC和感知调整值。<BR>此外，如果你消耗两次而非一次荒野变形使用次数，你可以同时在你自己和另一个生物身上显现出光环。</p>
 
-<DIV></DIV></body>
+<DIV></DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
@@ -189,6 +226,7 @@ Gift</STRONG></FONT><BR>当你使用瀚海之怒时，你可以让60尺内一个
 
 
 </html>
+
 
 
 

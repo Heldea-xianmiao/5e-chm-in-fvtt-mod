@@ -34,7 +34,45 @@
 
 <P><STRONG><EM>毒液请求 Venomous 
 
-Request（低等级）</EM></STRONG>。在森林深处，角色们发现了一个隐藏的蛇人社会，他们崇拜的是荒野之母而不是泽希尔。然而，他们身上癌症般的诅咒缩短了他们的生命，他们认为这源于他们选择以梅洛拉的名义守护的有毒的沉没的神殿，杀死因其那些从其腐败中溢出的扭曲生物。村长请求角色们的帮助，冒险深入这座致命的神殿，寻找这些恐怖的源头，也许还有他们自己的诅咒，希望能彻底摧毁它。</P></body>
+Request（低等级）</EM></STRONG>。在森林深处，角色们发现了一个隐藏的蛇人社会，他们崇拜的是荒野之母而不是泽希尔。然而，他们身上癌症般的诅咒缩短了他们的生命，他们认为这源于他们选择以梅洛拉的名义守护的有毒的沉没的神殿，杀死因其那些从其腐败中溢出的扭曲生物。村长请求角色们的帮助，冒险深入这座致命的神殿，寻找这些恐怖的源头，也许还有他们自己的诅咒，希望能彻底摧毁它。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

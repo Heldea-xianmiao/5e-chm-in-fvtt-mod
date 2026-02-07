@@ -374,7 +374,45 @@ border=0>
 
 在地下旅行的冒险者们遭遇了彼此指责对方破坏了自己艺术品的两个石巨人；角色们可以通过找到真正的黑手（比如第三个巨人，一群灰矮人或者一个无心的掘土巨怪）来结束争吵。</TD></TR>
 
-<TR><TD width=30>6</TD><TD>石巨人希望操纵角色们去干掉一个有力的竞争对手。</TD></TR></TABLE>  </P></body>
+<TR><TD width=30>6</TD><TD>石巨人希望操纵角色们去干掉一个有力的竞争对手。</TD></TR></TABLE>  </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

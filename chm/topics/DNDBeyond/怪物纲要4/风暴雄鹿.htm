@@ -54,7 +54,45 @@ Growth。</STRONG>
 
 Call。</STRONG> 
 
-在进行一次豁免检定后，雄鹿向120尺内它可以看见的一个生物降下一道闪电。目标必须进行一次DC16的敏捷豁免，失败受到19（3d12）闪电伤害，成功则仅受到一半伤害。</P></body>
+在进行一次豁免检定后，雄鹿向120尺内它可以看见的一个生物降下一道闪电。目标必须进行一次DC16的敏捷豁免，失败受到19（3d12）闪电伤害，成功则仅受到一半伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

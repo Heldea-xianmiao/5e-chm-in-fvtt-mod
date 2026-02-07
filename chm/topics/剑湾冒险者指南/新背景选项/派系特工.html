@@ -120,7 +120,45 @@ lang=EN-US> The Zhentarim。</SPAN>
 
 <SPAN lang=EN-US>《玩家手册》</SPAN>中“侍僧”的特征表格作为你的基础特征和动机，并在适当的时候修改条目以让其符合你作为派系特工的身份。（例如考虑将<SPAN 
 
-lang=EN-US>“</SPAN>信仰<SPAN lang=EN-US>”</SPAN>替换成<SPAN lang=EN-US>“</SPAN>组织<SPAN lang=EN-US>”</SPAN>）<BR>你的羁绊可能会关联于你组织中的其他成员、或一个对你组织而言相当重要的场所或对象。你所追求的理念可能会与你所属组织的信条和原则一致，但在本质上更个人一些。</P></body>
+lang=EN-US>“</SPAN>信仰<SPAN lang=EN-US>”</SPAN>替换成<SPAN lang=EN-US>“</SPAN>组织<SPAN lang=EN-US>”</SPAN>）<BR>你的羁绊可能会关联于你组织中的其他成员、或一个对你组织而言相当重要的场所或对象。你所追求的理念可能会与你所属组织的信条和原则一致，但在本质上更个人一些。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

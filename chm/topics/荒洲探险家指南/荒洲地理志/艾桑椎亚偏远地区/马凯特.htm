@@ -46,7 +46,45 @@ Ord，这个城市的内部守卫，守护着附近的村庄和小镇，然而�
 
 Volcano。<BR>  
 
-在奥法纪，马凯特的沙漠曾经是一片郁郁葱葱的景色，这里孕育出了卓越的文明，然而在灾祸之战，文明最终止于可怕的冲突。这里的战斗使得植被变为了沙土，埋葬了无数艾桑椎亚各个团体愿意付出一切去获取的秘密。<BR></body>
+在奥法纪，马凯特的沙漠曾经是一片郁郁葱葱的景色，这里孕育出了卓越的文明，然而在灾祸之战，文明最终止于可怕的冲突。这里的战斗使得植被变为了沙土，埋葬了无数艾桑椎亚各个团体愿意付出一切去获取的秘密。<BR><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

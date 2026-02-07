@@ -42,7 +42,45 @@ Conclave的白龙手下保护了鸦龙族裔。他的雕像以及周围的神龛
 
 <P>德拉贡尼亚废墟的冒险<BR>那些有勇气深入德拉贡尼亚废墟的人可以找到宝藏和被摧毁的城市中留下的幽魂。</P>
 
-<P>昔日荣光（低等级）：一群心怀不满的龙血族裔秘密集结在他们曾经的城市废墟中，被一名死亡骑士的低语所指引。死亡骑士向他们许诺了重新控制鸦龙族裔的力量。他们开始学习死灵法术，甚至以死亡骑士的名义进行献祭。死亡骑士彭特拉卡斯Pentrakath正在荒洲大陆上四处收集神器，但是很快他就会利用他的邪教徒与狂热者实现他疯狂的计划，如果前面没有人干涉的话（见本章前面的“德瑞莫斯峡谷的冒险”）。</P></body>
+<P>昔日荣光（低等级）：一群心怀不满的龙血族裔秘密集结在他们曾经的城市废墟中，被一名死亡骑士的低语所指引。死亡骑士向他们许诺了重新控制鸦龙族裔的力量。他们开始学习死灵法术，甚至以死亡骑士的名义进行献祭。死亡骑士彭特拉卡斯Pentrakath正在荒洲大陆上四处收集神器，但是很快他就会利用他的邪教徒与狂热者实现他疯狂的计划，如果前面没有人干涉的话（见本章前面的“德瑞莫斯峡谷的冒险”）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

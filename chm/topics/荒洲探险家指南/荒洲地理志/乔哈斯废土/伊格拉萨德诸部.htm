@@ -76,7 +76,45 @@ html,body {
 
 <P>伊格拉萨德的冒险<BR>角色们可以到伊格拉萨德找一名强大的巨人寻求帮助，帮助维持村庄间的团结，或者试着让他们分裂。</P>
 
-<P>死灵法师的大军（中级）：一位被流放的多洛拉夫亡灵巫师与一个嗜血的牛头人氏族结盟，制造出一支不死军团。他们的缓慢扩张对伊格拉萨德构成了威胁。伊格拉萨德的七个村庄各自派出了一名勇士，与多洛拉夫和克什塔斯克的勇士们并肩作战，一同对抗残忍的入侵者与他的邪恶怪物军团。角色们如果想让村子里的人帮助他们，就要加入战斗。</P></body>
+<P>死灵法师的大军（中级）：一位被流放的多洛拉夫亡灵巫师与一个嗜血的牛头人氏族结盟，制造出一支不死军团。他们的缓慢扩张对伊格拉萨德构成了威胁。伊格拉萨德的七个村庄各自派出了一名勇士，与多洛拉夫和克什塔斯克的勇士们并肩作战，一同对抗残忍的入侵者与他的邪恶怪物军团。角色们如果想让村子里的人帮助他们，就要加入战斗。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

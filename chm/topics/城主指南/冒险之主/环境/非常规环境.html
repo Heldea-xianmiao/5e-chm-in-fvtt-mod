@@ -3570,9 +3570,47 @@ lang=EN-US>1</span>小时时长的休息。不会疲倦的坐骑（比如飞行�
 
 style='mso-spacerun:yes'>    </span></span>冒险者们飞越天空时，随机遭遇的检定频率跟一般情况相同。飞行中的角色忽略所有不可飞行生物的影响，除非角色正贴近地面飞行且可作为该生物的远程攻击目标。飞行中的角色可以随意指定地面上的生物为目标，随时与该目标进行交互。<span
 
-lang=EN-US><o:p></o:p></span></p></div></body>
+lang=EN-US><o:p></o:p></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

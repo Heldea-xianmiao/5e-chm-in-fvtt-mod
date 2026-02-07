@@ -82,7 +82,45 @@ magic, 或迷踪步 misty step，使用智力作为其施法属性，且不需�
 
 莫克鱼怪的巢穴入口具有魔力，莫克鱼怪在自己巢穴中且没有失能的时候能随时激活或者压制这一效果。任何距离此出口30尺内并能看到它的生物必须进行DC15的感知豁免检定，失败的情况下，生物会感受到强烈的冲动，在每个回合中使用其移动速度进入巢穴并向着莫克鱼怪移动（目标不会意识到它正在向一个生物前进）。目标会通过最短的路线向莫克鱼怪移动。一旦他能看到莫克鱼怪，它就能重复豁免检定，成功则结束它对自己的影响。目标还能在每个回合结束时和每次受到伤害时重复豁免检定。<BR> · 
 
-以一个念头（不需要动作），莫克鱼怪可以让巢穴中的水进行一个一分钟后生效的变化。水可以变得像空气一样能够呼吸和透明，也可以变成正常的水（从浑浊到清澈）。<BR>一旦莫克鱼怪死亡，这些区域效应就会立即结束。</P></body>
+以一个念头（不需要动作），莫克鱼怪可以让巢穴中的水进行一个一分钟后生效的变化。水可以变得像空气一样能够呼吸和透明，也可以变成正常的水（从浑浊到清澈）。<BR>一旦莫克鱼怪死亡，这些区域效应就会立即结束。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

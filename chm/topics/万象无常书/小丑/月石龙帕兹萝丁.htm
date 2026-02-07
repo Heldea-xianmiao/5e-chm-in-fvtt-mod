@@ -108,7 +108,45 @@ HP 330（20d20+12）<br>
 
 <font color=red><strong>水果旋风Whirlwind of Fruit。</strong></font>妖精水果从附近的车里飞出，在帕兹萝丁60尺内一处10尺半径、30尺高的圆柱形区域里创造出一团水果组成的旋风，并持续存在至下个先攻值到20时。当一个生物在其回合中第一次进入旋风区域或在其中开始回合时，它必须进行一次DC15的敏捷豁免，失败则受到11（2d10）钝击伤害，成功则只受到一半伤害。</P>
 
-<P></P></body>
+<P></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

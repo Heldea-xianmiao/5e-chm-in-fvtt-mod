@@ -52,7 +52,45 @@ Charge（充能5~6）。</STRONG>耶诺古之口移动不超过其速度的距�
 
 18的力量豁免。豁免失败者受25（3d12+6）点穿刺伤害并被耶诺古之口擒抱（逃脱DC16）。如果一个生物已经以这种方式被擒抱，则它将陷入倒地状态。直到擒抱结束，目标被束缚。耶诺古之口至多以这种方式擒抱一个生物。<BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>獠牙反击Fanged 
 
-Rebuke。</STRONG>当耶诺古之口受到伤害时，它能以反应对周围10尺内一个随机生物发动一次啃咬攻击。如果其周围没有任何生物，则它能够发动两次投掷獠牙攻击。</P></body>
+Rebuke。</STRONG>当耶诺古之口受到伤害时，它能以反应对周围10尺内一个随机生物发动一次啃咬攻击。如果其周围没有任何生物，则它能够发动两次投掷獠牙攻击。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

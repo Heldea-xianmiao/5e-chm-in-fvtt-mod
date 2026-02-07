@@ -72,7 +72,45 @@ Reawakening</STRONG></FONT><BR><EM>奇物,
 
 传说</EM><BR>莱瑟曼的女巫们制造了这个小小的石牌，用以对抗红袍巫师的亡灵法术。你可以使用一个动作，从石牌上释放 <EM><FONT color=#800080>完全复生术true resurrection 
 
-</FONT></EM>。一旦被这样使用，石牌就会化为尘埃，彻底毁坏。</P></body>
+</FONT></EM>。一旦被这样使用，石牌就会化为尘埃，彻底毁坏。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

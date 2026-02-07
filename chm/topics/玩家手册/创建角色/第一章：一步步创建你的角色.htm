@@ -396,9 +396,47 @@ Class</STRONG>
 
 <P>大多D&amp;D中的角色都不是独行侠。一个为了同一目标而通力合作的冒险者团体中，或者说一支<STRONG>队伍party</STRONG>中，都是由各个角色各司其职。而团队间的协作与配合可以让队伍在龙与地下城世界的众多危险中获得更高的存活率。与你的玩家伙伴和DM一同讨论决定你们的角色是否互相认识，他们怎么聚在一起以及这个群体可能承担着何种使命。</P>
 
-</BODY>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
 </html>
+
 

@@ -138,7 +138,45 @@ Trap</FONT></STRONG><BR><EM>简易陷阱（等级11-16，致命威胁）</EM><BR
 
 <P><STRONG>效果：</STRONG>当激活时，此陷阱以压力板为中心施展一次睡眠术法术，以9级法术位。</P>
 
-<P><STRONG>反制措施：</STRONG>一次DC20的感知（察觉）检定能揭示出压力板。一次在压力板周围5尺内进行的DC20的智力（奥秘）检定解除此陷阱，但检定结果为10或更低则会触发它。一次对压力板施展的成功的解除魔法（DC19）会摧毁此陷阱。</P></body>
+<P><STRONG>反制措施：</STRONG>一次DC20的感知（察觉）检定能揭示出压力板。一次在压力板周围5尺内进行的DC20的智力（奥秘）检定解除此陷阱，但检定结果为10或更低则会触发它。一次对压力板施展的成功的解除魔法（DC19）会摧毁此陷阱。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

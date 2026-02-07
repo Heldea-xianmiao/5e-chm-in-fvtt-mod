@@ -64,7 +64,45 @@
 
 <BR>    
 
-  </FONT></STRONG><FONT color=#000000><EM>中立邪恶，女性黑暗精灵<BR></EM>维维尔克指挥着占领杜马兰山腰要塞的卓尔家族和大地精部落。她以她神明的形象，用血腥的铁腕统治，强加与古代卓尔社会相同的爱与恐惧。无情而苛刻的主母维维尔克建立、训练并准备她的部队，以便有朝一日帮助罗丝以美味的残酷摧毁克灵王朝。</FONT></P></body>
+  </FONT></STRONG><FONT color=#000000><EM>中立邪恶，女性黑暗精灵<BR></EM>维维尔克指挥着占领杜马兰山腰要塞的卓尔家族和大地精部落。她以她神明的形象，用血腥的铁腕统治，强加与古代卓尔社会相同的爱与恐惧。无情而苛刻的主母维维尔克建立、训练并准备她的部队，以便有朝一日帮助罗丝以美味的残酷摧毁克灵王朝。</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

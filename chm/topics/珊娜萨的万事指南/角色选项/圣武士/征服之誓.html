@@ -236,7 +236,45 @@ Rebuke</FONT></STRONG>
 
 你具有所有伤害的抗性。<BR> · 当你在你的回合进行攻击动作时，你可以进行一次额外的攻击，作为该动作的一部分。<BR> · 
 
-你的近战武器攻击在掷出19或20时即可形成一次重击。<BR>一旦你使用了此特性，直到你完成一次长休前你都不能再使用它。<BR></P></body>
+你的近战武器攻击在掷出19或20时即可形成一次重击。<BR>一旦你使用了此特性，直到你完成一次长休前你都不能再使用它。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

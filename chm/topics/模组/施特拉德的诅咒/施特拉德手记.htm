@@ -38,7 +38,45 @@ DM 可以给玩家展示附录 F 中的“施特拉德手记残页
 
 From the Tome of Strahd”小节。<BR> <BR>如果施特拉德看到、或从其部下那里得知这本书已经落入到了冒险小队手中，他会延后其他一切目标（见第 
 
-1 章“踏入迷雾”），直到重新夺回这本书。施特拉德会优先攻击这本书的持有者</P></body>
+1 章“踏入迷雾”），直到重新夺回这本书。施特拉德会优先攻击这本书的持有者</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

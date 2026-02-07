@@ -38,7 +38,45 @@ html,body {
 
 hag</strong>，她在这儿制作和售卖玩偶。有些玩偶是瓷的，有些是布的，它们都有圆圆的大眼睛和画的惟妙惟肖的笑容。鹅指奶奶有三副放大镜，一副望远镜，还有十面镜子可以出售。<br>如果有角色在集市的水果摊上把头发交给了商人，队伍可能会看到它们的头发已经粘在了一些玩偶的头上，它们可能是按照角色们的样子制作的——鹅指奶奶工作起来很快。尽管她把地精们给她的头发大多都用来装饰玩偶了，但她还是保留了一点用于探知术Scrying法术或邪恶的鬼婆魔法。<br>鹅指奶奶会用“乖乖”或“我的小甜甜”这样令人发腻的词来称呼角色们。她的笑容背后藏着一种泰然自若的邪恶。</P>
 
-<P><strong>价钱Price</strong><br>希望购买玩偶或玻璃物品的角色必须用三天的好梦来和鹅指奶奶交易。她会用一根缝衣针刺角色的手指来达成交易。<br>支付代价的角色会被恐怖玩偶的噩梦折磨三天。当这段时间内该角色完成长休时，他必须进行一次DC15的感知豁免。失败的情况下，他不会恢复任何生命骰。移除诅咒或类似的魔法会结束这个效应。</P></body>
+<P><strong>价钱Price</strong><br>希望购买玩偶或玻璃物品的角色必须用三天的好梦来和鹅指奶奶交易。她会用一根缝衣针刺角色的手指来达成交易。<br>支付代价的角色会被恐怖玩偶的噩梦折磨三天。当这段时间内该角色完成长休时，他必须进行一次DC15的感知豁免。失败的情况下，他不会恢复任何生命骰。移除诅咒或类似的魔法会结束这个效应。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

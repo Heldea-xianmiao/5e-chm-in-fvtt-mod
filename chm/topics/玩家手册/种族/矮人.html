@@ -1778,4 +1778,41 @@ style="FONT-SIZE: 11pt; TEXT-DECORATION: line-through; FONT-FAMILY: 宋体; mso-
 
  FONT-FAMILY: 'STHeiti light'; mso-bidi-font-family: Calibri; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri; mso-spacerun: 'yes'"><font face="STHeiti light" >灰矮人，或称杜尔加矮人生活在幽暗地域深处的城市中。这些邪恶而行踪隐秘的奴隶贩子会袭击地表世界然后抓走俘虏，再将它们的猎物卖给幽暗地域的其他族类。他们天生的魔法能力使他们可以隐形，还可使身型短时间内巨化。</font></span><span style="FONT-SIZE:
 
- 12pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"></span></p></div></body></html>
+ 12pt; FONT-FAMILY: 宋体; mso-spacerun: 'yes'"></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

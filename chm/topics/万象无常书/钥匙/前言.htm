@@ -20,7 +20,45 @@ Things</U></EM>
 
 对DM来说很重要的问题：</p>
 
-<ul style="MARGIN: 0px auto"><li>牌组的起源和本质<li>在不（超出DM控制地）干扰战役的前提下使用牌组<li>构建一个仅包含特定卡牌的牌组<li>将牌组的效果融入到战役中<li>与每张卡关联的新魔法效果<li>为想要创造专属卡牌的角色提供的冒险原因</li></ul></body>
+<ul style="MARGIN: 0px auto"><li>牌组的起源和本质<li>在不（超出DM控制地）干扰战役的前提下使用牌组<li>构建一个仅包含特定卡牌的牌组<li>将牌组的效果融入到战役中<li>与每张卡关联的新魔法效果<li>为想要创造专属卡牌的角色提供的冒险原因</li></ul><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -660,7 +660,45 @@ War</FONT></STRONG><BR>安塞隆东部正在进行的战争和龙后归来的真
 
         <P align=center>10</P></TD>
 
-      <TD>有些脑袋不清醒的人声称自己在东方看到了巨龙，但他们看到的只是飞龙wyverns和错觉罢了。（不准确；人们声称自己看到了巨龙，而这些的确是非常罕见的对真正巨龙的目击。）</TD></TR></TABLE></P></BLOCKQUOTE></body>
+      <TD>有些脑袋不清醒的人声称自己在东方看到了巨龙，但他们看到的只是飞龙wyverns和错觉罢了。（不准确；人们声称自己看到了巨龙，而这些的确是非常罕见的对真正巨龙的目击。）</TD></TR></TABLE></P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

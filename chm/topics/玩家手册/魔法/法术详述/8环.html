@@ -520,7 +520,45 @@ DC20 的智力检定，检定成功者将逃出迷宫，而该法术随之终止
 
 尺时法术终止。<BR>淹没在水墙中的生物可以用游泳的方式移动，由于波涛阻力影响，该生物必须要进行一次对抗该法术 DC 
 
-的力量（运动）检定以决定起能否成功移动，而检定失败者则无法移动。通过移动离开水墙区域的生物会直接掉到地上。</P></body>
+的力量（运动）检定以决定起能否成功移动，而检定失败者则无法移动。通过移动离开水墙区域的生物会直接掉到地上。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

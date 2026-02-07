@@ -82,7 +82,45 @@ h4 {
 
 10尺半径球形区域里，你唤起死气与生机。该区域里每个由你选择的生物需进行一次体质豁免，失败时受到2d6暗蚀伤害，成功时伤害减半。区域里的非魔法植物都会枯萎。<BR>此外，区域里一个你所选的生物能使用并投掷一枚未使用的生命 
 
-骰。恢复投掷结果加上你的施法属性调整值点生命值。<BR><B>升环施法。</B>当你使用3环或更高的法术位释放该法术时，法术位每比2环高1环，法术多造成1d6伤害，选择生物能投掷的生命骰数也多1个。</P></body>
+骰。恢复投掷结果加上你的施法属性调整值点生命值。<BR><B>升环施法。</B>当你使用3环或更高的法术位释放该法术时，法术位每比2环高1环，法术多造成1d6伤害，选择生物能投掷的生命骰数也多1个。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

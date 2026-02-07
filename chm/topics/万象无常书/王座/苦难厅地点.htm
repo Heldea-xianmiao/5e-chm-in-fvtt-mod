@@ -172,7 +172,45 @@ Study</STRONG></font></font><br>
 
 <strong>格雷莫利的鬼魂Gremorly's ghost</strong>（见随附的资料卡）留了在天文台中。他以一个半透明的人类形象出现，穿着长裤、鞋子、长袖外套和巫师帽。他留着长长的胡子，眉毛浓密，手里拿着一根幽灵棍子。格雷莫利忘了自己已经死去，像还活着一样继续着自己的工作。他从一台望远镜移到另一台望远镜，偶尔查阅桌子上的天文图标或检查仪式用的魔杖。他不会注意到角色们，除非他们与他或者魔杖互动。如果这些角色们引起了他的注意，他会高兴地暗笑。“更多加入我幽灵大军的养料，”他举起法杖说，“我希望你们已经和自己的神说好了。”格雷莫利会一直战斗至死。<br>
 
-<strong>宝藏Treasure。</strong>格雷莫利手握的法杖是他的凋零法杖的灵体映射，而真正法杖靠在桌边。格雷莫利的法术书落在了放地图的桌下，其中半数是死灵系法术，还包括了他资料卡中那些法术。</p></body>
+<strong>宝藏Treasure。</strong>格雷莫利手握的法杖是他的凋零法杖的灵体映射，而真正法杖靠在桌边。格雷莫利的法术书落在了放地图的桌下，其中半数是死灵系法术，还包括了他资料卡中那些法术。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

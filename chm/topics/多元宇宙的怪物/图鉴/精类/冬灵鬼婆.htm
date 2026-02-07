@@ -54,7 +54,45 @@ Shard。</strong>远程法术攻击：命中+6，射程60尺，单一目标。�
 
 Feast。</strong>鬼婆啃食距离其五尺内一个一分钟内死去敌人的尸体。每个60尺内鬼婆选择的能看到她进食的生物必须成功通过DC15的感知豁免，否则在一分钟内对她陷入恐慌。因为这种方式恐慌时，生物会陷入失能，无法理解其他人说的话，无法阅读，只能胡言乱语。一个生物可以在每个其回合结束重复该豁免，成功则结束该效应。如果一个生物的豁免检定成功或者对其的效果结束，该生物在接下来的24小时内免疫鬼婆的恐怖飨宴。<br><strong>施法Spellcasting。</strong>当手持或骑乘灰杖时，鬼婆可以使用以下法术，它无需任何材料成分并以魅力作为施法关键属性（豁免DC14）：<br><EM><FONT color=#800080>随意：定身类人hold person<br>每项1/日：寒冰锥cone of cold，冰风暴ice storm，冰墙术wall of 
 
-ice</FONT></EM></p></body>
+ice</FONT></EM></p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

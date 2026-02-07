@@ -32,7 +32,45 @@ html,body {
 
 巨魔虽然不虔诚也不思考精神上的问题，但它们害怕并崇拜一个已知的存在——毁灭者瓦普拉克。和许多次等神明一样，瓦普拉克的真实本性是一个迷，但他总是被描绘成一个可怕的、畸形的和巨魔一样健壮的绿色生物。他被赋予了无心的毁灭和偏执的情节，并时常对其他神心怀不轨。<br>
 
-巨魔崇拜者们相信，瓦普拉克吞噬掉了了被煮熟或被消解掉（被火或酸杀死）的巨魔的灵魂。而同时，祂将灵魂吐回世界上，令它再生出新的身躯。</p></body>
+巨魔崇拜者们相信，瓦普拉克吞噬掉了了被煮熟或被消解掉（被火或酸杀死）的巨魔的灵魂。而同时，祂将灵魂吐回世界上，令它再生出新的身躯。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

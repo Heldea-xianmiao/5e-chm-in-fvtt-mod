@@ -60,7 +60,45 @@ Level)。这些角色受雇于一个酿酒家族，以找出是谁破坏了他�
 
 Level)。这些角色受雇于一个匿名组织，去揭开特罗斯特瓦尔德麦芽酒的秘密。这意味着调查所有的谣言，潜入酿酒家族寻找配方，检查所有的成分。酿酒业的家族把他们的秘密藏得严严实实。当角色的匿名赞助人想要确保配方不会泄露出去时，情节变得更加复杂，所以他们试图在任务完成时杀死角色。这位赞助人可能是来自暗流帮Shadycreek 
 
-Run的万象会Myriad家族的成员，也可能是另一个定居点的竞争对手的啤酒厂。 </P></body>
+Run的万象会Myriad家族的成员，也可能是另一个定居点的竞争对手的啤酒厂。 </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

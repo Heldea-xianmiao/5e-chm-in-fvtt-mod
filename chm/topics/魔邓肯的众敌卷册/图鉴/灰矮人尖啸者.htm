@@ -40,7 +40,45 @@ html,body {
 
 Pain。</STRONG>每轮一次，一个攻击灰矮人尖啸者的生物可以瞄准关在里面的灰矮人攻击。攻击者在攻击检定上承受劣势。若命中，这次攻击对灰矮人尖啸者额外造成5(1d10)点伤害，而尖啸者可以以一个反应用它的多重攻击来反击。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>尖啸者进行一次钻头攻击并使用音波尖啸。<BR><STRONG>钻头Drill。</STRONG>近战武器攻击：命中+6，触及5尺，单一目标。命中：10(1d12+4)点穿刺伤害。<BR><STRONG>音波尖啸Sonic 
 
-Scream。</STRONG>尖啸者将毁灭性的能量散射到15尺立方的区域里。区域内的每个生物必须进行一个DC11的力量豁免，豁免失败则受到7(2d6)点雷鸣伤害并倒地。</P></body>
+Scream。</STRONG>尖啸者将毁灭性的能量散射到15尺立方的区域里。区域内的每个生物必须进行一个DC11的力量豁免，豁免失败则受到7(2d6)点雷鸣伤害并倒地。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

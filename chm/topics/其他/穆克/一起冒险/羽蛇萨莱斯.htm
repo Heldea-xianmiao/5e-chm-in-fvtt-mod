@@ -60,7 +60,45 @@ Shape。</STRONG>羽蛇可以用魔法变形为挑战等级等于或低于其自
 
 13的体质豁免，豁免失败则陷入24小时的昏迷。其他生物可以用一个动作来摇醒该目标。<BR><STRONG>绞缠Constrict。</STRONG>近战武器攻击：命中+6，触及10尺，单一中型或更小体型生物。命中：10（2d6+3）的钝击伤害，目标被擒抱（逃脱DC 
 
-15）。另外，羽蛇不能同时绞缠另一个目标。</P></body>
+15）。另外，羽蛇不能同时绞缠另一个目标。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

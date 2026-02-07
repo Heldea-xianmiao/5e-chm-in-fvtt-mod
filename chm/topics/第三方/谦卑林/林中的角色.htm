@@ -318,7 +318,45 @@ Strig）的身体更加纤细、拥有流线型的身材。<BR>狡狐族通常�
 
 <P><STRONG><FONT color=#800000>浣熊语Mapach</FONT></STRONG><BR>浣熊语是一种技术含量很高的语言，在日常会话中经常包含粗略的方程式和物理性质的看法。浣熊语强调，对周围环境的认知是生存的关键。浣熊语使用其由各种线、破折号和点组成的文字系统。</P>
 
-<P><STRONG><FONT color=#800000>狡狐语Vulpin</FONT></STRONG><BR>狡狐语是一种结合了咆哮、低喘和尖叫的语言。狡狐语用自己流畅的花体文字书写的。根据上下文的不同，使用者被教授如何在低级和高级的狡狐语版本之间切换。对于新手练习者来说，最大难点是学习何时使用何种形式。</P></body>
+<P><STRONG><FONT color=#800000>狡狐语Vulpin</FONT></STRONG><BR>狡狐语是一种结合了咆哮、低喘和尖叫的语言。狡狐语用自己流畅的花体文字书写的。根据上下文的不同，使用者被教授如何在低级和高级的狡狐语版本之间切换。对于新手练习者来说，最大难点是学习何时使用何种形式。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

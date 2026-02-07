@@ -94,7 +94,45 @@ Reaper</STRONG>带着来自第三章“死亡巨人遭遇表”的随从占领�
 
 <P><STRONG>墨染幽渊Inky Depths</STRONG> 
 
-<BR>一个幽影腐化<STRONG>克拉肯Kraken</STRONG>的巢穴就在海渊，沉浸在其中融合的能量之中。它威胁着水面上的船只，将水手们拖入水中，变成<STRONG>幽影Shadow</STRONG>，<STRONG>食尸鬼Ghoul</STRONG>以及其他来自“水元素遭遇表”的生物（见第三章）。</P></body>
+<BR>一个幽影腐化<STRONG>克拉肯Kraken</STRONG>的巢穴就在海渊，沉浸在其中融合的能量之中。它威胁着水面上的船只，将水手们拖入水中，变成<STRONG>幽影Shadow</STRONG>，<STRONG>食尸鬼Ghoul</STRONG>以及其他来自“水元素遭遇表”的生物（见第三章）。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

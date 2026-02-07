@@ -48,7 +48,45 @@ Assembly资助玛尔塔的研究。多年前，玛尔塔遇到巨魔 Trolls攻�
 
 Hounds在她的塔楼附近的荒野中漫游，以阻止巨魔。她不希望地狱犬在未来造成问题，所以她雇佣角色去猎杀一些以控制其数量。角色们发现他们并不是唯一杀死地狱猎犬的人：一个山丘巨人Hill 
 
-Giant和一小群巨魔正在杀死猎犬，准备袭击玛尔塔的塔楼！ </P></body>
+Giant和一小群巨魔正在杀死猎犬，准备袭击玛尔塔的塔楼！ </P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

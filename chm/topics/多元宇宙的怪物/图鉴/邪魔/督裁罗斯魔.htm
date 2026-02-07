@@ -50,7 +50,45 @@ Cunning（充能4~6）。</STRONG>在距离督裁罗斯魔60尺内、可以听�
 
 Leech。</STRONG>督裁罗斯魔触碰距离它15尺范围内的一个失能生物。目标受到36(7d8+4)点暗蚀伤害，督裁罗斯魔获得相当于一半伤害值的临时生命值。目标必须在一次DC16的体质豁免检定中获得成功，否则它的生命值上限将下降暗蚀伤害等额的数值。这种减少会持续到当目标完成一次长休，如果目标的生命值上限降低为0则死亡。<BR><STRONG>施法Spellcasting。</STRONG>督裁罗斯魔施展如下法术之一，且不需要材料成分，其施法属性为魅力(法术豁免DC16)：<BR><EM><FONT color=#800080>随意：黑暗术darkness，侦测魔法detect magic，解除魔法dispel 
 
-magic，隐形术invisibility (仅自身)，暗示术suggestion<BR>3/日：闪电束lightning bolt</FONT></EM><BR><STRONG>传送Teleport。</STRONG>督裁罗斯魔可以携带任何穿着或携带的物品传送到60尺内能看见的未占据空间里。</P></body>
+magic，隐形术invisibility (仅自身)，暗示术suggestion<BR>3/日：闪电束lightning bolt</FONT></EM><BR><STRONG>传送Teleport。</STRONG>督裁罗斯魔可以携带任何穿着或携带的物品传送到60尺内能看见的未占据空间里。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

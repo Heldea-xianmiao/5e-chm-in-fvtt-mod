@@ -328,7 +328,45 @@ Colors</H6>
 
 Missle</I></U> 
 
-。每日黄昏时分，1d6颗被消耗的星星将重新出现在法袍上。<BR>着装这件长袍期间，你可以用一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作使你和你着装或携带的物件一起进入星界，直至你再次使用一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作回到你原本所在的位面。此时你出现在自己之前占据的空间中，如果该空间已被占据，则你出现在最近的未占据空间。</P></body>
+。每日黄昏时分，1d6颗被消耗的星星将重新出现在法袍上。<BR>着装这件长袍期间，你可以用一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作使你和你着装或携带的物件一起进入星界，直至你再次使用一个<STRONG><FONT color=#008000>魔法</FONT></STRONG>动作回到你原本所在的位面。此时你出现在自己之前占据的空间中，如果该空间已被占据，则你出现在最近的未占据空间。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -102,7 +102,45 @@ Resistance。</STRONG>恶灵魔对抗法术和魔法效应时进行的豁免检�
 
 (2d8+4)暗蚀伤害。如果目标是一个生物，它的生命值最大值也下降3 
 
-(1d6)。这一过程持续到目标完成一次短休或长休。如果此效果将目标的生命值上限降低到0，则目标死亡。<BR>占据尸体(充能6)。恶灵魔消失并进入一个5尺内、它能看到的完整尸体。尸体必须是大型或更小的野兽或类人生物。恶灵魔现在实际上是被附身的生物。它的类型变成亡灵，虽然它现在看起来个活着的生物，并且它获得一些临时生命值等于尸体生命值的最大值。<BR>在拥有尸体的同时，恶灵魔保留了它的生命值、阵营、感知、智力、魅力、心灵感应以及对毒素伤害、力竭、魅惑和恐惧的免疫力。除此之外，它还会使用目标所拥有的游戏统计数据，获取其知识和熟练，但不包括其职业能力(如果有的话)。<BR>占据持续到暂时生命值耗尽(此时身体再次变成尸体)或恶灵魔使用一个额外动作结束占据。当占据结束时，恶灵魔会重新出现在离尸体5尺内的未被占据的地方。</P></body>
+(1d6)。这一过程持续到目标完成一次短休或长休。如果此效果将目标的生命值上限降低到0，则目标死亡。<BR>占据尸体(充能6)。恶灵魔消失并进入一个5尺内、它能看到的完整尸体。尸体必须是大型或更小的野兽或类人生物。恶灵魔现在实际上是被附身的生物。它的类型变成亡灵，虽然它现在看起来个活着的生物，并且它获得一些临时生命值等于尸体生命值的最大值。<BR>在拥有尸体的同时，恶灵魔保留了它的生命值、阵营、感知、智力、魅力、心灵感应以及对毒素伤害、力竭、魅惑和恐惧的免疫力。除此之外，它还会使用目标所拥有的游戏统计数据，获取其知识和熟练，但不包括其职业能力(如果有的话)。<BR>占据持续到暂时生命值耗尽(此时身体再次变成尸体)或恶灵魔使用一个额外动作结束占据。当占据结束时，恶灵魔会重新出现在离尸体5尺内的未被占据的地方。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

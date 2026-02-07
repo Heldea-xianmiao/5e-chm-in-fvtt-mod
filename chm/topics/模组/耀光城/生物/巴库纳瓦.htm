@@ -62,7 +62,45 @@ Bite。</STRONG>近战武器攻击：命中+9，触及10尺，单一目标。命
 
 Storm Slam。</STRONG>近战武器攻击。命中率+9，触及10英尺，一个目标。命中：9 (1d8 +5) 钝击伤害加上5 (1d10) 
 
-雷鸣伤害，并且目标被沿水平方向推开10英尺。<BR><STRONG><FONT color=#800000>传奇动作</FONT></STRONG><BR>巴库纳瓦拥有3传奇动作，用来选择执行下列动作项。它每次只可选择执行一个传奇动作项，且必须在另一生物回合结束时执行。巴库纳瓦在其回合开始时恢复所有消耗的传奇动作数。<BR>迅捷滑行。巴库纳瓦以半速进行飞翔或游泳。这个动作不会引起借机攻击。<BR><STRONG>猛击。</STRONG>巴库纳瓦进行一次风暴猛击攻击。<BR><STRONG>闪电攻击（耗费3个动作）。</STRONG>巴库纳瓦向自己周围60英尺范围内的两个生物发射闪电。每个目标都必须在DC15的敏捷豁免中成功，否则会受到22（4d10）的雷鸣伤害。</P></body>
+雷鸣伤害，并且目标被沿水平方向推开10英尺。<BR><STRONG><FONT color=#800000>传奇动作</FONT></STRONG><BR>巴库纳瓦拥有3传奇动作，用来选择执行下列动作项。它每次只可选择执行一个传奇动作项，且必须在另一生物回合结束时执行。巴库纳瓦在其回合开始时恢复所有消耗的传奇动作数。<BR>迅捷滑行。巴库纳瓦以半速进行飞翔或游泳。这个动作不会引起借机攻击。<BR><STRONG>猛击。</STRONG>巴库纳瓦进行一次风暴猛击攻击。<BR><STRONG>闪电攻击（耗费3个动作）。</STRONG>巴库纳瓦向自己周围60英尺范围内的两个生物发射闪电。每个目标都必须在DC15的敏捷豁免中成功，否则会受到22（4d10）的雷鸣伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

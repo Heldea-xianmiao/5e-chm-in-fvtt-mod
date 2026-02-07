@@ -38,7 +38,45 @@ html,body {
 
 他们来到修道院废墟群的目的便是与梅克卡拉斯结盟，认定他的实力足以撼动星光位面战争的战力平衡。不过梅克卡拉斯更喜欢坐在他的宝库之上并威吓这些乡民，但他尊重红龙们与吉斯洋基人的缘故联系，并给予这个使团探访他与继续协商的权利。</p><p>
 
-阿兹玛和她的武者们对角色们会保持冷漠的态度，但她希望得到梅克卡拉斯的好感。如果角色们惹了红龙、或是向他们展示出了也许能打动红龙的财富与魔法物品，有可能阿兹玛会想办法伏击角色们。如果角色们讨伐了梅克卡拉斯，阿兹玛和她的追随者们将返回星光位面——当然，是在他们向角色们复仇完成之后。</p></body>
+阿兹玛和她的武者们对角色们会保持冷漠的态度，但她希望得到梅克卡拉斯的好感。如果角色们惹了红龙、或是向他们展示出了也许能打动红龙的财富与魔法物品，有可能阿兹玛会想办法伏击角色们。如果角色们讨伐了梅克卡拉斯，阿兹玛和她的追随者们将返回星光位面——当然，是在他们向角色们复仇完成之后。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

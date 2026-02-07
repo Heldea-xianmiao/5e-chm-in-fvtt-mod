@@ -98,7 +98,45 @@ Plane。</STRONG><SPAN>目标的速度降低10尺，直到其下个回合结束�
 
 Lights（充能6）。</STRONG><SPAN>集群发出耀眼的光芒，其周围15尺内每个生物必须通过一次DC10的体质豁免。豁免失败将陷入震慑状态，持续1分钟。被震慑生物可以在自己的每次回合结束时再次进行该豁免，豁免成功则终止该效应。</SPAN><BR><SPAN><STRONG><FONT color=#800000>附赠动作Bonus Actions</FONT></STRONG> 
 
-</SPAN><BR><STRONG>照明Illumination。</STRONG><SPAN>日光萤群散发出15尺的明亮光照以及其外15尺的微光光照，它也可以用一个附赠动作来熄灭光照。</SPAN></SPAN></P></body>
+</SPAN><BR><STRONG>照明Illumination。</STRONG><SPAN>日光萤群散发出15尺的明亮光照以及其外15尺的微光光照，它也可以用一个附赠动作来熄灭光照。</SPAN></SPAN></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

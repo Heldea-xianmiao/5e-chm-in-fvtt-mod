@@ -42,7 +42,45 @@ Vale</FONT></STRONG><BR>斯科拉山谷是个狂野之地，这里雄伟的动�
 
 <P><STRONG><FONT color=#800000>林地 
 
-Woodlands</FONT></STRONG><BR>斯科拉谷的树木以扭曲的、可攀爬的形状生长，为居民提供了玩耍和睡觉的阴凉地方。树精们保护着这些最大的树，特别是防止醉醺醺的半羊人的搞怪行为。白天，丛林是田园诗般的森林，回荡着排箫的音乐。然而到了晚上，森林变得更加险恶。夜间出没的怪物——尤其是奇美拉、鸡蛇和鸟妖——在森林里游荡，努力猎取狂欢后独自游荡的醉醺醺的半羊人。半羊人很少在夜间独自旅行，他们相信噪音和音乐会吓跑邪恶，但贪欢者并不总是像他们那样小心翼翼。</P></body>
+Woodlands</FONT></STRONG><BR>斯科拉谷的树木以扭曲的、可攀爬的形状生长，为居民提供了玩耍和睡觉的阴凉地方。树精们保护着这些最大的树，特别是防止醉醺醺的半羊人的搞怪行为。白天，丛林是田园诗般的森林，回荡着排箫的音乐。然而到了晚上，森林变得更加险恶。夜间出没的怪物——尤其是奇美拉、鸡蛇和鸟妖——在森林里游荡，努力猎取狂欢后独自游荡的醉醺醺的半羊人。半羊人很少在夜间独自旅行，他们相信噪音和音乐会吓跑邪恶，但贪欢者并不总是像他们那样小心翼翼。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

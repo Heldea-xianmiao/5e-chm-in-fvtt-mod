@@ -40,7 +40,45 @@ html,body {
 
 <P>艾欧西亚高沼地的冒险<BR>这些泥泞的沼泽与草地中隐藏着诸多在泥沼下失落的秘密，那些死气沉沉的居民一心想隐藏这些秘密。</P>
 
-<P>失落的安息之地（中级）：一个无组织的独眼巨人部落在荒原上游荡，寻找他们去世几百年的勇士坟墓。他们也许会和角色讨价还价，并且愿意用奇物、珍稀物品来换取他们的帮助，找寻他们勇士的安息之所。当坟墓被发现后，独眼巨人会举行仪式并将他们先祖的骨头复活成为巨人。角色们可以决定中止仪式，惹恼巨人，或是随后了解到这个部落将成为高沼上其他部族的威胁。</P></body>
+<P>失落的安息之地（中级）：一个无组织的独眼巨人部落在荒原上游荡，寻找他们去世几百年的勇士坟墓。他们也许会和角色讨价还价，并且愿意用奇物、珍稀物品来换取他们的帮助，找寻他们勇士的安息之所。当坟墓被发现后，独眼巨人会举行仪式并将他们先祖的骨头复活成为巨人。角色们可以决定中止仪式，惹恼巨人，或是随后了解到这个部落将成为高沼上其他部族的威胁。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

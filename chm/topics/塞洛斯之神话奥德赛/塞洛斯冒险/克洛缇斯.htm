@@ -616,7 +616,45 @@ Villains<BR></FONT></STRONG>离弃殿堂里经常被发现独行的怪物和在�
 
         <P align=center>6</P></TD>
 
-      <TD>一只<STRONG><FONT color=#ff0000>女面斯芬克斯</FONT></STRONG>出于对人类行为的好奇在一座离弃殿堂里制造了一系列致命陷阱并诱惑冒险者来这里同时见证他们会如何克服这些挑战。</TD></TR></TABLE></P></BLOCKQUOTE></body>
+      <TD>一只<STRONG><FONT color=#ff0000>女面斯芬克斯</FONT></STRONG>出于对人类行为的好奇在一座离弃殿堂里制造了一系列致命陷阱并诱惑冒险者来这里同时见证他们会如何克服这些挑战。</TD></TR></TABLE></P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

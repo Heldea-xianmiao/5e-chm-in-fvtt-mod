@@ -48,7 +48,45 @@ Tactics。</STRONG>只要和平卫士有至少一个未失能的盟友处于攻�
 
 Mancatcher。</STRONG>近战武器攻击：命中+5，触及10尺，单一目标。命中：8（1d10+3）点穿刺伤害，外加4（1d8）点闪电伤害。如果目标的体型不超过大型，它还将陷入 <STRONG>擒抱Grappled</STRONG> 状态（逃脱DC13）。擒抱期间，目标还将陷入 <STRONG>束缚Restrained</STRONG> 状态且无法进行传送，且在它的每个回合开始时都将受到8（1d10+3）点闪电伤害。直到擒抱结束为止，这个和平卫士无法执行它的电能捕叉攻击。<BR><FONT color=#777777>（译注：动作项名疑似是打错了，前文中它的名字叫 异界捕叉Planar 
 
-Mancatcher。）</FONT></P></body>
+Mancatcher。）</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

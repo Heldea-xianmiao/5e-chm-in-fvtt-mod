@@ -70,7 +70,45 @@ Spark(充能6)。</STRONG>作为附赠动作，邪教信徒触摸一个简易或
 
 One</STRONG><BR><STRONG>辐射火焰Radiant 
 
-Flames(1/日)。</STRONG>炫彩火焰包围着邪教徒，直至1分钟、邪教者失能或死亡，或邪教徒主动熄灭火焰(无需动作)。当被火焰包裹时，邪教徒拥有30英尺范围的心灵感应，并且它可以用一个附赠动作传送到30英尺内的一个它可以看到的未占据空间。此外，每一个在邪教徒周围5英尺内开始其回合的生物必须进行DC15敏捷豁免，失败则受到16点(3d10)光耀伤害，豁免成功则伤害减半。</P></BLOCKQUOTE></body>
+Flames(1/日)。</STRONG>炫彩火焰包围着邪教徒，直至1分钟、邪教者失能或死亡，或邪教徒主动熄灭火焰(无需动作)。当被火焰包裹时，邪教徒拥有30英尺范围的心灵感应，并且它可以用一个附赠动作传送到30英尺内的一个它可以看到的未占据空间。此外，每一个在邪教徒周围5英尺内开始其回合的生物必须进行DC15敏捷豁免，失败则受到16点(3d10)光耀伤害，豁免成功则伤害减半。</P></BLOCKQUOTE><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

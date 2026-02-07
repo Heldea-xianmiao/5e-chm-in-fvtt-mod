@@ -32,7 +32,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000>雷龙 Brontosaurus</FONT></STRONG> <BR><EM>超巨型野兽，无阵营</EM><BR>护甲等级：15（天生护甲）<BR>生命值：121（9d20+27）<BR>速度：30尺<BR>力量21（+5） 敏捷9（-1） 体质17（+3）<BR>智力2（-4） 感知10（+0） 魅力7（-2）<BR>豁免：体质+6<BR>感官：被动察觉10<BR>语言：——<BR>挑战等级：5（1800XP）<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>重踏Stomp。</STRONG>近战武器攻击：命中+8，触及20尺，单一目标。命中：27（5d8+5）钝击伤害，目标必须成功通过一次DC14的力量豁免检定，否则将应击 
 
-倒地Prone 。<BR><STRONG>扫尾Tail。</STRONG>近战武器攻击：命中+8，触及20尺，单一目标。命中：32（6d8+5）钝击伤害。</P></body>
+倒地Prone 。<BR><STRONG>扫尾Tail。</STRONG>近战武器攻击：命中+8，触及20尺，单一目标。命中：32（6d8+5）钝击伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -182,7 +182,45 @@ Cracker。</STRONG>
 
 Sense。</STRONG> 
 
-你始终知道上一次使用的位面传送门位于你何方，但你与那个传送门必须处于同一存在位面上。不仅如此，以一个动作，你可以侦测到30尺内的任何对你来说未处于全身掩护的传送门的位置。一旦你使用了侦测传送门动作，直到你完成一次长休前你都无法再次使用这一动作。</P></body>
+你始终知道上一次使用的位面传送门位于你何方，但你与那个传送门必须处于同一存在位面上。不仅如此，以一个动作，你可以侦测到30尺内的任何对你来说未处于全身掩护的传送门的位置。一旦你使用了侦测传送门动作，直到你完成一次长休前你都无法再次使用这一动作。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

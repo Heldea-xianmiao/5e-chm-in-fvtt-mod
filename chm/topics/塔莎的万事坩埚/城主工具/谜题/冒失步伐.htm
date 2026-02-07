@@ -106,5 +106,43 @@ DC 13 体质豁免。若豁免失败，该生物 HP 降至 0。若豁免成功�
 
 
 
-<P><STRONG><FONT color=#800000>【译者注释】</FONT></STRONG><BR>显然，本节中的例题无法使用中文解谜。但是，参照“自定义谜题”中的建议来替换字母表即可轻松转换谜题语言。</P></body>
+<P><STRONG><FONT color=#800000>【译者注释】</FONT></STRONG><BR>显然，本节中的例题无法使用中文解谜。但是，参照“自定义谜题”中的建议来替换字母表即可轻松转换谜题语言。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 </html>
+

@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>凤凰之阶 Phoenix Stairs</FONT></STRONG></P>
 
-<P>一个自然形成的怪异的六角形岩柱创造了通往俄拉尼阿德的一座小火山的阶梯。一只凤凰在火山口顶部筑巢，照看着它珍贵的蛋。在塞洛斯的市场上，凤凰的羽毛可以卖到很高的价钱，不幸的是，那些爬到凤凰巢穴的人就算成功了也只能得到一根羽毛。</P></body>
+<P>一个自然形成的怪异的六角形岩柱创造了通往俄拉尼阿德的一座小火山的阶梯。一只凤凰在火山口顶部筑巢，照看着它珍贵的蛋。在塞洛斯的市场上，凤凰的羽毛可以卖到很高的价钱，不幸的是，那些爬到凤凰巢穴的人就算成功了也只能得到一根羽毛。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

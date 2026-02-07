@@ -50,7 +50,45 @@ Hemorrhaging</FONT></STRONG><BR>10级起，你当的法术对一个生物造成�
 
 <P><STRONG><FONT color=#800000>血浓于水 Thicker Than 
 
-Water</FONT></STRONG><BR>当你达到14级后，流淌在你血管中的鲜血已经充满了魔法的活力，能够修复创伤，保护你的生命。当一个法术或魔法效应令你回复生命值时，你额外恢复等同于你熟练加值点的生命值。<BR>此外，当你专注一个法术时，你获得对非魔法攻击造成的钝击、穿刺、和挥砍伤害的抗性。</P></body>
+Water</FONT></STRONG><BR>当你达到14级后，流淌在你血管中的鲜血已经充满了魔法的活力，能够修复创伤，保护你的生命。当一个法术或魔法效应令你回复生命值时，你额外恢复等同于你熟练加值点的生命值。<BR>此外，当你专注一个法术时，你获得对非魔法攻击造成的钝击、穿刺、和挥砍伤害的抗性。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

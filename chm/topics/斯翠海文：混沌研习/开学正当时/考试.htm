@@ -62,7 +62,45 @@ DC。如果角色选择作弊，则作弊的检定骰无法使用在学习阶段
 
 判定检定结果之前使用。每次检定至多只能使用一个学生骰。在使用一<BR>个学生骰之后，该玩家不能再使用学生骰直到角色完成一 
 
-次长休。<BR>玩家应该记下他们获得的学生骰和该骰可以使用的对应属性。<BR>在每个学年结束时，玩家将失去他们的角色在考试中获得的所有学生骰。</P></body>
+次长休。<BR>玩家应该记下他们获得的学生骰和该骰可以使用的对应属性。<BR>在每个学年结束时，玩家将失去他们的角色在考试中获得的所有学生骰。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

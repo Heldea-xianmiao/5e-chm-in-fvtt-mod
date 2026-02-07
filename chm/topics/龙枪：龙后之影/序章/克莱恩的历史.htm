@@ -94,7 +94,45 @@ Darkness，文明和生态环境剧变，带来饥荒、瘟疫和大规模的迁
 
 <P><STRONG><FONT color=#800000>龙后归来The Dragon Queen's 
 
-Return</FONT></STRONG><BR>哪怕在安塞隆正在愈合创伤之时，新的威胁也仍在滋长。龙后塔克西丝（在其他世界里被称为提亚马特）被驱逐出克莱恩已经过了千年之久。她一直耐心地等待着机会，密谋重返克莱恩。她瞒过其他神明，偷偷地把一块教皇神殿废墟的碎片安置在了奈拉卡Neraka，隐藏在火山众多的塔曼布沙克地区。在这里，这块碎片逐渐化为这座伊斯塔最伟大建筑的影子。在它之中，龙后开启了一扇传送门，这样就可以用她的力量来影响世界。但神殿的基石缺了一块碎片，所以她还不能完全回归克莱恩世界。塔克西丝召集了那些效忠于她、已经离开这个世界许久的邪恶巨龙，再次开始征服克莱恩。<BR>在龙后的命令下，色彩龙们偷走了善良的金属龙们的蛋。金属龙们勉强答应不会插手即将到来的战争，作为交换，色彩龙们承诺保障那些被劫持的龙蛋的安全。<BR>但是龙后的仆从们悄悄地打破了承诺。塔克西丝教会了她的追随者们如何把偷来的龙蛋腐化成怪物般的士兵——龙人。他们打算赌一把，赌在金属巨龙们发现这桩背叛之前，龙人大军就能征服整个克莱恩。<BR>没有了神明与巨龙作为对手，龙后的军队在这个已经破碎的世界里肆意横行。在黑暗之后的名号下，效忠于塔克西丝的巨龙大军开始征服克莱恩。</P></body>
+Return</FONT></STRONG><BR>哪怕在安塞隆正在愈合创伤之时，新的威胁也仍在滋长。龙后塔克西丝（在其他世界里被称为提亚马特）被驱逐出克莱恩已经过了千年之久。她一直耐心地等待着机会，密谋重返克莱恩。她瞒过其他神明，偷偷地把一块教皇神殿废墟的碎片安置在了奈拉卡Neraka，隐藏在火山众多的塔曼布沙克地区。在这里，这块碎片逐渐化为这座伊斯塔最伟大建筑的影子。在它之中，龙后开启了一扇传送门，这样就可以用她的力量来影响世界。但神殿的基石缺了一块碎片，所以她还不能完全回归克莱恩世界。塔克西丝召集了那些效忠于她、已经离开这个世界许久的邪恶巨龙，再次开始征服克莱恩。<BR>在龙后的命令下，色彩龙们偷走了善良的金属龙们的蛋。金属龙们勉强答应不会插手即将到来的战争，作为交换，色彩龙们承诺保障那些被劫持的龙蛋的安全。<BR>但是龙后的仆从们悄悄地打破了承诺。塔克西丝教会了她的追随者们如何把偷来的龙蛋腐化成怪物般的士兵——龙人。他们打算赌一把，赌在金属巨龙们发现这桩背叛之前，龙人大军就能征服整个克莱恩。<BR>没有了神明与巨龙作为对手，龙后的军队在这个已经破碎的世界里肆意横行。在黑暗之后的名号下，效忠于塔克西丝的巨龙大军开始征服克莱恩。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

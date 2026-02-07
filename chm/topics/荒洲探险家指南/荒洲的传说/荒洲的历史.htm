@@ -86,7 +86,45 @@ Wildemount</FONT></H2>
 
 <P>    诸神的消失有许多种叫法：奥术研究者称之为第二次火花，敬神者则称之为修和。不过这件兵戈扰攘、神性隔绝的历史事件最为常见的叫法是人神诀别，它标志着奥法纪的终结。</P>
 
-<P>多年过去，大地重现生机。诸神依旧从神之门外影响和引导着他们的崇拜者，赋予他们知识和力量，但是这一次凡人需要自己决定未来的道路。新的城市、王国和文化在旧世界的灰烬上建立了新世界。新的旋律悠扬响起，人们充满光明未来的希望。而被掩埋的废墟和古老的遗迹则默默提醒人们，不要重蹈那个黑暗时代的复辙。<BR></P></body>
+<P>多年过去，大地重现生机。诸神依旧从神之门外影响和引导着他们的崇拜者，赋予他们知识和力量，但是这一次凡人需要自己决定未来的道路。新的城市、王国和文化在旧世界的灰烬上建立了新世界。新的旋律悠扬响起，人们充满光明未来的希望。而被掩埋的废墟和古老的遗迹则默默提醒人们，不要重蹈那个黑暗时代的复辙。<BR></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

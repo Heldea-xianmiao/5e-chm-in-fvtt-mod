@@ -78,7 +78,45 @@ Aura。</STRONG>当巨魔还活着的时候，它会产生一种刺骨的寒气�
 
 Smell。</STRONG>巨魔依赖嗅觉进行的感知（察觉）检定具有优势。<BR><STRONG>再生Regeneration。</STRONG>巨魔在它的回合开始时回复10点生命值。如果巨魔受到强酸或者火焰伤害，则该特质在它的下一回合里无法生效。如果巨魔以0生命值开始其自己回合且无法使用再生，则巨魔死亡。<BR><STRONG><FONT color=#800000>动作</FONT></STRONG><BR><STRONG>多重攻击Multiattack。</STRONG>巨魔发动三次攻击：一次啃咬和两次爪击。<BR><STRONG>啃咬Bite。</STRONG>近战武器攻击：命中+7，触及5尺，单一目标。命中：7（1d6+4）的穿刺伤害外加9（2d8）寒冷伤害。<BR><STRONG>爪击Claw。</STRONG> 
 
-近战武器攻击：命中+7，触及5尺，单一目标。命中：11（2d6+4）的挥砍伤害外加9（2d8）寒冷伤害。如果目标承受了任何寒冷伤害，其必须通过DC15的体质豁免，否则其攻击检定具有劣势，直至其下回合结束。</P></body>
+近战武器攻击：命中+7，触及5尺，单一目标。命中：11（2d6+4）的挥砍伤害外加9（2d8）寒冷伤害。如果目标承受了任何寒冷伤害，其必须通过DC15的体质豁免，否则其攻击检定具有劣势，直至其下回合结束。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

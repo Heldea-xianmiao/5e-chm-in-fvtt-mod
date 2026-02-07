@@ -60,7 +60,45 @@ Saga</FONT></STRONG>
 
 <P><STRONG><FONT color=#800000>六层山峦The Six-Story 
 
-Mountain</FONT></STRONG><BR>在世界的中心是一座巨大的山，它是这个世界上的巨人的祖先的住所。这座山垂直地体现了序位，从山脚的丘陵到永远在其高耸的山峰上翻滚的风暴。在古代，巨人被驱逐出这座山，巨人神后嗣、天使、魔鬼或其他超自然守护者守护着这个地方，以确保巨人在安南允许他们离开之前不会回来。这个神话般的地方隐藏着什么关于创世和古老历史的秘密？</P></body>
+Mountain</FONT></STRONG><BR>在世界的中心是一座巨大的山，它是这个世界上的巨人的祖先的住所。这座山垂直地体现了序位，从山脚的丘陵到永远在其高耸的山峰上翻滚的风暴。在古代，巨人被驱逐出这座山，巨人神后嗣、天使、魔鬼或其他超自然守护者守护着这个地方，以确保巨人在安南允许他们离开之前不会回来。这个神话般的地方隐藏着什么关于创世和古老历史的秘密？</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

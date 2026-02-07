@@ -48,7 +48,45 @@ html,body {
 
 Lock。</STRONG>其他生物不能传送出入距离披甲罗斯魔60尺内的空间，任何这样的尝试被浪费。<BR><STRONG>魔法抗性Magic 
 
-Resistance。</STRONG>披甲罗斯魔在对法术和其他魔法效果的豁免检定上有优势。<BR><STRONG>超凡感官Uncanny Senses。</STRONG>除非陷入失能，否则披甲罗斯魔不会被突袭。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Mutiattack。</STRONG>披甲罗斯魔发动一次啃咬或舌击，和一次爪击。<BR><STRONG>啃咬Bite。</STRONG>近战武器攻击：命中+7，触及5尺，单一目标。命中：7（1d6+4）点穿刺伤害，外加18（4d8）点力场伤害。<BR><STRONG>爪击Claw。</STRONG>近战武器攻击：命中+7，触及5尺，单一目标。命中：7（1d6+4）点挥砍伤害，外加9（2d8）点力场伤害。<BR><STRONG>舌击Tongue。</STRONG>近战武器攻击：命中+7，触及30尺，单一目标。命中：10（1d12+4）点穿刺伤害，外加7（2d6）点强酸伤害。如果目标为中型或更小，它被擒抱（逃脱DC15），被拉向披甲罗斯魔30尺，并束缚直到擒抱结束。披甲罗斯魔同一时间只能用舌头擒抱一个目标。</P></body>
+Resistance。</STRONG>披甲罗斯魔在对法术和其他魔法效果的豁免检定上有优势。<BR><STRONG>超凡感官Uncanny Senses。</STRONG>除非陷入失能，否则披甲罗斯魔不会被突袭。<BR><STRONG><FONT color=#800000>动作Actions</FONT></STRONG><BR><STRONG>多重攻击Mutiattack。</STRONG>披甲罗斯魔发动一次啃咬或舌击，和一次爪击。<BR><STRONG>啃咬Bite。</STRONG>近战武器攻击：命中+7，触及5尺，单一目标。命中：7（1d6+4）点穿刺伤害，外加18（4d8）点力场伤害。<BR><STRONG>爪击Claw。</STRONG>近战武器攻击：命中+7，触及5尺，单一目标。命中：7（1d6+4）点挥砍伤害，外加9（2d8）点力场伤害。<BR><STRONG>舌击Tongue。</STRONG>近战武器攻击：命中+7，触及30尺，单一目标。命中：10（1d12+4）点穿刺伤害，外加7（2d6）点强酸伤害。如果目标为中型或更小，它被擒抱（逃脱DC15），被拉向披甲罗斯魔30尺，并束缚直到擒抱结束。披甲罗斯魔同一时间只能用舌头擒抱一个目标。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

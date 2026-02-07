@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>课外社团 Extracurriculars</FONT></STRONG></P>
 
-<P>校园俱乐部和学生社团是斯翠海文校园生活中重要的组成部分。角色可以按照以下规则参加课外社团，以使他们的冒险拥有更多趣味、获得少量的增益、或许也会更容易或与同学交上朋友——当然，也可能是产生冲突。</P></body>
+<P>校园俱乐部和学生社团是斯翠海文校园生活中重要的组成部分。角色可以按照以下规则参加课外社团，以使他们的冒险拥有更多趣味、获得少量的增益、或许也会更容易或与同学交上朋友——当然，也可能是产生冲突。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -84,7 +84,45 @@ Leech。</STRONG>督裁罗斯魔接触距离它15英尺范围内的一个失能�
 
 (充能4~6)。</STRONG>在距离督裁罗斯魔60英尺以内的范围内、最多可以听到它声音的两个尤格罗斯魔友军，可以用他们的反应进行一次近战攻击。<BR><STRONG>传送Teleport 
 
-。</STRONG>督裁罗斯魔可以通过魔法进行传送，携带装备传送到60内一个能看到且未占据空间。</P></body>
+。</STRONG>督裁罗斯魔可以通过魔法进行传送，携带装备传送到60内一个能看到且未占据空间。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -58,7 +58,45 @@ style="BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid; WIDTH: 400px;
 
 style="FONT-SIZE: 11pt; FONT-FAMILY: 'Arial Unicode MS'; mso-spacerun: 'yes'" 
 
-dir=ltr><FONT size=3 face="Arial Unicode MS">在选择芦笋时，使用底部约3/4英寸厚的芦笋（大约和荧光笔一样厚）；如果太细（像铅笔一样）会烤过头。<BR>如果你喜欢更脆的培根，用标准培根代替厚切培根。</FONT></SPAN></P></DIV></body>
+dir=ltr><FONT size=3 face="Arial Unicode MS">在选择芦笋时，使用底部约3/4英寸厚的芦笋（大约和荧光笔一样厚）；如果太细（像铅笔一样）会烤过头。<BR>如果你喜欢更脆的培根，用标准培根代替厚切培根。</FONT></SPAN></P></DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

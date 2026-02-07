@@ -86,7 +86,45 @@ DC 11 的敏捷豁免，否则就会摔倒在地。<BR>如果油是粘的，任�
 
 的力量豁免，否则陷入束缚状态。在该生物的回合，它可以用一个动作进行一次 DC 11 
 
-的力量豁免，试图从黏糊糊的水坑中解脱出来，结束束缚状态，并移动到最近的未占据空间。</P></body>
+的力量豁免，试图从黏糊糊的水坑中解脱出来，结束束缚状态，并移动到最近的未占据空间。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

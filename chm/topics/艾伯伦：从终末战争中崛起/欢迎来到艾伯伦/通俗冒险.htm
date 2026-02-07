@@ -84,7 +84,45 @@ Villains</FONT></STRONG>  <BR>艾伯伦有很多反派，从二流罪犯到大�
 
 有一枚戒指，可以制造他死亡的假象，并稳定他的伤势，或者在他从萨恩的塔上跳下时，可以施展羽落术。 一个 DM 可以让玩家决定答案: 这是 Halas 
 
-Martain ，好的。 你觉得他是怎麽从上次遭遇中幸存下来的? 这种合作可以产生一个引人注目的故事，并在世界上产生一种投入感。</P></body>
+Martain ，好的。 你觉得他是怎麽从上次遭遇中幸存下来的? 这种合作可以产生一个引人注目的故事，并在世界上产生一种投入感。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

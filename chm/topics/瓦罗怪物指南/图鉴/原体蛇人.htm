@@ -30,7 +30,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000 size=5>蛇人 Yuan-ti<BR> </FONT></STRONG></P>
 
-<P>成为某一特定神之邪恶祭司的蛇人——无论是神灵赛斯，夜之蛇丹德尔或是麦尔绍克——总是能够晋升成为蛇人族的精神领袖。这些牧师举行祭祀仪式来取悦他们邪恶的宗主。这里也描述了堕落的蛇人护卫和可怕的憎恶蛇人。</P></body>
+<P>成为某一特定神之邪恶祭司的蛇人——无论是神灵赛斯，夜之蛇丹德尔或是麦尔绍克——总是能够晋升成为蛇人族的精神领袖。这些牧师举行祭祀仪式来取悦他们邪恶的宗主。这里也描述了堕落的蛇人护卫和可怕的憎恶蛇人。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

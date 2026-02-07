@@ -92,7 +92,44 @@ Fey</EM></U>。你施展其中任意一道法术时，可以选择将其学派�
 
 </STRONG><BR>你习得借由将暗影魔法编入你的幻术，从而使其获得半真实效果的秘密。当你用法术位施展一道幻术学派法术时，你能选择一个属于幻象一部分的非活化非魔法物件，并让该物件化作真实。你可以在法术持续过程中在自己的回合以一个附赠动作这样做。该物件将在接下来1分钟内保持真实，它在此期间无法造成伤害或赋予任何状态。例如，你可以创造一座横跨峡谷的桥梁幻象，而后将之化作真实，使你的队友能从桥上跨越峡谷。</p>
 
-<DIV></DIV></body>
+<DIV></DIV><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 
 
@@ -101,6 +138,7 @@ Fey</EM></U>。你施展其中任意一道法术时，可以选择将其学派�
 
 
 </html>
+
 
 
 

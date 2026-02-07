@@ -52,7 +52,45 @@ style="BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid; WIDTH: 400px;
 
 style="FONT-SIZE: 11pt; FONT-FAMILY: 'Arial Unicode MS'; mso-spacerun: 'yes'" 
 
-dir=ltr><FONT size=3 face="Arial Unicode MS">1/2茶匙的辣椒碎会带来一股明显但适度的辣味。如果你想更辣，那就放1茶匙的量。你可以用烤辣椒代替辣椒碎来细微地改变口味。用加利福尼亚辣椒干，巴西拉辣椒干或瓜希柳辣椒干都可以，取半个小辣椒干，用煎锅烤4到5分钟直到香味出来。等它冷却然后把它碾成小块（1/2英寸）。如果想要更辣，那就把辣椒种子也加进去。<BR>这杯饮品可以不加水喝，可以倒在冰上喝，可以兑可乐喝，还可以作为一款极好的热棕榈酒的基础，再配上香料印度茶。</FONT></SPAN></P></div></body>
+dir=ltr><FONT size=3 face="Arial Unicode MS">1/2茶匙的辣椒碎会带来一股明显但适度的辣味。如果你想更辣，那就放1茶匙的量。你可以用烤辣椒代替辣椒碎来细微地改变口味。用加利福尼亚辣椒干，巴西拉辣椒干或瓜希柳辣椒干都可以，取半个小辣椒干，用煎锅烤4到5分钟直到香味出来。等它冷却然后把它碾成小块（1/2英寸）。如果想要更辣，那就把辣椒种子也加进去。<BR>这杯饮品可以不加水喝，可以倒在冰上喝，可以兑可乐喝，还可以作为一款极好的热棕榈酒的基础，再配上香料印度茶。</FONT></SPAN></P></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

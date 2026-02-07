@@ -54,7 +54,45 @@ Kiss：</STRONG>如果飞首亲吻一个在其五尺范围内失能的类人生�
 
 Stunning Shriek：</STRONG>当飞首发出尖叫时，任何距离飞首30尺内且能听到叫声的类人生物和野兽必须成功通过DC 
 
-12的智力豁免检定否则将处于惊恐状态直至飞首下一轮回合结束。在飞首的尖叫效果下，该惊恐生物会处于震慑状态。如果该生物成功通过豁免检定则结束该状态，且一小时内该生物免疫任何飞首的惊人尖叫效果。</P></body>
+12的智力豁免检定否则将处于惊恐状态直至飞首下一轮回合结束。在飞首的尖叫效果下，该惊恐生物会处于震慑状态。如果该生物成功通过豁免检定则结束该状态，且一小时内该生物免疫任何飞首的惊人尖叫效果。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

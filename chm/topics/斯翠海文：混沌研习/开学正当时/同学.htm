@@ -194,7 +194,45 @@ Grojsh</FONT></STRONG>  <BR><EM>绝对中立 兽人 二年级（靡华）</EM>
 
 Bowen</FONT></STRONG>  <BR><EM>混乱善良 火元素裔 一年级（粹丽）</EM>  
 
-<BR>作为校园里最受欢迎的学生之一，赞瑟是斗法塔拉拉队的成员，他出色的运动能力为他赢得了拉拉队主飞手的位置。赞瑟在精心设计的欢呼流程中升到空中，令观众大呼过瘾。<BR>赞瑟还加入了校体操部。他在丝带与呼拉圈艺术体操方面都有着不错的成绩。为了进一步精进自身并给评委们留下深刻印象，赞瑟·参考各式曲风和编排来表演。课间在校园里走动时，他会随性地向每个人呐喊口号，表达他对学校精神的肯定。尽管他生性活泼，但赞瑟是真情实意的鼓励者，绝不会表现得高人一等：事实上，他甚至对自己在斯翠海文一些人群中备受欢迎一事毫不在意。<BR><STRONG>课外社团：</STRONG>校体操部，斗法塔拉拉队<BR><STRONG>工作：</STRONG>无<BR><STRONG>羁绊之福：</STRONG>因为你与赞瑟的关系，你在校园里有着很高的地位，大多数同学都乐意为你提供帮助。<BR><STRONG>羁绊之祸：</STRONG>举行聚会或活动时，校园里也不会有人邀请你参加——可能就连你的朋友都受到了邀请。</P></body>
+<BR>作为校园里最受欢迎的学生之一，赞瑟是斗法塔拉拉队的成员，他出色的运动能力为他赢得了拉拉队主飞手的位置。赞瑟在精心设计的欢呼流程中升到空中，令观众大呼过瘾。<BR>赞瑟还加入了校体操部。他在丝带与呼拉圈艺术体操方面都有着不错的成绩。为了进一步精进自身并给评委们留下深刻印象，赞瑟·参考各式曲风和编排来表演。课间在校园里走动时，他会随性地向每个人呐喊口号，表达他对学校精神的肯定。尽管他生性活泼，但赞瑟是真情实意的鼓励者，绝不会表现得高人一等：事实上，他甚至对自己在斯翠海文一些人群中备受欢迎一事毫不在意。<BR><STRONG>课外社团：</STRONG>校体操部，斗法塔拉拉队<BR><STRONG>工作：</STRONG>无<BR><STRONG>羁绊之福：</STRONG>因为你与赞瑟的关系，你在校园里有着很高的地位，大多数同学都乐意为你提供帮助。<BR><STRONG>羁绊之祸：</STRONG>举行聚会或活动时，校园里也不会有人邀请你参加——可能就连你的朋友都受到了邀请。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

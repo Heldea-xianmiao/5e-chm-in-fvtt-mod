@@ -50,7 +50,45 @@ html,body {
 
 无论表现如何，霍加兹所展现的善意皆是为了她的恶毒诡计：腐化凡人的灵魂。如果要露出蛛丝马迹，那便一定是她那毒蛇般的长尾——在面对那些极为诱人的受害者时，霍加兹总是忍不住兴奋地摇起尾巴。<br>
 
-无私的英雄和真正的烈士直戳霍加兹的喜好——她就喜欢扭曲和玷污这些高尚者的灵魂。她积极地回应着坚定不移的行善者，加倍努力以尝试将其腐化。</p></body>
+无私的英雄和真正的烈士直戳霍加兹的喜好——她就喜欢扭曲和玷污这些高尚者的灵魂。她积极地回应着坚定不移的行善者，加倍努力以尝试将其腐化。</p><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

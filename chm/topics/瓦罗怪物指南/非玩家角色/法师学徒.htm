@@ -40,7 +40,45 @@ html,body {
 
 奥秘+4，历史+4<BR>感官 被动察觉10<BR>语言 任意一种语言（一般为通用语）<BR>挑战等级 1/4（50XP）</P>
 
-<P><STRONG>施法。</STRONG>学徒是一名1级施法者。他的施法能力基于智力（法术豁免DC12，法术攻击加值+4）。他准备了以下法师法术：<BR>戏法（随意）：火焰箭，修复术，魔法伎俩<BR>1环（2法术位）：燃烧之手，易容术，护盾术<BR><STRONG><FONT color=#800000>动作<BR></FONT>匕首。</STRONG>近战或远程武器攻击：命中+2，触及5尺，或者射程20/60尺，单一目标。命中：2（1d4）穿刺伤害。</P></body>
+<P><STRONG>施法。</STRONG>学徒是一名1级施法者。他的施法能力基于智力（法术豁免DC12，法术攻击加值+4）。他准备了以下法师法术：<BR>戏法（随意）：火焰箭，修复术，魔法伎俩<BR>1环（2法术位）：燃烧之手，易容术，护盾术<BR><STRONG><FONT color=#800000>动作<BR></FONT>匕首。</STRONG>近战或远程武器攻击：命中+2，触及5尺，或者射程20/60尺，单一目标。命中：2（1d4）穿刺伤害。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

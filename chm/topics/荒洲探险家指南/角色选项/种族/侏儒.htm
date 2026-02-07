@@ -46,7 +46,45 @@ Marbleweaver的岩侏儒因她在圆柱、壁画和浮雕方面的创新运用�
 
 <H3><FONT color=#800000>乔哈斯的侏儒 Gnomes in Xhorhas</FONT></H3>
 
-<P>大部分乔哈斯人与侏儒的接触仅限于在幽暗地域的匆匆一瞥——看到一名地底侏儒抱着满怀的宝石奔走。地底侏儒对地表政治几乎没有兴趣，甚至在克灵王朝与灰矮人叛军之间的地下战争中也尽力保持中立。在大多数情况下，地底侏儒及其定居点规模太小，常常不为其他较大的种族所察觉。</P></body>
+<P>大部分乔哈斯人与侏儒的接触仅限于在幽暗地域的匆匆一瞥——看到一名地底侏儒抱着满怀的宝石奔走。地底侏儒对地表政治几乎没有兴趣，甚至在克灵王朝与灰矮人叛军之间的地下战争中也尽力保持中立。在大多数情况下，地底侏儒及其定居点规模太小，常常不为其他较大的种族所察觉。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

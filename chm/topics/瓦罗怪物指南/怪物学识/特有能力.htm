@@ -30,4 +30,41 @@
 
 
 
- 12pt;  FONT-WEIGHT: bold; COLOR: rgb(112,48,160); FONT-STYLE: italic;  "><font>嫌恶</font><font>/关怀术antipathy/sympathy</font></span></i></b><span><font>中的嫌恶效应影响一般。豁免</font></span><span style=" FONT-FAMILY: Arial;  mso-fareast- ">DC<font>与蛇人的天生施法能力的豁免相同。</font></span></p><p class=19  style=" mso-pagination: widow-orphan"><b><span style="  FONT-WEIGHT: bold;  "><font></font></span></b> </p><p class=19  style=" mso-pagination: widow-orphan"><b><span style="  FONT-WEIGHT: bold;  "><font>化棍为蛇（仅限憎恶蛇人和恶咒蛇人，充能</font></span></b><b><span style=" FONT-FAMILY: Arial; FONT-WEIGHT: bold;  mso-fareast- ">6</span></b><b><span style="  FONT-WEIGHT: bold;  "><font>）：</font></span></b><span><font>蛇人将一堆枝条，箭矢或者类似尺寸的木料转化为一个毒蛇集群（</font></span><span style=" FONT-FAMILY: Arial;  mso-fareast- ">swarm of poisonous snakes<font>），蛇群作为蛇人的盟友存在并会服从其口头命令。蛇群会持续存在</font></span><span style=" FONT-FAMILY: Arial;  mso-fareast- ">1<font>分钟，然后变回原来的材料。</font></span></p></div></body></html>
+ 12pt;  FONT-WEIGHT: bold; COLOR: rgb(112,48,160); FONT-STYLE: italic;  "><font>嫌恶</font><font>/关怀术antipathy/sympathy</font></span></i></b><span><font>中的嫌恶效应影响一般。豁免</font></span><span style=" FONT-FAMILY: Arial;  mso-fareast- ">DC<font>与蛇人的天生施法能力的豁免相同。</font></span></p><p class=19  style=" mso-pagination: widow-orphan"><b><span style="  FONT-WEIGHT: bold;  "><font></font></span></b> </p><p class=19  style=" mso-pagination: widow-orphan"><b><span style="  FONT-WEIGHT: bold;  "><font>化棍为蛇（仅限憎恶蛇人和恶咒蛇人，充能</font></span></b><b><span style=" FONT-FAMILY: Arial; FONT-WEIGHT: bold;  mso-fareast- ">6</span></b><b><span style="  FONT-WEIGHT: bold;  "><font>）：</font></span></b><span><font>蛇人将一堆枝条，箭矢或者类似尺寸的木料转化为一个毒蛇集群（</font></span><span style=" FONT-FAMILY: Arial;  mso-fareast- ">swarm of poisonous snakes<font>），蛇群作为蛇人的盟友存在并会服从其口头命令。蛇群会持续存在</font></span><span style=" FONT-FAMILY: Arial;  mso-fareast- ">1<font>分钟，然后变回原来的材料。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

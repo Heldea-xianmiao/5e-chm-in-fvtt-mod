@@ -36,7 +36,45 @@ html,body {
 
 <P><STRONG><FONT color=#800000>史崔提安前线 The Stratian Front</FONT></STRONG><BR>阿喀洛斯军队的士兵监视着腓拜洛斯并在阿喀洛斯的边界巡逻，对抗任何可能对他们的家园造成伤害的威胁。这是一场无休止的战争，需要阿喀洛斯的持续投入。虽然有一些永久性的营地存在——比如喧闹的“绝望营地”和沙口堡的洞穴——但大多数史崔提安巡逻队在恶土上按照自己的路线巡逻。</P>
 
-<P><STRONG><FONT color=#800000>烬土 The Ashlands</FONT></STRONG><BR>掩埋在白色火山灰中的烬土生动地提醒着人们上次维西俄斯火山爆发的最终时刻。无数的亡灵游荡在这片土地上，当他们在半埋的废墟中游荡时，很多亡魂并没有意识到自己已经死了。这片土地也是牛头人和被称为时间饮者的漂白龙族先知的家园。</P></body>
+<P><STRONG><FONT color=#800000>烬土 The Ashlands</FONT></STRONG><BR>掩埋在白色火山灰中的烬土生动地提醒着人们上次维西俄斯火山爆发的最终时刻。无数的亡灵游荡在这片土地上，当他们在半埋的废墟中游荡时，很多亡魂并没有意识到自己已经死了。这片土地也是牛头人和被称为时间饮者的漂白龙族先知的家园。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

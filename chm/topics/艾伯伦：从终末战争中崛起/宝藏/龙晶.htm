@@ -40,7 +40,45 @@ rail）和元素飞艇（elemental airships）——也需要持续消耗艾伯�
 
 <P><FONT color=#e5bc7d><STRONG>西伯瑞斯龙晶</STRONG></FONT>自西伯瑞斯之环上坠下，这是一个环绕世界的水晶之环。虽然在科瓦雷地区非常罕见，但西伯瑞斯龙晶在泽恩德瑞克常见得多，这对探险家们而言就是一座尚待开采的金矿。西伯瑞斯龙晶通体琥珀色，其中蕴含着闪烁的金色纹理。这种龙晶可被用于制造需要龙纹同调的魔法物品。大号的西伯瑞斯龙晶则可能被用于超凡奇械，或是制造神器和传奇物品。</P>
 
-<P><FONT color=#808080>（译注：艾伯伦、凯博尔、西伯瑞斯即艾伯伦世界创世神话中的三龙，对应大地、黄泉、天空。）</FONT></P></body>
+<P><FONT color=#808080>（译注：艾伯伦、凯博尔、西伯瑞斯即艾伯伦世界创世神话中的三龙，对应大地、黄泉、天空。）</FONT></P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -64,7 +64,45 @@ Docent</FONT></STRONG><BR><EM>奇物，珍稀（需战俑同调）</EM><BR>指�
 
 <P><STRONG><FONT color=#800000>臂刃 
 
-Armblade</FONT></STRONG><BR><EM>武器（任意单手近战武器），普通（需战俑同调）</EM><BR>臂刃是一种附着在你手臂上的魔法武器，只要维持同调，臂刃就无法与你分离。为了完成同调，你必须在同调期间将臂刃一直贴着你的前臂。<BR>使用一个附赠动作，你能把臂刃从前臂中弹出，或是将其收回。当臂刃弹出时，你可以如同持有该武器一般来使用它，此时你将不能用这只手执行其他操作。</P></body>
+Armblade</FONT></STRONG><BR><EM>武器（任意单手近战武器），普通（需战俑同调）</EM><BR>臂刃是一种附着在你手臂上的魔法武器，只要维持同调，臂刃就无法与你分离。为了完成同调，你必须在同调期间将臂刃一直贴着你的前臂。<BR>使用一个附赠动作，你能把臂刃从前臂中弹出，或是将其收回。当臂刃弹出时，你可以如同持有该武器一般来使用它，此时你将不能用这只手执行其他操作。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

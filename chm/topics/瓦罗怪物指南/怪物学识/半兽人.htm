@@ -8,4 +8,41 @@ font-weight:bold;font-size:18.0000pt;" >HALF-ORCS</span></b><b><span style="colo
 
 font-weight:bold;font-size:18.0000pt;" > </span></b><hr size="1"  width="100%"  align=center  style="color:rgb(47,109,130);" ></p><p><span style="mso-fareast-
 
-" > <font>人类的传说把兽人描绘为贪婪的邪魔，试图与其他类人生物交配来更广泛地传播他们的种子。事实上，兽人只有在他们认为这样的搭配会增强部族的力量时才会与非兽人结合。当兽人们遇到与他们的力量和凶残相匹敌的人类时，他们有时会结成以混合两个群体的血脉成立的同盟。</font><br><br><font>兽人部落中的半兽人与纯血的兽人一样强壮，同时也表现出相当的狡猾。因此，半兽人能够比他们的同伴们更快地在部族中取得地位，而半兽人作为领袖的部族也并不罕见。</font></span></p></div></body></html>
+" > <font>人类的传说把兽人描绘为贪婪的邪魔，试图与其他类人生物交配来更广泛地传播他们的种子。事实上，兽人只有在他们认为这样的搭配会增强部族的力量时才会与非兽人结合。当兽人们遇到与他们的力量和凶残相匹敌的人类时，他们有时会结成以混合两个群体的血脉成立的同盟。</font><br><br><font>兽人部落中的半兽人与纯血的兽人一样强壮，同时也表现出相当的狡猾。因此，半兽人能够比他们的同伴们更快地在部族中取得地位，而半兽人作为领袖的部族也并不罕见。</font></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>

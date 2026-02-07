@@ -108,5 +108,43 @@ style="FONT-SIZE: 10.5pt; FONT-FAMILY: Cambria; mso-spacerun: 'yes'"><FONT size=
 
 <P><STRONG><FONT color=#800000>替换武术 Martial Versatility</FONT>  
 
-</STRONG><BR><EM>第4级圣武士特性</EM><BR>每当你通过提升圣武士等级获得属性值提升时，你可以用另一个圣武士能够选择的战斗风格替换你当前的战斗风格。这一变化代表着你在战斗训练上重心的转移。</P></BODY></HTML>
+</STRONG><BR><EM>第4级圣武士特性</EM><BR>每当你通过提升圣武士等级获得属性值提升时，你可以用另一个圣武士能够选择的战斗风格替换你当前的战斗风格。这一变化代表着你在战斗训练上重心的转移。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></HTML>
+
 

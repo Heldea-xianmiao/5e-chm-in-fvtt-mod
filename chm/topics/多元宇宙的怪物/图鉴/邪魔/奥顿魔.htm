@@ -68,7 +68,45 @@ Actions<BR></FONT>隐形场（充能4~6）Invisibiliy
 
 Field。</STRONG>奥顿魔变为隐形。任何其穿戴或握持的装备只要还装备于其上，便也同样成为隐形。此隐形在奥顿魔进行一次攻击检定或被一次攻击检定命中时立刻终止。<BR><STRONG><FONT color=#800000>反应Reactions</FONT></STRONG><BR><STRONG>爆裂复仇Explosive 
 
-Retribution。</STRONG>作为生命值降至15或以下的回应，奥顿魔自爆。每个其30尺内的其他生物都必须进行一个DC17的敏捷豁免，豁免失败则承受9（2d8）点火焰伤害外加9（2d8）点雷鸣伤害，成功则承受一半伤害。奥顿魔、其炼狱匕首以及其黄铜十字弩被摧毁。</P></body>
+Retribution。</STRONG>作为生命值降至15或以下的回应，奥顿魔自爆。每个其30尺内的其他生物都必须进行一个DC17的敏捷豁免，豁免失败则承受9（2d8）点火焰伤害外加9（2d8）点雷鸣伤害，成功则承受一半伤害。奥顿魔、其炼狱匕首以及其黄铜十字弩被摧毁。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

@@ -98,7 +98,45 @@ Tower</FONT><BR></STRONG><EM>超巨型物件</EM><BR><STRONG>AC</STRONG>：15<BR
 
 Stone（需要装填与瞄准）。</STRONG><BR>远程攻击：+5，射程300/1200尺（无法命中60尺内的目标）。<BR>命中：44（8d10）钝击伤害。</P>
 
-<P>配重投石机是一种以弧线抛射重型投石的攻城器，其投出的石弹可以越过城墙打击目标。装填和瞄准配重投石机各需要两次操作动作，随后操作手便可执行配重投石动作。</P></body>
+<P>配重投石机是一种以弧线抛射重型投石的攻城器，其投出的石弹可以越过城墙打击目标。装填和瞄准配重投石机各需要两次操作动作，随后操作手便可执行配重投石动作。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

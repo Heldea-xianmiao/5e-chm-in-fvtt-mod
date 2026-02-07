@@ -78,7 +78,45 @@ Woodlands</FONT></STRONG><BR><EM>法杖，珍稀（需德鲁伊同调）</EM><BR
 
 Withering</FONT></STRONG><BR><EM>法杖，珍稀（需牧师、德鲁伊或魔契师同调）</EM><BR>凋零法杖有3发充能，且每天黎明时恢复1d3发已消耗的充能。<BR>该法杖可以用作一把魔法长棍持用。当你用这把法杖命中目标时，除了造成普通长棍的伤害外，你还可以消耗1发充能以对目标造成额外2d10点暗蚀伤害。此外，目标必须成功通过一次DC 
 
-15的体质豁免否则它基于力量或体质的属性检定或豁免检定将具有劣势，其效应持续1小时。</P></body>
+15的体质豁免否则它基于力量或体质的属性检定或豁免检定将具有劣势，其效应持续1小时。</P><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
 
 </html>
+
 

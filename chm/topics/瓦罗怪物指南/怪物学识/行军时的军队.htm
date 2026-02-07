@@ -36,4 +36,41 @@ style =" TEXT-INDENT: 24pt;  mso-char-indent-count: 2.0000"
 
      ><font>这一禁忌并不适用于在战役期时就进入已经怀孕并在战役期间分娩的雌性类地精，这类后代被称为战争之子，这一头衔将伴随他们终身。战争之子被认为是受到马格鲁比耶所祝福之人，因此这些年轻的类地精被像一面旗帜一样带入战场，用来集结军队。</font></span><span style=" FONT-FAMILY: Arial; mso-fareast- " 
 
-     ></span></p></td></tr></table><p class=p  style=" mso-pagination: widow-orphan"><span style=" FONT-FAMILY: Arial;  mso-fareast- "><o:p> </o:p></span></p><p class=p  style=" mso-pagination: widow-orphan"><span style=" FONT-FAMILY: Arial;  mso-fareast- "><o:p> </o:p></span></p></div></body></html>
+     ></span></p></td></tr></table><p class=p  style=" mso-pagination: widow-orphan"><span style=" FONT-FAMILY: Arial;  mso-fareast- "><o:p> </o:p></span></p><p class=p  style=" mso-pagination: widow-orphan"><span style=" FONT-FAMILY: Arial;  mso-fareast- "><o:p> </o:p></span></p></div><script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 报告导航位置 (用于书签记忆)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 监听引用操作 (Alt + 选中文本)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body></html>
