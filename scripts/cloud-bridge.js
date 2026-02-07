@@ -52,8 +52,10 @@
 
         console.log("5e-chm-cloud-bridge | Sending quote:", text.substring(0, 20) + "...");
 
-        // 发送消息给父窗口 (Foundry VTT)
-        window.parent.postMessage({
+        // 发送消息给顶层窗口 (Foundry VTT)
+        // 使用 window.top 而不是 window.parent，以防 CHM 内部使用了 frameset 导致嵌套
+        const targetWindow = window.top || window.parent;
+        targetWindow.postMessage({
             type: '5echm:quote',
             text: text,
             html: html,
