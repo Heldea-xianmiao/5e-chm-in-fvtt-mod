@@ -28,32 +28,29 @@
 1. **下载源文件**：前往 [DND5e_chm](https://github.com/DND5eChm/DND5e_chm) 下载最新仓库文件。
 2. **覆盖文件**：将内容复制到本模组的 **`chm/`** 文件夹中。
 3. **执行修复脚本**：
-   - 运行 **`update.bat`**：**[强烈推荐]** 一键执行所有必要的修复操作，包括：
-     - HTML5 兼容性与编码修复。
-     - 注入 FVTT 引用功能脚本。
-     - **Web 兼容性修复**（解决云端部署时的 404/中文路径问题）。
-     - 生成 `.nojekyll` 防止 GitHub Pages 构建错误。
-   - 运行 **`cleanup_mod.ps1`**：**[可选]** 自动删除无用的工程文件（.wcp, .git 等）和开发工具，减小体积。
+   - 运行 **`update.bat`** (或 `apply_fixes.ps1`)：修复 HTML5 兼容性和注入引用功能。
+   - 运行 **`cleanup_mod.ps1`**：**[推荐]** 自动删除无用的工程文件（.wcp, .git 等）和开发工具，减小体积。
 
 ## ☁️ 云端模式与空间瘦身 (可选)
 
 如果您的服务器空间紧张，可以使用**云端模式**，将 130MB 的数据托管在外部，模组仅保留几百 KB 的引导脚本。
 
 ### 1. 启用方法
-在 FVTT 的 **模组设置** -> **5e不全书** -> **数据源地址** 中填入有效的远程 `index.html` 链接。
+在 FVTT 的 **游戏设置Game Settings** -> **5e不全书** -> **数据源地址** 中填入有效的远程 `index.html` 链接。
 - **jsDelivr CDN (推荐/无需自己搭建)**: 
   `https://cdn.jsdelivr.net/gh/Heldea-xianmiao/fvtt-5echm-online-mod@main/chm/index.html`
   *(注意：国内访问 jsDelivr 可能偶有波动，但通常可用)*
 - **GitHub Pages / Gitee Pages**: 
-  如果您有自己搭建的 Pages 服务，填入形如 `https://yourname.github.io/repo/chm/index.html` 的地址。
+  如果您有自己搭建的 Pages 服务，填入形如 `https://yourname.github.io/repo/` 的地址。
+  **也可以直接使用本项目的地址`https://heldea-xianmiao.github.io/5e-chm-in-fvtt-mod/`**
 
 ### 2. 删除本地文件
 设置生效并测试可以打开页面后，您可以**直接删除**服务器模组目录下的整个 **`chm`** 文件夹，只保留 `scripts/`, `module.json` 等文件。
 
 ### 3. 如何自己搭建云端源？
-如果您希望自己托管内容（例如挂在自己的 Gitee/GitHub 仓库）：
-1. **必须先运行**本地的 **`update.bat`**：它会自动处理跨域脚本注入、中文路径编码修复以及防止 Jekyll 构建错误。
-2. 将 `chm` 文件夹（及根目下的 `.nojekyll`）上传到您的 Pages 仓库。
+如果您希望自己托管内容（例如挂在自己的 Gitee 仓库以获得极速体验）：
+1. 运行 **`prepare_for_cloud.ps1`**：此脚本会为所有 HTML 注入跨域通信代码（这是云端引用功能必须的）。
+2. 将 `chm` 文件夹上传到通过 Pages 服务托管的仓库中。
 3. 在 FVTT 设置中填入您的 URL。
 
 ## 🛠️ 技术细节
