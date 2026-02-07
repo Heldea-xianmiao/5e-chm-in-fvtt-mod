@@ -176,7 +176,9 @@ export class ChmBrowser extends ApplicationV2 {
                         e.stopPropagation();
 
                         const currentUrl = win.location.href;
-                        const defaultResolution = new URL(href, currentUrl).href;
+                        // WinCHM 导出的链接中 # 被编码为 %23，需要还原为 # 以正确分离路径和锚点
+                        const cleanedHref = href.replace(/%23/gi, '#');
+                        const defaultResolution = new URL(cleanedHref, currentUrl).href;
                         
                         // 简单的本地检查逻辑
                          try {
@@ -186,7 +188,7 @@ export class ChmBrowser extends ApplicationV2 {
                                      // Rooted fallback
                                     const topicsIndex = currentUrl.indexOf('/topics/');
                                     const rootBase = currentUrl.substring(0, topicsIndex + '/topics/'.length);
-                                    const rootedResolution = new URL(href, rootBase).href;
+                                    const rootedResolution = new URL(cleanedHref, rootBase).href;
                                     win.location.href = rootedResolution;
                                 }
                         } catch { 
