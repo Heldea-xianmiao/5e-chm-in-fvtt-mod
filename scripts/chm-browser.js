@@ -1,7 +1,7 @@
-const { ApplicationV2 } = foundry.applications.api;
+﻿const { ApplicationV2 } = foundry.applications.api;
 
 /**
- * 定义嵌入浏览器的窗口类 (ApplicationV2)
+ * 瀹氫箟宓屽叆娴忚鍣ㄧ殑绐楀彛绫?(ApplicationV2)
  */
 export class ChmBrowser extends ApplicationV2 {
     static DEFAULT_OPTIONS = {
@@ -9,7 +9,7 @@ export class ChmBrowser extends ApplicationV2 {
         tag: "div",
         classes: ["chm-browser-app"],
         window: {
-            title: "5e不全书 (fvtt版)",
+            title: "5e涓嶅叏涔?(鏈湴鐗?",
             resizable: true,
             minimizable: true,
             icon: "fas fa-book-atlas"
@@ -20,109 +20,32 @@ export class ChmBrowser extends ApplicationV2 {
         }
     };
 
-    // 记录最后访问的页面地址
+    // 璁板綍鏈€鍚庤闂殑椤甸潰鍦板潃
     lastSrc = "modules/5e-chm-in-fvtt/chm/index.html";
 
-    constructor(options) {
-        super(options);
-        this._onMessage = this._onMessage.bind(this);
-    }
-
-    // 处理跨域消息
-    _onMessage(event) {
-        if (!event.data || typeof event.data !== 'object') return;
-        
-        // --- 核心修正：避免本地模式下双重引用 ---
-        // 只有当设置为 Cloud Mode (isRemote=true) 时，或者显式判断来源非本地时，才响应 PostMessage
-        // 但由于 onMessage 绑定时无法直接获取 _renderHTML 作用域内的 isRemote 变量
-        // 我们通过简单的检查：如果当前环境是本地，且我们稍后会绑定本地监听器，则忽略此消息
-        // 为了安全起见，这里做一个特定的策略：
-        // 如果消息来自 "5echm:quote"，我们检查一下是否已经由本地监听器处理过？难。
-        // 最好的办法：如果 game.settings 配置了 Remote URL，则允许 PostMessage。否则忽略。
-        // 这样本地模式下（URL为空），即使文件里有脚本，PostMessage 也会被忽略，完全依赖本地 MouseUp。
-        const settingUrl = game.settings.get("5e-chm-in-fvtt", "sourceUrl");
-        const isRemoteMode = settingUrl && (settingUrl.startsWith("http://") || settingUrl.startsWith("https://"));
-        
-        if (!isRemoteMode) return; 
-
-        const msg = event.data;
-        const type = msg.type;
-
-        // 1. 处理引用请求 (Cloud Mode)
-        if (type === '5echm:quote') {
-            this._handleSelectionCompat(msg.html, msg.text, msg.title);
-        }
-        
-        // 2. 处理导航更新 (Cloud Mode)
-        if (type === '5echm:nav') {
-            // 这里可以更新 Title 或者 console log
-            if (this.window && this.window.title && msg.title) {
-                this.window.title.innerText = `5e不全书 - ${msg.title}`;
-            }
-        }
-    }
-
     /**
-     * 统一处理引用逻辑 (Chat Output)
-     */
-    _handleSelectionCompat(htmlPart, textPart, docTitle) {
-        if (!htmlPart && !textPart) return;
-        
-        const finalHtml = htmlPart || textPart.replace(/\n/g, "<br>");
-        
-        console.log(`5e-chm | Receive Quote: "${textPart.substring(0, 20)}..."`);
-        ChatMessage.create({
-            content: `<h3>5e不全书引用</h3><div class="chm-quote" style="background: rgba(0,0,0,0.05); padding: 5px; border-left: 3px solid #666; margin-bottom: 5px; overflow-x: auto; max-width: 100%;">${finalHtml}</div><p style="font-size: 0.8em; color: #666; text-align: right;">— ${docTitle}</p>`
-        });
-        if (ui.notifications) ui.notifications.info("已引用到聊天栏");
-    }
-
-    async close(options) {
-        window.removeEventListener("message", this._onMessage);
-        return super.close(options);
-    }
-
-    /**
-     * 渲染 HTML 内容
+     * 娓叉煋 HTML 鍐呭
+     * @param {ApplicationRenderContext} context
+     * @param {RenderOptions} options
+     * @returns {Promise<HTMLElement>}
      */
     async _renderHTML(context, options) {
-        // 注册监听器 (去重)
-        window.removeEventListener("message", this._onMessage);
-        window.addEventListener("message", this._onMessage);
-
-        // 读取配置：判断是本地还是云端
-        const settingUrl = game.settings.get("5e-chm-in-fvtt", "sourceUrl");
-        let targetSrc = "";
-        let isRemote = false;
-
-        if (settingUrl && (settingUrl.startsWith("http://") || settingUrl.startsWith("https://"))) {
-            targetSrc = settingUrl;
-            isRemote = true;
-            if (this.window && this.window.title) this.window.title.innerText = "5e不全书 (云端版)";
-        } else {
-            // 本地 fallback
-            targetSrc = this.lastSrc || "modules/5e-chm-in-fvtt/chm/index.html";
-            targetSrc = foundry.utils.getRoute ? foundry.utils.getRoute(targetSrc) : targetSrc;
-        }
+        // 浣跨敤璁板繂鐨勮矾寰?(this.lastSrc) 鑰屼笉鏄啓姝荤殑 basePath
+        const targetPath = this.lastSrc || "modules/5e-chm-in-fvtt/chm/index.html"; // 澧炲姞榛樿鍊间繚鎶?
+        const localUrl = foundry.utils.getRoute ? foundry.utils.getRoute(targetPath) : targetPath;
 
         const wrapper = document.createElement("div");
         wrapper.classList.add("chm-browser-wrapper");
 
         const iframe = document.createElement("iframe");
-        iframe.src = targetSrc;
+        iframe.src = localUrl;
         iframe.classList.add("chm-browser-iframe");
         iframe.allow = "clipboard-write";
 
-        // 本地模式监听逻辑 (iframe.onload)
-        // 如果是云端模式，onload 里面访问 contentWindow.document 会报错，需要 try-catch 跳过
+        // 鐩戝惉 iframe 鍔犺浇瀹屾垚浜嬩欢
         iframe.onload = () => {
-             // 1. 如果是 Remote 模式，我们依赖 PostMessage，这里做不了太多事情
-             if (isRemote) {
-                 // console.log("5e-chm | Remote mode loaded. Waiting for postMessage bridge...");
-                 return;
-             }
+            // console.log("5e-chm | Iframe Wrapper Loaded (onload fired)");
 
-            // 2. 本地模式逻辑 (直接 DOM 操作)
             const onMouseUp = (ev) => {
                 const win = ev.view;
                 let selectionText = "";
@@ -132,6 +55,8 @@ export class ChmBrowser extends ApplicationV2 {
                      const sel = win.getSelection();
                      if (sel) {
                          selectionText = sel.toString();
+                         
+                         // 鎻愬彇甯︽爣绛剧殑 HTML 鐢ㄤ簬淇濇寔鍒嗘鍜屾牸寮?
                          if (sel.rangeCount > 0) {
                              const container = win.document.createElement("div");
                              for (let i = 0; i < sel.rangeCount; i++) {
@@ -142,63 +67,106 @@ export class ChmBrowser extends ApplicationV2 {
                      }
                 } catch(e) {}
                 
-                // V14/Keybind Check
-                const isAlt = ev.altKey || (game.keyboard?.isModifierActive(KeyboardManager.MODIFIER_KEYS.ALT));
-                const isCtrl = ev.ctrlKey || (game.keyboard?.isModifierActive(KeyboardManager.MODIFIER_KEYS.CONTROL));
+                // Fallback: 濡傛灉 HTML 鎻愬彇澶辫触锛屼娇鐢ㄧ函鏂囨湰
+                if (!selectionHtml && selectionText) selectionHtml = selectionText.replace(/\n/g, "<br>");
+
+                // V14 鍏煎鎬у寮猴細妫€娴嬫寜閿?
+                const isAlt = ev.altKey || (game.keyboard && game.keyboard.isModifierActive && game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.ALT));
+                const isCtrl = ev.ctrlKey || (game.keyboard && game.keyboard.isModifierActive && game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.CONTROL));
                 
-                if ((isAlt || isCtrl) && (selectionHtml || selectionText)) {
-                    this._handleSelectionCompat(selectionHtml, selectionText, win.document.title);
+                console.log(5e-chm | MouseUp Detected. Select: "..." | Alt:  | Ctrl:  | CapturePhase);
+                
+                if (selectionHtml && (isAlt || isCtrl)) { // CHECK HTML CONTENT NOT TEXT
+                    console.log("5e-chm | Sending selection to chat");
+                    ChatMessage.create({
+                        content: <h3>5e涓嶅叏涔﹀紩鐢?/h3><div class="chm-quote" style="background: rgba(0,0,0,0.05); padding: 5px; border-left: 3px solid #666; margin-bottom: 5px; overflow-x: auto; max-width: 100%;"></div><p style="font-size: 0.8em; color: #666; text-align: right;">鈥?</p>
+                    });
+                    if (ui.notifications) ui.notifications.info("宸插紩鐢ㄥ埌鑱婂ぉ鏍?);
                 }
             };
 
             const bindDoc = (win) => {
                 try {
                     if (!win || !win.document) return false;
+                    
+                    // Prevention: If this specific window instance is already bound, skip
                     if (win._chmBound) return true;
 
+                    // 浣跨敤 Capture 闃舵 (true) 鏉ユ崟鑾蜂簨浠讹紝闃叉琚〉闈㈠師鏈夎剼鏈樆姝㈠啋娉?
+                    win.removeEventListener("mouseup", onMouseUp, true);
                     win.addEventListener("mouseup", onMouseUp, true);
+                    
+                    // Mark this window instance as bound
                     win._chmBound = true;
                     
-                    if (win.document && this.window && this.window.title) {
-                        this.window.title.innerText = `5e不全书 - ${win.document.title}`;
-                    }
-
-                    // 本地路径修复逻辑 (Remote模式下通常不需要，或者由服务器配置决定)
+                    console.log(5e-chm | Listeners bound to content frame: );
+                    
+                    // Update Title
+                     if (win.document && this.window && this.window.title) {
+                        this.window.title.innerText = 5e涓嶅叏涔?- ;
+                     }
+                    
+                    // --- Link Fixer for Broken Relative Paths ---
+                    // Many CHM files use relative paths assuming a flat structure or specific base, 
+                    // which breaks when files are nested (e.g., inside "topics/閫熸煡/娉曟湳閫熸煡/").
+                    // We intercept clicks to check if the link is broken (404) and try to fix it by rebasing to 'topics/'.
                     win.document.addEventListener('click', async (e) => {
                         const link = e.target.closest('a');
                         if (!link) return;
+                        
                         const href = link.getAttribute('href');
-                        if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.match(/^[a-z]+:\/\//)) return;
+                        // Skip anchors, javascript, absolute HTTP, or mailto
+                        if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.match(/^[a-z]+:\/\//)) return;
 
+                        // Only apply this heuristic if we are inside 'topics/' and not at the root of it
                         if (!win.location.href.includes('/topics/') || win.location.href.endsWith('/topics/')) return;
 
                         e.preventDefault();
                         e.stopPropagation();
 
                         const currentUrl = win.location.href;
-                        // WinCHM 导出的链接中 # 被编码为 %23，需要还原为 # 以正确分离路径和锚点
-                        const cleanedHref = href.replace(/%23/gi, '#');
-                        const defaultResolution = new URL(cleanedHref, currentUrl).href;
+                        // 1. The browser's default resolution (often broken in these files)
+                        const defaultResolution = new URL(href, currentUrl).href;
                         
-                        // 简单的本地检查逻辑
-                         try {
-                                const res = await fetch(defaultResolution, { method: 'HEAD' });
-                                if (res.ok) win.location.href = defaultResolution;
-                                else {
-                                     // Rooted fallback
-                                    const topicsIndex = currentUrl.indexOf('/topics/');
-                                    const rootBase = currentUrl.substring(0, topicsIndex + '/topics/'.length);
-                                    const rootedResolution = new URL(cleanedHref, rootBase).href;
-                                    win.location.href = rootedResolution;
-                                }
-                        } catch { 
-                             win.location.href = defaultResolution; 
+                        // 2. The "Rooted" resolution (assuming href is meant to be from 'topics/' root)
+                        const topicsIndex = currentUrl.indexOf('/topics/');
+                        const rootBase = currentUrl.substring(0, topicsIndex + '/topics/'.length);
+                        const rootedResolution = new URL(href, rootBase).href;
+
+                        // Function to check if a URL exists
+                        const checkUrl = async (url) => {
+                            try {
+                                const res = await fetch(url, { method: 'HEAD' });
+                                return res.ok;
+                            } catch { return false; }
+                        };
+
+                        // Logic: If default works, go there. If not, try rooted.
+                        // Optimization: If the path clearly goes deeper (e.g. "BookName/...") but we are already deep, prefer rooted check first?
+                        // No, let's be safe. Check Default first.
+                        
+                        console.log(5e-chm | Link clicked. Checking: );
+                        
+                        if (await checkUrl(defaultResolution)) {
+                            // console.log("5e-chm | Default path valid.");
+                            win.location.href = defaultResolution;
+                        } else {
+                            console.warn(5e-chm | Default path 404: . Trying rooted path...);
+                            if (await checkUrl(rootedResolution)) {
+                                console.log(5e-chm | Rooted path found: );
+                                win.location.href = rootedResolution;
+                            } else {
+                                console.error("5e-chm | Link dead in both locations.");
+                                // Fallback to default behavior (letting user see the 404 or whatever)
+                                win.location.href = defaultResolution;
+                            }
                         }
-                    }, true); 
+                    }, true); // Capture phase to ensure we control navigation
 
                     return true;
                 } catch (err) {
-                    // console.log("5e-chm | Cross-origin access denied (Expected for Cloud Mode)");
+                    // Suppress security errors for cross-origin frames if present
+                    // console.warn("5e-chm | Bind error:", err);
                     return false;
                 }
             };
@@ -207,30 +175,38 @@ export class ChmBrowser extends ApplicationV2 {
                 try {
                     const topWin = iframe.contentWindow;
                     if (!topWin) return;
-                    // Try recursive frame access (Main/Content frames structure of some CHM exports)
-                     try {
-                        const mainWin = topWin.frames["main"];
-                        if (mainWin) {
-                             const contentWin = mainWin.frames["content"];
-                             if (contentWin) bindDoc(contentWin);
-                             else bindDoc(mainWin);
-                        } else {
-                            bindDoc(topWin);
-                        }
-                     } catch(e) { 
-                         // Fallback for single frame or cross origin
-                     }
-                } catch (err) {}
+
+                    const mainWin = topWin.frames["main"];
+                    if (!mainWin) return;
+                    
+                    const contentWin = mainWin.frames["content"];
+                    if (!contentWin) return;
+
+                    // Attempt bind (idempotent due to _chmBound check)
+                    bindDoc(contentWin);
+
+                } catch (err) {
+                    // console.warn("5e-chm | Frame access error:", err);
+                }
             };
-            
+
+            // 鍚姩姘镐箙杞 (1s)锛屼互澶勭悊椤甸潰璺宠浆鍜岄噸鏂板姞杞?
             if (this._pollInterval) clearInterval(this._pollInterval);
             this._pollInterval = setInterval(attachListeners, 1000);
+            
+            // 绉婚櫎瓒呮椂鍋滄閫昏緫锛屽彧瑕佺獥鍙ｅ紑鐫€灏变竴鐩磋疆璇㈡娴嬪鑸?
         };
 
         wrapper.appendChild(iframe);
         return wrapper;
     }
 
+    /**
+     * 灏嗘覆鏌撶粨鏋滄彃鍏ュ埌绐楀彛鍐呭涓?
+     * @param {HTMLElement} result - _renderHTML 杩斿洖鐨勫厓绱?
+     * @param {HTMLElement} content - 绐楀彛鐨勫唴瀹瑰鍣?
+     * @param {RenderOptions} options
+     */
     _replaceHTML(result, content, options) {
         content.replaceChildren(result);
     }

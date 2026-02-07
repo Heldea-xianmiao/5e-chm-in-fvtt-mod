@@ -139,8 +139,8 @@ foreach ($file in $files) {
 }
 
 Write-Host "------------------------------------------------"
-Write-Host "修复完成！" -ForegroundColor Green
-Write-Host "  - 修复反斜杠引用: $fixedBackslash 个文件"
-Write-Host "  - 编码中文路径:   $encodedChinese 个文件"
-Write-Host "  - 修复锚点编码:   $fixedAnchor 个文件"
-Write-Host "建议：请再次 push 到 GitHub，并等待 Pages 构建完成（约需1-2分钟）。" -ForegroundColor Yellow
+Write-Host "Fix Completed!" -ForegroundColor Green
+Write-Host "  - Fixed backslashes: $fixedBackslash files"
+Write-Host "  - Encoded paths:     $encodedChinese files"
+Write-Host "  - Fixed anchors:     $fixedAnchor files"
+Write-Host "Suggestion: Please push to GitHub again and wait for Pages build to complete (approx 1-2 mins)." -ForegroundColor Yellow

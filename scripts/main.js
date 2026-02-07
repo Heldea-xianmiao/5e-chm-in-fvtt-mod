@@ -1,9 +1,9 @@
-import { ChmBrowser } from "./chm-browser.js";
+﻿import { ChmBrowser } from "./chm-browser.js";
 
-// 实例化
+// 瀹炰緥鍖?
 const chmBrowser = new ChmBrowser();
 
-// 智能开关函数：如果已打开则置顶，否则渲染
+// 鏅鸿兘寮€鍏冲嚱鏁帮細濡傛灉宸叉墦寮€鍒欑疆椤讹紝鍚﹀垯娓叉煋
 const toggleBrowser = () => {
     if (chmBrowser.rendered) {
         chmBrowser.bringToFront();
@@ -12,20 +12,11 @@ const toggleBrowser = () => {
     }
 };
 
-// 注册快捷键 Alt + B
+// 娉ㄥ唽蹇嵎閿?Alt + B
 Hooks.once('init', () => {
-    game.settings.register("5e-chm-in-fvtt", "sourceUrl", {
-        name: "数据源地址 (Cloud Mode)",
-        hint: "默认留空使用本地文件（最稳定）。如需节省服务器空间，可填写 Gitee Pages 或 GitHub Pages 的 index.html 链接。示例：https://cdn.jsdelivr.net/gh/User/Repo/chm/；也可直接使用本项目的github page：https://heldea-xianmiao.github.io/5e-chm-in-fvtt-mod/",
-        scope: "world",
-        config: true,
-        type: String,
-        default: "",
-    });
-
     game.keybindings.register('5e-chm-in-fvtt', 'openBrowser', {
-        name: '打开5e不全书',
-        hint: '按下快捷键直接打开窗口',
+        name: '鎵撳紑5e涓嶅叏涔?,
+        hint: '鎸変笅蹇嵎閿洿鎺ユ墦寮€绐楀彛',
         editable: [ { key: "KeyB", modifiers: ["Alt"] } ],
         onDown: toggleBrowser,
         restricted: false,
@@ -33,25 +24,25 @@ Hooks.once('init', () => {
     });
 });
 
-// 添加到左侧笔记栏
+// 娣诲姞鍒板乏渚х瑪璁版爮
 Hooks.on("getSceneControlButtons", (controls) => {
-    // 适配 V14: controls 可能变为对象而不是数组
+    // 閫傞厤 V14: controls 鍙兘鍙樹负瀵硅薄鑰屼笉鏄暟缁?
     let noteLayer;
     if (Array.isArray(controls)) {
         noteLayer = controls.find(c => c.name === "notes");
     } else if (typeof controls === "object") {
-         // V14 早期开发版可能将 controls 更改为对象结构
+         // V14 鏃╂湡寮€鍙戠増鍙兘灏?controls 鏇存敼涓哄璞＄粨鏋?
         noteLayer = controls.notes;
     }
 
     if (noteLayer) {
-        if (!noteLayer.tools) noteLayer.tools = []; // 确保 tools 数组存在
+        if (!noteLayer.tools) noteLayer.tools = []; // 纭繚 tools 鏁扮粍瀛樺湪
         
-        // 防止重复添加
+        // 闃叉閲嶅娣诲姞
         if (!noteLayer.tools.some(t => t.name === "open-5e-chm")) {
             noteLayer.tools.push({
                 name: "open-5e-chm",
-                title: "5e不全书",
+                title: "5e涓嶅叏涔?,
                 icon: "fas fa-book-atlas",
                 visible: true,
                 onClick: toggleBrowser,
@@ -63,30 +54,30 @@ Hooks.on("getSceneControlButtons", (controls) => {
     }
 });
 
-// 添加到右侧日志栏
+// 娣诲姞鍒板彸渚ф棩蹇楁爮
 Hooks.on("renderJournalDirectory", (app, html, data) => {
-    // 兼容 jQuery 和原生 DOM (V13/V14 可能移除 jQuery)
-    // 如果 html 是 jQuery 对象，取第一个元素；如果是 HTMLElement，直接使用
+    // 鍏煎 jQuery 鍜屽師鐢?DOM (V13/V14 鍙兘绉婚櫎 jQuery)
+    // 濡傛灉 html 鏄?jQuery 瀵硅薄锛屽彇绗竴涓厓绱狅紱濡傛灉鏄?HTMLElement锛岀洿鎺ヤ娇鐢?
     const element = (html.jquery) ? html[0] : html;
 
     const actionButtons = element.querySelector(".header-actions");
     if (!actionButtons) return;
 
-    // 创建按钮
+    // 鍒涘缓鎸夐挳
     const button = document.createElement("button");
     button.className = "create-entry";
     button.style.minWidth = "96px";
     button.style.flex = "0";
-    button.innerHTML = `<i class="fas fa-book-atlas"></i> 5e不全书`;
+    button.innerHTML = <i class="fas fa-book-atlas"></i> 5e涓嶅叏涔;
     
-    // 绑定点击事件
+    // 缁戝畾鐐瑰嚮浜嬩欢
     button.addEventListener("click", (ev) => {
         ev.preventDefault();
         chmBrowser.render({ force: true });
     });
 
-    // 插入按钮 (prepend)
+    // 鎻掑叆鎸夐挳 (prepend)
     actionButtons.prepend(button);
 });
 
-console.log("5e不全书FVTT部署版已上线");
+console.log("5e涓嶅叏涔VTT閮ㄧ讲鐗堝凡涓婄嚎");
