@@ -2,7 +2,7 @@
   "id": "5e-chm-in-fvtt",
   "title": "5E不全书fvtt内部部署",
   "description": "在FVTT内嵌浏览器中打开5e不全书。适配 dnd5e 5.x 系统。",
-  "version": "release-2-26.02.07",
+  "version": "1.1.1-release-2",
   "compatibility": {
     "minimum": "13",
     "verified": "14"
