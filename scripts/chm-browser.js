@@ -52,48 +52,51 @@ export class ChmBrowser extends ApplicationV2 {
         iframe.classList.add("chm-browser-iframe");
         iframe.allow = "clipboard-write";
 
+        // -------------------------------------------------------------
+        // 1. Cloud Bridge Mode (If loaded from Cloud/GitHub Pages)
+        // -------------------------------------------------------------
+        // Always listen for messages, regardless of load state
+        const messageHandler = (event) => {
+             // Verify origin if needed, or check message structure
+             const data = event.data;
+             if (!data || typeof data.type !== 'string' || !data.type.startsWith('5echm:')) return;
+             
+             const msgType = data.type.replace('5echm:', '');
+             // console.log("5e-chm | Received Cloud Message:", msgType, data);
+
+             // Handle Navigation (Title Update / History)
+             if (msgType === 'nav') {
+                 if (data.title && this.window && this.window.title) {
+                     this.window.title.innerText = `5e不全书 - ${data.title}`;
+                 }
+                 // Update lastSrc purely for restoring next time
+                 if (data.href) {
+                      // Optionally save state
+                 }
+             }
+             
+             // Handle Quote (Alt+Click selection from bridge)
+             if (msgType === 'quote') {
+                 const selectionHtml = data.html || data.text.replace(/\n/g, "<br>");
+                 const docTitle = data.title || "5e不全书";
+                 
+                 ChatMessage.create({
+                    content: `<h3>5e不全书引用</h3><div class="chm-quote" style="background: rgba(0,0,0,0.05); padding: 5px; border-left: 3px solid #666; margin-bottom: 5px; overflow-x: auto; max-width: 100%;">${selectionHtml}</div><p style="font-size: 0.8em; color: #666; text-align: right;">—— ${docTitle}</p>`
+                });
+                if (ui.notifications) ui.notifications.info("已引用到聊天栏");
+             }
+        };
+
+        // Remove old listener to prevent duplicates if re-rendering within same session (though unlikely for ApplicationV2 in this way)
+        window.removeEventListener('message', this._boundMessageHandler); 
+        this._boundMessageHandler = messageHandler;
+        window.addEventListener('message', this._boundMessageHandler);
+
         // 监听 iframe 加载完成事件
         iframe.onload = () => {
              // console.log("5e-chm | Iframe Wrapper Loaded (onload fired)");
 
-             // -------------------------------------------------------------
-             // 1. Cloud Bridge Mode (If loaded from Cloud/GitHub Pages)
-             // -------------------------------------------------------------
-             // The content is cross-origin, so we cannot access iframe.contentWindow directly.
-             // We rely on postMessage from the injected "bridge script" inside the HTML files.
-             window.addEventListener('message', (event) => {
-                 // Verify origin if needed, or check message structure
-                 const data = event.data;
-                 if (!data || typeof data.type !== 'string' || !data.type.startsWith('5echm:')) return;
-                 
-                 const msgType = data.type.replace('5echm:', '');
-                 // console.log("5e-chm | Received Cloud Message:", msgType, data);
-
-                 // Handle Navigation (Title Update / History)
-                 if (msgType === 'nav') {
-                     if (data.title && this.window && this.window.title) {
-                         this.window.title.innerText = `5e不全书 - ${data.title}`;
-                     }
-                     // Update lastSrc purely for restoring next time, but tricky if href is full URL
-                     // We can store it as is.
-                     if (data.href) {
-                         // Only store if it's not the initial load or something loop-inducing
-                         // this.lastSrc = data.href; 
-                     }
-                 }
-                 
-                 // Handle Quote (Alt+Click selection from bridge)
-                 if (msgType === 'quote') {
-                     const selectionHtml = data.html || data.text.replace(/\n/g, "<br>");
-                     const docTitle = data.title || "5e不全书";
-                     
-                     ChatMessage.create({
-                        content: `<h3>5e不全书引用</h3><div class="chm-quote" style="background: rgba(0,0,0,0.05); padding: 5px; border-left: 3px solid #666; margin-bottom: 5px; overflow-x: auto; max-width: 100%;">${selectionHtml}</div><p style="font-size: 0.8em; color: #666; text-align: right;">—— ${docTitle}</p>`
-                    });
-                    if (ui.notifications) ui.notifications.info("已引用到聊天栏");
-                 }
-             });
-
+             /* Removed redundant message listener setup inside onload */
 
              // -------------------------------------------------------------
              // 2. Local Mode (Same Origin)

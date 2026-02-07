@@ -17,7 +17,7 @@ Hooks.once('init', () => {
     // 注册设置：云端部署地址
     game.settings.register('5e-chm-in-fvtt', 'cloudUrl', {
         name: '云端部署地址',
-        hint: '如果部署到了GitHub Pages (如 https://username.github.io/repo/chm/index.html)，填写后将优先加载该地址。留空则加载本地文件。',
+        hint: '如果部署到了GitHub Pages (如 https://username.github.io/repo/)，填写后将优先加载该地址。留空则加载本地文件。推荐使用本项目github page：https://heldea-xianmiao.github.io/5e-chm-in-fvtt-mod/',
         scope: 'world',
         config: true,
         type: String,
