@@ -1,4 +1,8 @@
 @echo off
+chcp 65001 > nul
+echo Fixing encoding first (GBK -> UTF-8)...
+python "%~dp0fix_encoding.py"
+echo.
 echo Starting fix script...
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0apply_fixes.ps1"
 echo.
