@@ -16,7 +16,7 @@ const toggleBrowser = () => {
 Hooks.once('init', () => {
     game.settings.register("5e-chm-in-fvtt", "sourceUrl", {
         name: "数据源地址 (Cloud Mode)",
-        hint: "默认留空使用本地文件（最稳定）。如需节省服务器空间，可填写 Gitee Pages 或 GitHub Pages 的 index.html 链接。示例：https://cdn.jsdelivr.net/gh/User/Repo/chm/index.html",
+        hint: "默认留空使用本地文件（最稳定）。如需节省服务器空间，可填写 Gitee Pages 或 GitHub Pages 的 index.html 链接。示例：https://cdn.jsdelivr.net/gh/User/Repo/chm/；也可直接使用本项目的github page：https://heldea-xianmiao.github.io/5e-chm-in-fvtt-mod/",
         scope: "world",
         config: true,
         type: String,
