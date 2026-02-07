@@ -1,4 +1,91 @@
-const { ApplicationV2 } = foundry.applications.api;
+import base64
+import json
+
+main_js_content = """import { ChmBrowser } from "./chm-browser.js";
+
+// 实例化
+const chmBrowser = new ChmBrowser();
+
+// 智能开关函数：如果已打开则置顶，否则渲染
+const toggleBrowser = () => {
+    if (chmBrowser.rendered) {
+        chmBrowser.bringToFront();
+    } else {
+        chmBrowser.render({ force: true });
+    }
+};
+
+// 注册快捷键 Alt + B
+Hooks.once('init', () => {
+    game.keybindings.register('5e-chm-in-fvtt', 'openBrowser', {
+        name: '打开5e不全书',
+        hint: '按下快捷键直接打开窗口',
+        editable: [ { key: "KeyB", modifiers: ["Alt"] } ],
+        onDown: toggleBrowser,
+        restricted: false,
+        precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL
+    });
+});
+
+// 添加到左侧笔记栏
+Hooks.on("getSceneControlButtons", (controls) => {
+    // 适配 V14: controls 可能变为对象而不是数组
+    let noteLayer;
+    if (Array.isArray(controls)) {
+        noteLayer = controls.find(c => c.name === "notes");
+    } else if (typeof controls === "object") {
+         // V14 早期开发版可能将 controls 更改为对象结构
+        noteLayer = controls.notes;
+    }
+
+    if (noteLayer) {
+        if (!noteLayer.tools) noteLayer.tools = []; // 确保 tools 数组存在
+        
+        // 防止重复添加
+        if (!noteLayer.tools.some(t => t.name === "open-5e-chm")) {
+            noteLayer.tools.push({
+                name: "open-5e-chm",
+                title: "5e不全书",
+                icon: "fas fa-book-atlas",
+                visible: true,
+                onClick: toggleBrowser,
+                button: true
+            });
+        }
+    } else {
+        console.warn("5e-chm-in-fvtt | Could not find 'notes' layer in controls", controls);
+    }
+});
+
+// 添加到右侧日志栏
+Hooks.on("renderJournalDirectory", (app, html, data) => {
+    // 兼容 jQuery 和原生 DOM (V13/V14 可能移除 jQuery)
+    // 如果 html 是 jQuery 对象，取第一个元素；如果是 HTMLElement，直接使用
+    const element = (html.jquery) ? html[0] : html;
+
+    const actionButtons = element.querySelector(".header-actions");
+    if (!actionButtons) return;
+
+    // 创建按钮
+    const button = document.createElement("button");
+    button.className = "create-entry";
+    button.style.minWidth = "96px";
+    button.style.flex = "0";
+    button.innerHTML = '<i class="fas fa-book-atlas"></i> 5e不全书';
+    
+    // 绑定点击事件
+    button.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        chmBrowser.render({ force: true });
+    });
+
+    // 插入按钮 (prepend)
+    actionButtons.prepend(button);
+});
+
+console.log("5e不全书FVTT部署版已上线");"""
+
+chm_browser_js_content = """const { ApplicationV2 } = foundry.applications.api;
 
 /**
  * 定义嵌入浏览器的窗口类 (ApplicationV2)
@@ -30,19 +117,9 @@ export class ChmBrowser extends ApplicationV2 {
      * @returns {Promise<HTMLElement>}
      */
     async _renderHTML(context, options) {
-        // 读取云端配置
-        const cloudUrl = game.settings.get('5e-chm-in-fvtt', 'cloudUrl');
-        
-        // 使用记忆的路径 (this.lastSrc) 
-        // 如果 lastSrc 还是默认的本地路径，且配置了云端路径，则替换为云端路径
-        let targetPath = this.lastSrc || "modules/5e-chm-in-fvtt/chm/index.html"; 
-        
-        if (cloudUrl && cloudUrl.startsWith("http") && targetPath.includes("modules/5e-chm-in-fvtt/chm/index.html")) {
-            targetPath = cloudUrl;
-            this.lastSrc = cloudUrl; // 更新记忆
-        }
-
-        const localUrl = targetPath.startsWith("http") ? targetPath : (foundry.utils.getRoute ? foundry.utils.getRoute(targetPath) : targetPath);
+        // 使用记忆的路径 (this.lastSrc) 而不是写死的 basePath
+        const targetPath = this.lastSrc || "modules/5e-chm-in-fvtt/chm/index.html"; // 增加默认值保护
+        const localUrl = foundry.utils.getRoute ? foundry.utils.getRoute(targetPath) : targetPath;
 
         const wrapper = document.createElement("div");
         wrapper.classList.add("chm-browser-wrapper");
@@ -54,53 +131,8 @@ export class ChmBrowser extends ApplicationV2 {
 
         // 监听 iframe 加载完成事件
         iframe.onload = () => {
-             // console.log("5e-chm | Iframe Wrapper Loaded (onload fired)");
+            // console.log("5e-chm | Iframe Wrapper Loaded (onload fired)");
 
-             // -------------------------------------------------------------
-             // 1. Cloud Bridge Mode (If loaded from Cloud/GitHub Pages)
-             // -------------------------------------------------------------
-             // The content is cross-origin, so we cannot access iframe.contentWindow directly.
-             // We rely on postMessage from the injected "bridge script" inside the HTML files.
-             window.addEventListener('message', (event) => {
-                 // Verify origin if needed, or check message structure
-                 const data = event.data;
-                 if (!data || typeof data.type !== 'string' || !data.type.startsWith('5echm:')) return;
-                 
-                 const msgType = data.type.replace('5echm:', '');
-                 // console.log("5e-chm | Received Cloud Message:", msgType, data);
-
-                 // Handle Navigation (Title Update / History)
-                 if (msgType === 'nav') {
-                     if (data.title && this.window && this.window.title) {
-                         this.window.title.innerText = `5e不全书 - ${data.title}`;
-                     }
-                     // Update lastSrc purely for restoring next time, but tricky if href is full URL
-                     // We can store it as is.
-                     if (data.href) {
-                         // Only store if it's not the initial load or something loop-inducing
-                         // this.lastSrc = data.href; 
-                     }
-                 }
-                 
-                 // Handle Quote (Alt+Click selection from bridge)
-                 if (msgType === 'quote') {
-                     const selectionHtml = data.html || data.text.replace(/\n/g, "<br>");
-                     const docTitle = data.title || "5e不全书";
-                     
-                     ChatMessage.create({
-                        content: `<h3>5e不全书引用</h3><div class="chm-quote" style="background: rgba(0,0,0,0.05); padding: 5px; border-left: 3px solid #666; margin-bottom: 5px; overflow-x: auto; max-width: 100%;">${selectionHtml}</div><p style="font-size: 0.8em; color: #666; text-align: right;">—— ${docTitle}</p>`
-                    });
-                    if (ui.notifications) ui.notifications.info("已引用到聊天栏");
-                 }
-             });
-
-
-             // -------------------------------------------------------------
-             // 2. Local Mode (Same Origin)
-             // -------------------------------------------------------------
-             // If local, we can access contentWindow. We keep the old logic for backward compatibility
-             // or for local files that haven't been "bridged" yet.
-             
             const onMouseUp = (ev) => {
                 const win = ev.view;
                 let selectionText = "";
@@ -123,7 +155,7 @@ export class ChmBrowser extends ApplicationV2 {
                 } catch(e) {}
                 
                 // Fallback: 如果 HTML 提取失败，使用纯文本
-                if (!selectionHtml && selectionText) selectionHtml = selectionText.replace(/\n/g, "<br>");
+                if (!selectionHtml && selectionText) selectionHtml = selectionText.replace(/\\n/g, "<br>");
 
                 // V14 兼容性增强：检测按键
                 const isAlt = ev.altKey || (game.keyboard && game.keyboard.isModifierActive && game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.ALT));
@@ -134,7 +166,7 @@ export class ChmBrowser extends ApplicationV2 {
                 if (selectionHtml && (isAlt || isCtrl)) { // CHECK HTML CONTENT NOT TEXT
                     console.log("5e-chm | Sending selection to chat");
                     ChatMessage.create({
-                        content: `<h3>5e不全书引用</h3><div class="chm-quote" style="background: rgba(0,0,0,0.05); padding: 5px; border-left: 3px solid #666; margin-bottom: 5px; overflow-x: auto; max-width: 100%;">${selectionHtml}</div><p style="font-size: 0.8em; color: #666; text-align: right;">—— ${win.document.title}</p>`
+                        content: `<h3>5e不全书引用</h3><div class="chm-quote" style="background: rgba(0,0,0,0.05); padding: 5px; border-left: 3px solid #666; margin-bottom: 5px; overflow-x: auto; max-width: 100%;">${selectionHtml}</div><p style="font-size: 0.8em; color: #666; text-align: right;">— ${win.document.title}</p>`
                     });
                     if (ui.notifications) ui.notifications.info("已引用到聊天栏");
                 }
@@ -176,11 +208,6 @@ export class ChmBrowser extends ApplicationV2 {
                         // Only apply this heuristic if we are inside 'topics/' and not at the root of it
                         if (!win.location.href.includes('/topics/') || win.location.href.endsWith('/topics/')) return;
 
-                        // We allow default if it looks simple, but we intercept to safeguard 404s
-                         // Actually, we should only intervene if we suspect it might fail, OR we intervene on all relative links.
-                         // Prudent approach: Check existence? No, that's slow (HEAD request).
-                         // BUT, current logic does a HEAD request.
-
                         e.preventDefault();
                         e.stopPropagation();
 
@@ -201,6 +228,8 @@ export class ChmBrowser extends ApplicationV2 {
                             } catch { return false; }
                         };
 
+                        // Logic: If default works, go there. If not, try rooted.
+                        
                         console.log(`5e-chm | Link clicked. Checking: ${href}`);
                         
                         if (await checkUrl(defaultResolution)) {
@@ -267,3 +296,9 @@ export class ChmBrowser extends ApplicationV2 {
         content.replaceChildren(result);
     }
 }
+"""
+
+print(json.dumps({
+    "main_js": base64.b64encode(main_js_content.encode('utf-8')).decode('utf-8'),
+    "chm_browser_js": base64.b64encode(chm_browser_js_content.encode('utf-8')).decode('utf-8')
+}))
