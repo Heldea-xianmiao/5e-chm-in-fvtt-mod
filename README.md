@@ -58,5 +58,15 @@
 - 依赖系统：dnd5e (建议 4.x / 5.x)
 - 编码：项目通过脚本强制处理了 UTF-8 与 GBK 的兼容性问题，确保在不同环境下字符显示正常。
 
+### GitHub Pages 自动部署
+
+本仓库已配置 GitHub Actions 自动部署工作流：
+- **部署内容**：仅部署 `chm/` 目录（实际网站内容）
+- **触发条件**：推送到 `main` 分支时自动触发
+- **部署地址**：`https://heldea-xianmiao.github.io/5e-chm-in-fvtt-mod/`
+- **配置文件**：`.github/workflows/deploy.yml`
+
+部署流程采用标准的 build + deploy 两步模式，确保与 GitHub Pages 服务完全兼容，避免部署冲突。
+
 ---
 *本模组仅作为技术容器，内容版权归属 DND5eChm 项目组及原作者所有。*
