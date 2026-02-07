@@ -30,6 +30,9 @@ export class ChmBrowser extends ApplicationV2 {
 
     // 处理跨域消息
     _onMessage(event) {
+        // Debug Log: 让我们看看所有收到的消息，确认是否有 5echm 相关的内容到达
+        // console.log("5e-chm | _onMessage", event.data); 
+
         if (!event.data || typeof event.data !== 'object') return;
         
         const msg = event.data;
@@ -37,6 +40,7 @@ export class ChmBrowser extends ApplicationV2 {
 
         // 1. 处理引用请求 (Cloud Mode & Local Mode with Bridge)
         if (type === '5echm:quote') {
+            console.log("5e-chm | Processing Quote Message:", msg); // 显式日志
             this._handleSelectionCompat(msg.html, msg.text, msg.title);
         }
         
