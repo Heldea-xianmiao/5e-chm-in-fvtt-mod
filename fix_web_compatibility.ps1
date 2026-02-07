@@ -2,6 +2,7 @@
 # 此脚本专门用于修复在 GitHub Pages 等 Web 环境下出现的 404 问题
 # 1. 修复 HTML 中的反斜杠路径 (win -> web)
 # 2. 对包含中文的 href 路径进行标准的 URI 编码 (避免浏览器/服务器编码歧义)
+# 3. 修复 href 中的 %23 编码为 # (WinCHM 锚点编码问题)
 
 $root = $PSScriptRoot
 $targetDir = Join-Path $root "chm"
@@ -14,6 +15,7 @@ $files = Get-ChildItem -Path $targetDir -Include *.htm,*.html -Recurse
 # 计数器
 $fixedBackslash = 0
 $encodedChinese = 0
+$fixedAnchor = 0
 
 foreach ($file in $files) {
     $content = Get-Content -Path $file.FullName -Raw -Encoding UTF8
@@ -109,6 +111,27 @@ foreach ($file in $files) {
         }
     }
     
+    # ---------------------------------------------------------
+    # 3. 修复 %23 编码问题 (Anchor Links)
+    # ---------------------------------------------------------
+    # WinCHM 生成 HTML 时将锚点分隔符 # 过度编码为 %23，
+    # 导致浏览器将其视为路径的一部分而非 fragment separator，所有锚点链接 404。
+    # 在 href 属性中将 %23 替换为 #
+    
+    $contentBeforeAnchorFix = $newContent
+    $newContent = [Regex]::Replace($newContent, '(href)="([^"]*%23[^"]*)"', {
+        param($match)
+        $attr = $match.Groups[1].Value
+        $val = $match.Groups[2].Value
+        $fixedVal = $val -replace '%23', '#'
+        return "$attr=`"$fixedVal`""
+    })
+    
+    if ($newContent -ne $contentBeforeAnchorFix) {
+        $fixedAnchor++
+        $changed = $true
+    }
+    
     if ($changed) {
         Set-Content -Path $file.FullName -Value $newContent -Encoding UTF8
         Write-Host "Fixed: $($file.Name)" -ForegroundColor Gray
@@ -119,4 +142,5 @@ Write-Host "------------------------------------------------"
 Write-Host "修复完成！" -ForegroundColor Green
 Write-Host "  - 修复反斜杠引用: $fixedBackslash 个文件"
 Write-Host "  - 编码中文路径:   $encodedChinese 个文件"
+Write-Host "  - 修复锚点编码:   $fixedAnchor 个文件"
 Write-Host "建议：请再次 push 到 GitHub，并等待 Pages 构建完成（约需1-2分钟）。" -ForegroundColor Yellow
