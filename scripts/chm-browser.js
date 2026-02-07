@@ -9,7 +9,7 @@ export class ChmBrowser extends ApplicationV2 {
         tag: "div",
         classes: ["chm-browser-app"],
         window: {
-            title: "5e不全书 (本地版)",
+            title: "5e不全书 (fvtt版)",
             resizable: true,
             minimizable: true,
             icon: "fas fa-book-atlas"
@@ -23,29 +23,106 @@ export class ChmBrowser extends ApplicationV2 {
     // 记录最后访问的页面地址
     lastSrc = "modules/5e-chm-in-fvtt/chm/index.html";
 
+    constructor(options) {
+        super(options);
+        this._onMessage = this._onMessage.bind(this);
+    }
+
+    // 处理跨域消息
+    _onMessage(event) {
+        if (!event.data || typeof event.data !== 'object') return;
+        
+        // --- 核心修正：避免本地模式下双重引用 ---
+        // 只有当设置为 Cloud Mode (isRemote=true) 时，或者显式判断来源非本地时，才响应 PostMessage
+        // 但由于 onMessage 绑定时无法直接获取 _renderHTML 作用域内的 isRemote 变量
+        // 我们通过简单的检查：如果当前环境是本地，且我们稍后会绑定本地监听器，则忽略此消息
+        // 为了安全起见，这里做一个特定的策略：
+        // 如果消息来自 "5echm:quote"，我们检查一下是否已经由本地监听器处理过？难。
+        // 最好的办法：如果 game.settings 配置了 Remote URL，则允许 PostMessage。否则忽略。
+        // 这样本地模式下（URL为空），即使文件里有脚本，PostMessage 也会被忽略，完全依赖本地 MouseUp。
+        const settingUrl = game.settings.get("5e-chm-in-fvtt", "sourceUrl");
+        const isRemoteMode = settingUrl && (settingUrl.startsWith("http://") || settingUrl.startsWith("https://"));
+        
+        if (!isRemoteMode) return; 
+
+        const msg = event.data;
+        const type = msg.type;
+
+        // 1. 处理引用请求 (Cloud Mode)
+        if (type === '5echm:quote') {
+            this._handleSelectionCompat(msg.html, msg.text, msg.title);
+        }
+        
+        // 2. 处理导航更新 (Cloud Mode)
+        if (type === '5echm:nav') {
+            // 这里可以更新 Title 或者 console log
+            if (this.window && this.window.title && msg.title) {
+                this.window.title.innerText = `5e不全书 - ${msg.title}`;
+            }
+        }
+    }
+
+    /**
+     * 统一处理引用逻辑 (Chat Output)
+     */
+    _handleSelectionCompat(htmlPart, textPart, docTitle) {
+        if (!htmlPart && !textPart) return;
+        
+        const finalHtml = htmlPart || textPart.replace(/\n/g, "<br>");
+        
+        console.log(`5e-chm | Receive Quote: "${textPart.substring(0, 20)}..."`);
+        ChatMessage.create({
+            content: `<h3>5e不全书引用</h3><div class="chm-quote" style="background: rgba(0,0,0,0.05); padding: 5px; border-left: 3px solid #666; margin-bottom: 5px; overflow-x: auto; max-width: 100%;">${finalHtml}</div><p style="font-size: 0.8em; color: #666; text-align: right;">— ${docTitle}</p>`
+        });
+        if (ui.notifications) ui.notifications.info("已引用到聊天栏");
+    }
+
+    async close(options) {
+        window.removeEventListener("message", this._onMessage);
+        return super.close(options);
+    }
+
     /**
      * 渲染 HTML 内容
-     * @param {ApplicationRenderContext} context
-     * @param {RenderOptions} options
-     * @returns {Promise<HTMLElement>}
      */
     async _renderHTML(context, options) {
-        // 使用记忆的路径 (this.lastSrc) 而不是写死的 basePath
-        const targetPath = this.lastSrc || "modules/5e-chm-in-fvtt/chm/index.html"; // 增加默认值保护
-        const localUrl = foundry.utils.getRoute ? foundry.utils.getRoute(targetPath) : targetPath;
+        // 注册监听器 (去重)
+        window.removeEventListener("message", this._onMessage);
+        window.addEventListener("message", this._onMessage);
+
+        // 读取配置：判断是本地还是云端
+        const settingUrl = game.settings.get("5e-chm-in-fvtt", "sourceUrl");
+        let targetSrc = "";
+        let isRemote = false;
+
+        if (settingUrl && (settingUrl.startsWith("http://") || settingUrl.startsWith("https://"))) {
+            targetSrc = settingUrl;
+            isRemote = true;
+            if (this.window && this.window.title) this.window.title.innerText = "5e不全书 (云端版)";
+        } else {
+            // 本地 fallback
+            targetSrc = this.lastSrc || "modules/5e-chm-in-fvtt/chm/index.html";
+            targetSrc = foundry.utils.getRoute ? foundry.utils.getRoute(targetSrc) : targetSrc;
+        }
 
         const wrapper = document.createElement("div");
         wrapper.classList.add("chm-browser-wrapper");
 
         const iframe = document.createElement("iframe");
-        iframe.src = localUrl;
+        iframe.src = targetSrc;
         iframe.classList.add("chm-browser-iframe");
         iframe.allow = "clipboard-write";
 
-        // 监听 iframe 加载完成事件
+        // 本地模式监听逻辑 (iframe.onload)
+        // 如果是云端模式，onload 里面访问 contentWindow.document 会报错，需要 try-catch 跳过
         iframe.onload = () => {
-            // console.log("5e-chm | Iframe Wrapper Loaded (onload fired)");
+             // 1. 如果是 Remote 模式，我们依赖 PostMessage，这里做不了太多事情
+             if (isRemote) {
+                 // console.log("5e-chm | Remote mode loaded. Waiting for postMessage bridge...");
+                 return;
+             }
 
+            // 2. 本地模式逻辑 (直接 DOM 操作)
             const onMouseUp = (ev) => {
                 const win = ev.view;
                 let selectionText = "";
@@ -55,8 +132,6 @@ export class ChmBrowser extends ApplicationV2 {
                      const sel = win.getSelection();
                      if (sel) {
                          selectionText = sel.toString();
-                         
-                         // 提取带标签的 HTML 用于保持分段和格式
                          if (sel.rangeCount > 0) {
                              const container = win.document.createElement("div");
                              for (let i = 0; i < sel.rangeCount; i++) {
@@ -67,106 +142,61 @@ export class ChmBrowser extends ApplicationV2 {
                      }
                 } catch(e) {}
                 
-                // Fallback: 如果 HTML 提取失败，使用纯文本
-                if (!selectionHtml && selectionText) selectionHtml = selectionText.replace(/\n/g, "<br>");
-
-                // V14 兼容性增强：检测按键
-                const isAlt = ev.altKey || (game.keyboard && game.keyboard.isModifierActive && game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.ALT));
-                const isCtrl = ev.ctrlKey || (game.keyboard && game.keyboard.isModifierActive && game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.CONTROL));
+                // V14/Keybind Check
+                const isAlt = ev.altKey || (game.keyboard?.isModifierActive(KeyboardManager.MODIFIER_KEYS.ALT));
+                const isCtrl = ev.ctrlKey || (game.keyboard?.isModifierActive(KeyboardManager.MODIFIER_KEYS.CONTROL));
                 
-                console.log(`5e-chm | MouseUp Detected. Select: "${selectionText.substring(0, 20)}..." | Alt: ${isAlt} | Ctrl: ${isCtrl} | CapturePhase`);
-                
-                if (selectionHtml && (isAlt || isCtrl)) { // CHECK HTML CONTENT NOT TEXT
-                    console.log("5e-chm | Sending selection to chat");
-                    ChatMessage.create({
-                        content: `<h3>5e不全书引用</h3><div class="chm-quote" style="background: rgba(0,0,0,0.05); padding: 5px; border-left: 3px solid #666; margin-bottom: 5px; overflow-x: auto; max-width: 100%;">${selectionHtml}</div><p style="font-size: 0.8em; color: #666; text-align: right;">— ${win.document.title}</p>`
-                    });
-                    if (ui.notifications) ui.notifications.info("已引用到聊天栏");
+                if ((isAlt || isCtrl) && (selectionHtml || selectionText)) {
+                    this._handleSelectionCompat(selectionHtml, selectionText, win.document.title);
                 }
             };
 
             const bindDoc = (win) => {
                 try {
                     if (!win || !win.document) return false;
-                    
-                    // Prevention: If this specific window instance is already bound, skip
                     if (win._chmBound) return true;
 
-                    // 使用 Capture 阶段 (true) 来捕获事件，防止被页面原有脚本阻止冒泡
-                    win.removeEventListener("mouseup", onMouseUp, true);
                     win.addEventListener("mouseup", onMouseUp, true);
-                    
-                    // Mark this window instance as bound
                     win._chmBound = true;
                     
-                    console.log(`5e-chm | Listeners bound to content frame: ${win.location.href}`);
-                    
-                    // Update Title
-                     if (win.document && this.window && this.window.title) {
+                    if (win.document && this.window && this.window.title) {
                         this.window.title.innerText = `5e不全书 - ${win.document.title}`;
-                     }
-                    
-                    // --- Link Fixer for Broken Relative Paths ---
-                    // Many CHM files use relative paths assuming a flat structure or specific base, 
-                    // which breaks when files are nested (e.g., inside "topics/速查/法术速查/").
-                    // We intercept clicks to check if the link is broken (404) and try to fix it by rebasing to 'topics/'.
+                    }
+
+                    // 本地路径修复逻辑 (Remote模式下通常不需要，或者由服务器配置决定)
                     win.document.addEventListener('click', async (e) => {
                         const link = e.target.closest('a');
                         if (!link) return;
-                        
                         const href = link.getAttribute('href');
-                        // Skip anchors, javascript, absolute HTTP, or mailto
-                        if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.match(/^[a-z]+:\/\//)) return;
+                        if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.match(/^[a-z]+:\/\//)) return;
 
-                        // Only apply this heuristic if we are inside 'topics/' and not at the root of it
                         if (!win.location.href.includes('/topics/') || win.location.href.endsWith('/topics/')) return;
 
                         e.preventDefault();
                         e.stopPropagation();
 
                         const currentUrl = win.location.href;
-                        // 1. The browser's default resolution (often broken in these files)
                         const defaultResolution = new URL(href, currentUrl).href;
                         
-                        // 2. The "Rooted" resolution (assuming href is meant to be from 'topics/' root)
-                        const topicsIndex = currentUrl.indexOf('/topics/');
-                        const rootBase = currentUrl.substring(0, topicsIndex + '/topics/'.length);
-                        const rootedResolution = new URL(href, rootBase).href;
-
-                        // Function to check if a URL exists
-                        const checkUrl = async (url) => {
-                            try {
-                                const res = await fetch(url, { method: 'HEAD' });
-                                return res.ok;
-                            } catch { return false; }
-                        };
-
-                        // Logic: If default works, go there. If not, try rooted.
-                        // Optimization: If the path clearly goes deeper (e.g. "BookName/...") but we are already deep, prefer rooted check first?
-                        // No, let's be safe. Check Default first.
-                        
-                        console.log(`5e-chm | Link clicked. Checking: ${href}`);
-                        
-                        if (await checkUrl(defaultResolution)) {
-                            // console.log("5e-chm | Default path valid.");
-                            win.location.href = defaultResolution;
-                        } else {
-                            console.warn(`5e-chm | Default path 404: ${defaultResolution}. Trying rooted path...`);
-                            if (await checkUrl(rootedResolution)) {
-                                console.log(`5e-chm | Rooted path found: ${rootedResolution}`);
-                                win.location.href = rootedResolution;
-                            } else {
-                                console.error("5e-chm | Link dead in both locations.");
-                                // Fallback to default behavior (letting user see the 404 or whatever)
-                                win.location.href = defaultResolution;
-                            }
+                        // 简单的本地检查逻辑
+                         try {
+                                const res = await fetch(defaultResolution, { method: 'HEAD' });
+                                if (res.ok) win.location.href = defaultResolution;
+                                else {
+                                     // Rooted fallback
+                                    const topicsIndex = currentUrl.indexOf('/topics/');
+                                    const rootBase = currentUrl.substring(0, topicsIndex + '/topics/'.length);
+                                    const rootedResolution = new URL(href, rootBase).href;
+                                    win.location.href = rootedResolution;
+                                }
+                        } catch { 
+                             win.location.href = defaultResolution; 
                         }
-                    }, true); // Capture phase to ensure we control navigation
+                    }, true); 
 
                     return true;
                 } catch (err) {
-                    // Suppress security errors for cross-origin frames if present
-                    // console.warn("5e-chm | Bind error:", err);
+                    // console.log("5e-chm | Cross-origin access denied (Expected for Cloud Mode)");
                     return false;
                 }
             };
@@ -175,38 +205,30 @@ export class ChmBrowser extends ApplicationV2 {
                 try {
                     const topWin = iframe.contentWindow;
                     if (!topWin) return;
-
-                    const mainWin = topWin.frames["main"];
-                    if (!mainWin) return;
-                    
-                    const contentWin = mainWin.frames["content"];
-                    if (!contentWin) return;
-
-                    // Attempt bind (idempotent due to _chmBound check)
-                    bindDoc(contentWin);
-
-                } catch (err) {
-                    // console.warn("5e-chm | Frame access error:", err);
-                }
+                    // Try recursive frame access (Main/Content frames structure of some CHM exports)
+                     try {
+                        const mainWin = topWin.frames["main"];
+                        if (mainWin) {
+                             const contentWin = mainWin.frames["content"];
+                             if (contentWin) bindDoc(contentWin);
+                             else bindDoc(mainWin);
+                        } else {
+                            bindDoc(topWin);
+                        }
+                     } catch(e) { 
+                         // Fallback for single frame or cross origin
+                     }
+                } catch (err) {}
             };
-
-            // 启动永久轮询 (1s)，以处理页面跳转和重新加载
+            
             if (this._pollInterval) clearInterval(this._pollInterval);
             this._pollInterval = setInterval(attachListeners, 1000);
-            
-            // 移除超时停止逻辑，只要窗口开着就一直轮询检测导航
         };
 
         wrapper.appendChild(iframe);
         return wrapper;
     }
 
-    /**
-     * 将渲染结果插入到窗口内容中
-     * @param {HTMLElement} result - _renderHTML 返回的元素
-     * @param {HTMLElement} content - 窗口的内容容器
-     * @param {RenderOptions} options
-     */
     _replaceHTML(result, content, options) {
         content.replaceChildren(result);
     }
