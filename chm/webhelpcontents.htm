@@ -284,15 +284,16 @@
 					}
 					
 					if (contentFrame) {
-						console.log("5e-chm | Navigating to:", rawHref);
-						contentFrame.location.href = rawHref;
-					} else {
-						console.log("5e-chm | Content frame not found.");
+						// Resolve rawHref relative to this document (webhelpcontents.htm), not the content frame
+						var baseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
+						var absoluteHref = baseUrl + rawHref;
+						console.log("5e-chm | Navigating to:", absoluteHref);
+						contentFrame.location.href = absoluteHref;
+						return false; // Prevent default behavior only on successful navigation
 					}
 				} catch(e) {
 					console.log("5e-chm | Navigation error", e);
 				}
-				return false; // Prevent default behavior
 			}
 			return r;
 		}
