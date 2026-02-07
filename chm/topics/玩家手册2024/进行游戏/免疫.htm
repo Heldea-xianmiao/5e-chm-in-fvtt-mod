@@ -1,22 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!-- coding: gbk -->
-
 <html>
-
-<head><title>免疫</title>
-
-<meta content="text/html; charset=UTF-8">
-
+<head><title>����</title>
+<meta content="text/html; charset=gb2312">
 <link rel="stylesheet" href="../../style.css"></head>
 
+<body><h3>���� Immunity</h3>
+<p>ĳЩ�����������������ض����˺����ͻ���ĳ���ض���״̬�������ض��˺�������ζ���㲻��������͵��˺��ܵ��˺�������ĳ��״̬��ζ���㲻�ܸ���״̬��Ӱ�졣</p>
 
-
-<body><h3>免疫 Immunity</h3>
-
-<p>某些生物或者物件会免疫特定的伤害类型或者某类特定的状态。免疫特定伤害类型意味着你不会因该类型的伤害受到伤害，免疫某类状态意味着你不受该类状态的影响。</p>
-
-
-
+<script src="../../../cloud-bridge.js"></script>
 <script>
 /* 5e-chm-bridge */
 (function(){
@@ -24,10 +16,10 @@
         try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
     };
     
-    // 1. 报告导航位置 (用于书签记忆)
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
     post('nav', { href: window.location.href, title: document.title });
 
-    // 2. 监听引用操作 (Alt + 选中文本)
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
     document.addEventListener('mouseup', (ev) => {
         const isAction = ev.altKey || ev.ctrlKey;
         if (!isAction) return;
@@ -54,10 +46,7 @@
     });
 })();
 </script>
-<script src="../../../cloud-bridge.js"></script>
 </body>
-
 </html>
-
 
 

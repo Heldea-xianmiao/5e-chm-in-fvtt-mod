@@ -88,7 +88,7 @@ foreach ($file in $files) {
             $encodedParts = $parts | ForEach-Object {
                 if ($_ -match '[^\x00-\x7F]') {
                     # URL Encode
-                    [System.Web.HttpUtility]::UrlEncode($_)
+                    [System.Net.WebUtility]::UrlEncode($_)
                 } else {
                     $_
                 }

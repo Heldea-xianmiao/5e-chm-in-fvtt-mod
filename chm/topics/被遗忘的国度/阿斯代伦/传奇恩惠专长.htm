@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>�������ר��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+<style>
+h3{BORDER-BOTTOM: #800000 1px solid;MARGIN-BOTTOM:-10px;}
+</style>
+</head>
+<body>
+<H2>�������ר�� Epic Boon Feats</H2>
+<P>��Щר�������ڴ�����ݷ��ࡣ</P>
+<P><STRONG><FONT color=#800000>��ҫ����֮���� Boon of Blazing 
+Dawn</FONT></STRONG><BR><EM>�������ר�����Ⱦ����ȼ�19+��</EM><BR>�����������档<BR><STRONG>����ֵ����Ability Score 
+Increase��</STRONG>��ѡ���һ����������1������������30��<BR><STRONG>�����ճ�Beloved 
+of the Sun��</STRONG>����жԹ�ҫ�˺������ߡ�<BR><STRONG>���״��Blazing 
+Strike��</STRONG>������������������һ������ʱ�������ѡ�����˺���Ϊ��ҫ�˺�������ά������ԭ�����˺����͡�<BR><STRONG>���ؼȼ�Burst of 
+Sunlight��</STRONG>ÿ�غ�һ�Σ���������ɹ�ҫ�˺��Ĺ����춨����һ������ʱ��������ɢ�����뾶30�ߵ����������Լ�����30�ߵ�΢����գ�����������¸��غϿ�ʼ����Щ��������⡣</P>
+<P><STRONG><FONT color=#800000>��Ӱ����֮���� Boon of Looming 
+Shadows</FONT></STRONG><BR><EM>�������ר�����Ⱦ����ȼ�19+��</EM><BR>�����������档<BR><STRONG>����ֵ����Ability Score 
+Increase��</STRONG>��ѡ���һ����������1������������30��<BR><STRONG>����չӰShadowy 
+Stretch��</STRONG>����ִ�й�������ʱ�����ս���������Ĵ�����Χ����10�ߣ���������ĻغϽ�����<BR><STRONG>�趯��ӰDacing Silhouette��</STRONG>�����Ը�������ִ�лرܶ�����</P>
+<P><STRONG><FONT color=#800000>��Ӱ����֮���� Boon of Misty 
+Escape</FONT></STRONG><BR><EM>�������ר�����Ⱦ����ȼ�19+��</EM><BR>�����������档<BR><STRONG>����ֵ����Ability Score 
+Increase��</STRONG>�����������֪����������1������������30��<BR><STRONG>��������Gaseous 
+Form��</STRONG>���������ֵ����0��δ�������������ܸ�Ϊ������ֵ����1�����跨��λ��ʩչ����<U><EM>��������Geseous 
+Form</EM></U>�����趯�������Դ˷�ʩչ�÷���ʱ����ֻ����������ΪĿ�꣬��ķ����ٶ�Ϊ20�ߣ����������ڼ䣬���ÿ���غϿ�ʼʱ����ָ�10����ֵ���÷�����ʩ�����������Դ�ר�����������ԡ�<BR>������һ��ʹ�ã�ֱ����ɳ����㶼�޷��ٴ�ʹ�á�</P>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

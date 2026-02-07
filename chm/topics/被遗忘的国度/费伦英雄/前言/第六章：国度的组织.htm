@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>�����£����ȵ���֯</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+<H2>�����£����ȵ���֯ Factions of the Realms</H2>
+<P>�����������ǿ�󣬷ֲ��㷺����֯�����Ǽȿ�����ǿ������ѣ�Ҳ�����ǿֲ��ĵ��ˡ����׵ĸ���ϵ�������м�Ҫ���ܣ���ϸ���ݼ������£�</P>
+<UL>
+  <LI><STRONG>���׽�Cult of the 
+  Dragon��</STRONG>�����֯��а����ı�����������صĳ�ݣ��Լ�����ת��Ϊ������������ð���߿��ܱ��������ǵļƻ�֮�С� 
+  <LI><STRONG>������ͥEmerald 
+  Enclave��</STRONG>����ɵ�³��������������ɵ���֯������Ұ�Լ����������ߡ� 
+  <LI><STRONG>������Harpers��</STRONG>��������һ���������߹��ɵĴ�����֯�������ڷ��׸��صֿ�������ͬʱ���ֵ͵��� 
+
+  <LI><STRONG>��������Lords��Alliance��</STRONG>�ɽ����ذ����������齨�����ˡ��������˴����ź�ƽ��ó���Լ�������Ӯ�� 
+
+  <LI><STRONG>��������Order of the 
+  Gauntlet��</STRONG>����������������������Ķ�ʿ����ɵ���֯��������Ѱа���������ݻ����ǡ� 
+  <LI><STRONG>������ʿThe Purple Dragon 
+  Knights��</STRONG>���׶��Ĵ�����ʿ�������ž���Ѳ�η��ף�������ֲ��ƽ�Ů���ļƻ��� 
+  <LI><STRONG>������ʦRed 
+  Wizards��</STRONG>��Ȼ���ǵļ����ڶ���������������������ʦʦ�ᴩԽ���ף�����ǿ���ǵĸ�����������Ѱ�Ҹ������͵�ħ���� 
+  <LI><STRONG>ɢ���ֻ�Zhentarim��</STRONG>����Ӵ�ķ�����֯�ṩ�ӹ�Ӷ�������У�������ɱ�˵ĸ�����������֯�ڷ��׵ĸ�����ж�����������</LI></UL>
+<P>��Щ��ϵ�еĴ󲿷ֶ��ڵ�һ������صĽ�ɫ��������Ľ�ɫ����ͨ��ѡ������һ����������Ϊ����ϵ��һԱ����ɫҲ�����ڲ�ѡ���Ӧ����������³�Ϊĳ����ϵ�ĳ�Ա�����ð���߶�����ð�����ĺ��ڲż�����һ����ϵ��<BR>��Ľ�ɫ�������ڻ���ϣ�������ĸ���ϵ�������ֿ��ܻ�����ĸ���ϵ��</P>
+
+
+<script src="../../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

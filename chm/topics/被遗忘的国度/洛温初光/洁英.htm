@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>��Ӣ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<H2>��Ӣ Kithkin</H2>
+<P>��Ӣ����İ�С�����壬����ӵ�н�׳���Ȳ����޳����ֱۺͽ�ʵ�����ɡ����ǿ��������ӡ�Բ��Ķ����һ˫����Ĵ��۾��������ǿ�������Լ��Щ���ܡ�<BR>�������Ӣͨ��һ�������Ӧ�������໥���ӣ���������ʹ�����ܹ���֪������ͬ�����С�����������ϵ������Ӣ�˴�֮����ޱ�������Ρ�<BR>һЩ��Ӣ���ڸ���ԭ�򡪡�ͨ�������ܷ�����������ִ����Ĵ��ˣ������Բ��֡�����-��Ӱ��ԭ��ʷ������������ʱ�����õش����������Ӧ�����а��롣Ȼ����������Σ���Ӣ�ձ���Ϊ����ͬ����һ��������</P>
+<P><STRONG><FONT color=#800000>���µĽ�Ӣ In 
+Lorwyn</FONT></STRONG><BR>���µĽ�Ӣ��������԰���С��ׯ�У�����ӭ�����߽������ǵ���������Щ��Ӣ�����ǵ��Ļ��Ų���¼��һ����Ϊ������Ӣ֮�顷�ĵ伮�С�����Ҳ��������������ţ������������µ���Ȼ������ص����ţ��������£���</P>
+<P><STRONG><FONT color=#800000>��Ӱ��ԭ�Ľ�Ӣ In 
+Shadowmoor</FONT></STRONG><BR>��Ӱ��ԭ�Ľ�Ӣ���ӹ����ͳ��⡣���Ǵ���ס�ڱ���Ϊ����������ǿ�����ӵ��У����������ϸ��ϰ����ά��������򡣰�Ӱ��ԭ��Ӣ�����������й�ע�����ǵ������������κη�����ѹ��ļ���</P>
+<P><STRONG><FONT color=#800000>���ݽ�Ӣ Playing a 
+Kithkin</FONT></STRONG><BR>������Ӣ��ҽ�ɫʱ����ʹ�ð��������壨��������ֲᡷ������Ӱ��ԭ�Ľ�Ӣ����120�ߺڰ��Ӿ���</P>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

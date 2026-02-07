@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>�ڶ��£���ҹ�е�����</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+<style>
+h3{BORDER-BOTTOM: #800000 1px solid;MARGIN-BOTTOM:-10px;}
+</style>
+</head>
+
+<body>
+
+
+<H1>�ڶ��£���ҹ�е����� Creatures of the Night
+</H1>
+
+
+<P>�����������밢˹���ס����̷����Ѫ��֮��ī��˹�з���˹�Լ�Ѫ��ĵ���������ص������ǡ�����һЩ�����ݿ������ڵ����µ�ð�չ����С���Ҳ���Խ������������Լ�����Ѫ����ħ�����ð�չ����<BR>�йع���ĸ�����ϸ��Ϣ��������ͼ������
+</P>
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

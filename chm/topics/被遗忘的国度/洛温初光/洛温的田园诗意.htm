@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>���µ���԰ʫ��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<style>
+h3{BORDER-BOTTOM: #800000 1px solid;MARGIN-BOTTOM:-10px;}
+</style>
+<body>
+<H2>���µ���԰ʫ�� The Idyllic Fields of Lorwyn</H2>
+<P>���µ�ÿ���ط������������������޵�ɫ�ʡ�����İ��������Ŵ˴���̫���ڿ��д�һ����ƽ��������һ����ƽ�ߣ����Ĺ�âһֱ��ҫ�Ŵ�ء������������Ǵ����������ա�</P>
+<H3>�����쿪�����ε����� Lives of Whimsy and Wandering</H3>
+<P>�����Ǿ��顢��ؾ��Ĳ��Ρ��������÷�塢������˵Ľ�Ӣ�������������Լ�˪��ļ�԰����Щ�����ƽ��������ɢ�������������У���ż��Ҳ�ᱬ����Թ�ͳ�ͻ���������������ס�����Ϣ������һ�¡���<BR>���µĲ��־����ƫ���������΢С�������ڸ�����ׯ���������ǣ������ϵ��������Ĵ����С������ǻۡ��޴�ľ���Ѱ�ҿ���̽�����½��磬���п��Ա���κ���̬���Ѻû����飬����Ϊ�Ǻ��˵�����������֮�⣬���б�������Ȼ����Ĳ���˼����ڣ������ɶ�����Ȼ�������̬��ɣ���չ�ֳ���ĸ�����Ķ����������˽������¾�ס������ĸ�����Ϣ��</P>
+<P><STRONG><FONT color=#800000>���¾�������� Lorwyn Denizen 
+Characteristics</FONT></STRONG><BR>��ʱ��ͣ�������µ����ǻ������塢�����Լ��˸��������ܵ����µ�ħ��Ӱ�졣���µľ��񾭳���ʾ��������ɫ��ͷ���Լ���ɫ���۾������Ҵ󲿷��˶�ϲ����ɫ�����޵ķ��Ρ����⣬���µľ����������ֹۣ����Ի�����̬�Ȼ�����������ǵĸ��Է����޳���ϲ�ö����磬����û�ж��⡣</P>
+<H3>�����ţ�̫��Ļ��� Eirdu, Embodiment of the Sun</H3>
+<P>����������עĿ������֮һ�ǰ����ţ�һ���޴�ģ����������ȣ��״��ͷ�����Լ�糺�ɫ��ë�ͳ��������������Ȼ���صİ����Ż���������¾���Ӵ�����������ʱ���ܿ�������������̫��켣���С�<BR>�󲿷���������Ϊ�������������������ر��ʵľ�����������Щ�˽������ŵ������ݣ��������Ŷ����������չ���𾴣��ܴ���һ��������ܵġ��־õ�����С������ŵ���ͽ�ö���������������貽����������ף�����������ţ�ֻҪ���л��õĵط����ͻ���̫�����ů��ʹ��<STRONG><U>Զ�Ž���Ancient 
+Gold Dragon</U></STRONG>���������������Ϸ�б�ʾ�����š�</P>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

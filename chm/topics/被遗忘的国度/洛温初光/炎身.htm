@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>����</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<H2>���� Flamekin</H2>
+<P>�����˻�������ʯ�����ִ���֮Դ��֯���ɵ���������ˣ��������������Ȼ�绳����̵Ĺ��������ǵ������������޺���ħ�����棬�����츳ħ��ȴ����������ǧ������̬��������������֮��<BR>������̽�����������Ա���Ϊ���ߵ�־�򣬼������Ҽ�ֵ��ʵ����һ�����������һ�����ܳɾ͵�����Ҫ֮�¡����ǽ����ֱ�����׷Ѱ����������֮������<BR>���������»�Ӱ��ԭ���зֲ�����������εأ����ǵ�������ϰ�׶�����һ�¡�</P>
+<P><STRONG><FONT color=#800000>�������� Playing a 
+Flamekin<BR></FONT></STRONG>����������ҽ�ɫʱ����ʹ�û�Ԫ�������壨����ħ�˿Ͼ��ף���Ԫ����Ĺ������</P>
+<div class=center style="BACKGROUND-COLOR: #eeeeee"><STRONG>���� Cinders<BR></STRONG>�ڰ�Ӱ��ԭ�������������ѹ�����ĵĳ�����ж�����Ϊ��������������������ϵ�ħ��������Ȼ˥΢����Ȼ�����Ա��л���ϵ������������Щ�������Ӿ��������������������������������е�һЩ�����ջ���ȼ���棬����һЩ��ữΪ˪�����һ�㽫�ڱ��º���������Ӳ�����</div>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

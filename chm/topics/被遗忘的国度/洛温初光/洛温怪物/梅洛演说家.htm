@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>÷����˵��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../../stat-block.css">
+<style>
+H2{
+BORDER-BOTTOM: #b79c61 1px solid;
+margin-bottom: -12px;
+}
+</style>
+</head>
+
+<body>
+
+
+<H2>���µ�÷�� Lorwyn Merrow </H2>  
+
+<P>���µ�÷���Ǹ߰������˺ͽ����ߣ�ƾ��̸��������츳�������ǵĵ�λ���ڽ����У�һ�����µ�÷�����ֳ�Ŀ�����˵�̬�ȣ��������ȴ�������޿����ޡ���ս���У����ǻ����������������������Ч���� 
+</P>
+
+
+<H2>÷����˵�� Merrow Haranguer
+</H2>
+
+<P>�����µĴ����÷�嶼����ͼ�ô����̱�������֮��ѹ�����ˣ�������Լ�Ŀ���÷����˵�ҡ�
+</P>
+
+<div class="stat-block">
+<h5>÷����˵��Merrow Haranguer</h5>
+<div class="sub-line">���͹��ޣ���������</div>
+<table><tr><td><strong>AC </strong>14</td><td width="40%"><strong>�ȹ� </strong>+4��14��</td></tr>
+<tr><td colspan=2><strong> HP </strong>90 ��12d8+36 ��</td></tr>
+<tr><td colspan=2><strong>�ٶ� </strong>5�ߣ���Ӿ�ٶ�40��</td></tr></table>
+<table class="stat-abilities"><tr><th></th><th></th><th>����</th><th>����</th><td style="WIDTH: 5px"></td><th></th><th></th><th>����</th><th>����</th><td style="WIDTH: 5px"></td><th></th><th></th><th>����</th><th>����</th></tr>
+<tr><td class="c1"><strong>����</strong></td><td class="c1">18</td><td class="c2">+4</td><td class="c2">+4</td>
+<td></td>
+<td class="c1"><strong>���</strong></td><td class="c1">18</td><td class="c2">+4</td><td class="c2">+7</td>
+<td></td>
+<td class="c1"><strong>����</strong></td><td class="c1">16</td><td class="c2">+3</td><td class="c2">+3</td></tr>
+<tr><td class="c3"><strong>����</strong></td><td class="c3">14</td><td class="c4">+2</td><td class="c4">+2</td>
+<td></td>
+<td class="c3"><strong>��֪</strong></td><td class="c3">15</td><td class="c4">+2</td><td class="c4">+2</td>
+<td></td>
+<td class="c3"><strong>����</strong></td><td class="c3">19</td><td class="c4">+4</td><td class="c4">+7</td></tr>
+</table>
+<table>
+<tr><td><strong>���� </strong>����+7����˵+7</td></tr>
+<tr><td><strong>�й� </strong>�������12</td></tr>
+<tr><td><strong>���� </strong>ͨ���ԭ���ˮ���</td></tr>
+<tr><td><strong>CR </strong>5 ��XP 1800�� PB +3��</td></tr>
+</table>
+<P>
+</P>
+<h6>����Traits</h6>
+<p>
+<strong>ˮ½����Amphibious��</strong>÷������ڿ�����ˮ�к�����
+</p>
+<h6>����Actions</h6>
+<p>
+<strong>���ع���Multiattack��</strong>÷��ʹ��ɺ��Ȩ�Ȼ�綾���������������ι�����<br>
+<strong>ɺ��Ȩ��Coral Scepter��</strong><em>��ս�����춨��</em>+7������5�ߡ�<em>���У�</em>14 ��2d10 + 4�� �ۻ��˺���<br>
+<strong>�綾����Poisoned Longbow��</strong><em>Զ�̹����춨��</em>+7�����150/600�ߡ�<em>���У�</em>8 ��1d8 + 4�� �����˺����7��2d6�������˺���<br>
+<strong>��á��Invective��</strong><em>��֪����춨��</em>DC15��÷��60�߿ɼ���Χ�ڵ������������ˡ�<em>ʧ�ܣ�</em>14��4d6�������˺�����ֱ��÷����¸��غϽ���ǰ��Ŀ����´ι����춨�������ơ�<em>�ɹ���</em>���ܰ��ˡ�
+</p>
+</div>
+
+<script src="../../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+

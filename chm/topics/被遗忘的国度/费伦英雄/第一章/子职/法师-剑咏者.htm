@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>��ʦ-��ӽ��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+<H2><FONT color=#000080>��ӽ�� Bladesinger</FONT> </H2>
+<P class=sum>�����������鶯����</P>
+<P>��ӽ����������һ�ֽ��������赸���ϵİ·����С���ս���У���ӽ�߻�����һϵ�д��۸��Ӷ��ֲ�ʧ���ŵ���ʽ�������˺�������ħ����������ԵĹ����;���ķ����С������Ŀ�ù���ӽ��չ¶����֮�ˣ������Ƿ�������Ϊ��һ������Ϊ����ľ���֮һ��������һ������֮�裬�����Ÿ߸�֮���С�<BR>��ӽ��Ŵ��ľ���������Ž�����ϵ����������������������ղ�Ϊ��ȡ��������ʱ�����գ�������Ľ�ӽ����Ȼ�����ڹ��ϵľ�����ȣ�����˹׿ŵMyth 
+Drannor��������������Щ�뾫���ǹ�����򡢽�����ʷ�ķǾ�����ᣬ����������Silver 
+Marches�����۳����ںδ�����ӽ���ǽ���Ϊ�˰�����ͨ�����Լ��ɾ�Ӣ��ΰҵ���������ǵ��츳�����˹��ȸ������������Ⱥ������ӽ�ߵĵ�����Ϊһ������ͷ��</P>
+<P><STRONG><FONT color=#000080>3�������� 
+Bladesong</FONT></STRONG> 
+<BR>��Ϊһ�������������㻽��һ�ֱ���Ϊ����ľ���ħ����ǰ������û����װ���׻�ʹ�ö��ơ�<BR>�������1���ӣ�������������ʧ��״̬����װ���׻���ƣ�����˫�ֲ���һ��������������ʱ��ǰ�������������ʱ������裨���趯������<BR>���輤���ڼ䣬�����������档���ܹ����𽣸�Ĵ������������������ֵ������1�Σ������һ�γ��ݺ����ػ����������ĵ�ʹ�ô���������ʹ�ð�������ʱ�����ָ�һ�������ĵ�ʹ�ô�����<BR><STRONG>�鶯Agility��</STRONG> 
+���AC��õ�ͬ������������ֵ�ļ�ֵ�����+1����������ٶ�����10�ߡ����⣬�������ݣ��ؼ����춨ʱ�������ơ�<BR><STRONG>����Bladework��</STRONG> 
+����ʹ��������������������й���ʱ�������ʹ�������������ֵ�����������������й������˺�������<BR><STRONG>רעFocus��</STRONG> 
+����Ϊά��רע���������ʻ���ʱ������Խ������������ֵ�ӵ�������ֵ���С�</P>
+<P><STRONG><FONT color=#000080>3����ս��ѵ�� Training in War and 
+Song</FONT></STRONG>     
+<BR>�������в�����˫�ּ����ʹ����Ľ�ս�������������������ʹ������������Ľ�ս������Ϊ�㷨ʦ������ʩ��������<BR>���⣬������������ѡ���һ��ܵ��������ؼ����˶������ݻ���˵��</P>
+<P><STRONG><FONT color=#000080>6�������⹥�� Extra 
+Attack</FONT></STRONG>  
+<BR>������Ļغ���ִ�й�������ʱ�����Խ������ι�������һ�Ρ�<BR>���⣬����Խ����⹥���е�һ�Σ��滻Ϊʩչ���һ��ʩ��ʱ��Ϊ�����ķ�ʦϷ����</P>
+<P><STRONG><FONT color=#000080>10��������֮�� Song of 
+Defense</FONT></STRONG>   
+<BR>����Ľ��輤���ڼ䣬�����ܵ��˺�ʱ�������ִ�з�Ӧ������һö����λ�������˺����͵�ͬ�ڸ÷���λ����5������ֵ��</P>
+<P><STRONG><FONT color=#000080>14����ʤ��֮�� Song of 
+Victory</FONT></STRONG>   
+<BR>����ʩչ��һ��ʩ��ʱ��Ϊ�����ķ���֮�������ִ�и�����������������һ�ι�����</P>
+
+
+<script src="../../../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

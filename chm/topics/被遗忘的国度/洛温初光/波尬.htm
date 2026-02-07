@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>����</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<H2>����Boggarts</H2>
+<P>����������-��Ӱ��ԭ�����Ͱ�С�����δ�׳����ؾ�����������ο���Ұ�ޣ��������Ǻ����ƶ���Ŀڱǡ�����Щ��ͬ�����⣬���ε���òǧ������еĲ��ο������ƴ�⬣����ż�̰��ë����С��Բ���۾�������һֻ��������ܳ�����ĿڱǺ�������Ķ��䡣�������������ڵ���ҩ������ͨ����ͨ�ض����򣬾���������������</P>
+<P><FONT color=#800000><STRONG>���µĲ��� In 
+Lorwyn</STRONG></FONT> 
+<BR>�����£����ε����ڼ��嶴��֮�У�����Ĺ����ȼ���ͬ���衣�곤��ʵ����ǿ�Ĳ��α���Ϊ"����"�������Ǳ����𾴵����䣬����άϵȺ���������µĲ���������Ⱥ�����֪ʶ��������顣��ನ��ԸΪ׷����������´��վ������Ⱥ���г�������ð���ߡ�<BR>���µĲ���ͨ������ħ���츳����Щ����Ȼħ������������ѧϰ��ʩչ�����츳�Ĳ��Σ��������Ϊ��³�������⣬���µĲ���Ҳ����ѡ���Ϊ���������������������ߣ������Ϊ��ʦ��������Ԥ��ʦ������Ϊ������֤���Լ�������ͨ��Ԥ��ħ������ȡ��Ϣ��</P>
+<P><STRONG><FONT color=#800000>��Ӱ��ԭ�Ĳ��� In 
+Shadowmoor</FONT></STRONG> 
+<BR>��Ӱ��ԭ�Ĳ�����������ͨ�������µĲ��θ�Ϊ���أ���������������ǡ����ǻ����������������������װ�װ嶤���Լ��������ϡ���Ӱ��ԭ�Ĳ����������Һ�����֯�����ǵ���Ⱥ����ϡ�٣���������Ϣ��ƫƧ��Σ�յĻ���֮�С���Ӱ��ԭ��"����"��½�����Ĵ��ε���ϲ���ÿ��顢������������Դ��������ˡ�<BR>�����µ�ͬ��һ������Ӱ��ԭ�Ĳ���Ҳ������ħ������Щ���ο��ܻ��Ϊħ��ʦ������ͨ����ѡ����������������һЩ���λ������Ϊ�Լ�������������³������һЩ���λ��Ϊ��ʿ������ͨ����ѡ���Ұ������һ��ְչ����ħ��������</P>
+<P><STRONG><FONT color=#800000>���ݲ��� Playing an 
+Boggart</FONT></STRONG> 
+ <BR>���㴴��һ��������ҽ�ɫʱ��ʹ�õؾ����壨����ħ�˿Ͼ��ף���Ԫ����Ĺ��</P>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

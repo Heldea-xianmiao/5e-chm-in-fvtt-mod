@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>����</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<H2>���� Elves</H2>
+<P>����-��Ӱ��ԭ���ȵľ���������һ�Ժ�ɫ��ͫ���۾��������Ľǣ��Ȳ�һ��˫���㣻�Լ�����䡣���µľ����밵Ӱ��ԭ�������ͬ�����������Ļ��ϴ��ںܴ�Ĳ��졣 
+</P>
+<P><STRONG><FONT color=#800000>���µľ��� In 
+Lorwyn</FONT></STRONG><BR>���µľ�������ɽ��һ��Ķ̽ǻ�����һ�����ǣ����ܻ���м��ߡ����ǵļ�����ֳ���ϸ�� 
+<BR>�����£������ǽ�����Ϊ����������������ÿλ��������Ķ��嶼�Ե��������������µľ������������������ĵ۹����ƹ���Ƭ�����ϵ��������<BR>��Щ���齫�۹�����������������в�������Ƿ��������Phyrexian�����֣���������"����-��Ӱ��ԭ����ʷ"����Ȼ���˴�����ֻ�ǵ۹������ɥ�ӣ���������Դ������������Ŀ�������Ϊ�۹�˥�����»�����</P>
+<P><STRONG><FONT color=#800000>��Ӱ��ԭ�ľ��� In 
+Shadowmoor</FONT></STRONG><BR>��Ӱ��ԭ�ľ���Ľ��ֳ��־�������Ŵֲ����ֵ���������ǵļ����Ҫ�����¶������ͬ�廹Ҫ���� 
+<BR>�����µľ���һ������Ӱ��ԭ�ľ������ػ�����������һλ��Ӱ��ԭ�����"��"�Ķ����ܳ�����ྫ�����ţ������������Ϊ�����Ի��ɳ����������佫Ӣ������������������Ϊ������߾��硣 
+<BR>Ѱ��ʦ���о���̽�����µİ�Ӱ��ԭ���顣����ÿ���˶�Я����<EM><U>��ĺʥ��ϻ 
+Reliquary of 
+Twilight</U></EM>���������£����ڰ�Ӱ��ԭ��������������ЩΪ׷Ѱ�������Լ�λ�������ľ��顪����Ѱ��ʦͬΪ��Ⱥ���������������ĳ�Ա��<BR><BR><STRONG><FONT color=#800000>���ݾ��� 
+Playing an Elf</FONT></STRONG><BR>  
+���㴴��һ���������»�Ӱ��ԭ�ľ�����ҽ�ɫʱ��ʹ�þ������壨��������ֲᡷ�������ڸý�ɫ�ľ���Ѫϵ���ԣ����·��ľ���Ѫϵ����ѡ������һ��Ѫϵ�� <BR><STRONG>����ѪϵElves Lineages</STRONG> 
+<TABLE class=center>
+  
+  <TR>
+    <TD width=150><STRONG>Ѫϵ </STRONG></TD>
+    <TD><STRONG>1��</STRONG></TD>
+    <TD width=180><STRONG>3��</STRONG></TD>
+    <TD width=240><STRONG>5��</STRONG></TD></TR>
+  <TR bgColor=#eeeeee>
+    <TD>���¾���Lorwyn Elf</TD>
+    <TD>
+      <P align=left>��֪��Ϸ��<U><EM>����֮��Thorn 
+      Whip</EM></U> ��ÿ������ɳ���ʱ������Խ����滻Ϊ��³�������б��е���һ��Ϸ����&nbsp; 
+      </P></TD>
+    <TD><U><EM>������Command</EM></U></TD>
+    <TD><U><EM>��Ĭ��Silence</EM></U></TD></TR>
+  <TR>
+    <TD>Ӱԭ����Shadowmoor Elf&nbsp;&nbsp;&nbsp;</TD>
+    <TD>
+      <P align=left>��ĺڰ��Ӿ�������120�ߡ���Ҳ֪��Ϸ��<U><EM>�����âStarry 
+      Wisp</EM></U> ��</P></TD>
+    <TD><U><EM>Ӣ������Heroism</EM></U></TD>
+    <TD><U><EM>�������Gentle Repose</EM></U></TD></TR>
+</TABLE>  
+ 
+  
+   
+ </P> 
+  
+  
+   
+
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

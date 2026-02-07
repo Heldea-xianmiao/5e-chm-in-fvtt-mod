@@ -1,22 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!-- coding: gbk -->
-
 <html>
-
-<head><title>持续时间</title>
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<head><title>����ʱ��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <link rel="stylesheet" href="../../style.css"></head>
 
+<body><h2>����ʱ�� Duration</h2>
+<p>�����ĳ���ʱ�伴�������侭ʩչ����ά�ֵ�ʱ��������ʱ��ͨ�������¼�����ʽ��<BR><b>רעConcentration��</b>רע������רע�������У���������ࣩ��<BR><b>����Instantaneous��</b>����������ζ������ħ��ֻ������һ˲�䣬������ɢ��<BR><b>����ʱ���Time Span��</b>�������������һ��ʱ��Σ��䵥λ���֡����ӡ�Сʱ�������������磬����ʱ��Ϊ��1���ӡ���ζ�ŷ�������1���Ӻ������ֻҪ��δ����ʧ��״̬����������ʱ����һ�����ڳ����ġ�������ʩչ�ĳ������������趯������</p>
 
-
-<body><h2>持续时间 Duration</h2>
-
-<p>法术的持续时间即法术在其经施展后所维持的时长。持续时间通常有以下几种形式：<BR><b>专注Concentration。</b>专注法术依专注规则运行（详见术语汇编）。<BR><b>立即Instantaneous。</b>立即法术意味着其中魔法只存在了一瞬间，随后便消散。<BR><b>持续时间段Time Span。</b>持续法术会给出一个时间段，其单位是轮、分钟、小时或者其他。例如，持续时间为“1分钟”意味着法术会在1分钟后结束。只要你未处于失能状态，你便可以随时结束一个正在持续的、由你所施展的持续法术（无需动作）。</p>
-
-
-
+<script src="../../../cloud-bridge.js"></script>
 <script>
 /* 5e-chm-bridge */
 (function(){
@@ -24,10 +16,10 @@
         try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
     };
     
-    // 1. 报告导航位置 (用于书签记忆)
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
     post('nav', { href: window.location.href, title: document.title });
 
-    // 2. 监听引用操作 (Alt + 选中文本)
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
     document.addEventListener('mouseup', (ev) => {
         const isAction = ev.altKey || ev.ctrlKey;
         if (!isAction) return;
@@ -54,10 +46,7 @@
     });
 })();
 </script>
-<script src="../../../cloud-bridge.js"></script>
 </body>
-
 </html>
-
 
 

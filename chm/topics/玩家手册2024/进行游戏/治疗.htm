@@ -1,28 +1,17 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!-- coding: gbk -->
-
 <html>
-
-<head><title>治疗</title>
-
-<meta content="text/html; charset=UTF-8">
-
+<head><title>����</title>
+<meta content="text/html; charset=gb2312">
 <link rel="stylesheet" href="../../style.css"></head>
 
+<body><h3>����Healing</h3>
+<p>����ֵ���Ա�ħ���ָ�������<U><EM>������Cure 
+wound</EM></U>����<EM><U>����ҩˮPotion of Healing</U></EM>��Ҳ��ͨ��<FONT color=#008000><STRONG>����</STRONG></FONT>��<FONT color=#008000><STRONG>����</STRONG></FONT>�ָ����������ࣩ��<BR>�����������ʱ�����ָ�������ֵ�ӵ���ĵ�ǰ����ֵ�ϡ��������ֵ���ܳ����������ֵ���ޣ����������޵�����ֵ������ʧ��������˵�����������14����ֵʱ������8����ֵ�����ƣ����������ֵ����Ϊ20������ָ�6����ֵ����8��</p>
+<div class="center"><p><STRONG>��Ϣ 
+Resting��</STRONG>ð���������������絽����ʱ�޿̲���ð�ա�����Ҳ��Ҫ��Ϣ���κ����ﶼ������һ���ڽ�������һСʱ����<FONT color=#008000><STRONG>����</STRONG></FONT>�����԰�Сʱ��<FONT color=#008000><STRONG>����</STRONG></FONT>��������һ�졣��Ϣ����Ҫ����֮һ�ǻָ�����ֵ���������ṩ�˶��ݺͳ��ݵĹ���</p></div>
 
-
-<body><h3>治疗Healing</h3>
-
-<p>生命值可以被魔法恢复，例如<U><EM>疗伤术Cure 
-
-wound</EM></U>或者<EM><U>治疗药水Potion of Healing</U></EM>，也可通过<FONT color=#008000><STRONG>短休</STRONG></FONT>或<FONT color=#008000><STRONG>长休</STRONG></FONT>恢复（见术语汇编）。<BR>当你接受治疗时，将恢复的生命值加到你的当前生命值上。你的生命值不能超过你的生命值上限，因此溢出上限的生命值将会消失。举例来说，如果你在有14生命值时接受了8生命值的治疗，而你的生命值上限为20，则你恢复6生命值而非8。</p>
-
-<div class="center"><p><STRONG>休息 
-
-Resting。</STRONG>冒险者们做不到从早到晚无时无刻不在冒险。他们也需要休息。任何生物都可以在一天内进行数次一小时长的<FONT color=#008000><STRONG>短休</STRONG></FONT>，并以八小时的<FONT color=#008000><STRONG>长休</STRONG></FONT>来结束这一天。休息的主要增益之一是恢复生命值。术语汇编提供了短休和长休的规则。</p></div>
-
-
-
+<script src="../../../cloud-bridge.js"></script>
 <script>
 /* 5e-chm-bridge */
 (function(){
@@ -30,10 +19,10 @@ Resting。</STRONG>冒险者们做不到从早到晚无时无刻不在冒险。�
         try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
     };
     
-    // 1. 报告导航位置 (用于书签记忆)
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
     post('nav', { href: window.location.href, title: document.title });
 
-    // 2. 监听引用操作 (Alt + 选中文本)
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
     document.addEventListener('mouseup', (ev) => {
         const isAction = ev.altKey || ev.ctrlKey;
         if (!isAction) return;
@@ -60,10 +49,7 @@ Resting。</STRONG>冒险者们做不到从早到晚无时无刻不在冒险。�
     });
 })();
 </script>
-<script src="../../../cloud-bridge.js"></script>
 </body>
-
 </html>
-
 
 

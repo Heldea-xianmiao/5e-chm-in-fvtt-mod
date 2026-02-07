@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>�������</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+<style>
+h3{BORDER-BOTTOM: #800000 1px solid;MARGIN-BOTTOM:-10px;}
+</style>
+</head>
+<body>
+<H2>�������ר�� Epic Boon Feats</H2>
+<P>��ר����ǰ��������˹�����½����й������������ڴ�����ݷ���</P>
+<P><STRONG><FONT color=#800000>������˹֮���� Boon of 
+Siberys</FONT></STRONG>   <BR><EM>�������ר�����Ⱦ����ȼ�19+��������ս�ۣ�</EM><BR>�����������棺<BR><STRONG>����ֵ����Ability Score 
+Increase��</STRONG> 
+ ��ѡ���һ����������1������������30��<BR><STRONG>����ħ��Aberrant 
+Magic��</STRONG> 
+ѡ��һ��������ʿ�����б�Ĳ����ڰ˻��ķ�����һ������������˹���Ʊ�ķ����������뽫�˷�����ĳ����������������а������ƽ��飩����ʼ��׼���������������������跨��λ��ʩչ�÷���һ�Σ�������ɳ��ݻ����ʱ�����ػ��Դ˷�ʩչ�÷�������������Ҳ�ܹ�����ӵ�еĺ��ʻ��׵ķ���λʩչ�÷����������Щ������ʩ�������Ǹ�֪�������������������ø�ר��ʱѡ�񣩡�<BR><STRONG>������˹����Siberys Dragonmarks</STRONG> 
+
+<table class=part>
+<tr><td width=240><STRONG>����</STRONG></td><th><STRONG>��������</STRONG></th></tr>
+<tr bgcolor=#eeeeee><td><U><I>��֪��True Seeing</I></U></td><th>���Detection</th></tr>
+<tr><td><U><I>������Teleport</I></U></td><th>̽ѰFinding</th></tr>
+<tr bgcolor=#eeeeee><td><U><I>������̬Animal Shapes</I></U></td><th>����Handling</th></tr>
+<tr><td><U><I>������Regenerate</I></U></td><th>ҽ��Healing</th></tr>
+<tr bgcolor=#eeeeee><td><U><I>Ӣ����Heroes' Feast</I></U></td><th>�д�Hospitality</th></tr>
+<tr><td><U><I>�����λ��Demiplane</I></U></td><th>����Making</th></tr>
+<tr bgcolor=#eeeeee><td><U><I>λ��ת��Plane Shift</I></U></td><th>ͨ��Passage</th></tr>
+<tr><td><U><I>�ռ���Symbol</I></U></td><th>��¼Scribing</th></tr>
+<tr bgcolor=#eeeeee><td><U><I>��������Mind Blank</I></U></td><th>�ڽ�Sentinel</th></tr>
+<tr><td><U><I>ͶӰ��Project Image</I></U></td><th>��ӰShadow</th></tr>
+<tr bgcolor=#eeeeee><td><U><I>�ٿ�����Control Wetdaer</I></U></td><th>����Storm</th></tr>
+<tr><td><U><I>�Թ���Maze</I></U></td><th>����Warding</th></tr>
+</table></P>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

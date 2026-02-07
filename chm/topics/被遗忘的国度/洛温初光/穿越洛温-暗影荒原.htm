@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>��Խ����-��Ӱ��ԭ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+<style>
+H6{
+color:rgb(15,92,188)}
+h3{BORDER-BOTTOM: #800000 1px solid;MARGIN-BOTTOM:-10px;}
+
+</style>
+</head>
+<body>
+<H2>��Խ����-��Ӱ��ԭTraversing Lorwyn-Shadowmoor</H2>
+<P>���ºͰ�Ӱ��ԭ�ı߽�󶼹̶��ˡ������ǻ��ǻ���Ϊ��������ԭ����ı䡣��ʱ���߽������ֵ��ע��ĵ������������ƶ�������ʱ�򣬱߽���ƶ��������ɿ��ԡ�<BR>�߽�ͨ�����ƶ������ģ��������д�����ﲢ������ת��ǰ�����ʱ�䡣��һ��ͻȻ�ı߽��ƶ��ᵼ���ˡ��۾ӵ��Լ�����½�ض��ܵ���һλ���ת��ЧӦ��</P>
+<H3>����ת��Transformed Lands</H3>
+<P>�߽���ƶ��������ı�ص����ۺ����ԣ�����Ӧ�µ�����һ�������ڴ���ɽ���ϵ���԰���´�ׯ�����ܻᱻת��Ϊ����Χǽ��ÿ��ס����Χ����̵�Ҫ����һƬ�ݰܡ��Ӳݴ�������أ�������Ҳ����Ϊ����������ɫ�ʰ�쵻���Ĳݵء�</P>
+<H3>�Ծ����Ӱ�� Effects on Inhabitants</H3>
+<P>���������������е�����-��Ӱ��ԭ����ᾭ��˲���ת�䡣���������е�ð�����������״������ƶ�����Ӱ��ԭ����֮��Ȼ��</P>
+<P><STRONG><FONT color=#800000>ĺ���볿�� Eventide and 
+Morningtide</FONT></STRONG><BR>�����´��е���Ӱ��ԭʱ�����ĳ���ȻЧӦ��ͳ��Ϊĺ�⣬���Ӱ�Ӱ��ԭ���е����µ�����ЧӦ��ͳ��Ϊ���⡣��������λ��ĸ��岻�ᾭ����Щ˲ʱЧӦ��<BR>�����µ�������밵Ӱ��ԭʱ��������չ�ֳ����İ�Ӱ��ԭ�ص㣬������ò���˸񶼻�ı䡣�������������µļ���ֻ��ģ����Ť���ر��������Ӱ��ԭ�����ﴩ�е�����ʱ��չ�ֳ����µ��ص㣬����Ҳ����֮�ı䡣<BR>ÿ���˵İ�Ӱ��ԭ�������ص㶼�Ƕ��صģ�������ͨ�������෴����ʽӳ�ձ˴ˡ�</P>
+<H3>��ֹת�� Preventing Transformation</H3>
+<P>����-��Ӱ��ԭλ�����������Ƴ�һ�ֱ���Ϊʥ��ϻ��ħ����������Է�ֹĺ���볿���Ч����</P>
+<H6>����ʥ��ϻ Reliquary of Dawn</H6>
+<P><EM>�������ͨ<BR></EM>����������װ�Ű����ŵ����צ�ӣ���Ƭ��������������Ϊ��������̫��Ļ����������װ����ʥ��ϻ�ڼ䣬������ĺ��ЧӦ��</P>
+<H6>��ĺʥ��ϻ Reliquary of Twilight</H6>
+<P><EM>�������ͨ</EM><BR>����������װ������³�����צ�ӣ���Ƭ��������������Ϊ���ǰ�Ӱ��ԭ�����Ļ����������װĺ��ʥ��ϻ�ڼ䣬�����߳���ЧӦ��</P>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

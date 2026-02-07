@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>����</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<H2>���� Faeries</H2>
+<P>���������ǵĶ�Ȥζ�����������ǵ����������Ǿ����������������档��С����״���죬���Ծ��д��ǣ���ɫ��ͫ�ף������ʵ�Ƥ�����������˫�������������鶼�����Ի��䣬���Ǿ���������������ħ���츳����ʹ�󲿷�ʱ�������츳�����������˶������ϡ�<BR>���µ�һЩ���飬�������Է�Ϊ����ͳ���ߵİ�ǉŮ��������ʵ���ϣ����������˶��Ͽ�ŷǉ�����š��ڰ�Ӱ��ԭ֮�Ͼ��󲿷����飬����������Ů����һλ�Ʒ���ǰ������Ů��ͳ�εľ��飬ͬʱ���ݴ�Ҳ���������������밵Ӱ��ԭ�ĳ�ͻ��</P>
+<P><STRONG><FONT color=#800000>�������� Playing a 
+Faerie<BR></FONT></STRONG>����������ҽ�ɫʱ��ʹ���������壨����ħ�˿Ͼ��ף���Ԫ����Ĺ������Ӱԭ���������120�ߺڰ��Ӿ���<BR>��������NPC��ɫ�Ľ���������¡�</P>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

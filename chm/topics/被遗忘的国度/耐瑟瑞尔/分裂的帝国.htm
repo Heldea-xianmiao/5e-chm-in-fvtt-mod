@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>���ѵĵ۹�</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../../style.css">
+<style>
+h3{BORDER-BOTTOM: #800000 1px solid;MARGIN-BOTTOM:-10px;}
+</style>
+</head>
+<body>
+<H2>���ѵĵ۹� An Empire Divided</H2>
+<P>��������ʷ�У���ɪ���һֱ��һ������Ϊ�����ֵĵ۹����ϲ���ɪ������²���ɪ�����</P>
+<H3>�ϲ���ɪ��� High Netheril</H3>
+<P>�ϲ���ɪ�����֧�������۹��ķ�ʦ�����ɡ��ϲ���ɪ����˵ļ������ǿ���ʩ�������Σ����ܲ���ÿһ�������Ա��ͨ��ħ�����ϲ���ɪ�����ȷ������ƾ��Ƹ�����������Ȩ�����Ͷ��׼���Ȼ���κβ���ħ�����ܵ��ϲ���ɪ�����ʼ���޷�������������λ򾭼�Ȩ����</P>
+<P><STRONG><FONT color=#800000>���ҵĲƸ� Decadent 
+Wealth</FONT></STRONG><BR>�ϲ���ɪ����˶ڻ��ŵ۹��ĲƸ����Զʼ��뾯��֮���ػ��ȵ����棬�˴�֮�䲻�������Ծ�ȡ���ࡣ�����ϲ���ɪ����˾�ס�ڸ��ճ��У���Ҳ��һЩ��ͬ��׳�۵ĵص㽨���ɵأ�����ħ�����ܷ����������ٲ�֮�ۡ�����ߡ��·�֮�ۻ��ǻ�ɽ���С�</P>
+<P><STRONG><FONT color=#800000>ħ������ Magic 
+Dependence</FONT></STRONG><BR>�ϲ���ɪ����˽��޷�ʩչħ������Ϊ��Ҫ������ɢ����ͯ������Щ��ʦȴ����ȵ���Ȩ��������ܡ�һ�����͵��ϲ���ɪ����˲���ħ�����޷�����Ŧ�ۡ�ĥ�������������������Щ��������ȫ�����д��ֻ��������ħ��ë�����˵����ħ����Ƥֽ��</P>
+<P><STRONG><FONT color=#800000>��� Society</FONT></STRONG><BR>�ϲ���ɪ�����������Ի�����ħ�����װ�����ò��ʿ�����ǽ���ħ��������ʵ����ò����������ͼ���ϲ���ɪ�����ʦ��һ�������Ρ�Σ�ա������뼤�ҵľ������ɡ�<BR>�����ϲ���ɪ����������ڴ�����ղ�������������׵�ħ���������ʾ���ǵĴ��������ȷ�Ʒζ��������������Ա����ӽ��죬Ҳƫ�ò���Ϸ�绯���ݻ���ħ��������ֱ����Ч�ķ�����</P>
+<H3>�²���ɪ��� Low Netheril</H3>
+<P>�²���ɪ����ǵ۹����Ͷ��׼��������̷�������ȫ���Ƹ���Ȩ���ķ�ʦ���塣</P>
+<P><STRONG><FONT color=#800000>��������� A Life of 
+Hardship</FONT></STRONG><BR>�²���ɪ�����������ƶ��֮�У��������ų��صĸ�˰��������²���ɪ�������ũ�����㡢�ɿ󣬻��������������Ϊ��ʦ�ṩ�������衣�²���ɪ����˼�����δӵ���Լ������ػ�ס����ֻ��������֧���䷨ʦ����������ߵĿ�֧��Ϊ����ֹ�Ͷ�����֯���ѣ��ϲ���ɪ����ķ�ʦż���������������ͻϮ�ͽ��켺����Ѫ���ܵ�ʾ�����������ߡ�</P>
+<P><STRONG><FONT color=#800000>��ͥ��ħ�� Family and 
+Magic</FONT></STRONG><BR>��Զ�뷨ʦ���ߵĵط����²���ɪ����˱����Ÿ��Ӷ�����ϰ�ף���Щϰ���Էḻ�����´�ͳ���β����Ƶļ�ͥŦ�������ơ������������¼ÿһλ��ĸ����ż����Ů�����֡�</P>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

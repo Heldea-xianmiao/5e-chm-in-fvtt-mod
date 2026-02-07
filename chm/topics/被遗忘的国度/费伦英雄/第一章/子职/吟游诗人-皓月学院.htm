@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>����ʫ��-���ѧԺ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+<H2><FONT color=#008080>���ѧԺ College of the Moon</FONT></H2>
+<P class=sum>�ù��ϵ���ҥ�������</P>
+<P>���ѧԺ��׷������Դ����ӰȺ���ĹŴ���³�����磬�����и����ѧԺ������ʫ�˼�¼Ⱥ����������Ĺ��¡���ѧԺ��ʫ�˴ӵ��������ħ�����¾���ԭ��ΰ��֮�м�ȡ�������Դ����������ǵ����ѣ�������Ȼ���磬��Ϊ���ǵĴ���������С�</P>
+<P><STRONG><FONT color=#008080>3�������¼��� Moon 
+Inspiration</FONT></STRONG> <BR>Դ�����£�˲Ϣ����ԭ��������������������ʹ�������ºô���<BR><STRONG>�������Inspired 
+Eclipse��</STRONG> 
+������һ��������������һ����������ʫ�˼�����ʱ����Ϊ�˸���������һ���֣����ܹ��������״̬��������30�������ܹ�������δռ�ݿռ䡣����״̬�����������»غϿ�ʼ�����������һ�ι����춨������˺���ʩչ����ʱ������ֹ��<BR><STRONG>�»Ի���Lunar 
+Vitality��</STRONG> 
+ÿ�غ�һ�Σ�����ʹ�÷����ָ�һ�����������ֵʱ�����������һö����ʫ�˼���������ʹ���λָ�������ֵ���ӵ�ͬ�ڴ�����ʫ�˼������ĳ�Ŀ���Ҹ�������ٶ�ֱ�����»غϽ���ǰ��������10�ߡ�</P>
+<P><STRONG><FONT color=#008080>3����ԭ��ѧʶ Primal 
+Lore</FONT></STRONG> 
+<BR>��ϰ�õ�³�����һ��λ�ڵ�³�������б��е�Ϸ���������������Ϊʫ�˷��������ǲ����������֪Ϸ��������ÿ������һ������ʫ�˵ȼ�ʱ���㶼���Խ���Ϸ������Ϊ��³�������б��е���һ��Ϸ����<BR> 
+���⣬�����м�������ѡ��һ��ѱ�ޣ���Ϥ��ҽҩ����Ȼ���������������ӵ������ѡ���ܵ������</P>
+<P><STRONG><FONT color=#008080>6�����¹�ף�� Blessing of the 
+Moonlights</FONT></STRONG>   
+<BR>��ʼ��׼���ŷ���<U><EM>�»�֮��Moonbeam</EM></U>��<BR>����ʩչ����<U><EM>�»�֮��Moonbeam</EM></U>ʱ������Ե����÷�����ʹ���»�Ҳ�������ϸ��֡��������ɢ������â���ڴ��ڼ䣬��5����ɢ����΢����գ�����ÿ��������ʧ�������»�֮��ЧӦ�Ļ��⣬�㶼����ѡ��һ����60���ڵĿɼ��������ָ�2d4����ֵ��<BR>һ����ʹ���˴����Ե���<U><EM>�»�֮��Moonbeam</EM></U> 
+��������������һ�γ��ݺ�����ٴ�ʹ�ô����ԡ�</P>
+<P><STRONG><FONT color=#008080>14����ĺɫ�Թ� Eventide's 
+Splendor</FONT></STRONG> 
+<BR>�����������ת����������������ʹ�������·�ʽ������������¼������ԣ�<BR><STRONG>����֮ӰShadow of 
+the New 
+Moon��</STRONG>����ʹ��ʫ�˼���ʱ������������ʫ�˼�����������Ҳ���Ի������״̬������������һ����Ӧ������30���������Կ�����һ��δռ�ݿռ䡣�����������״̬���������»غϿ�ʼ��<BR><STRONG>����֮��Vibrance 
+of the Full 
+Moon��</STRONG> 
+    
+����ʹ���»Ի�������ʱ������Բ������������ʫ�˼�������������1d6��ʹ�ý����Ϊ���档</P>
+
+
+<script src="../../../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

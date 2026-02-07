@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>��Ӱ��ԭ���ն��Ұ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<style>
+h3{BORDER-BOTTOM: #800000 1px solid;MARGIN-BOTTOM:-10px;}
+</style>
+<body>
+<H2>��Ӱ��ԭ���ն��Ұ The Sinister Wilds of Shadowmoor</H2>
+<P>��Ӱ��ԭ�����µ�����ӳ�񡣾�������������ࡪ���ڰ����֡�Σ���ķ��������Ļ�Ұ�����ɳ�����������<BR>��ҹ���������λ�棻���������ƽ�߽�������Ӳ������¡���Ӱ��ԭ������ѭ������Ϊÿ��һ�Σ���󲿷�����λ����������ơ����������ڼ�ᴦ�ںڰ��������������Ǵ���΢����ա�</P>
+<H3>�������� Chaos Reigns</H3>
+<P>��Ӱ��ԭ��һ�������˿�Ұħ���Ļ���֮�ء�����һֱ�ڱ仯����Ƭ��ɭ�֡�������������ύ��λ�á�������ˣ�û�����ŵ�ͼ��һֱ����׼ȷ��<BR>������Ĳö�����Ӱ��ԭ���κ����򶼿����ǿ�Ұħ��������������ָ�ϡ�����</P>
+<H3>��������ɵ������ Insular and Suspicious Outlooks</H3>
+<P>���������Ƶģ���Ӱ��ԭ��ס��������顢���Ρ�÷�塢��Ӣ�������Լ�˪�������Щ�������������������µİ汾���ӹ�������ɡ���������ڰ�Ӱ��ԭס�����Ϣ������һ�¡���<BR>��Ӱ��ԭ��ס������µ�ס��������⣬Ҳ�����ײ���������ͻ�����ҵ�¿ͷŵ���Ӽ������κ�������͵���������顢�����Լ������ε�����Ƭ�����ϣ���ͨ�������ǵ�����ͬ������ײС���Ӱ��ԭ�Ļ�Ұ��Ǳ���Ÿ��ֿɲ���������������ˡ�ģ�����Լ��ɳ�������Ϊ��ʵ�Ŀֲ������ǡ���������ڰ�Ӱ��ԭ�������Ϣ���������¡���</P>
+<P><STRONG><FONT color=#800000>��Ӱ��ԭ��������� Shadowmoor Denizen 
+Characteristics</FONT></STRONG><BR>���������Ƶģ���Ӱ��ԭҲ��ħ����Ӱ�쳤ʱ��ͣ����������ˡ������������ڵͱ��Ͷȵ���ɫ�����ǵ�ͷ�������Ǻ�ɫ����ɫ���߰�ɫ�����۾�����ĺ���ɫ�����ܶ�ľ���ϲ����ɫ������ɫ��������ɫ�ķ��Ρ���Ӱ��ԭ�ľ���ͨ������ʵ���������Ǳ���������ӽǿ������������ԥ������Ľ��ܹ�ȥ�����ǻ���������룬Ҳ�����໥���⡣</P>
+<H3>����³�������Ļ��� Isilu, Embodiment of the Moon</H3>
+<P>����³ͨ������Ϊ�ǰ�Ӱ��ԭ������������һ�������������Լ���ҷ������հ㷭����ë�ĳ�����������������������¶�Ӧ�ﰬ���ţ�����³Ҳ�����Ͱ�Ӱ��ԭ��ס�񻥶�����Щ��ϸ�۲���˿��ܻ����ڰ�Ӱ��ԭ�ĵ�ƽ����Ƴ������³���߰���׳���Ĳ�����չʾ����������Ư��������ͷ­��<BR>���İ�Ӱ��ԭס������³�������������������Լ��ܴ������ĳ�Ĭ�Լ�΢���Ŀ����и��ܵ�����³�ļ�������������������³��������Ǳ����޷�ӵ�е��ǻۡ�����³����ͽ��������ʯ��ǵĵص�ڤ�룬������ף�����������ţ�ֻҪ�������ĵط����ͻ�����������ϡ�ʹ��<STRONG><U>Զ�ź���Ancient 
+Black Dragon</U></STRONG>���������������Ϸ�б�ʾ����³��</P>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

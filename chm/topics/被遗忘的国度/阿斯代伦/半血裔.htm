@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>��Ѫ��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+<style>
+h3{BORDER-BOTTOM: #800000 1px solid;MARGIN-BOTTOM:-10px;}
+</style>
+</head>
+<body>
+<H2>��Ѫ�� Dhampir</H2>
+<P>��Ѫ���ǻ��������ˣ�����ӵ������Ѫ��ĳ���֮������ȴ��һ�ֿ��µļ��������䡣�������Ѫ�������ʳ��Ѫ������Ҳ��һЩ��Ѫ�῿��ȡ�ξ���������������Ҫ֮���Ի�ȡ���֡���Ѫ���������ѡ����Ŭ����������ļ��ʣ�������������ʳ�ĳ嶯���ܡ�<BR>��Ѫ�����������Ѫ��������йء���Щ��Ѫ����ǿ����Ѫ��ĺ��������һЩ���ڱ���Ѫ��ҧ�˺����˲���ת�䣬���ֿ��µĽ����Լ�����ħ����Ӱ��Ҳ���ܴ�������Ѫ�ᡣ���۳�����Σ���Ѫ�ᶼ���Ը��ַ�ʽչ�ֳ����ǵ���Ѫ�������������ٶ��������Լ��ܼ�ȡ�������Ŀ�ҧ��</P>
+<P><STRONG><FONT color=#800000>��Ѫ������ Dhampir 
+Traits</FONT></STRONG><BR><STRONG>�������ͣ�</STRONG>����<BR><STRONG>���ͣ�</STRONG>����(Լ4-7�߸�)��С��(Լ2-4Ӣ�߸�)����ѡȡ������ʱѡ��<BR><STRONG>�ٶȣ�</STRONG>35��</P>
+<P>��Ϊ��Ѫ�ᣬ���������������ʣ�<BR><STRONG>�ڰ��Ӿ�Darkvision��</STRONG>��ӵ��60�ߺڰ��Ӿ���<BR><STRONG>����Spider 
+Climb��</STRONG>��ӵ�е������ٶȵ������ٶȡ����㵽��3����������ش�ֱ���������컨�����ƶ��������������ң����Ҳ���ҪΪ�˽������˫�֡�<BR><STRONG>����֮��Trace 
+of Undeath��</STRONG>����ж԰�ʴ�˺��Ŀ��ԡ�<BR><STRONG>��Ѫ��ҧVampiric 
+Bite��</STRONG>����ʹ��ͽ�ִ������˺�ʱ�������ѡ��ʹ����������ҧ���ˣ����Ŀ�����1d4+���ʵ���ֵ�Ĵ����˺�������ͽ�ִ��ԭ�����˺���<BR>����ʹ�ô˿�ҧ����������һ�����ǹ�װ���������������ʱ�������ѡ�����·�ʽ֮һ��ǿ�����Լ���</P>
+<UL>
+  <LI>
+<DIV><STRONG>��ȡDrain��</STRONG>��ָ����ڴ˴����˺�������ֵ��</DIV></LI>
+  <LI>
+<DIV><STRONG>ǿ��Strengthen��</STRONG>�ڽ�������һ�����ڣ�����е���һ�����Լ춨�򹥻��춨��ü�ֵ����ֵ���ڴ˿�ҧ��ɵĴ����˺���<BR>���ܹ��Դ˿�ҧǿ�����Լ��Ĵ����������������ֵ��������ɳ���ʱ�㽫�ػ�ȫ�������ĵ�ǿ��������</DIV></LI></UL>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

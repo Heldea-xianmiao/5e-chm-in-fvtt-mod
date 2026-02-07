@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>����˹�Ƽ���������</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+
+<H3>����˹�Ƽ��������� House 
+Jorasco Heir</H3>
+<P><B>����ֵ��</B>��ݡ����ʡ���֪
+<BR><B>ר����</B>ҽ�����ƣ���"����ר��"��
+<BR><B>����������</B>ҽҩ������
+<BR><B>����������</B>��ҩ����
+<BR><B>װ����</B>ѡ��A��B��(A)��ҩ���ߡ��ߵ���װ��ҽ�ư���25GP����(B)50GP��</P>
+<P>����˹�Ƽ���ļ�ѧ��Ϊ����������ʹ���������β�����ߣ���ʱ�޿̲����Ӷ����ǵĽ��������ꡣ������ƾ��ħ����������ҽ����㶼����ϰ�öԿ���Щ�ֶ���ֶΡ����ܹ�����Щ����ʩ�������˵�ѵ������ͬ����Ҫ��һ���ǡ��������ȷ��ÿһ�����ƶ��ܻ�����Ӧ�ı��ꡣ�Ͼ���Ψ��ȷ�������Դ�ȹ̣����ܱ�������˹���������ٱ���ɽ���������һλ�������ˡ���м�ڱ���֮�µ��ʴ�ҽʦ�������һ���侲����������ר��ҽ�����������ͨ����׼�Ľ���ʽ��������ʧ������������</P>
+
+<script src="../../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>ʹ�ñ���</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+<H2>ʹ�ñ��� Using&nbsp;This&nbsp;Book</H2>
+<P>������������������ڷ��״�½�ض��������½ڹ��ɣ�ÿһ�¶���Ӧһ���ض������ð�����͡������½��򺭸��˸������������Ϸ�Ļ������飬�Լ������ڷ��׸��ص�ð�ա��㻹�����ñ���������и���������ð�������������ǽ��ܱ������Ĺ��ȡ����⣬ħ����Ʒ�������½�ҲΪ���ṩ�˿������ڷ��׸��ش����Լ���ð�յĹ��ߡ�<BR>�����������������������ô��������ֵ�����Կ��ڡ�����ͼ�������ҵ���Ӧ�����ݿ���<BR><STRONG>��һ�£������������Ĺ���Running&nbsp;the&nbsp;Realms��</STRONG>��һ�½�Ϊ������˹������㿪�ı������Ĺ����š���������ҡ�����þ���ʷʫ�еĽ��顣���������й��ڲ�ͬ�����ġ����淲������顢��Ӱ��������ϵ�Լ������е����ħ����ð�ա�<BR><STRONG>�ڶ��£��ȵ�The&nbsp;Dalelands��</STRONG>������һ���Ŵ����鳬���سǵ�һϵ��ǰ�߾��䣬Ϊ�����D&amp;D���Ӣ��ð���ṩ��̨��<BR><STRONG>�����£������Icewind&nbsp;Dale��</STRONG>����Ȼ�Ŀֲ���������Ƭ����֮�ء������������ֲ�����µľ�����̨��<BR><STRONG>�����£�����ɺCalimshan��</STRONG>ħ���߶ȷ���Ŀ���ɺ��ɳĮ����Ű�ľ���֮����ǧ��ųǿ��ָ��еķ����漼�γ������Աȡ�<BR><STRONG>�����£���ӰȺ��The&nbsp;Moonshae&nbsp;Isles��</STRONG>��ӰȺ����������˵�뺣��ð�յ���̨����������ķ�ʽ���ڱ�ħ����������ʴ��<BR><STRONG>�����£�����֮��Baldur's 
+Gate��</STRONG>������ʵ�Ķ�������趨�������������һ�нԿ��Խ�Ǯ��������������Ҳ�����⡣<BR><STRONG>�����£���˹����˹��ʧ��ͼ���The&nbsp;Lost&nbsp;Library&nbsp;of&nbsp;Lethchauntos��</STRONG>Ϊ1����ɫ׼����ð�գ������������ҽ��ܱ������Ĺ�����صķ�����ͻ��<BR><STRONG>�ڰ��£�ħ����ƷMagic&nbsp;Item��</STRONG>�����˷����еĸ��ֱ������ͨ��<EM><U>����������Harper&nbsp;Pins</U></EM>������<EM><U>��֮��Crown&nbsp;of&nbsp;Horns</U></EM>�ĺ���������<BR><STRONG>�ھ��£�����ͼ��Bestiary��</STRONG>���һ�¸���������¹����Լ��������ս�����������ɵ�֪�����֡�</P>
+
+
+<script src="../../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

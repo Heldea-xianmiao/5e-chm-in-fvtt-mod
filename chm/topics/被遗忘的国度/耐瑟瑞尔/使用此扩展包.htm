@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>ʹ�ô���չ��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+<style>
+h3{BORDER-BOTTOM: #800000 1px solid;MARGIN-BOTTOM:-10px;}
+</style>
+</head>
+<body>
+<H2>ʹ�ô���չ�� Using
+  This Supplement</H2>
+<P>����չ�����������ڹŴ���ɪ��������������Ĺ���������һ����������ĵ۹�������չ��������³ǡ�ð�������ȫ�����ߡ��������õĹ������ݾ����ԡ�����ͼ������¼B��<BR> 
+������Ը����˹Ŵ���ɪ���������ʷ����Ȼ�������ʺ���������Ķ���������չ���������ݽ������³���ʹ�á�<BR>����չ�����������ݣ�<BR>��һ���ṩ�˹����ڹŴ���ɪ�����չ��ð�յ���Ѷ���������ճ�������Eileanar�������Conch����ϸ���ܡ�ͬʱҲ�����趨����Щ�����еĵ�ͼ��ð�չ��ߡ�<BR>�ڶ��²����˹Ŵ���ɪ�����ħ�������뿪�ɶ������Ļ���ЧӦ���ֺ���
+<BR>
+ 
+�����������˵�����ʱ��֮�ţ���ɫ�ɽ��ǰ���Ŵ���ɪ���������������ص�ͼ���趨����Щ�ص㸽����ð�ա�
+<BR>
+�������ṩ���趨�ڹŴ���ɪ����еĵ�ͼ��ð�ա�
+<BR>��¼ 
+A��¼�˽�ɫ������ð���л�õ���ɪ���ħ����Ʒ��
+<BR >
+  ��¼ B�ṩ�˹Ŵ���ɪ����пɼ�����Ĺ���ͼ����</P>
+<H3 >
+
+
+ȷ����������ÿ��� 
+Ensuring Fun for All</H3>
+<P >
+
+
+ 
+   ����չ�漰�������У���Щ���ܻ��ò�����Ҹе���л��ʡ����㽫����չ������Ϸ֮ǰ������ϸ�Ķ��������ݣ��عˡ�����ָ�ϡ���"ȷ����������ÿ���"һ�ڣ�����ذ���"Ӳ�����������"һ���е�˵������������ҽ��й�ͨ��</P>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

@@ -1,52 +1,29 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!-- coding: gbk -->
-
 <html>
-
 <head>
-
-<title>魔法物品-卷轴</title>
-
-<meta content="text/html; charset=UTF-8">
-
+<title>ħ����Ʒ-����</title>
+<meta content="text/html; charset=gb2312">
 <link rel="stylesheet" href="../../../style.css">
-
-
-
 
 
 </head>
 
-
-
 <body>
-
 <TABLE class=center>
-
 <TR>
+<TH width=40>�ٲ���</TH>
+<TH>��Ʒ����</TH>
+<TH>��Ʒԭ��</TH>
+<TH>��Ʒ���</TH>
+<TH width=60>ϡ�ж�</TH>
+<TH width=40>��ϡ�ж�</TH>
+<TH>ͬ������</TH></TR><TR bgcolor=#eeeeee><TD>U</TD><TD>��ؾ���</TD><TD>Scroll of Mapping</TD><TD>����</TD><TD>����ͨ</TD><TD>m</TD><TD>��</TD></TR>
+<TR><TD>V</TD><TD>��ؾ���</TD><TD>Scroll of Mapping</TD><TD>����</TD><TD>����ϡ</TD><TD>m</TD><TD>��</TD></TR>
+<TR bgcolor=#eeeeee><TD>R</TD><TD>���ʾ���</TD><TD>Scroll of Nightmares</TD><TD>����</TD><TD>��ϡ</TD><TD>m</TD><TD>��</TD></TR>
+<TR><TD>R</TD><TD>С�����</TD><TD>Scroll of the Jester</TD><TD>����</TD><TD>��ϡ</TD><TD>m</TD><TD>��</TD></TR></TABLE>
 
-<TH width=40>速查标记</TH>
-
-<TH>物品译名</TH>
-
-<TH>物品原文</TH>
-
-<TH>物品类别</TH>
-
-<TH width=60>稀有度</TH>
-
-<TH width=40>子稀有度</TH>
-
-<TH>同调需求</TH></TR><TR bgcolor=#eeeeee><TD>U</TD><TD>绘地卷轴</TD><TD>Scroll of Mapping</TD><TD>卷轴</TD><TD>非普通</TD><TD>m</TD><TD>—</TD></TR>
-
-<TR><TD>V</TD><TD>绘地卷轴</TD><TD>Scroll of Mapping</TD><TD>卷轴</TD><TD>极珍稀</TD><TD>m</TD><TD>—</TD></TR>
-
-<TR bgcolor=#eeeeee><TD>R</TD><TD>梦魇卷轴</TD><TD>Scroll of Nightmares</TD><TD>卷轴</TD><TD>珍稀</TD><TD>m</TD><TD>—</TD></TR>
-
-<TR><TD>R</TD><TD>小丑卷轴</TD><TD>Scroll of the Jester</TD><TD>卷轴</TD><TD>珍稀</TD><TD>m</TD><TD>—</TD></TR></TABLE>
-
-
-
+<script src="../../../../cloud-bridge.js"></script>
 <script>
 /* 5e-chm-bridge */
 (function(){
@@ -54,10 +31,10 @@
         try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
     };
     
-    // 1. 报告导航位置 (用于书签记忆)
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
     post('nav', { href: window.location.href, title: document.title });
 
-    // 2. 监听引用操作 (Alt + 选中文本)
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
     document.addEventListener('mouseup', (ev) => {
         const isAction = ev.altKey || ev.ctrlKey;
         if (!isAction) return;
@@ -84,10 +61,7 @@
     });
 })();
 </script>
-<script src="../../../../cloud-bridge.js"></script>
 </body>
-
 </html>
-
 
 

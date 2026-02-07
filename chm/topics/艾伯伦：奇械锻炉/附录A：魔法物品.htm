@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>��¼A��ħ����Ʒ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../style.css">
+<style>
+H6{color:#0000ff}
+</style>
+</head>
+<body>
+<H6>�ٱ乤�� Manifold Tool      </H6>
+<P><EM>�����ͨ����ͬ����</EM><BR>������ߵ���̬�����ǰ��֡���˿���������������ߡ�������ħ��������������Ʒ��������ת��Ϊһ����ѡ��Ĺ������ߡ��������������̬��Σ�����ʹ�ô˹���ʱ���������������</P>
+<H6>�۷�֮ѥ Boots of the Winding Path</H6>
+<H6></H6>
+<P><EM>�������ͨ����ͬ����<BR></EM>��װ��˫ѥ���ڼ䣬�����ִ�и���������������15����һ����ɼ���δռ�ݿռ䡣������ڵ�ǰ�غϵ�ĳ��ʱ�����ռ�ݴ˿ռ䡣</P>
+<H6>����֮�� Helm of Awareness</H6>
+<P><EM>�������ͨ����ͬ����<BR></EM>��װ�ⶥͷ���ڼ䣬����ȹ��춨�������ơ�</P>
+<H6>  ˼ά�ƽ� Mind Sharpener</H6>
+<P><EM>��ָ������ͨ����ͬ����</EM><BR>����Ʒ����4���ܡ�����ʧ����ά��רע�����ʻ���ʱ�������Է�Ӧ���Ĵ���Ʒ��1���ܽ������Ϊ�ɹ�������Ʒ��ÿ������ʱ�ָ�1d4�����ĵĳ��ܡ�</P>
+<H6>�������� Repeating Shot</H6>
+<P><EM>���������е�ҩ������������׻���ã�������ͨ����ͬ����</EM><BR>�ô�ħ����������Զ�̹���ʱ���乥���춨���˺��������+1��ֵ���Ҵ����������װ�����������֮��<BR>���������ȱ����ҩ���佫�Լ����������������ô���������Զ�̹����춨ʱ���������Զ�����һ��ħ����ҩ������������ĵ�ҩ������Ŀ���ʧ�ֺ�������ʧ��</P>
+<H6>����֮�� Repulsion Shield</H6>
+<P><EM>���ף����ƣ�������ͨ</EM><BR>���ô˶����ڼ䣬��Ļ��׵ȼ����+1��ֵ��<BR>�˶��ƾ���4���ܡ����մ˶����ڼ䣬��һ�����Ͳ��������͵�λ����5���ڵ������Խ�ս�����춨������ʱ�������Է�Ӧ���Ĵ˶���1���ܣ����ù�����ֱ����������15�ߡ��˶�����ÿ������ʱ�ָ�1d4�����ĵĳ��ܡ�</P>
+<H6>�������� Returning Weapon</H6>
+<P><EM>����������Ͷ��������������׻���ã�������ͨ</EM><BR>�ô�ħ�����������Ĺ����춨���˺��������+1��ֵ������ʹ�ô���������һ��Զ�̹����춨�������������ص�������С�</P>
+<H6>�����ָ���ָ Spell-Refueling Ring</H6>
+<P><EM>��ָ������ͨ����ʩ����ͬ����</EM><BR>��װ�˽�ָ�ڼ䣬�����Ը��������ָ�һö�����ĵķ���λ�����ָ��ķ���λ����Ӧ�������������˽�ָһ��ʹ�ã�ֱ�����������㶼�޷��ٴ�ʹ�á�</P>
+<H6>ѣĿ���� Dazzling Weapon</H6>
+<P>������������׻���ã�����ϡ����ͬ����<BR>�ô�ħ���������еĹ����춨���˺��������+1��ֵ�����մ������ڼ䣬����ִ�и����������������ɢ���뾶30�ߵ����������Լ�����30�ߵ�΢����ա������Ը�������Ϩ��˹��ա�<BR>����������4���ܡ����㱻һ�ι����춨���к����������Է�Ӧ���Ĵ�������1���ܣ�����ʹ�ù����߽���һ��DC15�����ʻ��⡣����ʧ����ù���������Ŀä״ֱ̬�����¸��غϽ�������������ÿ������ʱ�ָ�1d4�����ĵĳ��ܡ�</P>
+
+
+<script src="../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

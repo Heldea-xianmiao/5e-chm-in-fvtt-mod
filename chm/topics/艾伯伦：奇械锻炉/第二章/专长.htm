@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>ר��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<H2>ר�� Feats</H2>
+<P>����չʾ��22����ר����</P>
+<P><STRONG>ר���б� Feat List</STRONG>
+  
+<TABLE class=part>
+<tr><td><STRONG>ר��</STRONG></td><th width=80><STRONG>����</STRONG></th></tr>
+<tr bgcolor=#eeeeee><td>��������Aberrant Dragonmark</td><th>����</th></tr>
+<tr><td>�������Mark of Detection</td><th>����</th></tr>
+<tr bgcolor=#eeeeee><td>̽Ѱ����Mark of Finding</td><th>����</th></tr>
+<tr><td>��������Mark of Handling</td><th>����</th></tr>
+<tr bgcolor=#eeeeee><td>ҽ������Mark of Healing</td><th>����</th></tr>
+<tr><td>�д�����Mark of Hospitality</td><th>����</th></tr>
+<tr bgcolor=#eeeeee><td>��������Mark of Making</td><th>����</th></tr>
+<tr><td>ͨ������Mark of Passage</td><th>����</th></tr>
+<tr bgcolor=#eeeeee><td>��¼����Mark of Scribing</td><th>����</th></tr>
+<tr><td>�ڽ�����Mark of Sentinel</td><th>����</th></tr>
+<tr bgcolor=#eeeeee><td>��Ӱ����Mark of Shadow</td><th>����</th></tr>
+<tr><td>��������Mark of Storm</td><th>����</th></tr>
+<tr bgcolor=#eeeeee><td>��������Mark of Warding</td><th>����</th></tr>
+<tr><td>�ߵ���������Greater Aberrant Mark</td><th>ͨ��</th></tr>
+<tr bgcolor=#eeeeee><td>�ߵ��������Greater Mark of Detection</td><th>ͨ��</th></tr>
+<tr><td>�ߵ�̽Ѱ����Greater Mark of Finding</td><th>ͨ��</th></tr>
+<tr bgcolor=#eeeeee><td>�ߵ���������Greater Mark of Handling</td><th>ͨ��</th></tr>
+<tr><td>�ߵ�ҽ������Greater Mark of Healing</td><th>ͨ��</th></tr>
+<tr bgcolor=#eeeeee><td>�ߵ��д�����Greater Mark of Hospitality</td><th>ͨ��</th></tr>
+<tr><td>�ߵȴ�������Greater Mark of Making</td><th>ͨ��</th></tr>
+<tr bgcolor=#eeeeee><td>�ߵ�ͨ������Greater Mark of Passage</td><th>ͨ��</th></tr>
+<tr><td>�ߵȳ�¼����Greater Mark of Scribing</td><th>ͨ��</th></tr>
+<tr bgcolor=#eeeeee><td>�ߵ��ڽ�����Greater Mark of Sentinel</td><th>ͨ��</th></tr>
+<tr><td>�ߵ���Ӱ����Greater Mark of Shadow</td><th>ͨ��</th></tr>
+<tr bgcolor=#eeeeee><td>�ߵȱ�������Greater Mark of Storm</td><th>ͨ��</th></tr>
+<tr><td>�ߵ���������Greater Mark of Warding</td><th>ͨ��</th></tr>
+<tr bgcolor=#eeeeee><td>ǿЧ����Potent Dragonmark</td><th>ͨ��</th></tr>
+<tr><td>������˹֮����Boon of Siberys</td><th>�������</th></tr></TABLE></P>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

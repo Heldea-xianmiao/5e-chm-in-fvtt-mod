@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>��ħ��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../../stat-block.css">
+<style>
+H2{
+BORDER-BOTTOM: #b79c61 1px solid;
+margin-bottom: -12px;
+}
+</style>
+</head>
+
+<body>
+
+<H2>��ħ�� Terran Magen
+</H2>
+
+<P>��ħ������ʹ��ר������Э������䷱������������ħ������Щħ��ͨ���������ɼ����ӻ���߽��������ʩ��
+</P>
+
+<div class="stat-block">
+<h5>��ħ��Terran Magen</h5>
+<div class="sub-line">���͹�װ������Ӫ</div>
+<table><tr><td><strong>AC </strong>21</td><td width="40%"><strong>�ȹ� </strong>+3��13��</td></tr>
+<tr><td colspan=2><strong> HP </strong>121��22d8+22��</td></tr>
+<tr><td colspan=2><strong>�ٶ� </strong>30�ߣ�����20�ߣ�������</td></tr></table>
+<table class="stat-abilities"><tr><th></th><th></th><th>����</th><th>����</th><td style="WIDTH: 5px"></td><th></th><th></th><th>����</th><th>����</th><td style="WIDTH: 5px"></td><th></th><th></th><th>����</th><th>����</th></tr>
+<tr><td class="c1"><strong>����</strong></td><td class="c1">16</td><td class="c2">+3</td><td class="c2">+3</td>
+<td></td>
+<td class="c1"><strong>���</strong></td><td class="c1">10</td><td class="c2">+0</td><td class="c2">+0</td>
+<td></td>
+<td class="c1"><strong>����</strong></td><td class="c1">12</td><td class="c2">+1</td><td class="c2">+1</td></tr>
+<tr><td class="c3"><strong>����</strong></td><td class="c3">10</td><td class="c4">+0</td><td class="c4">+0</td>
+<td></td>
+<td class="c3"><strong>��֪</strong></td><td class="c3">18</td><td class="c4">+4</td><td class="c4">+7</td>
+<td></td>
+<td class="c3"><strong>����</strong></td><td class="c3">10</td><td class="c4">+0</td><td class="c4">+0</td></tr>
+</table>
+<table>
+<tr><td><strong>���� </strong>���+7</td></tr>
+<tr><td><strong>���� </strong>���ء�������Ŀä���Ȼ󡢶��������ߡ��ֻš���ԡ�ʯ�����ж�</td></tr>
+<tr><td><strong>�й� </strong>�������17</td></tr>
+<tr><td><strong>���� </strong>���ͨ�����Լ������������ԣ�������˵</td></tr>
+<tr><td><strong>CR </strong>8��XP3,900��PB+3��</td></tr>
+</table>
+<P>
+</P>
+<h6>����Traits</h6>
+<p>
+<strong>����Disintegration��</strong>��ħ��������������Ϊ������������װ��Я�������ж�������ԭ�ء�<br>
+<strong>ħ������Magic Resistance��</strong>ħ���Կ�����������ħ��ЧӦʱ���еĻ���춨�������ơ�<br>
+</p>
+<h6>����Actions</h6>
+<p>
+<strong>���ع���Multiattack��</strong>ħ��ʹ�ô�����ȭ��������������������ι�����<br>
+<strong>������ȭHamer Fist��</strong><em>��ս�����춨��</em>+6������5�ߡ�<em>���У�</em>16��3d8+3���ۻ��˺����13��3d8�������˺���<br>
+<strong>�������Thunderous Boom��</strong><em>Զ�̹����춨��</em>+7�����60�ߡ�<em>���У�</em>28��8d6�������˺���<br>
+<strong>ʩ��Spellcasting��</strong>ħ��ʩչ����һ��������������ϳɷֲ�ʹ�ø�֪��Ϊʩ�����ԣ���������DC15����<br>
+<strong><em>���⣺</em></strong><U><I>��ʦ֮��Mage Hand���޸���Mending��ħ������Prestidigitation</I></U><br>
+<strong><em>ÿ��1/�գ�</em></strong><U><I>������Disintegrate���ض���Move Earth����ʯ��Stone Shape</I></U>
+</p>
+</div>
+
+<script src="../../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

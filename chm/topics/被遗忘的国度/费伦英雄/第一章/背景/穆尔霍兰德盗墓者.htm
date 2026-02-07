@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>�¶������µ�Ĺ��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+<H3>�¶������µ�Ĺ�� Mulhorandi Tomb Raider</H3>
+<P><b>����ֵ��</b>��ݡ����ʡ�����
+<BR><b>ר����</b>����
+<BR><b>����������</b>�������ڽ�
+<BR><b>����������</b>ʯ������
+<BR><b>װ����</b>ѡ��A��B��(A)ذ�ס��ᴸ��ʯ�����ߡ��������̸ǡ��˹������ӡ����ˡ�2��С����������ϸ�ߡ����޺С�5֧��ѡ����з�װ��ˮ����26GP����(B)50GP��</P>
+<P>�����������������������ϣ����ԴӺ���ʱ����������������йعŴ��۹��뱻����ǰ�Ĺ��¡�����Щ���µ��У��¶���������һƬ�����˱������Ƹ������ء����޼�֮���ȴ����㹻��թ���㹻�¸ҵ����������Ƿ�������������ȥ̽��ĹѨ����ڣ����������Է����Լ��������Ų���</P>
+<script src="../../../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

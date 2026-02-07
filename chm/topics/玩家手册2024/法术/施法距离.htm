@@ -1,38 +1,22 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!-- coding: gbk -->
-
 <html>
-
-<head><title>施法距离</title>
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<head><title>ʩ������</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <link rel="stylesheet" href="../../style.css"></head>
 
-
-
-<body><h2>施法距离Range</h2>
-
-<p>法术的施法距离是施法者能将法术效应源点投射的最远距离，且法术的详述中会列出该法术中的哪部分效应受该距离限制。<BR>法术的施法距离通常有以下几种形式：</p>
-
+<body><h2>ʩ������Range</h2>
+<p>������ʩ��������ʩ�����ܽ�����ЧӦԴ��Ͷ�����Զ���룬�ҷ����������л��г��÷����е��Ĳ���ЧӦ�ܸþ������ơ�<BR>������ʩ������ͨ�������¼�����ʽ��</p>
 <UL>
-
   <LI>
-
-<div><b>距离Distance。</b>法术的施法距离以尺数列出。</div></LI>
-
+<div><b>����Distance��</b>������ʩ�������Գ����г���</div></LI>
   <LI>
-
-<div><b>触碰Touch。</b>法术的效应必须以施法者所接触的某个事物为源点，具体由此法术本身列出。</div></LI>
-
+<div><b>����Touch��</b>������ЧӦ������ʩ�������Ӵ���ĳ������ΪԴ�㣬�����ɴ˷��������г���</div></LI>
   <LI>
+<div><b>����Self��</b>������ʩ��������ʩչ���ʩ����������ɢ�������ɴ˷��������г���</div></LI></UL>
+<p>��ĳ���������������ƶ���ЧӦ�������ƶ�����ʩ����������ƣ����Ƿ�����������˵����</p>
 
-<div><b>自身Self。</b>法术在施法者自身施展或从施法者自身弥散，具体由此法术本身列出。</div></LI></UL>
-
-<p>若某个法术包含可以移动的效应，则其移动不受施法距离的限制，除非法术本身另有说明。</p>
-
-
-
+<script src="../../../cloud-bridge.js"></script>
 <script>
 /* 5e-chm-bridge */
 (function(){
@@ -40,10 +24,10 @@
         try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
     };
     
-    // 1. 报告导航位置 (用于书签记忆)
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
     post('nav', { href: window.location.href, title: document.title });
 
-    // 2. 监听引用操作 (Alt + 选中文本)
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
     document.addEventListener('mouseup', (ev) => {
         const isAction = ev.altKey || ev.ctrlKey;
         if (!isAction) return;
@@ -70,10 +54,7 @@
     });
 })();
 </script>
-<script src="../../../cloud-bridge.js"></script>
 </body>
-
 </html>
-
 
 

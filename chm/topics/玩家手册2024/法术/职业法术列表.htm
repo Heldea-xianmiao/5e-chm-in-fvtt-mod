@@ -1,22 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!-- coding: gbk -->
-
 <html>
-
-<head><title>职业法术列表</title>
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<head><title>ְҵ�����б�</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <link rel="stylesheet" href="../../style.css"></head>
 
+<body><h3>ְҵ�����б� Class Spell Lists</h3>
+<p>��һ������λ��ĳ��ְҵ�ķ����б��У���ôְҵ�����ֽ��ڷ���ѧ��֮��չʾ������֮�С�ĳЩ���ԻὫ���������ɫ�ķ����б�����ܸý�ɫ��������������ְ֮ҵ��</p>
 
-
-<body><h3>职业法术列表 Class Spell Lists</h3>
-
-<p>若一道法术位于某个职业的法术列表中，那么职业的名字将在法术学派之后展示于括号之中。某些特性会将法术加入角色的法术列表，尽管该角色并非括号内所述之职业。</p>
-
-
-
+<script src="../../../cloud-bridge.js"></script>
 <script>
 /* 5e-chm-bridge */
 (function(){
@@ -24,10 +16,10 @@
         try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
     };
     
-    // 1. 报告导航位置 (用于书签记忆)
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
     post('nav', { href: window.location.href, title: document.title });
 
-    // 2. 监听引用操作 (Alt + 选中文本)
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
     document.addEventListener('mouseup', (ev) => {
         const isAction = ev.altKey || ev.ctrlKey;
         if (!isAction) return;
@@ -54,10 +46,7 @@
     });
 })();
 </script>
-<script src="../../../cloud-bridge.js"></script>
 </body>
-
 </html>
-
 
 

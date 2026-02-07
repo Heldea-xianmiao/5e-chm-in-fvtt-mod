@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>ʢ������ɪ���</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+<style>
+h3{BORDER-BOTTOM: #800000 1px solid;MARGIN-BOTTOM:-10px;}
+</style>
+</head>
+<body>
+<H2>ʢ������ɪ��� Netheril at its Height</H2>
+<P>��ͼ��ʢ��ʱ�ڵ���ɪ�����չʾ����ɪ�������ƽ�ʱ������ò<FONT color=#808080 size=2>����ע����ȫ��δ¼�룩</FONT> �����ճǸ����ڴ��֮�ϣ����ڵ�ͼ����������������������ò�����λ�ü��Ա�ʾ��</P>
+<div class=center style="BACKGROUND-COLOR: #eeeeee"><STRONG>��ɪ������Netheril Timeline</STRONG><BR>���������˹Ŵ���ɪ�������ʷ�������Թȵؼ���Dalereckoning��DR��Ϊ׼��������ɪ���������ʹ�õ��������Ե�һ��Ԫ��ʼ�����۹�����֮��ΪԪ�������<BR><STRONG>��һ��ԪFirst 
+Age</STRONG><STRONG>��</STRONG><STRONG>-3859 DR �� -3534 DR����</STRONG>     
+������Eaerlanni��������һȺ���������ɪ����˽���ħ����ͳ��<BR><STRONG>��ɪ��ԪNether 
+Age</STRONG><STRONG>��</STRONG><STRONG>-3533 DR �� -3316 
+DR����</STRONG> 
+    
+��ɪ����˷�������ɪ���ᣬʹ�ð���ʦ�������ó�ָ����������ǿ��ħ������Щ����ʦѧϰ���������������ħ��֪ʶ�����ճ�Ϊ��ɪ�����ͳ�ν׼���<BR><STRONG>�����ܺ�ʱ��Mythallar Era��-3315 DR �� -2759 
+DR����</STRONG>     
+��ʦ������ķIoulaum�����˵�һ�������ܺ����һ�����ճǡ��۹����ú����Ϊ�ϲ���ɪ������²���ɪ�����<BR><STRONG>����ʱ��Silver Age��-2758 DR �� -2208 
+DR����</STRONG>     �۹����Ų�̽����������Ϊ���������<BR><STRONG>�ƽ�ʱ��Golden Age��-2207 DR 
+�� -1206 DR�� ��</STRONG>      
+��ɪ������ٲ�ʢ��������ͳ��Ϊ���ɪ���Deep Netheril�ĺ��׷ɵء��ڴ��ڼ䣬�����ɪ������ʧ�����ԡ�
+<BR><STRONG>����ʱ��Age of Discovery��-1205 DR 
+�� -697 DR�� ��</STRONG>       �ϲ���ɪ�����ʼ����ǰ���������硣
+<BR ><STRONG>��Ӱʱ��Shadowed Age��-696 DR �� -340 DR�� 
+��</STRONG>
+        
+ ��ʦ������˹�������ճ�������Eileanar��������ɪ���ᱻ�������ͬʱ���ص׵ķ���ħ����ʼ�����۹���ħ�������������²���ɪ����˿�ʼ��֯Э���Ե���䷴����
+<BR><STRONG>������˹������Karsus's Folly��-339 
+DR����</STRONG>
+
+
+  ������˹ʩ���˿�����˹������Karsus's 
+Avatar����ͼ��Ϊ��o��ȴ��������������ħ����������˹�ڴ˾���ɥ�������ճ�׹����״�½����ɪ����۹�Ҳ��֮������<BR><STRONG>��ɪ�������Netheril Returns��1372 
+DR����</STRONG>  
+���ճ��ն�̹���Զ�Ӱڤ���ط���ŵ�¿�Anauroch������ 1487 DR �ٶ����䡣<BR><STRONG>��ҫ����֮��The Year of the Shining Mythal��1501 
+DR����</STRONG>      
+���ǵ�ǰ����ݣ����ݡ����������ȣ�����Ӣ�ۡ��롶���������ȣ�����ð�ա���֮�趨����
+<P></P></div>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

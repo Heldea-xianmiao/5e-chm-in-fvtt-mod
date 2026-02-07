@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>������Դ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+<H2>������Դ Other&nbsp;Resources</H2>
+<P>�κ��鶼�����ܵ����Լ��ͺ��Ǳ������Ĺ�����������˼�ʮ��������е�ÿһ��ϸ�ڡ����������Ĺ��ȣ�����ð�ա�ֻ�Ƿ��׵ĺ������е�һ�Ρ�<BR>��������Ҫ�İ����ǡ��������Ĺ��ȣ�����Ӣ�ۡ���������������ҵ�����ȫ���׵ĸ����������������Ϣ������Ҫ�ļ�����ϵ�����о����ħ�����Ǳ����ﻹ�й��ڽ�ɫ�����Ľ��黹���µĹ���ѡ������µ���ְ��ר�����з�����<BR>���⣬����������Ϊ����ð�յ���չ������Ƶ�������Ŀ���������DnDBeyond.com���ҵ���Щ��Ŀ�ı��⣺</P>
+<P><STRONG>��˹���׵ļ��ʾ��Astarion's&nbsp;Book&nbsp;of&nbsp;Hungers</STRONG>�����ڰ�˹���ף�������֮��3����һλ����ϲ���ľ�����Ѫ�����塣<BR><STRONG>���£�����Lorwyn: 
+First&nbsp;Light</STRONG>���������ơ��е��������������D&amp;D���������µ���������ӰȺ����ս���趨ʮ�����ϡ�<BR><STRONG>��ɪ���֮��Nerheril's&nbsp;FallΪ</STRONG>�����ṩ�˶�Զ�ŵ���ɪ����۹�����ħ���ľ���һƳ�����������еĹ��ħ����Ʒ��ð�ա�</P>
+<P>������³ǲ�Ʒ�ߵ�����鼮Ҳ�ṩ�˹��ڱ������Ĺ�����صľ���ϸ�ڻ��������з�����ð�գ�������</P>
+<P><STRONG>����֮�ţ�׹�밢����˹Baldur's&nbsp;Gate��Descent&nbsp;into&nbsp;Avernus</STRONG>�ṩ�˹��ڲ���֮���������еĶ�����Ϣ��<BR><STRONG>������Candlekeep&nbsp;Mysteries</STRONG>�����ȫ������ΰ���ͼ��ݣ��������ڽ��壬���ṩ�������еĲ����йص�ð�ռ���<BR><STRONG>����ȣ���˪��Ů����ڡIcewind&nbsp;Dale: 
+Rime&nbsp;of&nbsp;the&nbsp;Frostmaiden</STRONG>�ṩ�˹���ʮ��Ķ�����Ϣ�Լ�������ŷ����֮������һ��ð�ա�<BR><STRONG>������ԨOut&nbsp;of&nbsp;Abyss</STRONG>�ṩ�˺ܶ���ڷ��������ǵ��İ��������Ϣ��<BR><STRONG>������֮�£����鷽�ⱮPhandelver&nbsp;and&nbsp;Below: 
+The&nbsp;Shattered&nbsp;Obelisk</STRONG>�������ٽ��޶��ǵķ���������������һ��Ť�������뺧������֮ð�յ���ʼ��<BR><STRONG>�籩����֮����Storm&nbsp;King's&nbsp;Thunder</STRONG>��һ������ɫ�Ǿ�������˵ĶԿ��������������ἰ�����ص��ʷʫð�գ�������Ӱ��������ȣ���<BR><STRONG>����֮ĹTomb&nbsp;of&nbsp;Annihilation</STRONG>�����˳����صĴ��֣�������ɪ��������н�����һ�������ĵ��Σ��ػ�һ��������������������<BR><STRONG>��ˮ�ǣ�����֮��Waterdeep: 
+Dragon&nbsp;Heist</STRONG>�����������ڽ������ˮ�ǡ�</P>
+
+
+<script src="../../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

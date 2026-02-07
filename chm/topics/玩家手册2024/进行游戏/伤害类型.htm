@@ -1,22 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!-- coding: gbk -->
-
 <html>
-
-<head><title>伤害类型</title>
-
-<meta content="text/html; charset=UTF-8">
-
+<head><title>�˺�����</title>
+<meta content="text/html; charset=gb2312">
 <link rel="stylesheet" href="../../style.css"></head>
 
+<body><h3>�˺�����Damage Types</h3>
+<p>ÿ���˺������Լ����˺����ͣ�����<b>����</b>����<b>�ӿ�</b>���˺��������������࣬�䱾��û���κι��򣬵�������<FONT color=#008000><STRONG>����</STRONG></FONT>֮����������������˺�������������</p>
 
-
-<body><h3>伤害类型Damage Types</h3>
-
-<p>每种伤害都有自己的伤害类型，比如<b>火焰</b>或者<b>挥砍</b>。伤害类型列于术语汇编，其本身没有任何规则，但是诸如<FONT color=#008000><STRONG>抗性</STRONG></FONT>之类的其他规则会基于伤害类型来运作。</p>
-
-
-
+<script src="../../../cloud-bridge.js"></script>
 <script>
 /* 5e-chm-bridge */
 (function(){
@@ -24,10 +16,10 @@
         try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
     };
     
-    // 1. 报告导航位置 (用于书签记忆)
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
     post('nav', { href: window.location.href, title: document.title });
 
-    // 2. 监听引用操作 (Alt + 选中文本)
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
     document.addEventListener('mouseup', (ev) => {
         const isAction = ev.altKey || ev.ctrlKey;
         if (!isAction) return;
@@ -54,10 +46,7 @@
     });
 })();
 </script>
-<script src="../../../cloud-bridge.js"></script>
 </body>
-
 </html>
-
 
 

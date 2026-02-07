@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>��ʦ-֪ʶ����</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+<H2>֪ʶ���� Knowledge 
+Domain</H2>
+<P class=sum> 
+�������ܣ���������</P>
+<P> 
+֪ʶ�����ѧϰ����������ʤ��һ�С�������һ�������ʦ�о��ش���ѧ�ʣ��Ѽ��žɵ�����̽�����ܵĵص㲢����˼��ı仯����������˵��֪ʶ�ļ�ֵԶ�����ʲƸ�������ѧϰ��һ�־��������ķ�ʽ��ͼ��ݣ���ѧ�Լ�������������Ҳ������֪ʶ�����������</P>
+<P> 
+֪ʶ����������Ӱ���ħ�����ƿ��ߵ������뷢���ıӻ��߸�����ͬ���ڷ��ף�֪ʶ�������ʦ����ŷ����Oghma������Gond������������</P>
+<P><STRONG><FONT color=#800000>3����֪ʶף�� Blessing of 
+Knowledge</FONT></STRONG>  
+<BR>������ѡ���һ�����������������Լ�������������ѡ��������������������ء���ʷ����Ȼ���ڽ̡��㻹�������������ܵ�ר����</P>
+<P><STRONG><FONT color=#800000>3����֪ʶ������ Knowledge Domain 
+Spells</FONT></STRONG>   
+<BR>���㵽��֪ʶ�����������ض�����ʦ�ȼ�ʱ�����ʼ��׼���˱��ж�Ӧ�ķ�����<BR><STRONG>֪ʶ������Knowledge Domain 
+Spells<BR></STRONG>  
+<table class="part">
+ <tr><th width=80><STRONG>��ʦ�ȼ�</STRONG></th><td><STRONG>׼������</STRONG></td></tr>
+<tr bgcolor=#eeeeee><th>3</th><td><U><EM>������Mind Spike* 
+      <BR>������Command��ͨ������Comprehend Languages*�����ħ��Detect 
+      Magic*��������Identify*<BR>���˼��Detect Thoughts*</EM></U>    </td></tr>
+<tr><th>5</th><td><U><EM>���ħ��Dispel 
+      Magic���ر����Nondetection��������Tongues*</EM></U> </td></tr>
+<tr bgcolor=#eeeeee><th>7</th><td><U><EM> �ط���Arcane 
+      Eye*��������Banishment��������Confusion</EM></U>  </td></tr>
+<tr><th>9</th><td><U><EM>ͨ������Legend Lore*��֪̽��Scrying*��ͻ����ֹSynaptic 
+      Static</EM></U>  </td></tr>
+</table>
+<FONT color=#808080 size=2>*����Ԥ��ѧ�ɵķ���</FONT> 
+</P>
+<P><STRONG><FONT color=#800000>3����˼άħ�� Mind 
+Magic<BR></FONT></STRONG> 
+��һ��ħ�������������ͨ������һ�������������������ħ��ѧʶ����֪ʶ����������ѡ��һ�����Ѿ�׼����Ԥ��ѧ�ɷ�������Ϊ�ö�����һ���֣������跨��λ�Լ����ϳɷֵ�ʩչ�÷�����</P>
+<P><STRONG><FONT color=#800000>6�����޾����� Unfettered 
+Mind<BR></FONT></STRONG>����60�������Ӧ������ʹ�ô������Ӧʱ�������ͬʱ����������ͬ�����֪����ֵ���������Ϊ1����<BR> 
+���⣬������������������������Ѿ�ӵ���˸�����������һ������δӵ�еĻ���������Ϊ���档</P>
+<P><STRONG><FONT color=#800000>17������ʥԤ֪ Divine 
+Foreknowledge</FONT></STRONG> 
+<BR>��һ��������������ħ���ؽ�˼ά��չ��δ������1��Сʱ�ڣ�����D20�춨�ϻ�����ơ�������һ��ʹ�ã�ֱ����ɳ����㶼�޷��ٴ�ʹ�á���Ҳ��������һ�����������ϵķ���λ�����ô����Ե�ʹ��Ȩ�����趯������</P>
+
+
+<script src="../../../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

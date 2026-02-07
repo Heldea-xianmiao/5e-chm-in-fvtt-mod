@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>˪��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<H2>˪�� Rimekin</H2>
+<P>˪�������ƽ����ʱ��Ѱ�����<BR>˪��Դ�����ºͰ�Ӱ��ԭ����ʱ�գ������������˪�����ڷ�����������֣������Բ��֡�����-��Ӱ��ԭ��ʷ�����ڼ�������ת����������Щ�������侲�߼�Ӧ�����⣬�ܳ�嶯³ç�ķ�Ӧ�������ԭ����������������ħ������Ⱦ���˳��Ǻ��⣬����Ҳ�ɴ�ת��Ϊ��˪���<BR>������һ����˪��ӵ������������ħ�����������ٻ����Ļ��������������ɫ��â�����ǳ��ȵĺ�ɫ�������ߣ���Щ�����桱ɢ�������ǳ��ǵĺ��䣬�������˵ĸ��¡���ЧӦҲ�ḽ����˪��Ӵ�����Ʒ�����ϡ��κ�˪����ŵĿ��׻��������������ᱻһ�������޺��İ�˪�����ǡ�</P>
+<P><STRONG><FONT color=#800000>˪������ Rimekin 
+Traits</FONT><BR>�������ͣ�</STRONG>����<BR><STRONG>���ͣ�</STRONG>���ͣ�Լ4-7�߸ߣ���С�ͣ�Լ2-4�߸ߣ�����ѡ�������ʱ����<BR><STRONG>�ٶȣ�</STRONG>30��</P>
+<P>��Ϊ˪������������������ʣ�<BR><STRONG>���ħ��Cold Fire Magic��</STRONG>��֪��Ϸ��<U><EM>�䶳����Ray of 
+Frost</EM></U>������Ľ�ɫ�ȼ�����3����5��ʱ����ֱ�ϰ�÷���<EM><U>����Ice 
+Knife</U></EM>��<U><EM>���浶Flame 
+Blade</EM></U>����ʼ��׼������Щϰ�õķ������ҿ��Բ����ķ���λʩչ��Щ����һ�Σ��������һ�γ���ʱ�����ػ��Դ˷�ʩչ�õ���������������Ҳ�������κ���ӵ�е���Ӧ���׷���λʩչ�õ���������ʹ�ô�����ʩչ<U><EM>���浶Flame 
+Blade</EM></U>ʱ���˷�����ɺ����˺����ǻ����˺���<BR>��������֪�������������ô�����ʩչ����ʱ��ʩ�����ԣ�����ѡ�������ʱѡ��ʩ�����ԣ���<BR><STRONG>���俹��Cold 
+Resistance��</STRONG>��ӵ�жԺ����˺��Ŀ��ԡ�<BR><STRONG>�ڰ��Ӿ�Darkvision��</STRONG>��ӵ��60�ߺڰ��Ӿ���</P>
+
+
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

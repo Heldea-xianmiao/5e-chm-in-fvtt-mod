@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>����</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+<H2>���� Backgrounds</H2>
+<P>��С���г���18���±������Թ����׵Ľ�ɫ��ʹ�á���Щ������������ĸ˳���г���<BR>����10��������Ӧ�ڶ��������ķ��׸���������Щ���������ڵ����Ա������С������������Ը��������Ľ�ɫ������ѡ��ָ���ı��������磬�����������¶������µľ����ǵ�Ĺ�ߡ��෴���㻹�����ҵ�һ������Ľ�ɫ���ϣ������ɫ������������Ӧ�������ض����������磬���˹�������������ʺ������κε����ĸ��ֺ�����ɫ��<BR>��������7������������������ĸ�����ϵ��أ���Щ������������ϵ�������С���Щ������������ĳ����ϵ��ص�ѵ�������������������������Ӧ��ϵ��<BR>������ѧͽ���������Ž�ɫ���������ģ�����������������������������ñ��������½ں����г������ר����������������ĳ������ְҵ�Ľ�ɫ��λӵ������츳֮�ˡ�ӵ�иñ�������ʿ��ɫ������ѡ����ǰ�������������ְ��</P>
+<P><STRONG>�����Ա���Regional Backgrounds</STRONG> 
+<table class=center style="WIDTH: 400px">
+<tr><td><STRONG>����</STRONG></td><td><STRONG>����</STRONG></td></tr>
+<tr bgcolor=#eeeeee><td>���˹����</td><td>ά�麣�� </td></tr>
+<tr><td>��ħ����ס�� </td><td>��ŵ�¿�ɳĮ</td></tr>
+<tr bgcolor=#eeeeee><td>��ȭӶ�� </td><td>���� </td></tr>
+<tr><td>����Ӵ���</td><td>��ı֮��  </td></tr>
+<tr bgcolor=#eeeeee><td>���ϵ���</td><td>���� </td></tr>
+<tr><td>�¾���ʥ��</td><td>�޺ۺ� </td></tr>
+<tr bgcolor=#eeeeee><td>�¶������µ�Ĺ��</td><td>�ŵ۹� </td></tr>
+<tr><td>����������</td><td>����</td></tr>
+<tr bgcolor=#eeeeee><td>��ɪ��������</td><td>�·��۹� </td></tr>
+<tr><td>Ӱ�ڷ�����</td><td>����֮�� </td></tr></table>
+</P>
+<P><STRONG>��ϵ����Faction Backgrounds</STRONG> 
+<table class=center style="WIDTH: 400px">
+<tr><td><STRONG>����</STRONG></td><td><STRONG>��ϵ</STRONG></td></tr>
+<tr bgcolor=#eeeeee><td>���׽���ͽ</td><td>���׽�</td></tr>
+<tr><td>������ͥ�ӻ���</td><td>������ͥ</td></tr>
+<tr bgcolor=#eeeeee><td>������</td><td>������</td></tr>
+<tr><td>������ʿ</td><td>������ʿ��</td></tr>
+<tr bgcolor=#eeeeee><td>�������˳���</td><td>��������</td></tr>
+<tr><td>������ʿ�̴�</td><td>������ʿ��</td></tr>
+<tr bgcolor=#eeeeee><td>ɢ���ֻ�Ӷ��</td><td>ɢ���ֻ�</td></tr></table></P>
+<script src="../../../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

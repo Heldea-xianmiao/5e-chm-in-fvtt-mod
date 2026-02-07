@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>��������</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<style>
+h3{BORDER-BOTTOM: #800000 1px solid;MARGIN-BOTTOM:-10px;}
+</style>
+<body>
+<H2>�������� Adapting Other Creatures</H2>
+<P>�������������»��߰�Ӱ��ԭ�ܳ���������ʹ�á�����ͼ�����е����ݿ���ʾ���ǡ�</P>
+<H3>���� Faeries</H3>
+<P>�����������Լ���Ӱ��ԭ�з����޳��ĵ����������ΪСС�Ĺ�ƶ���û���ħ��ʩ�����ǵĶ����硣��������������һ���������������ʱ�����ǻ�����顣�����Ҫ��������������Ϸ����Ϊ����ҽ�ɫ��ʹ��<STRONG><U>Ƥ�˾�Pixie</U></STRONG>��<STRONG><U>С����Sprite</U></STRONG>�����ݿ������Ҫ����������ҽ�ɫ������һ�¡�</P>
+<H3>������ Scarecrow</H3>
+<P>��������ʹ����ȥ<STRONG><U>����Treefolk</U></STRONG>ʬ������Ŀ��¹�װ���ɽ�Ӣħ�����գ�ֻ���ڰ�Ӱ��ԭ�ҵ�������û��˼������������Ӱ��ԭ�ĵ����˻��ǻ�չ�ֳ����⣻�����ǵ����˵������ߣ����޷������������Ѫ�ȱ������������ѡ���Ӱ��ԭ��ħ���Ὣ����ע�뵾�����С��������ڰ�Ӱ��ԭ�������µı߾��������˶��ǿ־�Ͷ��˵�Ԥ�ס�<BR>ÿ�������˵���۶�������ͬ������ൾ���˶�����һ��ͨ��������ʹ��<STRONG><U>������Scarecrow</U></STRONG>���ݿ�����Ϸ�б�ʾ��Ӱ��ԭ�����ˡ�</P>
+<H3>���� Treefolk</H3>
+<P>�������������ºͰ�Ӱ��ԭ������������ʶ����Ҷ������������˫��������Լ����ŵ��沿�����������ڵ���ʱ��Ѱ����ľһ����֮��ͨ����Ϊ�����ѡ�����ʽ�����ʶ����˵����������-��Ӱ��ԭλ������ϵı�������֮һ��</P>
+<P><STRONG><FONT color=#800000>�������� Lorwyn 
+Treefolk<BR></FONT></STRONG>�����£�һЩ�������ǻ���Ϊ���ߣ�������Щ���������һЩ���������ǵĲ��ǵ���Ȩ�ȣ���ͼͳ����Щ�������</P>
+<P><STRONG><FONT color=#800000>Ӱԭ���� Shadowmoor 
+Treefolk<BR></FONT></STRONG>�ڰ�Ӱ��ԭ����������Ȼ�ĸ����ػ��ߣ��Կ�������������������ߡ��������ɹ������¶������ұ����ǵ�����ͬ����������ڱ�����</P>
+<P><STRONG><FONT color=#800000>�������ݿ� Treefolk Stat 
+Blocks</FONT></STRONG><BR>�κ����������������ʹ��<STRONG><U>����Treant</U></STRONG>�����ݿ���ʾ����һ������Ʒ�ֱ�����ѡ��һ��������Դ��������������ʲô�����Լ������Ը������Ρ�
+<table class=part>
+<TR><TH width=60><STRONG>1d4</STRONG></TH><TD><STRONG>��������ǡ���</STRONG> </TD></TR>
+<TR bgColor=#f1f7f2><TH>1</TH><TD>һ��רע�������±���ɭ�־�����ڰ�Ӱ��ԭ����ɭ����ľ�İ������� </TD></TR>
+<TR><TH>2</TH><TD>һ��ϲ��˼����ѧ�ĺ������� </TD></TR>
+<TR bgColor=#f1f7f2><TH>3</TH><TD>һ����ͼ�ݻ����пƼ��Ļ������ </TD></TR>
+<TR><TH>4</TH><TD>һ�����Ծݴ��������ϡƷ�ֵ��������� </TD></TR>
+</table></P>
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

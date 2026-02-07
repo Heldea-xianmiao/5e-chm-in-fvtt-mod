@@ -1,276 +1,277 @@
-<!-- coding: gbk -->
-<!DOCTYPE html>
-</style>
-
-
-
-<style>
-html,div { margin: 0; padding: 0;}
-
-body {
-	padding: 0px;
-	margin: 0px;
-	overflow: auto;
-	height: 100%;
-}
-
-#winchm_template_button{
-	float: right;
-	width: 93px;
-	top: 7px;
-	position: relative;
-	text-align: right;
-	right: 5px;
-	height: auto;
-}
-
-#winchm_template_top{
-	padding: 0px;
-	margin: 0px;
-	border-bottom: 1px solid #9B9B9B;
-	background-color: #B1CEFE;
-}
-
-#winchm_template_navigation{
-	margin: 0px;
-	padding-top: 7px;
-	padding-left: 7px;
-	padding-bottom: 3px;
-	padding-right: 0px;
-	font-size: 8.5pt;
-	font-family: Arial, Helvetica, sans-serif;
-	font-weight: normal;
-	color: #585858;
-}
-
-#winchm_template_title{
-	margin: 0px;
-	padding-top: 4px;
-	padding-left: 7px;
-	padding-bottom: 7px;
-	padding-right: 0px;
-	font-size: 18px; 
-	font-family: Verdana, Geneva, sans-serif;
-	color: #363636;
-}
-
-#winchm_template_content{
-	margin-top: 20px;
-	margin-left: 15px;
-	margin-bottom: 20px;
-	margin-right: 15px;
-	width: auto  !important;
-	width: 100%;
-}
-
-#winchm_template_footer{
-	border-width: 1px;
-	border-color: #B1CEFE;
-	border-top-style: solid;
-	margin-top: 15px;
-	margin-left: 15px;
-	margin-bottom: 20px;
-	margin-right: 15px;
-	padding-top: 7px;
-	padding-left: 0px;
-	padding-bottom: 0px;
-	padding-right: 0px;
-	font-family: arial, helvetica, sans-serif;
-	font-size: 8.5pt;
-	color: #696969;
-	width: auto;
-	text-align: left;
-}
-
-
-#winchm_template_container{
-	margin: 0px;
-	padding: 0px;
-	position: static;
-	padding-bottom: 3px;
-	overflow: auto;
-	background-color: #FFFFFF;
-}
-
-
-#winchm_template_navigation A:link	{text-decoration: none; color:#004080}
-#winchm_template_navigation A:visited  {text-decoration: none; color: #004080}
-#winchm_template_navigation A:active {text-decoration: none; color: #004080 }
-#winchm_template_navigation A:hover {text-decoration: none;color: #0080FF}
-
-A:link	{text-decoration: underline; color:#0033CC}
-A:visited  {text-decoration: underline; color: #0033CC}
-A:active {text-decoration: underline; color: #0033CC }
-A:hover {text-decoration: underline;color: #FF0000;}
-</style>
-<script type="text/javascript">
-function isMobile(){
-Agent = window.navigator.userAgent;
-if (Agent.indexOf("iPhone")>=1 || Agent.indexOf("iPad")>=1 || Agent.indexOf("iPod")>=1 || Agent.indexOf("Android")>=1){
-return true;
-}else{
-return false;	
-}
-
-}
-function d_onresize(){
-if (window.navigator.userAgent.indexOf("MSIE")>=1){
-document.getElementById('winchm_template_container').style.pixelWidth = document.body.offsetWidth - 3;
-document.getElementById('winchm_template_container').style.pixelHeight = document.body.offsetHeight - document.getElementById('winchm_template_top').offsetHeight - 4;
-}
-document.getElementById('winchm_template_container').style.top = document.getElementById('winchm_template_top').offsetHeight + 'px';
-}
-
-function d_onbeforeprint(){
-if (window.navigator.userAgent.indexOf("MSIE")>=1){
-document.getElementById('winchm_template_container').style.height = 'auto';
-}
-}
-
-function d_onafterprint(){
-d_onresize();
-}
-
-if(!isMobile()){
-
-window.onload = d_onresize;
-window.onresize = d_onresize;
-window.onbeforeprint = d_onbeforeprint;
-window.onafterprint = d_onafterprint;
-
-document.write("<style>\n");
-document.write("body {overflow: hidden;}\n");
-document.write("#winchm_template_container {position: absolute;overflow: auto;top : 0px;right: 0px;bottom: 0px;left: 0px;}\n");
-document.write("</style>\n");
-}
-
-</script>
-<style>
-@media print
-{
-body {
-	padding: 0px;
-	margin: 0px;
-	overflow: auto;
-	height: auto;
-}
-#winchm_template_container{
-	position: static;	
-	margin: 0px;
-	padding: 5px;
-	
-	width: auto;
-	height: auto;
-	overflow: hidden;
-}
-#winchm_template_button{
-visibility:hidden;
-}
-}
-</style>
-</head>
-
-<body>
-
-<div id="winchm_template_top">
-	<div id="winchm_template_button"><A title="Previous topic" href="../%e6%96%af%e7%bf%a0%e6%b5%b7%e6%96%87%ef%bc%9a%e6%b7%b7%e6%b2%8c%e7%a0%94%e4%b9%a0/%e9%ad%94%e6%b3%95%e7%89%a9%e5%93%81.html" ><IMG id=winchm_template_prev border=0 alt ="Previous topic" src="../template2/btn_prev_n.gif" ></A><A title="Next topic" href="%e7%a7%8d%e6%97%8f/%e9%b8%9f%e7%be%bd%e4%ba%ba.html" ><IMG id=winchm_template_next border=0 alt ="Next topic" src="../template2/btn_next_n.gif" ></A></div>
-	<div id="winchm_template_navigation">Help &gt; 
-魔邓肯出品：多元宇宙的怪物 &gt; </div>
-	<div id="winchm_template_title">种族</div>
-</div>
-<div id="winchm_template_container">
-	<div id="winchm_template_content"><p><strong><span style="FONT-SIZE:
- 14pt; FONT-FAMILY: 宋体">第一章：奇幻种族<span lang=EN-US> Fantastical Races</span></span></strong><span
- lang=EN-US><br>
-      <br>
-      </span>译者的话：<em><span style="FONT-FAMILY: 宋体">本贴为<span
- lang=EN-US>MotM</span>第一章部分初译内容，此版本仅为译者一家之言。本人能力有限，译文并非能完全体现英文原本的含义与韵味。一切译名以<span
- lang=EN-US>1.7.1</span>版的<span lang=EN-US>D&amp;D 5e</span>三宝书和民间通用译名为准，部分译名参考自以前各扩展中玩家种族的译文。因为本书内容为对之前出版的诸多玩家种族的修改和整合，所以本译文对与三宝书不统一的翻译用词进行整合，并按个人喜好加以调整。若未能完全沿用旧译文，对诸位译者们致以歉意。同时感谢每一位曾参与过龙与地下城<span
- lang=EN-US>5e</span>翻译工作的民间译者，谢谢你们！</span></em><i><span lang=EN-US><br>
-      <br>
-      </span><em><span style="FONT-FAMILY: 宋体">鸟羽人<span
- lang=EN-US>Aarakocra </span>到 狗头人<span lang=EN-US>Kobold </span>描述的译者为<span
- lang=EN-US> Farevell</span>。</span></em><br>
-      <em><span style="FONT-FAMILY: 宋体">化兽者<span
- lang=EN-US>Shifter </span>数据的译者为<span lang=EN-US>Amethyst Dragonlord</span>。</span></em><span
- lang=EN-US><br>
-      <em><span style="FONT-FAMILY: 宋体"> </span></em></span><em><span
- style="FONT-FAMILY: 宋体">蜥蜴人<span lang=EN-US>Lizardfolk </span>到
-      蛇人<span lang=EN-US>Yuan-ti </span>的描述，与斑猫人<span lang=EN-US>Tabaxi</span>到蛇人<span
- lang=EN-US>Yuan-ti</span>数据的译者为柴郡猫眼。</span></em><br>
-      <em><span style="FONT-FAMILY: 宋体">以上译文经过本人些许修改以保持统一，感谢帮助翻译的每一位译者！</span></em><br>
-      </i><span lang=EN-US><br>
-      <br>
-      <br>
-      </span>本章汇集了来自龙与地下城的多元宇宙之中的奇幻种族，并为玩家角色们提供了以下种族，作为玩家手册中可选择种族的补充。<span
- lang=EN-US><br>
-      <br>
-      </span>鸟羽人<span lang=EN-US>Aarakocra, </span>阿斯莫<span lang=EN-US>Aasimar, </span>熊地精<span
- lang=EN-US>Bugbear, </span>人马<span lang=EN-US>Centaur, </span>幻身灵<span
- lang=EN-US>Changeling, </span>地底侏儒<span lang=EN-US>Deep Gnome, </span>灰矮人<span
- lang=EN-US>Duergar, </span>雅灵<span lang=EN-US>Eladrin, </span>仙灵<span
- lang=EN-US>Fairy, <br>
-      </span>费尔伯格人<span lang=EN-US>Firbolg, </span>气元素裔<span lang=EN-US>Genasi: Air, </span>土元素裔<span
- lang=EN-US>Genasi: Earth, </span>火元素裔<span lang=EN-US>Genasi: Fire, </span>水元素裔<span
- lang=EN-US>Genasi: Water, </span>吉斯洋基人<span lang=EN-US>Githyanki, </span>吉斯泽莱人<span
- lang=EN-US>Githzerai, </span>地精<span lang=EN-US>Goblin, </span>歌利亚<span
- lang=EN-US>Goliath, <br>
-      </span>兔人<span lang=EN-US>Harengon, </span>大地精<span lang=EN-US>Hobgoblin, </span>天狗<span
- lang=EN-US>Kenku, </span>狗头人<span lang=EN-US>Kobold, </span>蜥蜴人<span
- lang=EN-US>Lizardfolk, </span>牛头人<span lang=EN-US>Minotaur, </span>兽人<span
- lang=EN-US>Orc, </span>半羊人<span lang=EN-US>Satyr, </span>海精灵<span lang=EN-US>Sea
-      Elf, <br>
-      </span>影灵<span lang=EN-US>Shadar-kai, </span>化兽者<span lang=EN-US>Shifter, </span>斑猫人<span
- lang=EN-US>Tabaxi, </span>龟人<span lang=EN-US>Tortle, </span>梭螺鱼人<span
- lang=EN-US>Triton, </span>蛇人<span lang=EN-US>Yun-ti.<br>
-      <br>
-      </span>这里的许多种族都是基于《怪物图鉴》和这本书籍中的怪物作为基础的。和你的<span lang=EN-US>DM</span>咨询，确认这里的选择是否适合你的战役。<span
- lang=EN-US><br>
-      <br>
-      </span>如果你使用了一个本章的种族，首先请阅读<span lang=EN-US>“</span>创建你的角色<span lang=EN-US>”</span>部分。<span
- lang=EN-US><br>
-      <br>
-      <br>
-      </span><span class=bbcsize><b><span style="FONT-FAMILY: 宋体">创建你的角色<span lang=EN-US> Creating Your Character</span></span></b></span><span
- lang=EN-US><br>
-      <br>
-      </span>在<span lang=EN-US>1</span>级时，决定你的角色是人类还是其他奇幻种族中的一员。如果你选择幻想种族，如本节的仙灵或兔人，在角色创建时参照以下的额外规则。如果你选择了本章中的一个幻象种族，在创造角色时遵循以下的规则。<span
- lang=EN-US><br>
-      <br>
-      </span><strong><span style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体">属性值加成<span lang=EN-US>Ability Score Increase</span></span></strong><br>
-当决定你属性值加成时，将一项属性加       <span lang=EN-US>2</span>，然后将另一项不同的属性加<span lang=EN-US>1.</span>或者选择三项不同的属性各自加<span
- lang=EN-US>1</span>。无论你如何决定角色的属性，骰点还是购点都必须遵循这一规则。<span lang=EN-US>“</span>快速建卡<span
- lang=EN-US>”</span>一节会指导你的角色选择增加何种属性。你可以采用这些指导也可以将其无视。无论你增加哪项属性，这些加成无法让属性超过<span
- lang=EN-US>20</span>。<span lang=EN-US><br>
-      <br>
-      </span><span class=bbcsize><b><span style="FONT-SIZE:
- 10pt; FONT-FAMILY: 宋体">语言<span lang=EN-US>Languages</span></span></b></span><br>
-你的角色能够说、读和写通用语和另一种你和       <span lang=EN-US>DM</span>认为适合角色的语言。《玩家手册》提供了一项可供选择的泛用语言列表。<span
- lang=EN-US>DM</span>战役为了战役而自由地修改该列表。<span lang=EN-US><br>
-      <br>
-      </span><span class=bbcsize><b><span
- style="FONT-SIZE: 10pt; FONT-FAMILY: 宋体">生物种类<span
- lang=EN-US>Creature Type</span></span></b></span><br>
-所有       <span lang=EN-US>D&amp;D</span>中的生物，包括所有玩家角色，都在规则上有一个特别的关键词，用来鉴别其所属的生物种类。绝大部分玩家角色都属于类人生物。这里列出的种族选项说明了你的角色的生物种类是什么。<span
- lang=EN-US><br>
-             </span>以下是游戏内的生物种类按字母表顺序排列的列表：异怪<span lang=EN-US> Aberration</span>、野兽<span lang=EN-US> Beast</span>、天族<span lang=EN-US> Celestial</span>、构装生物<span lang=EN-US> Construct</span>、龙类<span lang=EN-US> Dragon</span>、元素生物<span lang=EN-US> Elemental</span>、妖精<span lang=EN-US> Fey</span>、邪魔 <span lang=EN-US>Fiend</span>、巨人<span lang=EN-US> Giant</span>、类人生物<span
- lang=EN-US> Humanoid</span>、怪兽<span lang=EN-US> Monstrosity</span>、泥怪<span
- lang=EN-US> Ooze</span>、植物<span lang=EN-US> Plant</span>、不死<span lang=EN-US> Undead</span>。这些生物种类本身并不拥有规则，但一些游戏规则会以不同的方式影响到特定种类的生物。例如，疗伤术法术对不死和构装生物无效。<span
- lang=EN-US><br>
-      <br>
-      </span><span class=bbcsize><b><span style="FONT-SIZE:
- 10pt; FONT-FAMILY: 宋体">寿命<span lang=EN-US>Life Span</span></span></b></span><br>
-在龙与地下城多元宇宙中，一个玩家角色的寿命通常约为一个世纪，前提是该角色没有在冒险中遭遇不测。例如矮人们和精灵这些种族的成员，通常可以活上几个世纪。如果本书中某个种族的成员普遍能活超过一个世纪，则会在该种族的描述中提到。       <span
- lang=EN-US><br>
-      <br>
-      </span><span class=bbcsize><b><span style="FONT-SIZE:
- 10pt; FONT-FAMILY: 宋体">身高与体重<span lang=EN-US> Height and Weight</span></span></b></span><br>
-不论种族，典型玩家角色的身高和体重范围与我们现实世界里人类的相同。如果你想随机地决定你的角色的身高和体重，参照《玩家手册》的随机身高体重       <span
- lang=EN-US>Random Height and Weight</span>表，并选择最能代表你所想象的角色的一列进行投掷。</p></div>	
-	<div id="winchm_template_footer">Copyright  2019. All rights 
-reserved. (To change the copyright info, just edit it in template.)</div>
-</div>
-
+﻿<!-- coding: gbk -->
+<!DOCTYPE html>
+</style>
+
+
+
+<style>
+html,div { margin: 0; padding: 0;}
+
+body {
+	padding: 0px;
+	margin: 0px;
+	overflow: auto;
+	height: 100%;
+}
+
+#winchm_template_button{
+	float: right;
+	width: 93px;
+	top: 7px;
+	position: relative;
+	text-align: right;
+	right: 5px;
+	height: auto;
+}
+
+#winchm_template_top{
+	padding: 0px;
+	margin: 0px;
+	border-bottom: 1px solid #9B9B9B;
+	background-color: #B1CEFE;
+}
+
+#winchm_template_navigation{
+	margin: 0px;
+	padding-top: 7px;
+	padding-left: 7px;
+	padding-bottom: 3px;
+	padding-right: 0px;
+	font-size: 8.5pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	color: #585858;
+}
+
+#winchm_template_title{
+	margin: 0px;
+	padding-top: 4px;
+	padding-left: 7px;
+	padding-bottom: 7px;
+	padding-right: 0px;
+	font-size: 18px; 
+	font-family: Verdana, Geneva, sans-serif;
+	color: #363636;
+}
+
+#winchm_template_content{
+	margin-top: 20px;
+	margin-left: 15px;
+	margin-bottom: 20px;
+	margin-right: 15px;
+	width: auto  !important;
+	width: 100%;
+}
+
+#winchm_template_footer{
+	border-width: 1px;
+	border-color: #B1CEFE;
+	border-top-style: solid;
+	margin-top: 15px;
+	margin-left: 15px;
+	margin-bottom: 20px;
+	margin-right: 15px;
+	padding-top: 7px;
+	padding-left: 0px;
+	padding-bottom: 0px;
+	padding-right: 0px;
+	font-family: arial, helvetica, sans-serif;
+	font-size: 8.5pt;
+	color: #696969;
+	width: auto;
+	text-align: left;
+}
+
+
+#winchm_template_container{
+	margin: 0px;
+	padding: 0px;
+	position: static;
+	padding-bottom: 3px;
+	overflow: auto;
+	background-color: #FFFFFF;
+}
+
+
+#winchm_template_navigation A:link	{text-decoration: none; color:#004080}
+#winchm_template_navigation A:visited  {text-decoration: none; color: #004080}
+#winchm_template_navigation A:active {text-decoration: none; color: #004080 }
+#winchm_template_navigation A:hover {text-decoration: none;color: #0080FF}
+
+A:link	{text-decoration: underline; color:#0033CC}
+A:visited  {text-decoration: underline; color: #0033CC}
+A:active {text-decoration: underline; color: #0033CC }
+A:hover {text-decoration: underline;color: #FF0000;}
+</style>
+<script type="text/javascript">
+function isMobile(){
+Agent = window.navigator.userAgent;
+if (Agent.indexOf("iPhone")>=1 || Agent.indexOf("iPad")>=1 || Agent.indexOf("iPod")>=1 || Agent.indexOf("Android")>=1){
+return true;
+}else{
+return false;	
+}
+
+}
+function d_onresize(){
+if (window.navigator.userAgent.indexOf("MSIE")>=1){
+document.getElementById('winchm_template_container').style.pixelWidth = document.body.offsetWidth - 3;
+document.getElementById('winchm_template_container').style.pixelHeight = document.body.offsetHeight - document.getElementById('winchm_template_top').offsetHeight - 4;
+}
+document.getElementById('winchm_template_container').style.top = document.getElementById('winchm_template_top').offsetHeight + 'px';
+}
+
+function d_onbeforeprint(){
+if (window.navigator.userAgent.indexOf("MSIE")>=1){
+document.getElementById('winchm_template_container').style.height = 'auto';
+}
+}
+
+function d_onafterprint(){
+d_onresize();
+}
+
+if(!isMobile()){
+
+window.onload = d_onresize;
+window.onresize = d_onresize;
+window.onbeforeprint = d_onbeforeprint;
+window.onafterprint = d_onafterprint;
+
+document.write("<style>\n");
+document.write("body {overflow: hidden;}\n");
+document.write("#winchm_template_container {position: absolute;overflow: auto;top : 0px;right: 0px;bottom: 0px;left: 0px;}\n");
+document.write("</style>\n");
+}
+
+</script>
+<style>
+@media print
+{
+body {
+	padding: 0px;
+	margin: 0px;
+	overflow: auto;
+	height: auto;
+}
+#winchm_template_container{
+	position: static;	
+	margin: 0px;
+	padding: 5px;
+	
+	width: auto;
+	height: auto;
+	overflow: hidden;
+}
+#winchm_template_button{
+visibility:hidden;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div id="winchm_template_top">
+	<div id="winchm_template_button"><A title="Previous topic" href=".." ><IMG id=winchm_template_prev border=0 alt ="Previous topic" src="../template2/btn_prev_n.gif" ></A><A title="Next topic" href="" ><IMG id=winchm_template_next border=0 alt ="Next topic" src="../template2/btn_next_n.gif" ></A></div>
+	<div id="winchm_template_navigation">Help &gt; 
+ħ�˿ϳ�Ʒ����Ԫ����Ĺ��� &gt; </div>
+	<div id="winchm_template_title">����</div>
+</div>
+<div id="winchm_template_container">
+	<div id="winchm_template_content"><p><strong><span style="FONT-SIZE:
+ 14pt; FONT-FAMILY: ����">��һ�£��������<span lang=EN-US> Fantastical Races</span></span></strong><span
+ lang=EN-US><br>
+      <br>
+      </span>���ߵĻ���<em><span style="FONT-FAMILY: ����">����Ϊ<span
+ lang=EN-US>MotM</span>��һ�²��ֳ������ݣ��˰汾��Ϊ����һ��֮�ԡ������������ޣ����Ĳ�������ȫ����Ӣ��ԭ���ĺ�������ζ��һ��������<span
+ lang=EN-US>1.7.1</span>���<span lang=EN-US>D&amp;D 5e</span>����������ͨ������Ϊ׼�����������ο�����ǰ����չ�������������ġ���Ϊ��������Ϊ��֮ǰ�����������������޸ĺ����ϣ����Ա����Ķ��������鲻ͳһ�ķ����ôʽ������ϣ���������ϲ�ü��Ե�������δ����ȫ���þ����ģ�����λ����������Ǹ�⡣ͬʱ��лÿһλ�������������³�<span
+ lang=EN-US>5e</span>���빤����������ߣ�лл���ǣ�</span></em><i><span lang=EN-US><br>
+      <br>
+      </span><em><span style="FONT-FAMILY: ����">������<span
+ lang=EN-US>Aarakocra </span>�� ��ͷ��<span lang=EN-US>Kobold </span>����������Ϊ<span
+ lang=EN-US> Farevell</span>��</span></em><br>
+      <em><span style="FONT-FAMILY: ����">������<span
+ lang=EN-US>Shifter </span>���ݵ�����Ϊ<span lang=EN-US>Amethyst Dragonlord</span>��</span></em><span
+ lang=EN-US><br>
+      <em><span style="FONT-FAMILY: ����"> </span></em></span><em><span
+ style="FONT-FAMILY: ����">������<span lang=EN-US>Lizardfolk </span>��
+      ����<span lang=EN-US>Yuan-ti </span>�����������è��<span lang=EN-US>Tabaxi</span>������<span
+ lang=EN-US>Yuan-ti</span>���ݵ�����Ϊ��è�ۡ�</span></em><br>
+      <em><span style="FONT-FAMILY: ����">�������ľ�������Щ���޸��Ա���ͳһ����л���������ÿһλ���ߣ�</span></em><br>
+      </i><span lang=EN-US><br>
+      <br>
+      <br>
+      </span>���»㼯������������³ǵĶ�Ԫ����֮�е�������壬��Ϊ��ҽ�ɫ���ṩ���������壬��Ϊ����ֲ��п�ѡ������Ĳ��䡣<span
+ lang=EN-US><br>
+      <br>
+      </span>������<span lang=EN-US>Aarakocra, </span>��˹Ī<span lang=EN-US>Aasimar, </span>�ܵؾ�<span
+ lang=EN-US>Bugbear, </span>����<span lang=EN-US>Centaur, </span>������<span
+ lang=EN-US>Changeling, </span>�ص�٪��<span lang=EN-US>Deep Gnome, </span>�Ұ���<span
+ lang=EN-US>Duergar, </span>����<span lang=EN-US>Eladrin, </span>����<span
+ lang=EN-US>Fairy, <br>
+      </span>�Ѷ�������<span lang=EN-US>Firbolg, </span>��Ԫ����<span lang=EN-US>Genasi: Air, </span>��Ԫ����<span
+ lang=EN-US>Genasi: Earth, </span>��Ԫ����<span lang=EN-US>Genasi: Fire, </span>ˮԪ����<span
+ lang=EN-US>Genasi: Water, </span>��˹�����<span lang=EN-US>Githyanki, </span>��˹������<span
+ lang=EN-US>Githzerai, </span>�ؾ�<span lang=EN-US>Goblin, </span>������<span
+ lang=EN-US>Goliath, <br>
+      </span>����<span lang=EN-US>Harengon, </span>��ؾ�<span lang=EN-US>Hobgoblin, </span>�칷<span
+ lang=EN-US>Kenku, </span>��ͷ��<span lang=EN-US>Kobold, </span>������<span
+ lang=EN-US>Lizardfolk, </span>ţͷ��<span lang=EN-US>Minotaur, </span>����<span
+ lang=EN-US>Orc, </span>������<span lang=EN-US>Satyr, </span>������<span lang=EN-US>Sea
+      Elf, <br>
+      </span>Ӱ��<span lang=EN-US>Shadar-kai, </span>������<span lang=EN-US>Shifter, </span>��è��<span
+ lang=EN-US>Tabaxi, </span>����<span lang=EN-US>Tortle, </span>��������<span
+ lang=EN-US>Triton, </span>����<span lang=EN-US>Yun-ti.<br>
+      <br>
+      </span>�����������嶼�ǻ��ڡ�����ͼ�������Ȿ�鼮�еĹ�����Ϊ�����ġ������<span lang=EN-US>DM</span>��ѯ��ȷ�������ѡ���Ƿ��ʺ����ս�ۡ�<span
+ lang=EN-US><br>
+      <br>
+      </span>�����ʹ����һ�����µ����壬�������Ķ�<span lang=EN-US>��</span>������Ľ�ɫ<span lang=EN-US>��</span>���֡�<span
+ lang=EN-US><br>
+      <br>
+      <br>
+      </span><span class=bbcsize><b><span style="FONT-FAMILY: ����">������Ľ�ɫ<span lang=EN-US> Creating Your Character</span></span></b></span><span
+ lang=EN-US><br>
+      <br>
+      </span>��<span lang=EN-US>1</span>��ʱ��������Ľ�ɫ�����໹��������������е�һԱ�������ѡ��������壬�籾�ڵ���������ˣ��ڽ�ɫ����ʱ�������µĶ�����������ѡ���˱����е�һ���������壬�ڴ����ɫʱ��ѭ���µĹ���<span
+ lang=EN-US><br>
+      <br>
+      </span><strong><span style="FONT-SIZE: 10pt; FONT-FAMILY: ����">����ֵ�ӳ�<span lang=EN-US>Ability Score Increase</span></span></strong><br>
+������������ֵ�ӳ�ʱ����һ�����Լ�       <span lang=EN-US>2</span>��Ȼ����һ�ͬ�����Լ�<span lang=EN-US>1.</span>����ѡ�����ͬ�����Ը��Լ�<span
+ lang=EN-US>1</span>����������ξ�����ɫ�����ԣ����㻹�ǹ��㶼������ѭ��һ����<span lang=EN-US>��</span>���ٽ���<span
+ lang=EN-US>��</span>һ�ڻ�ָ����Ľ�ɫѡ�����Ӻ������ԡ�����Բ�����Щָ��Ҳ���Խ������ӡ������������������ԣ���Щ�ӳ��޷������Գ���<span
+ lang=EN-US>20</span>��<span lang=EN-US><br>
+      <br>
+      </span><span class=bbcsize><b><span style="FONT-SIZE:
+ 10pt; FONT-FAMILY: ����">����<span lang=EN-US>Languages</span></span></b></span><br>
+��Ľ�ɫ�ܹ�˵������дͨ�������һ�����       <span lang=EN-US>DM</span>��Ϊ�ʺϽ�ɫ�����ԡ�������ֲᡷ�ṩ��һ��ɹ�ѡ��ķ��������б��<span
+ lang=EN-US>DM</span>ս��Ϊ��ս�۶����ɵ��޸ĸ��б��<span lang=EN-US><br>
+      <br>
+      </span><span class=bbcsize><b><span
+ style="FONT-SIZE: 10pt; FONT-FAMILY: ����">��������<span
+ lang=EN-US>Creature Type</span></span></b></span><br>
+����       <span lang=EN-US>D&amp;D</span>�е��������������ҽ�ɫ�����ڹ�������һ���ر�Ĺؼ��ʣ�����������������������ࡣ���󲿷���ҽ�ɫ������������������г�������ѡ��˵������Ľ�ɫ������������ʲô��<span
+ lang=EN-US><br>
+             </span>��������Ϸ�ڵ��������ఴ��ĸ��˳�����е��б�����<span lang=EN-US> Aberration</span>��Ұ��<span lang=EN-US> Beast</span>������<span lang=EN-US> Celestial</span>����װ����<span lang=EN-US> Construct</span>������<span lang=EN-US> Dragon</span>��Ԫ������<span lang=EN-US> Elemental</span>������<span lang=EN-US> Fey</span>��аħ <span lang=EN-US>Fiend</span>������<span lang=EN-US> Giant</span>����������<span
+ lang=EN-US> Humanoid</span>������<span lang=EN-US> Monstrosity</span>�����<span
+ lang=EN-US> Ooze</span>��ֲ��<span lang=EN-US> Plant</span>������<span lang=EN-US> Undead</span>����Щ�������౾�����ӵ�й��򣬵�һЩ��Ϸ������Բ�ͬ�ķ�ʽӰ�쵽�ض������������磬�����������Բ����͹�װ������Ч��<span
+ lang=EN-US><br>
+      <br>
+      </span><span class=bbcsize><b><span style="FONT-SIZE:
+ 10pt; FONT-FAMILY: ����">����<span lang=EN-US>Life Span</span></span></b></span><br>
+��������³Ƕ�Ԫ�����У�һ����ҽ�ɫ������ͨ��ԼΪһ�����ͣ�ǰ���Ǹý�ɫû����ð�����������⡣���簫���Ǻ;�����Щ����ĳ�Ա��ͨ�����Ի��ϼ������͡����������ĳ������ĳ�Ա�ձ��ܻ��һ�����ͣ�����ڸ�������������ᵽ��       <span
+ lang=EN-US><br>
+      <br>
+      </span><span class=bbcsize><b><span style="FONT-SIZE:
+ 10pt; FONT-FAMILY: ����">���������<span lang=EN-US> Height and Weight</span></span></b></span><br>
+�������壬������ҽ�ɫ����ߺ����ط�Χ��������ʵ�������������ͬ�������������ؾ�����Ľ�ɫ����ߺ����أ����ա�����ֲᡷ������������       <span
+ lang=EN-US>Random Height and Weight</span>�����ѡ�����ܴ�����������Ľ�ɫ��һ�н���Ͷ����</p></div>	
+	<div id="winchm_template_footer">Copyright  2019. All rights 
+reserved. (To change the copyright info, just edit it in template.)</div>
+</div>
+
+<script src="../../cloud-bridge.js"></script>
 <script>
 /* 5e-chm-bridge */
 (function(){
@@ -278,10 +279,10 @@ reserved. (To change the copyright info, just edit it in template.)</div>
         try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
     };
     
-    // 1. 报告导航位置 (用于书签记忆)
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
     post('nav', { href: window.location.href, title: document.title });
 
-    // 2. 监听引用操作 (Alt + 选中文本)
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
     document.addEventListener('mouseup', (ev) => {
         const isAction = ev.altKey || ev.ctrlKey;
         if (!isAction) return;
@@ -308,9 +309,8 @@ reserved. (To change the copyright info, just edit it in template.)</div>
     });
 })();
 </script>
-<script src="../../cloud-bridge.js"></script>
-</body>
-</html>
+</body>
+</html>
 
 
 

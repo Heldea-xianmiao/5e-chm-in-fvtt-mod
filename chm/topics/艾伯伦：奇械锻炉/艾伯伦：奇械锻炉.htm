@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<!-- coding: gbk -->
+<html>
+<head>
+<title>�����ף���е��¯</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<H1>�����ף���е��¯ Forge of the Artificer</H1>
+<H2>������Ա redits</H2>
+<P><STRONG>Lead Designer:</STRONG> James Wyatt<BR><STRONG>Designers:</STRONG> 
+Jeremy Crawford, Makenzie De Armas, Ron Lundeen, Ben Petrisor, Patrick 
+Renie<BR><STRONG>Rules 
+Developers:</STRONG> Makenzie De Armas (lead), Jeremy Crawford, Ron Lundeen, Ben 
+Petrisor, Carl Sibley<BR><STRONG>Editors:</STRONG> Adrian Ng (lead), Judy Bauer, 
+Sue Weinlein<BR><STRONG>Playtest Analysts:</STRONG>  Ron Lundeen (lead), Makenzie De Armas<BR><STRONG>Art Director:</STRONG> 
+ Noor Rahman<BR><STRONG>Graphic Designers:</STRONG>  Matt Cole, Paolo Vacala<BR><STRONG>Cover Illustrators:</STRONG> 
+ Michael Broussard, Patrick Ganas<BR><STRONG>Interior 
+Illustrators:</STRONG> Ignacio Bazan-Lazcano, Michael Broussard, Cullen Cole, 
+Daarken, Andrea De Dominicis, Kevin Gnutzmans, John Grello, Yinfaowei Harrison, 
+Michal Ivan, Jordan Kerbow, Kuno, Arthur Loftis, Calder Moore, Lee Moyer, 
+Claudio Pozas, Noor Rahman, Dave Sarabia, Leroy Steinmann, John Thacker, Kenny 
+Vo, Esther Wu, Ahmed Zulfiqar<BR><STRONG>Cartographer:</STRONG> Sean Macdonald<BR><STRONG>Concept Artists:</STRONG>  Michael 
+Broussard, John Grello, Alexander Ostrowski, Noor Rahman<BR><STRONG>Consultants:</STRONG> Keith Baker, Elizabeth 
+Banerjee, Shawn Banerjee, Daniel Delgado, Sameer Joseph<BR><STRONG>Producers:</STRONG> Rob Hawkey (lead), Bill Benham, 
+Siera Bruggeman, Vanessa Hoskins</P>
+<P><STRONG>����&amp;У�ԣ�</STRONG>��ԭ�ϵ���������è�����������磬������ܷ���kong��PAX-12��������Waft�����������<BR><STRONG>�Ű棺</STRONG>�������<BR></P>
+
+
+<script src="../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+
