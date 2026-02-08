@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!-- saved from url=(0014)about:internet -->
 <html>
 <head>
@@ -17,6 +17,7 @@
     <td><div class="border2" onmouseover="this.className='border1';" onmouseout="this.className='border2';" onmousedown="this.className='border3'" onmouseup="this.className='border1';"onclick="parent.tree.clickNode(parseInt(parent.tree.LastSelected) + 1);"><nobr><img src="images/next.gif" align="absmiddle"><script>document.write(strings['Next']);</script></nobr></div> </td>
   </tr>
 </table>
+<script src="cloud-bridge.js"></script>
 <script>
 /* 5e-chm-bridge */
 (function(){
@@ -24,10 +25,10 @@
         try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
     };
     
-    // 1. 报告导航位置 (用于书签记忆)
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
     post('nav', { href: window.location.href, title: document.title });
 
-    // 2. 监听引用操作 (Alt + 选中文本)
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
     document.addEventListener('mouseup', (ev) => {
         const isAction = ev.altKey || ev.ctrlKey;
         if (!isAction) return;
@@ -54,7 +55,6 @@
     });
 })();
 </script>
-<script src="cloud-bridge.js"></script>
 </body>
 </html>
 

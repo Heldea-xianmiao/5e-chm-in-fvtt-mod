@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+﻿<!DOCTYPE html>
 <!-- saved from url=(0014)about:internet -->
 <html>
 <head>
@@ -33,7 +32,7 @@ function synbar(){
 
 function Page_load(){
 	if(document.location.protocol=="file:" && navigator.userAgent.indexOf("Safari")>-1){
-		alert("Some features may not be supported when you're browsing LOCAL files using Chrome or Safari.\n\n Two solutions:\n* Upload the files to a web server.\n --OR-- \n* Use IE, Firefox or Opera as your web browser.");
+		alert("Local browsing cannot use the full functionality of Web Help. Please upload the file to a web server.");
 	}
 	//document.getElementById("td1").className="v";
 	setTimeout("synbar();",200);
@@ -65,6 +64,7 @@ function Page_load(){
     </tr>
   </table>
 </div>
+<script src="cloud-bridge.js"></script>
 <script>
 /* 5e-chm-bridge */
 (function(){
@@ -72,10 +72,10 @@ function Page_load(){
         try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
     };
     
-    // 1. 报告导航位置 (用于书签记忆)
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
     post('nav', { href: window.location.href, title: document.title });
 
-    // 2. 监听引用操作 (Alt + 选中文本)
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
     document.addEventListener('mouseup', (ev) => {
         const isAction = ev.altKey || ev.ctrlKey;
         if (!isAction) return;
@@ -102,7 +102,7 @@ function Page_load(){
     });
 })();
 </script>
-<script src="cloud-bridge.js"></script>
 </body>
 </html>
+
 

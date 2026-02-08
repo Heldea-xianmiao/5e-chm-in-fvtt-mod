@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!-- saved from url=(0014)about:internet -->
 <html>
 <head>
@@ -10,12 +10,13 @@
 	<frame src="webhelptoph.htm" name="top" scrolling="NO" noresize id="top">
 	<frameset rows="*" cols="270,*" framespacing="5" frameborder="1" border="5" bordercolor="#003366">
 		<frame src="webhelplefth.htm" name="nav" frameborder="1" bordercolor="#003366" id="nav">
-		<frame src="scr/%e5%86%99%e5%9c%a8%e5%89%8d%e9%9d%a2.html" name="content" frameborder="1" bordercolor="#003366" id="content">
+		<frame src="scr/%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2.html" name="content" frameborder="1" bordercolor="#003366" id="content">
 	</frameset>
 </frameset>
 
 <noframes><body>
 
+<script src="cloud-bridge.js"></script>
 <script>
 /* 5e-chm-bridge */
 (function(){
@@ -23,10 +24,10 @@
         try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
     };
     
-    // 1. 报告导航位置 (用于书签记忆)
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
     post('nav', { href: window.location.href, title: document.title });
 
-    // 2. 监听引用操作 (Alt + 选中文本)
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
     document.addEventListener('mouseup', (ev) => {
         const isAction = ev.altKey || ev.ctrlKey;
         if (!isAction) return;
@@ -53,7 +54,6 @@
     });
 })();
 </script>
-<script src="cloud-bridge.js"></script>
 </body></noframes>
 </html>
 

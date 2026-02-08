@@ -1,4 +1,5 @@
 ﻿<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
 <!-- coding: gbk -->
 <html>
 <head>
@@ -13,7 +14,30 @@ html,body {
 
 </head>
 
-<body>
+<body><script language="JavaScript" type="text/JavaScript">
+function syn(){
+if(parent.nav.tree){
+ if(parent.nav.tree.loaded){
+  parent.nav.tree.selectNode(0);
+ }else{
+  setTimeout("syn()",500);
+}
+  }else{
+  setTimeout("syn()",500);
+  }}
+if(parent!=self){
+  setTimeout("syn()",100);
+}else{
+  parent.location.href = "../index.htm?page=写在前面.html";
+}
+originalOnload = window.onload;
+if(originalOnload==null){
+window.onload = function(){parent.contentLoaded = true;};
+}else{
+window.onload = function(){originalOnload();parent.contentLoaded = true;};
+}
+</script> 
+
 <P align=center><STRONG><FONT color=#800000 size=7>D&amp;D 5E不全书 <FONT size=4>v20260205</FONT> </FONT></STRONG></P>
 <P>     本书中标注为new!的资源表示该资源为此版本不全书新增的资源。
 </P>
