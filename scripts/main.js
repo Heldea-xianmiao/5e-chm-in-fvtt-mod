@@ -1,9 +1,9 @@
 ﻿import { ChmBrowser } from "./chm-browser.js";
 
-// 瀹炰緥鍖?
+// 实例化
 const chmBrowser = new ChmBrowser();
 
-// 鏅鸿兘寮€鍏冲嚱鏁帮細濡傛灉宸叉墦寮€鍒欑疆椤讹紝鍚﹀垯娓叉煋
+// 智能开关函数：如果已打开则置顶，否则渲染
 const toggleBrowser = () => {
     if (chmBrowser.rendered) {
         chmBrowser.bringToFront();
@@ -12,11 +12,11 @@ const toggleBrowser = () => {
     }
 };
 
-// 娉ㄥ唽蹇嵎閿?Alt + B
+// 注册快捷键 Alt + B
 Hooks.once('init', () => {
     game.keybindings.register('5e-chm-in-fvtt', 'openBrowser', {
-        name: '鎵撳紑5e涓嶅叏涔?,
-        hint: '鎸変笅蹇嵎閿洿鎺ユ墦寮€绐楀彛',
+        name: '打开5e不全书',
+        hint: '按下快捷键直接打开窗口',
         editable: [ { key: "KeyB", modifiers: ["Alt"] } ],
         onDown: toggleBrowser,
         restricted: false,
@@ -24,25 +24,25 @@ Hooks.once('init', () => {
     });
 });
 
-// 娣诲姞鍒板乏渚х瑪璁版爮
+// 添加到左侧笔记栏
 Hooks.on("getSceneControlButtons", (controls) => {
-    // 閫傞厤 V14: controls 鍙兘鍙樹负瀵硅薄鑰屼笉鏄暟缁?
+    // 适配 V14: controls 可能变为对象而不是数组
     let noteLayer;
     if (Array.isArray(controls)) {
         noteLayer = controls.find(c => c.name === "notes");
     } else if (typeof controls === "object") {
-         // V14 鏃╂湡寮€鍙戠増鍙兘灏?controls 鏇存敼涓哄璞＄粨鏋?
+         // V14 早期开发版可能将 controls 更改为对象结构
         noteLayer = controls.notes;
     }
 
     if (noteLayer) {
-        if (!noteLayer.tools) noteLayer.tools = []; // 纭繚 tools 鏁扮粍瀛樺湪
+        if (!noteLayer.tools) noteLayer.tools = []; // 确保 tools 数组存在
         
-        // 闃叉閲嶅娣诲姞
+        // 防止重复添加
         if (!noteLayer.tools.some(t => t.name === "open-5e-chm")) {
             noteLayer.tools.push({
                 name: "open-5e-chm",
-                title: "5e涓嶅叏涔?,
+                title: "5e不全书",
                 icon: "fas fa-book-atlas",
                 visible: true,
                 onClick: toggleBrowser,
@@ -54,30 +54,30 @@ Hooks.on("getSceneControlButtons", (controls) => {
     }
 });
 
-// 娣诲姞鍒板彸渚ф棩蹇楁爮
+// 添加到右侧日志栏
 Hooks.on("renderJournalDirectory", (app, html, data) => {
-    // 鍏煎 jQuery 鍜屽師鐢?DOM (V13/V14 鍙兘绉婚櫎 jQuery)
-    // 濡傛灉 html 鏄?jQuery 瀵硅薄锛屽彇绗竴涓厓绱狅紱濡傛灉鏄?HTMLElement锛岀洿鎺ヤ娇鐢?
+    // 兼容 jQuery 和原生 DOM (V13/V14 可能移除 jQuery)
+    // 如果 html 是 jQuery 对象，取第一个元素；如果 是 HTMLElement，直接使用
     const element = (html.jquery) ? html[0] : html;
 
     const actionButtons = element.querySelector(".header-actions");
     if (!actionButtons) return;
 
-    // 鍒涘缓鎸夐挳
+    // 创建按钮
     const button = document.createElement("button");
     button.className = "create-entry";
     button.style.minWidth = "96px";
     button.style.flex = "0";
-    button.innerHTML = <i class="fas fa-book-atlas"></i> 5e涓嶅叏涔;
+    button.innerHTML = `<i class="fas fa-book-atlas"></i> 5e不全书`;
     
-    // 缁戝畾鐐瑰嚮浜嬩欢
+    // 绑定点击事件
     button.addEventListener("click", (ev) => {
         ev.preventDefault();
         chmBrowser.render({ force: true });
     });
 
-    // 鎻掑叆鎸夐挳 (prepend)
+    // 插入按钮 (prepend)
     actionButtons.prepend(button);
 });
 
-console.log("5e涓嶅叏涔VTT閮ㄧ讲鐗堝凡涓婄嚎");
+console.log("5e不全书FVTT部署版已上线 (Main V3)");
