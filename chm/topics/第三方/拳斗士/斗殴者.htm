@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<!-- coding: gbk -->
+<html>
+<head>
+<title>斗殴者</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../stat-block.css">
+<style>
+H2{
+BORDER-BOTTOM: #b79c61 1px solid;
+margin-bottom: -12px;
+}
+</style>
+</head>
+
+<body><script language="JavaScript" type="text/JavaScript">
+function syn(){
+if(parent.nav.tree){
+ if(parent.nav.tree.loaded){
+  parent.nav.tree.selectNode(6869);
+ }else{
+  setTimeout("syn()",500);
+}
+  }else{
+  setTimeout("syn()",500);
+  }}
+if(parent!=self){
+  setTimeout("syn()",100);
+}else{
+  parent.location.href = "../../../index.htm?page=第三方/拳斗士/斗殴者.htm";
+}
+originalOnload = window.onload;
+if(originalOnload==null){
+window.onload = function(){parent.contentLoaded = true;};
+}else{
+window.onload = function(){originalOnload();parent.contentLoaded = true;};
+}
+</script> 
+
+<H1>斗殴者 Brawlers
+</H1>
+
+<p class=sum>喧嚣之徒与市井莽汉
+</p>
+
+<div class="HT"><STRONG>栖息地：</STRONG>
+任意；<STRONG>宝藏：</STRONG>个体
+</div>
+
+<P>斗殴者喧闹而又莽撞，追求及时行乐或是干上一架，当然最好是两者兼得。他们大多是劳工或匠人，手头宽裕时便尽情畅饮以宣泄过剩的精力，囊中羞涩时则直接拳脚相向。其中技艺尤为精湛的，甚至能以搏斗供人取乐谋生。
+</P>
+<script src="../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+

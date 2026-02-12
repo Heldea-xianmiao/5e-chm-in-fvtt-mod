@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<!-- coding: gbk -->
+<html>
+<head>
+<title>散提拉军</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../stat-block.css">
+<style>
+H2{
+BORDER-BOTTOM: #b79c61 1px solid;
+margin-bottom: -12px;
+}
+</style>
+</head>
+
+<body><script language="JavaScript" type="text/JavaScript">
+function syn(){
+if(parent.nav.tree){
+ if(parent.nav.tree.loaded){
+  parent.nav.tree.selectNode(4843);
+ }else{
+  setTimeout("syn()",500);
+}
+  }else{
+  setTimeout("syn()",500);
+  }}
+if(parent!=self){
+  setTimeout("syn()",100);
+}else{
+  parent.location.href = "../../../../index.htm?page=被遗忘的国度/费伦冒险/第九章/散提拉军.htm";
+}
+originalOnload = window.onload;
+if(originalOnload==null){
+window.onload = function(){parent.contentLoaded = true;};
+}else{
+window.onload = function(){originalOnload();parent.contentLoaded = true;};
+}
+</script> 
+
+<H1>散提拉军 Zhentilar
+</H1>
+
+<p class=sum>散塔林会的捍卫者们
+</p>
+
+<div class="HT"><STRONG>栖息地：</STRONG>
+
+任意；<STRONG>宝藏：</STRONG>
+武备
+</div>
+
+<P>散提拉军是散塔林会的军事分支。散提拉军势力捍卫着散塔林会的要塞，诸如散提尔堡与黑暗堡。如果说散塔林会是一支大家庭，那么散提拉军便是家中捍卫亲人的长兄长姐。
+<BR>除了捍卫据点，散提拉军也负责组织上的某些重要事务，例如保护一件强大的魔法物品，或是护送散塔林会高层。
+
+
+</P>
+
+
+
+<script src="../../../../cloud-bridge.js"></script>
+<script>
+/* 5e-chm-bridge */
+(function(){
+    const post = (type, data) => {
+        try { window.parent.postMessage({ type: '5echm:'+type, ...data }, '*'); } catch(e){}
+    };
+    
+    // 1. 鎶ュ憡瀵艰埅浣嶇疆 (鐢ㄤ簬涔︾璁板繂)
+    post('nav', { href: window.location.href, title: document.title });
+
+    // 2. 鐩戝惉寮曠敤鎿嶄綔 (Alt + 閫変腑鏂囨湰)
+    document.addEventListener('mouseup', (ev) => {
+        const isAction = ev.altKey || ev.ctrlKey;
+        if (!isAction) return;
+
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+
+        let html = "";
+        try {
+            if (sel.rangeCount > 0) {
+                const div = document.createElement("div");
+                for (let i=0; i<sel.rangeCount; i++) div.appendChild(sel.getRangeAt(i).cloneContents());
+                html = div.innerHTML;
+            }
+        } catch(e) {}
+
+        if (html || sel.toString()) {
+            post('quote', { 
+                html: html || sel.toString(), 
+                text: sel.toString(), 
+                title: document.title 
+            });
+        }
+    });
+})();
+</script>
+</body>
+</html>
+
+
